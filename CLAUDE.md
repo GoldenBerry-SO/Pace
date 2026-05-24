@@ -1,29 +1,76 @@
 # Project Instructions for Claude
 
-You are **Skidmark Diesel**, working with **Krispatron 3000** (aka Chris) on `pace.tools` — the GoldenBerry company-wide skill router for AI coding agents. This file overrides defaults. Read it before doing work.
+You are **Skidmark Diesel**, working with **Krispatron 3000** (aka Chris) on `pace.tools` — GoldenBerry's curated marketplace of AI coding skills. This file overrides defaults. Read it before doing work.
 
 ## What pace is
 
-One installable skill (`/pace`) that fans out to many sub-commands across engineering, product, ops, marketing, and whatever else GoldenBerry needs a repeatable way of working for. Same install tech as [impeccable](https://impeccable.style) — different scope.
+Pace is **two things in one repo**:
 
-**Pace does not duplicate impeccable.** For design work, pace defers to impeccable. The installer (`npx pace skills install`) offers to install impeccable alongside pace so users get the design skills from the source.
+1. **A company router** — one installable skill (`/pace`) that fans out to GoldenBerry-specific sub-commands. Lives in `skill/`. Starts empty; we add commands as we author them.
+2. **A Claude Code marketplace** — a curated catalog of plugins under `plugins/`, primarily a verbatim import of [Anthropic's knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins). Sales, marketing, finance, legal, engineering, data, customer-support, product, HR, ops, design, and more (~150 skills).
+
+The marketplace is registered via `.claude-plugin/marketplace.json` (49 plugin entries: pace + 17 first-party Anthropic + 5 partner-built + 27 external by git URL).
+
+**Pace does not duplicate impeccable.** For code-level frontend design, pace defers to impeccable. The `npx pace skills install` CLI offers impeccable alongside.
 
 ## Origin
 
-This repo was scaffolded from [impeccable](https://github.com/pbakaus/impeccable) (Apache 2.0). See `NOTICE.md` for attribution. Pace inherits impeccable's build system, multi-harness transformer pipeline (13 harness output dirs), Astro site shell, and CLI install flow. Pace does NOT inherit the anti-pattern detector or Chrome extension — those are impeccable-specific.
+This repo combines three lineages:
 
-## Architecture (v0.1+)
+- **Pace's router + scaffold:** original work by Chris Jimenez, GoldenBerry. Apache 2.0.
+- **Build system + install tech:** forked from [impeccable](https://github.com/pbakaus/impeccable) by Paul Bakaus. Apache 2.0.
+- **Imported plugins:** copied from [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins) and the partner-built additions. Apache 2.0, attributed in `NOTICE.md`.
 
-There is **one** user-invocable skill, `pace`, with **N commands** underneath it (starting at 0; we add as we author). Users type `/pace <command>`. The skill lives in `skill/`:
+Pace does NOT include impeccable's anti-pattern detector, Chrome extension, or live-mode browser tooling.
 
-- `SKILL.md` — frontmatter (auto-trigger description, `allowed-tools`), shared setup rules, and the **Commands** router table.
-- `reference/<command>.md` — one file per command, loaded when the user invokes it.
-- `scripts/command-metadata.json` — single source of truth for each command's description and argument hint. Build + `pin.mjs` both read from this.
-- `scripts/pin.mjs` — creates lightweight redirect shims so users can promote `/pace audit` to a top-level `/audit`.
-- `scripts/load-context.mjs` — loads `PRODUCT.md` if present.
-- `scripts/cleanup-deprecated.mjs` — sweeps leftover files when commands are renamed/removed.
+## Architecture
 
-**Do not add standalone skills** unless there's a strong reason. The `/` menu pollution problem is real; one router is the move.
+### Two halves, separate trees
+
+```
+skill/                      ← THE PACE ROUTER (our work)
+├── SKILL.md                ← /pace router, sub-command table
+├── reference/<cmd>.md      ← one file per /pace sub-command
+└── scripts/                ← load-context, pin, cleanup
+
+plugins/                    ← THE MARKETPLACE (verbatim Anthropic imports)
+├── sales/
+│   ├── .claude-plugin/plugin.json   ← Anthropic's manifest, untouched
+│   ├── skills/<skill>/SKILL.md      ← Anthropic's skills
+│   ├── .mcp.json                    ← Anthropic's connector config
+│   └── README.md
+├── marketing/
+├── … 15 more first-party
+└── partner-built/
+    ├── apollo/                       ← Apollo.io
+    ├── brand-voice/                  ← Tribe AI
+    └── … 3 more
+
+.claude-plugin/marketplace.json       ← Registers BOTH pace and every plugin
+```
+
+### Why two halves
+
+- **Different patterns.** Pace's `/pace` uses single-router-with-sub-commands. The imported plugins use Anthropic's pattern: each plugin has many auto-triggering independent skills, namespaced via slash commands (`/sales:call-prep`).
+- **Different ownership.** Pace router = our code, we evolve. Imported plugins = upstream code, we sync from Anthropic. Editing imported plugins forks us from upstream — do it deliberately.
+- **Different install granularity.** Users install `pace` for the router; install `sales`, `data`, etc. individually for what they need. Don't bundle.
+
+### Adding to the pace router
+
+1. Create `skill/reference/<command>.md`.
+2. Add a row to the **Commands** table in `skill/SKILL.md`.
+3. Add metadata to `skill/scripts/command-metadata.json`.
+4. Add the name to `PACE_SUB_COMMANDS` in `scripts/lib/utils.js`.
+5. Add it to `VALID_COMMANDS` in `skill/scripts/pin.mjs`.
+6. Run `bun run build` to fan out to all harness output dirs.
+
+### Adding/updating a plugin in the marketplace
+
+For Anthropic upstream sync: `rsync -a /path/to/knowledge-work-plugins/<plugin>/ plugins/<plugin>/` then update version in `marketplace.json` if it shifted.
+
+For a new GoldenBerry-authored plugin: create `plugins/<name>/` with `.claude-plugin/plugin.json` + `skills/<skill>/SKILL.md` + optional `.mcp.json`. Then add an entry to `.claude-plugin/marketplace.json` with `source: "./plugins/<name>"` and `author: { name: "GoldenBerry" }`.
+
+**Do not edit imported plugins under `plugins/` casually.** That forks us from Anthropic and breaks `git pull`-style upstream syncs. If you must customize, copy to a new name (e.g., `plugins/sales-gb/`) and edit there.
 
 ### Adding a new command
 

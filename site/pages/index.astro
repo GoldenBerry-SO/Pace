@@ -116,48 +116,207 @@ alongside for design work.</span>
   <section class="section language" id="language">
     <div class="section-head">
       <span class="section-number">02</span>
-      <h2 class="section-title">The Language</h2>
+      <h2 class="section-title">The Catalog</h2>
     </div>
     <div class="section-body">
       <p class="section-lede">
-        Each pace command is a small piece of shared vocabulary. <code>/pace review</code> means the same thing across the company. <code>/pace ship</code> follows the same checklist for engineering and marketing alike. The vocabulary is the product.
+        Pace is a marketplace. Install the <code>/pace</code> router for GoldenBerry-specific commands, and pick the department plugins your team actually needs. Built on the verbatim import of <a href="https://github.com/anthropics/knowledge-work-plugins">Anthropic's knowledge-work-plugins</a>.
       </p>
 
-      <div class="language-table" role="table" aria-label="Command catalog">
-        <div class="language-row language-row-head" role="row">
-          <span role="columnheader">Domain</span>
-          <span role="columnheader">Commands</span>
-          <span role="columnheader">When</span>
-        </div>
-        <div class="language-row" role="row">
-          <span class="language-domain" role="cell">Engineering</span>
-          <span class="language-commands" role="cell"><em>Coming as they ship.</em></span>
-          <span class="language-when" role="cell">Reviews, on-call, deploys, refactors.</span>
-        </div>
-        <div class="language-row" role="row">
-          <span class="language-domain" role="cell">Product</span>
-          <span class="language-commands" role="cell"><em>Coming as they ship.</em></span>
-          <span class="language-when" role="cell">Specs, PRDs, kickoffs, retros.</span>
-        </div>
-        <div class="language-row" role="row">
-          <span class="language-domain" role="cell">Ops</span>
-          <span class="language-commands" role="cell"><em>Coming as they ship.</em></span>
-          <span class="language-when" role="cell">Runbooks, incidents, postmortems.</span>
-        </div>
-        <div class="language-row" role="row">
-          <span class="language-domain" role="cell">Marketing</span>
-          <span class="language-commands" role="cell"><em>Coming as they ship.</em></span>
-          <span class="language-when" role="cell">Launches, posts, briefs, copy passes.</span>
-        </div>
-        <div class="language-row language-row-deferred" role="row">
-          <span class="language-domain" role="cell">Design</span>
-          <span class="language-commands" role="cell">Full catalog at <a href="https://impeccable.style">impeccable.style</a></span>
-          <span class="language-when" role="cell">Pace defers to impeccable for design.</span>
-        </div>
+      <div class="catalog-grid">
+        <article class="catalog-card catalog-card-router">
+          <div class="catalog-card-meta">
+            <span class="catalog-card-prefix">/pace</span>
+            <span class="catalog-card-tag">Router</span>
+          </div>
+          <h3>Company router</h3>
+          <p>GoldenBerry-specific commands. Empty in v0.1; we add as we author. <code>/pace teach</code> sets up project context.</p>
+          <span class="catalog-card-author">GoldenBerry</span>
+        </article>
+
+        <article class="catalog-card">
+          <div class="catalog-card-meta">
+            <span class="catalog-card-prefix">/sales:*</span>
+            <span class="catalog-card-tag">9 workflows</span>
+          </div>
+          <h3>Sales</h3>
+          <p>Prospect, prep calls, manage pipeline, draft outreach, build battlecards.</p>
+          <span class="catalog-card-author">Anthropic</span>
+        </article>
+
+        <article class="catalog-card">
+          <div class="catalog-card-meta">
+            <span class="catalog-card-prefix">/marketing:*</span>
+            <span class="catalog-card-tag">8 workflows</span>
+          </div>
+          <h3>Marketing</h3>
+          <p>Draft content, plan campaigns, enforce brand voice, brief on competitors, report performance.</p>
+          <span class="catalog-card-author">Anthropic</span>
+        </article>
+
+        <article class="catalog-card">
+          <div class="catalog-card-meta">
+            <span class="catalog-card-prefix">/engineering:*</span>
+            <span class="catalog-card-tag">10 workflows</span>
+          </div>
+          <h3>Engineering</h3>
+          <p>Standups, code review, architecture decisions, incident response, tech docs.</p>
+          <span class="catalog-card-author">Anthropic</span>
+        </article>
+
+        <article class="catalog-card">
+          <div class="catalog-card-meta">
+            <span class="catalog-card-prefix">/data:*</span>
+            <span class="catalog-card-tag">10 workflows</span>
+          </div>
+          <h3>Data</h3>
+          <p>Write SQL, visualize, validate analyses, ship dashboards. Snowflake, Databricks, BigQuery.</p>
+          <span class="catalog-card-author">Anthropic</span>
+        </article>
+
+        <article class="catalog-card">
+          <div class="catalog-card-meta">
+            <span class="catalog-card-prefix">/finance:*</span>
+            <span class="catalog-card-tag">8 workflows</span>
+          </div>
+          <h3>Finance</h3>
+          <p>Journal entries, reconciliation, statements, variance analysis, close support.</p>
+          <span class="catalog-card-author">Anthropic</span>
+        </article>
+
+        <article class="catalog-card">
+          <div class="catalog-card-meta">
+            <span class="catalog-card-prefix">/legal:*</span>
+            <span class="catalog-card-tag">9 workflows</span>
+          </div>
+          <h3>Legal</h3>
+          <p>Contract review, NDA triage, compliance, risk assessment, templated responses.</p>
+          <span class="catalog-card-author">Anthropic</span>
+        </article>
+
+        <article class="catalog-card">
+          <div class="catalog-card-meta">
+            <span class="catalog-card-prefix">/product-management:*</span>
+            <span class="catalog-card-tag">8 workflows</span>
+          </div>
+          <h3>Product Management</h3>
+          <p>Specs, roadmaps, user research synthesis, stakeholder updates, competitive landscape.</p>
+          <span class="catalog-card-author">Anthropic</span>
+        </article>
+
+        <article class="catalog-card">
+          <div class="catalog-card-meta">
+            <span class="catalog-card-prefix">/customer-support:*</span>
+            <span class="catalog-card-tag">5 workflows</span>
+          </div>
+          <h3>Customer Support</h3>
+          <p>Triage, draft responses, escalate, research context, build the knowledge base.</p>
+          <span class="catalog-card-author">Anthropic</span>
+        </article>
+
+        <article class="catalog-card">
+          <div class="catalog-card-meta">
+            <span class="catalog-card-prefix">/operations:*</span>
+            <span class="catalog-card-tag">9 workflows</span>
+          </div>
+          <h3>Operations</h3>
+          <p>Vendor management, process docs, change management, capacity planning, compliance.</p>
+          <span class="catalog-card-author">Anthropic</span>
+        </article>
+
+        <article class="catalog-card">
+          <div class="catalog-card-meta">
+            <span class="catalog-card-prefix">/human-resources:*</span>
+            <span class="catalog-card-tag">9 workflows</span>
+          </div>
+          <h3>Human Resources</h3>
+          <p>Recruiting, onboarding, performance reviews, comp analysis, policy guidance.</p>
+          <span class="catalog-card-author">Anthropic</span>
+        </article>
+
+        <article class="catalog-card">
+          <div class="catalog-card-meta">
+            <span class="catalog-card-prefix">/productivity:*</span>
+            <span class="catalog-card-tag">4 workflows</span>
+          </div>
+          <h3>Productivity</h3>
+          <p>Manage tasks, plan the day, build memory of recurring work. Slack, Notion, Linear, Asana.</p>
+          <span class="catalog-card-author">Anthropic</span>
+        </article>
+
+        <article class="catalog-card">
+          <div class="catalog-card-meta">
+            <span class="catalog-card-prefix">/enterprise-search:*</span>
+            <span class="catalog-card-tag">5 workflows</span>
+          </div>
+          <h3>Enterprise Search</h3>
+          <p>One query across email, chat, docs, wikis. Cuts the tool-switching tax.</p>
+          <span class="catalog-card-author">Anthropic</span>
+        </article>
+
+        <article class="catalog-card">
+          <div class="catalog-card-meta">
+            <span class="catalog-card-prefix">/design:*</span>
+            <span class="catalog-card-tag">7 workflows</span>
+          </div>
+          <h3>Design (UX)</h3>
+          <p>Critique, design system management, UX writing, a11y audits, research synthesis, dev handoff.</p>
+          <span class="catalog-card-author">Anthropic</span>
+        </article>
+
+        <article class="catalog-card catalog-card-deferred">
+          <div class="catalog-card-meta">
+            <span class="catalog-card-prefix">/impeccable:*</span>
+            <span class="catalog-card-tag">Companion</span>
+          </div>
+          <h3>Frontend code design</h3>
+          <p>Pace defers to <a href="https://impeccable.style">impeccable</a> for code-level UI craft. The installer offers it alongside.</p>
+          <span class="catalog-card-author">Paul Bakaus</span>
+        </article>
+
+        <article class="catalog-card">
+          <div class="catalog-card-meta">
+            <span class="catalog-card-prefix">/small-business:*</span>
+            <span class="catalog-card-tag">31 workflows</span>
+          </div>
+          <h3>Small Business</h3>
+          <p>Payroll planning, month-end close, weekly briefs, growth campaigns. Owner-operator workflows.</p>
+          <span class="catalog-card-author">Anthropic</span>
+        </article>
+
+        <article class="catalog-card">
+          <div class="catalog-card-meta">
+            <span class="catalog-card-prefix">/bio-research:*</span>
+            <span class="catalog-card-tag">6 workflows</span>
+          </div>
+          <h3>Bio Research</h3>
+          <p>Literature search, genomics analysis, target prioritization. PubMed, Benchling, ChEMBL.</p>
+          <span class="catalog-card-author">Anthropic</span>
+        </article>
+
+        <article class="catalog-card">
+          <div class="catalog-card-meta">
+            <span class="catalog-card-prefix">+ partners</span>
+            <span class="catalog-card-tag">5 plugins</span>
+          </div>
+          <h3>Partner-built</h3>
+          <p>Apollo.io, Common Room, Slack-by-Salesforce, Zoom, brand-voice. Each authored by its vendor.</p>
+          <span class="catalog-card-author">Vendors</span>
+        </article>
+
+        <article class="catalog-card">
+          <div class="catalog-card-meta">
+            <span class="catalog-card-prefix">+ external</span>
+            <span class="catalog-card-tag">27 plugins</span>
+          </div>
+          <h3>External marketplace</h3>
+          <p>Vanta, Miro, PlanetScale, Figma, Adobe, Box, S&amp;P Global, and more. Referenced by git URL.</p>
+          <span class="catalog-card-author">Various</span>
+        </article>
       </div>
 
       <div class="language-footnote">
-        <a href="/docs" class="text-link">Browse the full reference &rarr;</a>
+        <a href="/plugins" class="text-link">Browse the full plugin catalog &rarr;</a>
       </div>
     </div>
   </section>
@@ -680,7 +839,105 @@ alongside for design work.</span>
   }
 
   /* ============================================
-     LANGUAGE table
+     CATALOG grid
+     ============================================ */
+  .catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+  }
+  .catalog-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-md);
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 10px;
+    transition: border-color var(--duration-base) var(--ease-out-quart),
+                transform var(--duration-base) var(--ease-out-quart);
+  }
+  .catalog-card:hover {
+    border-color: var(--color-forest-soft);
+    transform: translateY(-1px);
+  }
+  .catalog-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-xs);
+    margin-bottom: 4px;
+  }
+  .catalog-card-prefix {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--color-forest);
+    font-weight: 500;
+  }
+  .catalog-card-tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-ash);
+    padding: 2px 8px;
+    background: var(--color-paper);
+    border: 1px solid var(--color-mist);
+    border-radius: 999px;
+  }
+  .catalog-card h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+  }
+  .catalog-card p {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.5;
+    flex: 1;
+  }
+  .catalog-card a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .catalog-card-author {
+    margin-top: var(--spacing-xs);
+    padding-top: var(--spacing-xs);
+    border-top: 1px solid var(--color-mist);
+    font-size: var(--fs-xs);
+    color: var(--color-ash);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .catalog-card-router {
+    background: var(--color-forest-dim);
+    border-color: var(--color-forest-soft);
+  }
+  .catalog-card-router .catalog-card-tag {
+    background: var(--color-paper);
+    color: var(--color-forest);
+    border-color: var(--color-forest-soft);
+  }
+  .catalog-card-deferred {
+    background: var(--color-clay-dim);
+    border-color: var(--color-clay-soft);
+  }
+  .catalog-card-deferred .catalog-card-prefix {
+    color: var(--color-clay-hover);
+  }
+  .catalog-card-deferred .catalog-card-tag {
+    color: var(--color-clay-hover);
+    border-color: var(--color-clay-soft);
+  }
+  .catalog-card-deferred .catalog-card-author {
+    border-color: var(--color-clay-soft);
+  }
+
+  /* ============================================
+     LANGUAGE table (legacy, kept for reference)
      ============================================ */
   .language-table {
     border: 1px solid var(--color-mist);

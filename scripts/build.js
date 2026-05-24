@@ -65,13 +65,16 @@ function generateCounts(rootDir, skills, buildDir) {
     `export const DETECTION_COUNT = ${detectionCount};\n`
   );
 
-  // Validate counts in key files
+  // Validate counts in key files. marketplace.json is intentionally NOT
+  // checked: it carries upstream plugin descriptions (e.g. "X skills") that
+  // refer to a plugin's own skill count, not pace's router command count.
+  // The validator can't distinguish, so it would false-positive on every
+  // imported plugin description.
   const filesToCheck = [
     'site/pages/index.astro',
     'README.md',
     'NOTICE.md',
     '.claude-plugin/plugin.json',
-    '.claude-plugin/marketplace.json',
   ];
 
   let errors = 0;

@@ -1,0 +1,269 @@
+---
+import Base from '../../layouts/Base.astro';
+import marketplace from '../../../.claude-plugin/marketplace.json';
+
+interface PluginEntry {
+  name: string;
+  displayName?: string;
+  description?: string;
+  author?: { name?: string };
+  source?: string | { source?: string; url?: string };
+  category?: string;
+  version?: string;
+}
+
+const plugins = (marketplace.plugins ?? []) as PluginEntry[];
+
+// Group: pace router, Anthropic first-party, partner-built (local), external
+function classify(p: PluginEntry): 'router' | 'first-party' | 'partner' | 'external' {
+  if (p.name === 'pace') return 'router';
+  const src = p.source;
+  if (typeof src === 'string') {
+    if (src.startsWith('./plugins/partner-built/')) return 'partner';
+    return 'first-party';
+  }
+  return 'external';
+}
+
+const groups = {
+  router: plugins.filter((p) => classify(p) === 'router'),
+  'first-party': plugins.filter((p) => classify(p) === 'first-party'),
+  partner: plugins.filter((p) => classify(p) === 'partner'),
+  external: plugins.filter((p) => classify(p) === 'external'),
+};
+
+const total = plugins.length;
+
+const groupLabels: Record<string, { title: string; lede: string }> = {
+  router: {
+    title: 'Pace router',
+    lede: "GoldenBerry's company-specific commands.",
+  },
+  'first-party': {
+    title: 'First-party (Anthropic)',
+    lede: 'Verbatim import of Anthropic\'s knowledge-work-plugins.',
+  },
+  partner: {
+    title: 'Partner-built',
+    lede: 'Vendor-authored plugins distributed in this marketplace.',
+  },
+  external: {
+    title: 'External (referenced by git URL)',
+    lede: 'Third-party plugins fetched from upstream repos at install time. Not copied into this repo.',
+  },
+};
+
+function authorName(p: PluginEntry): string {
+  return p.author?.name ?? '(none)';
+}
+
+function sourceText(p: PluginEntry): string {
+  if (typeof p.source === 'string') return p.source;
+  if (p.source && typeof p.source === 'object') return p.source.url ?? '(external)';
+  return '(none)';
+}
+---
+
+<Base
+  title="Plugins · pace"
+  description="Curated marketplace of AI coding skills. Pace router + Anthropic knowledge-work-plugins + partner-built + external."
+  activeNav="plugins"
+  canonicalPath="/plugins"
+>
+  <article class="plugins-page">
+    <header class="plugins-header">
+      <span class="plugins-eyebrow">Marketplace</span>
+      <h1>Plugins</h1>
+      <p class="plugins-lede">
+        Pace bundles <strong>{total} plugins</strong> across four origins: GoldenBerry's pace router, Anthropic's knowledge-work-plugins (verbatim), partner-built plugins, and external plugins referenced from upstream repos.
+      </p>
+      <div class="plugins-install">
+        <code>claude plugin marketplace add GoldenBerry-SO/pace.tools</code>
+      </div>
+    </header>
+
+    {(['router', 'first-party', 'partner', 'external'] as const).map((groupKey) => (
+      <section class="plugins-group">
+        <h2>{groupLabels[groupKey].title}</h2>
+        <p class="plugins-group-lede">{groupLabels[groupKey].lede}</p>
+
+        <div class="plugins-table" role="table">
+          <div class="plugins-row plugins-row-head" role="row">
+            <span role="columnheader">Plugin</span>
+            <span role="columnheader">Description</span>
+            <span role="columnheader">Author</span>
+          </div>
+          {groups[groupKey].map((p) => (
+            <div class="plugins-row" role="row">
+              <span class="plugins-name" role="cell">
+                <code>{p.name}</code>
+                {p.displayName && p.displayName !== p.name && (
+                  <span class="plugins-displayname">{p.displayName}</span>
+                )}
+              </span>
+              <span class="plugins-desc" role="cell">{p.description ?? '(none)'}</span>
+              <span class="plugins-author" role="cell">{authorName(p)}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <section class="plugins-howto">
+      <h2>Install a plugin</h2>
+      <pre><code>claude plugin marketplace add GoldenBerry-SO/pace.tools
+claude plugin install &lt;name&gt;@pace.tools</code></pre>
+      <p>
+        Replace <code>&lt;name&gt;</code> with any value in the Plugin column. The pace CLI (<code>npx pace skills install</code>) wraps this with an interactive picker that also offers <a href="https://impeccable.style">impeccable</a> for frontend design.
+      </p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .plugins-page {
+    max-width: var(--width-max);
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
+  }
+  .plugins-header {
+    margin-bottom: var(--spacing-2xl);
+    border-bottom: 1px solid var(--color-mist);
+    padding-bottom: var(--spacing-lg);
+  }
+  .plugins-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    margin-bottom: var(--spacing-sm);
+    display: inline-block;
+  }
+  .plugins-header h1 {
+    font-family: var(--font-display);
+    font-size: var(--fs-3xl);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-md);
+  }
+  .plugins-lede {
+    font-size: var(--fs-md);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    max-width: 64ch;
+    margin-bottom: var(--spacing-md);
+  }
+  .plugins-install code {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    padding: 8px 14px;
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 6px;
+    display: inline-block;
+    color: var(--color-ink);
+  }
+  .plugins-group {
+    margin-bottom: var(--spacing-2xl);
+  }
+  .plugins-group h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--spacing-xs);
+  }
+  .plugins-group-lede {
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+    margin-bottom: var(--spacing-md);
+  }
+  .plugins-table {
+    border: 1px solid var(--color-mist);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--color-paper-elev);
+  }
+  .plugins-row {
+    display: grid;
+    grid-template-columns: 1.3fr 3fr 0.9fr;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-bottom: 1px solid var(--color-mist);
+    align-items: start;
+    font-size: var(--fs-sm);
+  }
+  .plugins-row:last-child {
+    border-bottom: 0;
+  }
+  .plugins-row-head {
+    background: var(--color-paper);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+    font-weight: 600;
+  }
+  .plugins-name {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .plugins-name code {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: var(--color-forest);
+    font-weight: 500;
+  }
+  .plugins-displayname {
+    font-size: var(--fs-xs);
+    color: var(--color-ash);
+  }
+  .plugins-desc {
+    color: var(--color-charcoal);
+    line-height: 1.5;
+  }
+  .plugins-author {
+    color: var(--color-ash);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .plugins-howto {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-mist);
+  }
+  .plugins-howto h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--spacing-md);
+  }
+  .plugins-howto pre {
+    background: var(--color-code-bg);
+    border: 1px solid var(--color-code-border);
+    padding: var(--spacing-md);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+  }
+  .plugins-howto p {
+    font-size: var(--fs-base);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+  }
+  @media (max-width: 720px) {
+    .plugins-row {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-xs);
+    }
+    .plugins-row-head {
+      display: none;
+    }
+  }
+</style>

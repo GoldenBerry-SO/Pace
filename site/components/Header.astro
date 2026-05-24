@@ -1,6 +1,6 @@
 ---
 interface Props {
-  activeNav?: 'home' | 'docs' | 'tutorials' | 'cases';
+  activeNav?: 'home' | 'plugins' | 'docs' | 'tutorials' | 'cases';
 }
 const { activeNav } = Astro.props;
 ---
@@ -15,6 +15,7 @@ const { activeNav } = Astro.props;
   </a>
   <nav class="site-header-nav" aria-label="Primary">
     <a href="/" data-nav="home" aria-current={activeNav === 'home' ? 'page' : undefined}>Home</a>
+    <a href="/plugins" data-nav="plugins" aria-current={activeNav === 'plugins' ? 'page' : undefined}>Plugins</a>
     <a href="/docs" data-nav="docs" aria-current={activeNav === 'docs' ? 'page' : undefined}>Docs</a>
     <a href="/tutorials" data-nav="tutorials" aria-current={activeNav === 'tutorials' ? 'page' : undefined}>Tutorials</a>
     <a href="https://github.com/GoldenBerry-SO/pace.tools" target="_blank" rel="noopener">GitHub</a>
