@@ -187,16 +187,32 @@ function loadSkillsFromPlugin(repoRoot: string, pluginSlug: string, pluginDispla
     const argumentHint = fm['argument-hint'] ?? fm['argumentHint'] ?? null;
     const pairsWith = extractPairsWith(body);
 
+    const sourcePath = `plugins/${pluginSlug}/skills/${entry}/SKILL.md`;
+    const sourceDir = `plugins/${pluginSlug}/skills/${entry}`;
+    const sourceUrl = `https://github.com/GoldenBerry-SO/pace.tools/blob/main/${sourcePath}`;
+    const sourceDirUrl = `https://github.com/GoldenBerry-SO/pace.tools/blob/main/${sourceDir}`;
+
+    // Rewrite relative .md links in the body to point at the GitHub source.
+    // The SKILL.md often references supporting files in the same skill dir
+    // (e.g. tdd/SKILL.md links to tests.md, mocking.md) which 404 if rendered
+    // as-is on /docs/skills/<slug>.
+    const rewrittenBody = (rest || body).replace(
+      /\]\(([^)\s]+\.md)\)/g,
+      (full, target: string) => {
+        if (target.startsWith('http://') || target.startsWith('https://') || target.startsWith('/')) {
+          return full;
+        }
+        return `](${sourceDirUrl}/${target})`;
+      },
+    );
+
     // Render the rest of the body (after title + lead) as HTML.
     let bodyHtml = '';
     try {
-      bodyHtml = marked.parse(rest || body, { async: false }) as string;
+      bodyHtml = marked.parse(rewrittenBody, { async: false }) as string;
     } catch {
-      bodyHtml = `<pre>${rest || body}</pre>`;
+      bodyHtml = `<pre>${rewrittenBody}</pre>`;
     }
-
-    const sourcePath = `plugins/${pluginSlug}/skills/${entry}/SKILL.md`;
-    const sourceUrl = `https://github.com/GoldenBerry-SO/pace.tools/blob/main/${sourcePath}`;
 
     skills.push({
       slug,

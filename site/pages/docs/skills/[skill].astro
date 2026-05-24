@@ -80,13 +80,15 @@ const pairs = skill.pairsWith
       </section>
     )}
 
-    <section class="skillpage-body">
-      <h2 class="skillpage-section-title">Full skill instructions</h2>
-      <p class="skillpage-source-note">
-        This is the same file the agent loads when the skill triggers. Source: <a href={skill.sourceUrl} target="_blank" rel="noopener"><code>{skill.sourcePath}</code></a>.
-      </p>
-      <div class="skillpage-body-content" set:html={skill.bodyHtml} />
-    </section>
+    {skill.bodyHtml.trim() && (
+      <section class="skillpage-body">
+        <h2 class="skillpage-section-title">Full skill instructions</h2>
+        <p class="skillpage-source-note">
+          This is the same file the agent loads when the skill triggers. Source: <a href={skill.sourceUrl} target="_blank" rel="noopener"><code>{skill.sourcePath}</code></a>.
+        </p>
+        <div class="skillpage-body-content" set:html={skill.bodyHtml} />
+      </section>
+    )}
 
     <section class="skillpage-meta">
       <div class="skillpage-meta-block">
