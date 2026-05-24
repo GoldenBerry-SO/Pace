@@ -22,6 +22,18 @@ Plugins included:
 
 Each plugin retains Anthropic's authorship in its `.claude-plugin/plugin.json`. Pace's `.claude-plugin/marketplace.json` references them with their original `displayName` and descriptions.
 
+## Engineering plugin additions
+
+The `engineering` plugin was extended with skills imported from [PiXeL16/skills](https://github.com/PiXeL16/skills), a personal Claude Code skill collection authored by Chris Jimenez and contributors:
+
+- **Workflow skills**: `spec`, `implement`, `review`, `topr`, `next`, `diagnose`, `tdd`, `prototype`, `improve-codebase-architecture`, `grill-me`, `grill-with-docs`, `triage`, `to-issues`, `to-prd`, `zoom-out`, `setup-engineering-skills` (renamed from `setup-matt-pocock-skills` in the upstream repo)
+- **Tooling skills**: `codex-review`, `setup-pre-commit`, `git-guardrails-claude-code`
+- **Authored for Pace**: `careful-review`, `find-missing-tests`, `security-review`, `e2e-test`, `ship-pr` (derived from personal slash-command prompts and rewritten as auto-trigger skills)
+
+Some of the upstream workflow skills (`diagnose`, `tdd`, `triage`, `to-issues`, `to-prd`, `improve-codebase-architecture`, `zoom-out`, `grill-me`, `grill-with-docs`, `handoff`, `setup-engineering-skills`) descend from [mattpocock/skills](https://github.com/mattpocock/skills); attribution stays with the original author. The stacked-PR workflow (`spec`, `implement`, `review`, `topr`, `next`) is original to PiXeL16/skills.
+
+PiXeL16/skills upstream license: MIT. Used under MIT; compatible with Pace's Apache-2.0 distribution.
+
 ## Imported partner-built plugins
 
 The plugins under `plugins/partner-built/` are third-party plugins distributed through Anthropic's knowledge-work-plugins marketplace, each authored by the named company:
