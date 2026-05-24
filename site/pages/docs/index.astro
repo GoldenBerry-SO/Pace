@@ -93,7 +93,6 @@ claude plugin install legal@pace.tools
       <pre class="docs-pre"><code>git clone &lt;pace-repo-url&gt;
 cd pace.tools
 npx skills add . --copy</code></pre>
-      <p class="docs-note">The pace repo URL is in the footer. Until pace moves to its own org, it lives at <code>github.com/GoldenBerry-SO/pace.tools</code>.</p>
     </section>
 
     <section class="docs-section" id="usage">
@@ -272,22 +271,6 @@ mkdir -p plugins/yourco-onboarding/skills/welcome-day-one
 rsync -a /path/to/knowledge-work-plugins/&lt;plugin&gt;/ plugins/&lt;plugin&gt;/
 <span class="docs-comment"># update version in marketplace.json if it shifted, commit, ship a pace release</span></code></pre>
       <p>Users then run <code>claude plugin update --all</code> to pick up the new versions.</p>
-    </section>
-
-    <section class="docs-section" id="fork">
-      <h2>Forking pace for your company</h2>
-
-      <p>Pace is structured to be forkable. The /pace router pattern, the marketplace shape, the install machinery, and the site framework all carry over.</p>
-
-      <ol>
-        <li>Fork <a href="https://github.com/GoldenBerry-SO/pace.tools">the pace repo</a> to your org.</li>
-        <li>Rename the router: <code>/pace</code> → <code>/yourco</code>. Update <code>.claude-plugin/plugin.json</code>, <code>SKILL.md</code>, <code>marketplace.json</code>, <code>cli/bin/cli.js</code>, and the site copy.</li>
-        <li>Update the marketplace name in <code>.claude-plugin/marketplace.json</code> from <code>pace</code> to <code>yourco</code>.</li>
-        <li>Decide which Anthropic plugins to keep in <code>plugins/</code>. Drop the ones your company doesn't need; keep the rest.</li>
-        <li>Author your own router commands at <code>skill/reference/&lt;cmd&gt;.md</code> for company-specific workflows.</li>
-        <li>Deploy the site to <code>yourco.tools</code> or wherever your team prefers.</li>
-      </ol>
-      <p>License is Apache 2.0; attribution to Anthropic, partners, and impeccable stays in <code>NOTICE.md</code>.</p>
     </section>
   </article>
 </SubPage>

@@ -471,97 +471,93 @@ import Base from '../layouts/Base.astro';
     <div class="section-body">
       <div class="faq-list">
         <details class="faq-item">
-          <summary>What is pace, exactly?</summary>
+          <summary>What is pace?</summary>
           <div class="faq-answer">
-            <p>Pace is two things in one repo:</p>
-            <ol>
-              <li><strong>A Claude Code marketplace</strong> that registers 50 plugins: <a href="https://github.com/anthropics/knowledge-work-plugins">Anthropic's knowledge-work-plugins</a> (sales, marketing, engineering, data, finance, legal, etc.) imported verbatim, 5 partner-built plugins, and 27 external plugins referenced by git URL.</li>
-              <li><strong>A company router</strong> (<code>/pace</code>) for your team's own commands. Codify how your team works, on top of the marketplace.</li>
-            </ol>
-            <p>One marketplace URL gives Claude visibility to everything. Pick which plugins to install per project or per person.</p>
+            <p>Pace is a curated marketplace of AI skills for AI coding agents like Claude Code. Install the plugins your team actually uses (sales, marketing, finance, engineering, data, and more) and Claude turns into a specialist for each role, connected to the tools your team already uses.</p>
           </div>
         </details>
 
         <details class="faq-item">
-          <summary>How is pace different from impeccable?</summary>
+          <summary>How is this different from just using Claude on its own?</summary>
           <div class="faq-answer">
-            <p><strong>Impeccable</strong> is a single design skill focused entirely on frontend code craft (typography, color, layout, motion at the CSS/component level).</p>
-            <p><strong>Pace</strong> is a marketplace covering every other knowledge-work domain plus a company router. Anthropic's <code>design</code> plugin also lives in pace, but that's about UX research / dev handoff / accessibility audits, not code-level CSS.</p>
-            <p>Most projects want both. The pace CLI offers to install impeccable alongside.</p>
+            <p>Out of the box, Claude is a strong generalist. Pace makes it a strong specialist: each plugin loads the domain knowledge for a role (how a sales call gets prepped, how a marketing campaign gets planned, how a SQL query gets validated) and connects to the tools that role actually uses (HubSpot, Canva, Snowflake).</p>
+            <p>The result is the difference between "Claude can help with sales" and "Claude prepped my Acme call by pulling the HubSpot history and recent Slack mentions while I was on my morning coffee."</p>
           </div>
         </details>
 
         <details class="faq-item">
-          <summary>Why import Anthropic's plugins verbatim instead of writing our own?</summary>
+          <summary>Which plugins should I install?</summary>
           <div class="faq-answer">
-            <p>Anthropic's <a href="https://github.com/anthropics/knowledge-work-plugins">knowledge-work-plugins</a> are Apache 2.0, well-researched, and already cover most knowledge-work scenarios. Reinventing them would be slower and probably worse.</p>
-            <p>By importing verbatim, we get:</p>
+            <p>Install the one or two that match your role:</p>
             <ul>
-              <li><strong>Upstream sync</strong>: Anthropic ships an improvement, we re-sync and ship it too.</li>
-              <li><strong>No drift</strong>: we don't accidentally diverge from a well-curated baseline.</li>
-              <li><strong>A clean customization story</strong>: when you need to customize a plugin, you fork it to a new name (<code>plugins/sales-custom/</code>) rather than editing the imported one.</li>
+              <li><strong>Salespeople:</strong> <code>sales</code> + <code>productivity</code></li>
+              <li><strong>Marketers:</strong> <code>marketing</code> + <code>brand-voice</code></li>
+              <li><strong>Engineers:</strong> <code>engineering</code> + <code>data</code></li>
+              <li><strong>PMs:</strong> <code>product-management</code> + <code>data</code></li>
+              <li><strong>Anyone:</strong> <code>productivity</code> + <code>enterprise-search</code> work cross-role</li>
+            </ul>
+            <p>See <a href="/docs/teams" class="text-link">/docs/teams</a> for the per-role guide with workflows and tips.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>How do I install it?</summary>
+          <div class="faq-answer">
+            <p>From inside your Claude Code project:</p>
+            <pre><code>claude plugin marketplace add pace.tools
+claude plugin install sales@pace.tools</code></pre>
+            <p>Plugins install independently. Pick what you need; skip what you don't.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Do I have to connect my tools?</summary>
+          <div class="faq-answer">
+            <p>No, but you should. Every plugin works standalone: it falls back to web search and whatever context you paste in. With connectors, Claude reads your real data directly: HubSpot accounts, Snowflake tables, Notion docs, Slack threads.</p>
+            <p>Authorization happens on first use, per tool, via OAuth in your browser. You don't manage API keys. See <a href="/docs/connectors" class="text-link">how connectors work</a> for the full flow.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Is my data safe?</summary>
+          <div class="faq-answer">
+            <p>Pace doesn't see or store your data. Plugins talk to your tools through MCP, which means the connection runs between Claude Code on your machine and the vendor (Slack, HubSpot, etc.). Nothing flows through pace.tools or any pace infrastructure.</p>
+            <p>You authorize each connector individually via OAuth. You can revoke access at any time from the vendor's account settings.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>How do I update?</summary>
+          <div class="faq-answer">
+            <p>From any installed project:</p>
+            <pre><code>claude plugin update --all</code></pre>
+            <p>That pulls the latest version of each installed plugin. New plugins added to the marketplace become visible automatically; install the ones you want.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can we customize plugins for our company's specific workflows?</summary>
+          <div class="faq-answer">
+            <p>Yes. Two paths, depending on scope:</p>
+            <ul>
+              <li><strong>Light:</strong> swap a connector for one that matches your stack (e.g. Salesforce instead of HubSpot). Skills resolve to whatever you authorize.</li>
+              <li><strong>Deep:</strong> fork the pace repo for your company, edit the plugins, rename the router from <code>/pace</code> to <code>/yourco</code>, and write commands specific to your team's process. GoldenBerry offers training and enablement for this; see the "Use pace at your company" section below.</li>
             </ul>
           </div>
         </details>
 
         <details class="faq-item">
-          <summary>Can I install just one plugin?</summary>
+          <summary>What does it cost?</summary>
           <div class="faq-answer">
-            <p>Yes. After registering the marketplace, you install plugins individually:</p>
-            <pre><code>claude plugin marketplace add pace.tools
-claude plugin install sales@pace.tools</code></pre>
-            <p>That's the whole flow. Install <code>pace</code> for the company router, <code>sales</code> for sales commands, <code>data</code> for SQL workflows, etc. The plugins don't depend on each other.</p>
+            <p>Pace is free and open source (Apache 2.0). The plugins are free too. Some connectors require paid accounts on the vendor side (Snowflake, HubSpot, etc.), but pace itself never charges and never paywalls plugins.</p>
           </div>
         </details>
 
         <details class="faq-item">
-          <summary>How do MCP connectors work?</summary>
+          <summary>What about design?</summary>
           <div class="faq-answer">
-            <p>Plugins like <code>sales</code>, <code>marketing</code>, <code>data</code>, <code>productivity</code> ship with a <code>.mcp.json</code> declaring the MCP servers they integrate with (Slack, HubSpot, Snowflake, Notion, etc.).</p>
-            <p>Claude prompts you to authorize each connector the first time a skill needs it. You don't need to install or configure anything manually. Plugins still work without their connectors; skills degrade gracefully to "tell me about your account, I'll work with what you give me."</p>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary>What if I want to customize a plugin for our company?</summary>
-          <div class="faq-answer">
-            <p>Don't edit the imported plugin under <code>plugins/&lt;name&gt;/</code> directly: that forks you from upstream and breaks sync.</p>
-            <p>Instead: copy the plugin to a new directory (e.g., <code>plugins/sales-gb/</code>), update its <code>plugin.json</code> name + author, and edit there. Add an entry to <code>marketplace.json</code> pointing at the new path. Users opt into your fork explicitly.</p>
-            <p>For company-specific commands that don't fit any imported plugin, add them to the <code>/pace</code> router under <code>skill/reference/&lt;cmd&gt;.md</code>. That's what the router exists for.</p>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary>What commands does the /pace router ship?</summary>
-          <div class="faq-answer">
-            <p>None yet (v0.2 is the marketplace pivot; the router still starts empty). Commands ship to the router as we author them.</p>
-            <p>Authoring a router command: drop a reference file at <code>skill/reference/&lt;cmd&gt;.md</code>, register it in <code>skill/SKILL.md</code> and <code>skill/scripts/command-metadata.json</code>, run <code>bun run build</code>, ship a PR. See <a href="/docs" class="text-link">/docs</a> for the full guide.</p>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary>How do I update to the latest plugins?</summary>
-          <div class="faq-answer">
-            <p>From any installed project:</p>
-            <pre><code>claude plugin update --all</code></pre>
-            <p>Pace's CLI also exposes <code>npx pace skills update</code> which updates the <code>/pace</code> router specifically.</p>
-            <p>Pace itself periodically re-syncs from Anthropic's upstream repo. New plugins and updated SKILL.md files land in our marketplace as a normal pace release.</p>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary>Can I pin <code>/pace audit</code> to just <code>/audit</code>?</summary>
-          <div class="faq-answer">
-            <p>Yes. Pace inherits impeccable's pin mechanism: <code>node skill/scripts/pin.mjs pin &lt;command&gt;</code> creates a lightweight redirect so <code>/audit</code> delegates to <code>/pace audit</code>.</p>
-            <p>Available once the command is in the allowlist; the allowlist is empty in v0.2.</p>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary>Is pace open source?</summary>
-          <div class="faq-answer">
-            <p>Yes. Apache 2.0 throughout. Pace's original code (router + marketplace) is open source; the imported plugins remain attributed to Anthropic and the partner authors. See <a href="https://github.com/GoldenBerry-SO/pace.tools/blob/main/NOTICE.md" class="text-link">NOTICE.md</a> for full attribution.</p>
-            <p>Fork it for your company; the marketplace shape and install machinery carry over for free.</p>
+            <p>For code-level design (CSS, typography, motion, layout, accessibility), pace defers to <a href="https://impeccable.style">impeccable</a>, a separate Apache 2.0 design skill kit. Install it alongside pace for design work.</p>
+            <p>Pace's catalog also includes Anthropic's <code>design</code> plugin, which covers UX research, design system management, accessibility audits, and dev handoff: different layer than impeccable.</p>
           </div>
         </details>
       </div>
@@ -575,11 +571,18 @@ claude plugin install sales@pace.tools</code></pre>
     <div class="company-cta-inner">
       <h2 class="company-cta-title">Use pace at your company</h2>
       <p class="company-cta-lede">
-        Pace is open source. Fork it, rename the router, and write the commands that match how your company works. The install machinery and editorial bar carry over for free.
+        Pace is open source. Fork it, rename the router, and write the commands that match how your company works.
       </p>
       <div class="company-cta-row">
         <a href="https://github.com/GoldenBerry-SO/pace.tools" class="cta cta-primary" target="_blank" rel="noopener">Fork on GitHub</a>
-        <a href="/docs#fork" class="cta cta-secondary">Forking guide</a>
+      </div>
+
+      <div class="company-cta-enablement">
+        <span class="company-cta-enablement-label">Need help rolling pace out to your team?</span>
+        <p>
+          GoldenBerry offers training and enablement: install + connector setup, command authoring for your company's workflows, and ongoing support as your playbook grows.
+        </p>
+        <a href="mailto:hello@goldenberry.so" class="cta cta-secondary">Get in touch</a>
       </div>
     </div>
   </section>
@@ -1361,6 +1364,32 @@ claude plugin install sales@pace.tools</code></pre>
     gap: var(--spacing-sm);
     justify-content: center;
     flex-wrap: wrap;
+  }
+  .company-cta-enablement {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-forest-soft);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    max-width: 56ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .company-cta-enablement-label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+  }
+  .company-cta-enablement p {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    margin: 0;
+    text-align: center;
   }
 
   /* ============================================

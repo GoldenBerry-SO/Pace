@@ -16,6 +16,7 @@ import {
   PLUGIN_CATEGORY_LABELS,
   PLUGIN_CATEGORY_ORDER,
 } from '../../lib/sidebar-data';
+import { CONNECTOR_CATEGORIES } from '../../lib/connector-data';
 
 export async function getStaticPaths() {
   // Re-import inside getStaticPaths so the prerender chunk can find them.
@@ -65,6 +66,10 @@ const {
 
 const pluginName = manifest.name ?? slug;
 const slashPrefix = `/${pluginName}:`;
+
+// Categorized connector rows that include THIS plugin. Reuses the master
+// catalog data from /docs/connectors so the structure is consistent.
+const connectorCategories = CONNECTOR_CATEGORIES.filter((c) => c.usedBy.includes(slug));
 
 // Build sidebar with all local plugins, grouped + sorted, same as
 // the /plugins index sidebar. Mirrors impeccable's pattern of keeping
@@ -165,25 +170,46 @@ for (const cat of PLUGIN_CATEGORY_ORDER) sidebarItems[cat] = [];
       </ul>
     </section>
 
-    {connectors.length > 0 && (
+    {connectorCategories.length > 0 && (
       <section class="plugin-section">
-        <h2>Connectors ({connectors.length})</h2>
+        <h2>Connectors</h2>
         <p class="plugin-section-lede">
-          MCP servers this plugin can integrate with. Claude prompts for authorization on first use. The plugin works without them; connectors unlock the supercharged version.
+          MCP servers this plugin integrates with, grouped by category. Bundled servers are pre-configured in <code>.mcp.json</code>. Alternatives slot in via <a href="/docs/connectors#category-placeholders">the <code>~~category</code> placeholder pattern</a>.
         </p>
-        <ul class="plugin-connectors">
-          {connectors.map((c) => (
-            <li class="plugin-connector">
-              <span class="plugin-connector-name">{c.name}</span>
-              {c.type && <span class="plugin-connector-type">{c.type}</span>}
-            </li>
+        <div class="plugin-connectors-table" role="table">
+          <div class="plugin-connectors-row plugin-connectors-row-head" role="row">
+            <span role="columnheader">Category</span>
+            <span role="columnheader">Bundled</span>
+            <span role="columnheader">Alternatives</span>
+          </div>
+          {connectorCategories.map((c) => (
+            <div class="plugin-connectors-row" role="row">
+              <span class="plugin-connectors-cat" role="cell">
+                <strong>{c.name}</strong>
+                <code>{c.placeholder}</code>
+              </span>
+              <span class="plugin-connectors-bundled" role="cell">
+                {c.bundled.length > 0
+                  ? c.bundled.map((s) => <span class="plugin-connectors-pill">{s}</span>)
+                  : <span class="plugin-connectors-empty">(none pre-configured)</span>
+                }
+              </span>
+              <span class="plugin-connectors-alts" role="cell">
+                {c.alternatives.length > 0
+                  ? c.alternatives.join(', ')
+                  : <span class="plugin-connectors-empty">none</span>
+                }
+              </span>
+            </div>
           ))}
-        </ul>
-        {hasConnectorsDoc && (
-          <p class="plugin-readme-cta">
-            <a href={`https://github.com/GoldenBerry-SO/pace.tools/blob/main/${pluginDir}/CONNECTORS.md`}>Full connector documentation on GitHub &rarr;</a>
-          </p>
-        )}
+        </div>
+        <p class="plugin-readme-cta">
+          <a href="/docs/connectors">How MCP and connectors work &rarr;</a>
+          {hasConnectorsDoc && <span class="plugin-connectors-sep"> · </span>}
+          {hasConnectorsDoc && (
+            <a href={`https://github.com/GoldenBerry-SO/pace.tools/blob/main/${pluginDir}/CONNECTORS.md`}>Full CONNECTORS.md on GitHub &rarr;</a>
+          )}
+        </p>
       </section>
     )}
 
@@ -419,6 +445,88 @@ for (const cat of PLUGIN_CATEGORY_ORDER) sidebarItems[cat] = [];
     font-size: 0.72rem;
     text-transform: uppercase;
   }
+
+  /* Categorized connector table */
+  .plugin-connectors-table {
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--color-paper-elev);
+    margin-bottom: var(--spacing-sm);
+  }
+  .plugin-connectors-row {
+    display: grid;
+    grid-template-columns: 1.2fr 1.6fr 1.4fr;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-bottom: 1px solid var(--color-mist);
+    align-items: start;
+    font-size: var(--fs-sm);
+  }
+  .plugin-connectors-row:last-child {
+    border-bottom: 0;
+  }
+  .plugin-connectors-row-head {
+    background: var(--color-paper);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+    font-weight: 600;
+  }
+  .plugin-connectors-cat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .plugin-connectors-cat strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .plugin-connectors-cat code {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: var(--color-forest);
+  }
+  .plugin-connectors-bundled {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .plugin-connectors-pill {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    padding: 2px 8px;
+    background: var(--color-forest-dim);
+    color: var(--color-forest);
+    border: 1px solid var(--color-forest-soft);
+    border-radius: 999px;
+  }
+  .plugin-connectors-alts {
+    color: var(--color-charcoal);
+    line-height: 1.5;
+    font-size: 0.85rem;
+  }
+  .plugin-connectors-empty {
+    color: var(--color-ash);
+    font-size: 0.85rem;
+  }
+  .plugin-connectors-sep {
+    color: var(--color-ash);
+  }
+  @media (max-width: 760px) {
+    .plugin-connectors-row {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-xs);
+    }
+    .plugin-connectors-row-head {
+      display: none;
+    }
+  }
+
   .plugin-source-list {
     list-style: none;
     padding: 0;

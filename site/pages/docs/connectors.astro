@@ -1,0 +1,417 @@
+---
+import SubPage from '../../layouts/SubPage.astro';
+import { DOCS_SIDEBAR } from '../../lib/sidebar-data';
+import {
+  CONNECTOR_CATEGORIES,
+  CONNECTOR_GROUP_ORDER,
+  CONNECTOR_GROUP_LABELS,
+} from '../../lib/connector-data';
+
+const currentPath = '/docs/connectors';
+
+const grouped: Record<string, typeof CONNECTOR_CATEGORIES> = {};
+for (const g of CONNECTOR_GROUP_ORDER) grouped[g] = [];
+for (const c of CONNECTOR_CATEGORIES) {
+  grouped[c.group].push(c);
+}
+---
+
+<SubPage
+  title="Connectors · pace"
+  description="How MCP connectors install, authorize, and integrate with pace plugins. Master catalog of every connector category."
+  activeNav="docs"
+  canonicalPath={currentPath}
+  sidebarLabel="Docs"
+>
+  <Fragment slot="sidebar">
+    {DOCS_SIDEBAR.map((group) => (
+      <div class="subpage-sidebar-group">
+        <span class="subpage-sidebar-group-title">{group.title}</span>
+        <ul class="subpage-sidebar-list">
+          {group.items.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={item.href === currentPath ? 'page' : undefined}
+              >{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </Fragment>
+
+  <article class="connectors-page">
+    <header class="connectors-header">
+      <span class="connectors-eyebrow">Reference</span>
+      <h1>Connectors</h1>
+      <p class="connectors-lede">
+        Connectors wire Claude to the external tools your role depends on: CRMs, project trackers, data warehouses, design tools, and more. They use the <a href="https://modelcontextprotocol.io/">Model Context Protocol (MCP)</a>. Every pace plugin ships with a <code>.mcp.json</code> listing the MCP servers it can use; install the plugin and the connectors come along.
+      </p>
+    </header>
+
+    <section class="connectors-section" id="installing">
+      <h2>Installing</h2>
+      <p>Connectors install along with the plugin. There's no separate connector install step.</p>
+
+      <pre class="connectors-pre"><code><span class="connectors-comment"># 1. Register the marketplace once</span>
+claude plugin marketplace add pace.tools
+
+<span class="connectors-comment"># 2. Install a plugin (its .mcp.json registers connectors)</span>
+claude plugin install sales@pace.tools</code></pre>
+
+      <p>After the plugin install, the connectors are <strong>declared but not yet authorized</strong>. Authorization happens on first use, per MCP server, via OAuth in your browser.</p>
+
+      <h3>The <code>.mcp.json</code> manifest</h3>
+      <p>Each plugin's <code>.mcp.json</code> at its directory root lists the MCP servers. For example, <code>plugins/sales/.mcp.json</code> looks like this:</p>
+
+      <pre class="connectors-pre"><code>&#123;
+  "mcpServers": &#123;
+    "slack":   &#123; "type": "http", "url": "https://mcp.slack.com/mcp" &#125;,
+    "hubspot": &#123; "type": "http", "url": "https://mcp.hubspot.com/anthropic" &#125;,
+    "notion":  &#123; "type": "http", "url": "https://mcp.notion.com/mcp" &#125;
+  &#125;
+&#125;</code></pre>
+
+      <p>That's the whole config. Vendors host the MCP server at the URL; users authorize via OAuth. You don't manage API keys yourself.</p>
+    </section>
+
+    <section class="connectors-section" id="authorizing">
+      <h2>Authorizing</h2>
+      <p>Three flavors of authorization, depending on the connector type.</p>
+
+      <h3>OAuth (most connectors)</h3>
+      <p>For hosted MCP servers (Slack, HubSpot, Notion, Asana, Linear, etc.), Claude triggers an OAuth flow on first use:</p>
+      <ol>
+        <li>You run a skill that needs the connector. Example: <code>/sales:call-prep Acme</code> needs HubSpot.</li>
+        <li>Claude detects the connector isn't authorized yet and opens an OAuth URL in your browser.</li>
+        <li>You sign in to the vendor and approve pace's access scope.</li>
+        <li>The browser redirects back. Claude saves the token. The skill continues.</li>
+        <li>Authorization persists per MCP server. Every plugin that talks to that server reuses the token.</li>
+      </ol>
+
+      <h3>Custom URL (self-hosted)</h3>
+      <p>Some MCP servers ship with an empty URL in <code>.mcp.json</code>: Snowflake, Databricks, Gmail, Google Calendar. These are pointers to your own instance:</p>
+
+      <pre class="connectors-pre"><code><span class="connectors-comment"># From plugins/data/.mcp.json</span>
+"snowflake":  &#123; "type": "http", "url": "" &#125;,
+"databricks": &#123; "type": "http", "url": "" &#125;</code></pre>
+
+      <p>The first time a skill needs the connector, Claude prompts for the URL. Provide your account's MCP endpoint, authorize, and Claude saves both for future use.</p>
+
+      <h3>Local stdio (npx-installed)</h3>
+      <p>One pattern uses a local MCP server that runs via <code>npx</code> on your machine: no remote auth, no API keys. The <a href="/plugins/pdf-viewer"><strong>pdf-viewer</strong></a> plugin uses this. Its <code>.mcp.json</code> declares a stdio server; <code>npx</code> auto-installs the package the first time it runs. Useful for tools that operate on your local file system.</p>
+    </section>
+
+    <section class="connectors-section" id="placeholders">
+      <h2>The <code>~~category</code> placeholder pattern</h2>
+      <p>
+        Plugin skills don't name specific vendors. They use category placeholders:
+      </p>
+
+      <pre class="connectors-pre"><code><span class="connectors-comment"># From a sales skill's prompt:</span>
+"Look up the account in ~~CRM and pull recent activity."
+
+<span class="connectors-comment"># From a data skill:</span>
+"Run the query against ~~data warehouse and return results."</code></pre>
+
+      <p>
+        <code>~~CRM</code> resolves to whatever CRM you've authorized: HubSpot, Salesforce, Pipedrive. <code>~~data warehouse</code> resolves to Snowflake, BigQuery, or Databricks. The plugin pre-configures a default set in <code>.mcp.json</code>, but any MCP server in the right category slots in.
+      </p>
+      <p>
+        This is what makes a plugin <strong>tool-agnostic</strong>. The same <code>/sales:call-prep</code> skill works for a HubSpot shop and a Salesforce shop without rewriting.
+      </p>
+    </section>
+
+    <section class="connectors-section" id="standalone">
+      <h2>Skills work without connectors</h2>
+      <p>
+        Every skill is designed to degrade gracefully. Without connectors, it falls back to web search and pasted context. <code>/sales:call-prep Acme</code> with no HubSpot connection still does web research and prep questions; the connected version pulls account history automatically.
+      </p>
+      <p>
+        Standalone is a sane starting point. Authorize connectors as you grow into them.
+      </p>
+    </section>
+
+    <section class="connectors-section" id="swapping">
+      <h2>Swapping in your own connector</h2>
+      <p>
+        Want to use a server pace doesn't pre-configure? Three ways:
+      </p>
+      <ol>
+        <li><strong>Authorize a different MCP server in the same category.</strong> Skills reference connectors by category (<code>~~CRM</code>), so any MCP server in that category resolves. Authorize Salesforce instead of HubSpot and the sales skills keep working.</li>
+        <li><strong>Edit the plugin's <code>.mcp.json</code> locally.</strong> Add an entry, change a URL, point at your own deployment. Trade-off: you've forked the plugin and lose upstream syncs.</li>
+        <li><strong>Fork the plugin for your company.</strong> Copy <code>plugins/&lt;name&gt;/</code> to <code>plugins/&lt;name&gt;-custom/</code>, edit <code>.mcp.json</code> there, register the fork in <code>marketplace.json</code>. See <a href="/docs#customizing">Customizing plugins</a> for the full pattern.</li>
+      </ol>
+    </section>
+
+    <section class="connectors-section" id="master-catalog">
+      <h2>Master catalog</h2>
+      <p class="connectors-section-lede">
+        Every connector category across every pace plugin. Bundled servers are pre-configured in the plugin's <code>.mcp.json</code>. Alternatives are swap-in candidates with an MCP server in the same category. The plugins column shows which plugins use each category.
+      </p>
+
+      {CONNECTOR_GROUP_ORDER.map((groupKey) => (
+        grouped[groupKey].length > 0 && (
+          <div class="connectors-group" id={`group-${groupKey}`}>
+            <h3>{CONNECTOR_GROUP_LABELS[groupKey]}</h3>
+            <div class="connectors-table" role="table">
+              <div class="connectors-row connectors-row-head" role="row">
+                <span role="columnheader">Category</span>
+                <span role="columnheader">Bundled</span>
+                <span role="columnheader">Alternatives</span>
+                <span role="columnheader">Used by</span>
+              </div>
+              {grouped[groupKey].map((c) => (
+                <div class="connectors-row" role="row">
+                  <span class="connectors-cell-cat" role="cell">
+                    <strong>{c.name}</strong>
+                    <code>{c.placeholder}</code>
+                  </span>
+                  <span class="connectors-cell-bundled" role="cell">
+                    {c.bundled.length > 0
+                      ? c.bundled.map((s) => <span class="connectors-pill">{s}</span>)
+                      : <span class="connectors-empty">(none pre-configured)</span>
+                    }
+                  </span>
+                  <span class="connectors-cell-alts" role="cell">
+                    {c.alternatives.length > 0
+                      ? c.alternatives.join(', ')
+                      : <span class="connectors-empty">none</span>
+                    }
+                  </span>
+                  <span class="connectors-cell-used" role="cell">
+                    {c.usedBy.map((p) => (
+                      <a href={`/plugins/${p}`} class="connectors-plugin-link"><code>{p}</code></a>
+                    ))}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )
+      ))}
+
+      <p class="connectors-note">
+        * Marks a placeholder server where the MCP URL is not yet configured upstream. Provide your own instance URL when authorizing.
+      </p>
+    </section>
+  </article>
+</SubPage>
+
+<style>
+  .connectors-page {
+    max-width: 100%;
+  }
+  .connectors-header {
+    margin-bottom: var(--spacing-2xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .connectors-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    margin-bottom: var(--spacing-sm);
+    display: inline-block;
+  }
+  .connectors-header h1 {
+    font-family: var(--font-display);
+    font-size: var(--fs-3xl);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-md);
+  }
+  .connectors-lede {
+    font-size: var(--fs-md);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    max-width: 64ch;
+  }
+  .connectors-lede a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .connectors-section {
+    margin-bottom: var(--spacing-2xl);
+    scroll-margin-top: 96px;
+  }
+  .connectors-section h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .connectors-section h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    color: var(--color-ink);
+  }
+  .connectors-section p {
+    font-size: var(--fs-base);
+    color: var(--color-charcoal);
+    line-height: 1.65;
+    margin-bottom: var(--spacing-sm);
+    max-width: 70ch;
+  }
+  .connectors-section ol {
+    padding-left: var(--spacing-md);
+    color: var(--color-charcoal);
+    font-size: var(--fs-base);
+    line-height: 1.65;
+    margin-bottom: var(--spacing-sm);
+    max-width: 70ch;
+  }
+  .connectors-section ol li {
+    margin-bottom: var(--spacing-xs);
+  }
+  .connectors-pre {
+    background: oklch(18% 0.015 150);
+    color: oklch(92% 0.005 150);
+    padding: var(--spacing-md);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    overflow-x: auto;
+    margin: var(--spacing-md) 0;
+    line-height: 1.5;
+  }
+  .connectors-pre code {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: inherit;
+  }
+  .connectors-comment {
+    color: oklch(62% 0.04 150);
+  }
+  .connectors-section-lede {
+    font-size: var(--fs-base);
+    color: var(--color-charcoal);
+    margin-bottom: var(--spacing-md);
+  }
+  .connectors-group {
+    margin-bottom: var(--spacing-lg);
+  }
+  .connectors-table {
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--color-paper-elev);
+    margin-bottom: var(--spacing-md);
+  }
+  .connectors-row {
+    display: grid;
+    grid-template-columns: 1.1fr 1.4fr 1.2fr 1.6fr;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-bottom: 1px solid var(--color-mist);
+    align-items: start;
+    font-size: var(--fs-sm);
+  }
+  .connectors-row:last-child {
+    border-bottom: 0;
+  }
+  .connectors-row-head {
+    background: var(--color-paper);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+    font-weight: 600;
+  }
+  .connectors-cell-cat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .connectors-cell-cat strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .connectors-cell-cat code {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: var(--color-forest);
+  }
+  .connectors-cell-bundled {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .connectors-pill {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    padding: 2px 8px;
+    background: var(--color-forest-dim);
+    color: var(--color-forest);
+    border: 1px solid var(--color-forest-soft);
+    border-radius: 999px;
+  }
+  .connectors-cell-alts {
+    color: var(--color-charcoal);
+    line-height: 1.5;
+    font-size: 0.85rem;
+  }
+  .connectors-cell-used {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .connectors-plugin-link {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--color-charcoal);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--duration-fast) var(--ease-out-quart);
+  }
+  .connectors-plugin-link code {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: inherit;
+  }
+  .connectors-plugin-link:hover {
+    color: var(--color-forest);
+    border-bottom-color: var(--color-forest-soft);
+  }
+  .connectors-empty {
+    color: var(--color-ash);
+    font-size: 0.85rem;
+  }
+  .connectors-note {
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+    line-height: 1.55;
+    font-style: italic;
+  }
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: var(--color-code-bg);
+    padding: 1px 7px;
+    border-radius: 4px;
+    border: 1px solid var(--color-code-border);
+    color: var(--color-ink);
+  }
+  @media (max-width: 880px) {
+    .connectors-row {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-xs);
+    }
+    .connectors-row-head {
+      display: none;
+    }
+  }
+</style>

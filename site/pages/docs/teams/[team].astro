@@ -56,59 +56,100 @@ const currentPath = `/docs/teams/${team.slug}`;
       <p class="team-intro">{team.intro}</p>
     </header>
 
-    <section class="team-section" id="plugins">
-      <h2>Plugins to install</h2>
-      <p class="team-section-lede">Pick from this set for the role. Primary plugins are essential; companions multiply value.</p>
-      <ul class="team-plugins-list">
-        {team.plugins.map((p) => (
-          <li class={`team-plugin team-plugin-${p.role}`}>
-            <div class="team-plugin-head">
-              <a class="team-plugin-name" href={`/plugins/${p.slug}`}>{p.slug}</a>
-              <span class={`team-plugin-role team-plugin-role-${p.role}`}>{p.role}</span>
-            </div>
-            <p class="team-plugin-why">{p.why}</p>
-            <code class="team-plugin-install">claude plugin install {p.slug}@pace.tools</code>
-          </li>
-        ))}
-      </ul>
-    </section>
+    {team.redirect && (
+      <section class="team-redirect">
+        <a
+          class="team-redirect-card"
+          href={team.redirect.url}
+          target="_blank"
+          rel="noopener"
+        >
+          <div class="team-redirect-card-main">
+            <span class="team-redirect-card-host">{new URL(team.redirect.url).hostname}</span>
+            <span class="team-redirect-card-cta">{team.redirect.cta}</span>
+          </div>
+          <svg
+            class="team-redirect-card-arrow"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M7 17L17 7" />
+            <path d="M8 7h9v9" />
+          </svg>
+        </a>
+        <p class="team-redirect-footnote">
+          {team.redirect.reason}
+        </p>
+        <p class="team-redirect-footnote">
+          Pace still includes Anthropic's <a href="/plugins/design"><code>design</code></a> plugin in the catalog if you want UX research, accessibility audits, or dev handoff skills alongside impeccable.
+        </p>
+      </section>
+    )}
 
-    <section class="team-section" id="connectors">
-      <h2>Connectors to set up</h2>
-      <p class="team-section-lede">Claude prompts to authorize each one the first time a relevant skill fires. You only do this once per project.</p>
-      <ul class="team-connectors">
-        {team.connectors.map((c) => (
-          <li>{c}</li>
-        ))}
-      </ul>
-    </section>
+    {!team.redirect && (
+      <>
+        <section class="team-section" id="plugins">
+          <h2>Plugins to install</h2>
+          <p class="team-section-lede">Pick from this set for the role. Primary plugins are essential; companions multiply value.</p>
+          <ul class="team-plugins-list">
+            {team.plugins.map((p) => (
+              <li class={`team-plugin team-plugin-${p.role}`}>
+                <div class="team-plugin-head">
+                  <a class="team-plugin-name" href={`/plugins/${p.slug}`}>{p.slug}</a>
+                  <span class={`team-plugin-role team-plugin-role-${p.role}`}>{p.role}</span>
+                </div>
+                <p class="team-plugin-why">{p.why}</p>
+                <code class="team-plugin-install">claude plugin install {p.slug}@pace.tools</code>
+              </li>
+            ))}
+          </ul>
+        </section>
 
-    <section class="team-section" id="workflows">
-      <h2>Workflows</h2>
-      <p class="team-section-lede">Common ways teams use these plugins day to day. Each one is a starting point; adapt the prompt to your context.</p>
-      <ul class="team-workflows">
-        {team.workflows.map((w) => (
-          <li class="team-workflow">
-            <h3>{w.title}</h3>
-            <p>{w.description}</p>
-            {w.prompt && <code class="team-workflow-prompt">{w.prompt}</code>}
-          </li>
-        ))}
-      </ul>
-    </section>
+        <section class="team-section" id="connectors">
+          <h2>Connectors to set up</h2>
+          <p class="team-section-lede">Claude prompts to authorize each one the first time a relevant skill fires. You only do this once per project.</p>
+          <ul class="team-connectors">
+            {team.connectors.map((c) => (
+              <li>{c}</li>
+            ))}
+          </ul>
+        </section>
 
-    <section class="team-section" id="tips">
-      <h2>Tips &amp; tricks</h2>
-      <p class="team-section-lede">Field-tested patterns from teams that have already shipped a quarter or two on these plugins.</p>
-      <ul class="team-tips">
-        {team.tips.map((t) => (
-          <li class="team-tip">
-            <h3>{t.title}</h3>
-            <p>{t.body}</p>
-          </li>
-        ))}
-      </ul>
-    </section>
+        <section class="team-section" id="workflows">
+          <h2>Workflows</h2>
+          <p class="team-section-lede">Common ways teams use these plugins day to day. Each one is a starting point; adapt the prompt to your context.</p>
+          <ul class="team-workflows">
+            {team.workflows.map((w) => (
+              <li class="team-workflow">
+                <h3>{w.title}</h3>
+                <p>{w.description}</p>
+                {w.prompt && <code class="team-workflow-prompt">{w.prompt}</code>}
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section class="team-section" id="tips">
+          <h2>Tips &amp; tricks</h2>
+          <p class="team-section-lede">Field-tested patterns from teams that have already shipped a quarter or two on these plugins.</p>
+          <ul class="team-tips">
+            {team.tips.map((t) => (
+              <li class="team-tip">
+                <h3>{t.title}</h3>
+                <p>{t.body}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </>
+    )}
 
     {team.seeAlso.length > 0 && (
       <section class="team-section team-see-also" id="see-also">
@@ -370,6 +411,77 @@ const currentPath = `/docs/teams/${team.slug}`;
     font-size: var(--fs-sm);
     color: var(--color-charcoal);
     line-height: 1.5;
+  }
+
+  /* Redirect variant (design team -> impeccable) */
+  .team-redirect {
+    margin-bottom: var(--spacing-2xl);
+  }
+  .team-redirect-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-left: 3px solid var(--color-forest);
+    border-radius: 0 10px 10px 0;
+    color: var(--color-ink);
+    text-decoration: none;
+    transition:
+      border-color var(--duration-base) var(--ease-out-quart),
+      background var(--duration-base) var(--ease-out-quart),
+      transform var(--duration-base) var(--ease-out-quart);
+  }
+  .team-redirect-card:hover {
+    border-color: var(--color-forest-soft);
+    border-left-color: var(--color-forest);
+    background: var(--color-forest-dim);
+    transform: translateX(2px);
+  }
+  .team-redirect-card-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .team-redirect-card-host {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+  }
+  .team-redirect-card-cta {
+    font-family: var(--font-display);
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+  }
+  .team-redirect-card-arrow {
+    color: var(--color-forest);
+    flex-shrink: 0;
+    transition: transform var(--duration-base) var(--ease-out-quart);
+  }
+  .team-redirect-card:hover .team-redirect-card-arrow {
+    transform: translate(2px, -2px);
+  }
+  .team-redirect-footnote {
+    margin-top: var(--spacing-md);
+    font-size: var(--fs-base);
+    color: var(--color-charcoal);
+    line-height: 1.65;
+    max-width: 64ch;
+  }
+  .team-redirect-footnote a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+    text-decoration: none;
+  }
+  .team-redirect-footnote a:hover {
+    border-color: var(--color-forest);
   }
 
   code {

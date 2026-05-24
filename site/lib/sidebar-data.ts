@@ -39,14 +39,14 @@ export const DOCS_SIDEBAR: SidebarGroup[] = [
       { href: '/docs/teams/operations', label: 'Operations' },
       { href: '/docs/teams/people', label: 'People' },
       { href: '/docs/teams/customer-support', label: 'Customer Support' },
-      { href: '/docs/teams/everyone', label: 'Everyone' },
+      { href: '/docs/teams/productivity', label: 'Productivity' },
     ],
   },
   {
     title: 'Reference',
     items: [
       { href: '/docs#architecture', label: 'Architecture' },
-      { href: '/docs#connectors', label: 'MCP connectors' },
+      { href: '/docs/connectors', label: 'Connectors & MCP' },
       { href: '/docs#router', label: 'The /pace router' },
       { href: '/docs#impeccable', label: 'Impeccable (design)' },
     ],
@@ -62,7 +62,6 @@ export const DOCS_SIDEBAR: SidebarGroup[] = [
     title: 'Operate',
     items: [
       { href: '/docs#updating', label: 'Updating' },
-      { href: '/docs#fork', label: 'Forking pace' },
     ],
   },
 ];

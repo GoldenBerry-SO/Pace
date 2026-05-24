@@ -25,6 +25,15 @@ export interface TeamSeeAlso {
   why: string;
 }
 
+export interface TeamRedirect {
+  /** External destination this team defers to (e.g. impeccable). */
+  url: string;
+  /** Plain-text label shown on the CTA button. */
+  cta: string;
+  /** Short rationale shown above the CTA. */
+  reason: string;
+}
+
 export interface TeamGuide {
   slug: string;
   name: string;
@@ -35,6 +44,9 @@ export interface TeamGuide {
   workflows: TeamWorkflow[];
   tips: TeamTip[];
   seeAlso: TeamSeeAlso[];
+  /** If set, the team page renders as a pointer to the external source
+   *  instead of the standard plugin/workflow/tips layout. */
+  redirect?: TeamRedirect;
 }
 
 export const TEAM_GUIDES: TeamGuide[] = [
@@ -90,7 +102,7 @@ export const TEAM_GUIDES: TeamGuide[] = [
     seeAlso: [
       { slug: 'marketing', label: 'Marketing', why: 'Joint campaigns + ICP refinement live across the seam.' },
       { slug: 'customer-support', label: 'Customer Support', why: 'Hand-off context for closed-won accounts.' },
-      { slug: 'everyone', label: 'Everyone', why: 'Productivity + enterprise-search are cross-cutting.' },
+      { slug: 'productivity', label: 'Productivity', why: 'Productivity + enterprise-search are cross-cutting.' },
     ],
   },
 
@@ -206,7 +218,7 @@ export const TEAM_GUIDES: TeamGuide[] = [
     seeAlso: [
       { slug: 'data', label: 'Data', why: 'Engineering and data overlap on perf, schema, and query questions.' },
       { slug: 'product', label: 'Product', why: 'Spec ↔ tech scope conversations are easier when both sides have the same plugins.' },
-      { slug: 'everyone', label: 'Everyone', why: 'Productivity + enterprise-search help with cross-functional context.' },
+      { slug: 'productivity', label: 'Productivity', why: 'Productivity + enterprise-search help with cross-functional context.' },
     ],
   },
 
@@ -326,62 +338,27 @@ export const TEAM_GUIDES: TeamGuide[] = [
     ],
   },
 
-  // ─── DESIGN ─────────────────────────────────────────────────────────────
+  // ─── DESIGN (defers to impeccable) ──────────────────────────────────────
   {
     slug: 'design',
     name: 'Design',
-    tagline: 'UX research, design system, accessibility, critique, dev handoff.',
+    tagline: 'For design work, pace defers to impeccable.',
     intro:
-      'Design has two halves: UX work (research synthesis, design system management, accessibility, dev handoff, critique) and code-level UI craft (CSS, typography, color, motion, layout). Pace covers the first half through Anthropic\'s /design:* plugin. For the second half, install impeccable alongside.',
-    plugins: [
-      { slug: 'design', role: 'primary', why: 'Critique, design system, UX writing, a11y audits, research synthesis, dev handoff.' },
-      { slug: 'product-management', role: 'companion', why: 'Spec + research synthesis lives at the design/product seam.' },
-    ],
-    connectors: ['(none required; works on Figma exports, screenshots, and pasted briefs)'],
-    workflows: [
-      {
-        title: 'Design critique',
-        description: 'Reads a Figma frame export or screenshot and provides structured critique: hierarchy, alignment, contrast, affordance.',
-        prompt: '/design:critique this Figma flow',
-      },
-      {
-        title: 'UX writing pass',
-        description: 'Drafts microcopy that fits the surface: error states, empty states, confirmations, tooltips.',
-        prompt: '/design:ux-writing for these four error states',
-      },
-      {
-        title: 'Accessibility audit',
-        description: 'Checks a flow for WCAG 2.1 AA: contrast, focus order, semantics, motion sensitivity, screen reader behavior.',
-        prompt: '/design:a11y-audit this checkout flow',
-      },
-      {
-        title: 'Research synthesis',
-        description: 'Reads interview transcripts and surfaces themes, contradictions, and quotable moments.',
-        prompt: '/design:research-synthesis from these 8 user interviews',
-      },
-      {
-        title: 'Dev handoff spec',
-        description: 'Generates a handoff doc: variants, states, tokens used, interaction notes, edge cases.',
-        prompt: '/design:dev-handoff for the new modal component',
-      },
-      {
-        title: 'Design system audit',
-        description: 'Surveys token usage in a codebase or Figma library and reports drift, gaps, and inconsistencies.',
-        prompt: '/design:design-system audit our token coverage in the marketing site',
-      },
-    ],
-    tips: [
-      { title: 'Pair with impeccable', body: 'For code-level UI craft (CSS, typography, motion), install impeccable alongside. /design:* + impeccable covers research → ship.' },
-      { title: 'A11y before handoff', body: 'Run /design:a11y-audit before dev handoff. Catching contrast and focus issues in design is far cheaper than in code review.' },
-      { title: 'Critique your own work', body: 'Asking colleagues for design feedback has friction. /design:critique gives a fast first pass on rough work.' },
-      { title: 'Synthesis is cross-functional', body: '/design:research-synthesis and /product-management:synthesize do similar work for slightly different audiences. Use whichever framing fits the deliverable.' },
-      { title: 'Handoff docs are an investment', body: '/design:dev-handoff feels like overhead until the implementer asks five clarifying questions. Then it pays for itself.' },
-      { title: 'Design-system audits land', body: 'Run /design:design-system quarterly. The drift report is the conversation starter for the next sprint of cleanup.' },
-    ],
+      "Design is its own discipline with its own dedicated tool. Rather than duplicate the work, pace points designers and frontend engineers at impeccable, a separate Apache 2.0 skill kit focused entirely on design fluency for AI coding agents: typography, color, layout, motion, accessibility, UX writing, design systems, dev handoff. Install impeccable alongside pace.",
+    redirect: {
+      url: 'https://impeccable.style/docs',
+      cta: 'Read the impeccable docs',
+      reason:
+        "Impeccable is the design counterpart to pace. A richer command set focused exclusively on design craft: typography, color, layout, motion, accessibility, UX writing, design systems, dev handoff.",
+    },
+    plugins: [],
+    connectors: [],
+    workflows: [],
+    tips: [],
     seeAlso: [
-      { slug: 'product', label: 'Product', why: 'Research and synthesis cross the team boundary constantly.' },
+      { slug: 'product', label: 'Product', why: 'Research and synthesis cross the design/product seam.' },
       { slug: 'marketing', label: 'Marketing', why: 'Brand voice + design system feed marketing surfaces.' },
-      { slug: 'engineering', label: 'Engineering', why: 'Handoff conversations are smoother when both sides have plugins.' },
+      { slug: 'engineering', label: 'Engineering', why: 'Handoff conversations span design and engineering.' },
     ],
   },
 
@@ -662,17 +639,17 @@ export const TEAM_GUIDES: TeamGuide[] = [
     seeAlso: [
       { slug: 'sales', label: 'Sales', why: 'Customer context flows from deal to account.' },
       { slug: 'product', label: 'Product', why: 'Support tickets feed product roadmap.' },
-      { slug: 'everyone', label: 'Everyone', why: 'Productivity + enterprise-search for cross-cutting context.' },
+      { slug: 'productivity', label: 'Productivity', why: 'Productivity + enterprise-search for cross-cutting context.' },
     ],
   },
 
-  // ─── EVERYONE ──────────────────────────────────────────────────────────
+  // ─── PRODUCTIVITY (cross-cutting) ──────────────────────────────────────
   {
-    slug: 'everyone',
-    name: 'Everyone',
-    tagline: 'Cross-cutting plugins for daily flow regardless of role.',
+    slug: 'productivity',
+    name: 'Productivity',
+    tagline: 'Cross-cutting daily-flow plugins for every role.',
     intro:
-      'Some plugins do not belong to a department; they help everyone. /productivity:* runs your morning. /enterprise-search:* finds the doc you swear you wrote. Install both regardless of role; they pair with whatever else you use.',
+      "Some plugins don't belong to a department; they help everyone. /productivity:* runs your morning. /enterprise-search:* finds the doc you swear you wrote. Install both regardless of role; they pair with whatever else you use.",
     plugins: [
       { slug: 'productivity', role: 'primary', why: 'Daily briefing, task management, memory of past decisions, calendar sanity.' },
       { slug: 'enterprise-search', role: 'primary', why: 'One query across email, Slack, docs, and wikis.' },
