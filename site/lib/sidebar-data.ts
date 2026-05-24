@@ -20,7 +20,7 @@ export const DOCS_SIDEBAR: SidebarGroup[] = [
   {
     title: 'Get started',
     items: [
-      { href: '/docs#install', label: 'Installing' },
+      { href: '/docs/install', label: 'Installing' },
       { href: '/docs#usage', label: 'Using commands' },
     ],
   },

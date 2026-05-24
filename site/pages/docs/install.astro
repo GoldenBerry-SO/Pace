@@ -1,0 +1,409 @@
+---
+import SubPage from '../../layouts/SubPage.astro';
+import { DOCS_SIDEBAR } from '../../lib/sidebar-data';
+
+const currentPath = '/docs/install';
+---
+
+<SubPage
+  title="Install · pace"
+  description="Install pace plugins in Claude Code, Cursor, Gemini, Codex, and the Cowork desktop app. Two flows for engineers and non-technical users."
+  activeNav="docs"
+  canonicalPath={currentPath}
+  sidebarLabel="Docs"
+>
+  <Fragment slot="sidebar">
+    {DOCS_SIDEBAR.map((group) => (
+      <div class="subpage-sidebar-group">
+        <span class="subpage-sidebar-group-title">{group.title}</span>
+        <ul class="subpage-sidebar-list">
+          {group.items.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={item.href === currentPath ? 'page' : undefined}
+              >{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </Fragment>
+
+  <article class="installpage">
+    <header class="installpage-header">
+      <span class="installpage-eyebrow">Get started</span>
+      <h1>Install pace</h1>
+      <p class="installpage-lede">
+        Pace is a Claude Code plugin marketplace. Register the marketplace once, then install the plugins your team uses. Two install paths: <strong>Claude Code CLI</strong> for engineers, and the <strong>Cowork desktop app</strong> for everyone else.
+      </p>
+    </header>
+
+    <nav class="installpage-toc" aria-label="On this page">
+      <span class="installpage-toc-label">On this page</span>
+      <ol class="installpage-toc-list">
+        <li><a href="#claude-code">Claude Code (engineers)</a></li>
+        <li><a href="#cowork">Cowork (non-technical users)</a></li>
+        <li><a href="#picking">Picking plugins</a></li>
+        <li><a href="#pace-cli">The <code>pace</code> CLI</a></li>
+        <li><a href="#updating">Updating</a></li>
+        <li><a href="#verifying">Verifying it worked</a></li>
+      </ol>
+    </nav>
+
+    <section class="installpage-section" id="claude-code">
+      <h2>Claude Code (engineers)</h2>
+      <p>
+        If you already run Claude Code in your terminal, this is the canonical flow. Three commands, no config files to edit, no API keys to manage.
+      </p>
+
+      <h3>1. Register the marketplace</h3>
+      <p>One-time per project. Tells Claude Code that <code>pace.tools</code> is a source of plugins.</p>
+      <pre class="installpage-pre"><code>claude plugin marketplace add pace.tools</code></pre>
+      <p class="installpage-aside">
+        Behind the scenes this fetches <a href="/.claude-plugin/marketplace.json">marketplace.json</a> and registers the 50 plugins it lists. You don't install all 50; you install the ones your team uses.
+      </p>
+
+      <h3>2. Install the plugins your team uses</h3>
+      <p>Install one plugin per team or function. The router (<code>pace</code>) is optional but recommended; it's where your company-specific commands go.</p>
+      <pre class="installpage-pre"><code><span class="installpage-comment"># The router (company commands like /pace teach)</span>
+claude plugin install pace@pace.tools
+
+<span class="installpage-comment"># Department plugins (install only what you use)</span>
+claude plugin install sales@pace.tools
+claude plugin install engineering@pace.tools
+claude plugin install data@pace.tools
+claude plugin install marketing@pace.tools</code></pre>
+      <p>
+        Not sure which to install? See <a href="#picking">Picking plugins</a> below, or jump to the <a href="/docs/teams">team guides</a> for role-based recommendations.
+      </p>
+
+      <h3>3. Connect your tools (on first use)</h3>
+      <p>
+        Plugins ship with connectors but they're not authorized yet. The first time you run a skill that needs Slack, HubSpot, Notion, or any other MCP server, Claude opens an OAuth flow in your browser. Sign in, approve, and the token is saved for next time.
+      </p>
+      <p>
+        For the full connector model (OAuth, self-hosted URLs, local stdio servers), see <a href="/docs/connectors">Connectors &amp; MCP</a>.
+      </p>
+    </section>
+
+    <section class="installpage-section" id="cowork">
+      <h2>Cowork (non-technical users)</h2>
+      <p>
+        <a href="https://cowork.com/">Cowork</a> is a desktop app that wraps Claude Code in a graphical interface. No terminal, no <code>npm</code>, no command-line install. Pace plugins are the same plugins; Cowork just installs them through clicks instead of commands.
+      </p>
+
+      <h3>1. Install Cowork</h3>
+      <p>Download the desktop app from <a href="https://cowork.com/">cowork.com</a> and sign in with your Anthropic account. Cowork runs on macOS and Windows.</p>
+
+      <h3>2. Add the pace marketplace</h3>
+      <ol class="installpage-steps">
+        <li>Open Cowork and go to the <strong>Plugins</strong> tab.</li>
+        <li>Click <strong>Add marketplace</strong>.</li>
+        <li>Paste <code>pace.tools</code> as the marketplace URL.</li>
+        <li>Click <strong>Add</strong>. Cowork loads the catalog of 50 plugins.</li>
+      </ol>
+
+      <h3>3. Install plugins by clicking</h3>
+      <p>
+        Browse the catalog inside Cowork and click <strong>Install</strong> next to each plugin you want. A salesperson installs <code>sales</code>; a product manager installs <code>product-management</code>; an HR person installs <code>human-resources</code>. The <a href="/docs/teams">team guides</a> have starter sets for every role.
+      </p>
+
+      <h3>4. Authorize connectors when prompted</h3>
+      <p>
+        The first time a skill needs an external tool (Slack, HubSpot, Notion, etc.), Cowork opens an OAuth window. Sign in, approve, and the connector stays authorized.
+      </p>
+
+      <div class="installpage-callout">
+        <strong>One install, multiple users.</strong> If you're rolling pace out to a team of non-technical users, install Cowork once on a shared template machine, register pace, then have everyone sign in with their own Anthropic account. Each user authorizes their own connectors against their own accounts.
+      </div>
+    </section>
+
+    <section class="installpage-section" id="picking">
+      <h2>Picking plugins</h2>
+      <p>
+        Pace ships 50 plugins. Most teams install three to six. Two ways to pick:
+      </p>
+
+      <h3>By role</h3>
+      <p>
+        The <a href="/docs/teams">team guides</a> have starter sets for sales, marketing, engineering, data, product, design, finance, legal, operations, people, customer support, and productivity. Each guide lists the plugins to install and a sample week of commands.
+      </p>
+
+      <h3>By plugin</h3>
+      <p>
+        The <a href="/plugins">plugin catalog</a> shows every plugin with its skills, connectors, and intended audience. Browse it like an app store.
+      </p>
+
+      <p class="installpage-aside">
+        Installing more plugins isn't free: each one adds skills to your <code>/</code> menu and bytes to the agent's context. Start with the few that map to your weekly work and add more as you find gaps.
+      </p>
+    </section>
+
+    <section class="installpage-section" id="pace-cli">
+      <h2>The <code>pace</code> CLI</h2>
+      <p>
+        Pace also ships a small Node CLI you can run with <code>npx</code>. It's an alternative to the Claude Code marketplace flow, useful in two cases:
+      </p>
+      <ul class="installpage-bullets">
+        <li>You want the same skills installed across <strong>multiple AI harnesses</strong> in the same project (Claude Code, Cursor, Gemini CLI, Codex CLI, etc.). The CLI copies into all of them at once.</li>
+        <li>You want a <strong>scripted, repeatable install</strong> for onboarding new repos, dev containers, or CI.</li>
+      </ul>
+
+      <pre class="installpage-pre"><code><span class="installpage-comment"># Install pace skills into every detected harness</span>
+npx pace skills install
+
+<span class="installpage-comment"># Check if updates are available</span>
+npx pace skills check
+
+<span class="installpage-comment"># Update to the latest skills</span>
+npx pace skills update
+
+<span class="installpage-comment"># List every command pace ships</span>
+npx pace skills help</code></pre>
+
+      <p>
+        Harness directories it writes into: <code>.claude</code>, <code>.cursor</code>, <code>.gemini</code>, <code>.agents</code>, <code>.github</code>, <code>.kiro</code>, <code>.opencode</code>, <code>.pi</code>, <code>.qoder</code>, <code>.rovodev</code>, <code>.trae</code>, <code>.trae-cn</code>. Only harnesses present in your project are touched.
+      </p>
+
+      <div class="installpage-callout installpage-callout-warning">
+        <strong>What the CLI installs.</strong> <code>npx pace skills install</code> installs the <code>pace</code> router skills and offers to bring <a href="https://impeccable.style">impeccable</a> along for frontend design. It does <strong>not</strong> install the department plugins (sales, engineering, etc.); those are Claude Code marketplace plugins. Use <code>claude plugin install</code> for them, or install through the Cowork UI.
+      </div>
+    </section>
+
+    <section class="installpage-section" id="updating">
+      <h2>Updating</h2>
+
+      <h3>Claude Code</h3>
+      <p>Marketplace plugins update with the same command they install with:</p>
+      <pre class="installpage-pre"><code>claude plugin marketplace update pace.tools</code></pre>
+      <p>That refreshes pace's catalog. Per-plugin updates land when Claude Code re-resolves the marketplace.</p>
+
+      <h3>Cowork</h3>
+      <p>Open the Plugins tab and click <strong>Check for updates</strong> on the pace marketplace. Cowork pulls the latest version of each installed plugin.</p>
+
+      <h3>Pace CLI</h3>
+      <pre class="installpage-pre"><code>npx pace skills update</code></pre>
+      <p>Reads the latest skills from the GitHub source and refreshes every harness directory.</p>
+    </section>
+
+    <section class="installpage-section" id="verifying">
+      <h2>Verifying it worked</h2>
+      <p>
+        Open a chat in Claude Code or Cowork and type <code>/</code>. You should see commands prefixed by the plugins you installed: <code>/sales:call-prep</code>, <code>/engineering:standup</code>, <code>/pace:teach</code>, etc. Type one and the corresponding skill takes over.
+      </p>
+      <p>
+        Connectors stay <em>declared but not authorized</em> until the first skill that needs them runs. That's by design: authorization is just-in-time, so a fresh install doesn't barrage you with OAuth windows you don't need yet.
+      </p>
+      <p>
+        Stuck? Open an issue at <a href="https://github.com/GoldenBerry-SO/pace.tools/issues">github.com/GoldenBerry-SO/pace.tools</a>.
+      </p>
+    </section>
+  </article>
+</SubPage>
+
+<style>
+  .installpage {
+    max-width: 100%;
+  }
+  .installpage-header {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .installpage-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    margin-bottom: var(--spacing-sm);
+    display: inline-block;
+  }
+  .installpage-header h1 {
+    font-family: var(--font-display);
+    font-size: var(--fs-3xl);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-md);
+  }
+  .installpage-lede {
+    font-size: var(--fs-md);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    max-width: 64ch;
+  }
+  .installpage-lede a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .installpage-toc {
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+  }
+  .installpage-toc-label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+    display: block;
+    margin-bottom: var(--spacing-sm);
+  }
+  .installpage-toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px var(--spacing-md);
+    counter-reset: toc;
+  }
+  .installpage-toc-list li {
+    counter-increment: toc;
+    font-size: var(--fs-sm);
+  }
+  .installpage-toc-list li::before {
+    content: counter(toc, decimal-leading-zero) ' ';
+    font-family: var(--font-mono);
+    color: var(--color-ash);
+    margin-right: 4px;
+  }
+  .installpage-toc-list a {
+    color: var(--color-charcoal);
+    border-bottom: 1px solid transparent;
+    transition: color var(--duration-fast) var(--ease-out-quart), border-color var(--duration-fast) var(--ease-out-quart);
+  }
+  .installpage-toc-list a:hover {
+    color: var(--color-forest);
+    border-color: var(--color-forest-soft);
+  }
+  .installpage-toc-list code {
+    font-family: var(--font-mono);
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: inherit;
+  }
+  .installpage-section {
+    margin-bottom: var(--spacing-2xl);
+    scroll-margin-top: 96px;
+  }
+  .installpage-section h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .installpage-section h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    color: var(--color-ink);
+  }
+  .installpage-section p {
+    font-size: var(--fs-base);
+    color: var(--color-charcoal);
+    line-height: 1.65;
+    margin-bottom: var(--spacing-sm);
+    max-width: 70ch;
+  }
+  .installpage-section ol,
+  .installpage-section ul {
+    padding-left: var(--spacing-md);
+    color: var(--color-charcoal);
+    font-size: var(--fs-base);
+    line-height: 1.65;
+    margin-bottom: var(--spacing-sm);
+    max-width: 70ch;
+  }
+  .installpage-section li {
+    margin-bottom: var(--spacing-xs);
+  }
+  .installpage-section a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+    transition: border-color var(--duration-fast) var(--ease-out-quart);
+  }
+  .installpage-section a:hover {
+    border-bottom-color: var(--color-forest);
+  }
+  .installpage-section strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .installpage-pre {
+    background: oklch(18% 0.015 150);
+    color: oklch(92% 0.005 150);
+    padding: var(--spacing-md);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    overflow-x: auto;
+    margin: var(--spacing-md) 0;
+    line-height: 1.6;
+  }
+  .installpage-pre code {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: inherit;
+  }
+  .installpage-comment {
+    color: oklch(62% 0.04 150);
+  }
+  .installpage-aside {
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+    font-style: italic;
+    border-left: 2px solid var(--color-mist);
+    padding-left: var(--spacing-md);
+    margin-left: 2px;
+  }
+  .installpage-aside a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .installpage-callout {
+    background: var(--color-forest-dim);
+    border-left: 3px solid var(--color-forest);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: 0 6px 6px 0;
+    margin: var(--spacing-md) 0;
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.6;
+  }
+  .installpage-callout strong {
+    color: var(--color-forest);
+  }
+  .installpage-callout-warning {
+    background: var(--color-clay-dim);
+    border-left-color: var(--color-clay);
+  }
+  .installpage-callout-warning strong {
+    color: var(--color-clay-hover);
+  }
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: var(--color-code-bg);
+    padding: 1px 7px;
+    border-radius: 4px;
+    border: 1px solid var(--color-code-border);
+    color: var(--color-ink);
+  }
+  @media (max-width: 720px) {
+    .installpage-toc-list {
+      flex-direction: column;
+      gap: 4px;
+    }
+  }
+</style>
