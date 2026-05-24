@@ -68,7 +68,7 @@ import { DOCS_SIDEBAR } from '../../lib/sidebar-data';
 
       <h3>Register the marketplace</h3>
       <p>Done once per project (or globally per machine). This tells Claude where to find pace's plugins.</p>
-      <pre class="docs-pre"><code>claude plugin marketplace add GoldenBerry-SO/pace.tools</code></pre>
+      <pre class="docs-pre"><code>claude plugin marketplace add pace.tools</code></pre>
 
       <h3>Install plugins individually</h3>
       <p>Pick what your role actually uses. There's no "install all" recommended path; most people use 2-4 plugins.</p>
@@ -90,9 +90,10 @@ claude plugin install legal@pace.tools
 
       <h3>From-repo install for development</h3>
       <p>If you're contributing to pace itself, clone the repo and use <code>--copy</code> to install from your local working tree:</p>
-      <pre class="docs-pre"><code>git clone https://github.com/GoldenBerry-SO/pace.tools
+      <pre class="docs-pre"><code>git clone &lt;pace-repo-url&gt;
 cd pace.tools
 npx skills add . --copy</code></pre>
+      <p class="docs-note">The pace repo URL is in the footer. Until pace moves to its own org, it lives at <code>github.com/GoldenBerry-SO/pace.tools</code>.</p>
     </section>
 
     <section class="docs-section" id="usage">
@@ -279,7 +280,7 @@ rsync -a /path/to/knowledge-work-plugins/&lt;plugin&gt;/ plugins/&lt;plugin&gt;/
       <p>Pace is structured to be forkable. The /pace router pattern, the marketplace shape, the install machinery, and the site framework all carry over.</p>
 
       <ol>
-        <li>Fork <a href="https://github.com/GoldenBerry-SO/pace.tools">GoldenBerry-SO/pace.tools</a> to your org.</li>
+        <li>Fork <a href="https://github.com/GoldenBerry-SO/pace.tools">the pace repo</a> to your org.</li>
         <li>Rename the router: <code>/pace</code> → <code>/yourco</code>. Update <code>.claude-plugin/plugin.json</code>, <code>SKILL.md</code>, <code>marketplace.json</code>, <code>cli/bin/cli.js</code>, and the site copy.</li>
         <li>Update the marketplace name in <code>.claude-plugin/marketplace.json</code> from <code>pace</code> to <code>yourco</code>.</li>
         <li>Decide which Anthropic plugins to keep in <code>plugins/</code>. Drop the ones your company doesn't need; keep the rest.</li>
@@ -323,7 +324,19 @@ rsync -a /path/to/knowledge-work-plugins/&lt;plugin&gt;/ plugins/&lt;plugin&gt;/
   }
   .docs-section {
     margin-bottom: var(--spacing-2xl);
-    scroll-margin-top: var(--spacing-md);
+    /* Clear the sticky site-header (72px) plus a bit of breathing room
+       so the section title doesn't kiss the header underline. */
+    scroll-margin-top: 96px;
+  }
+  .docs-note {
+    margin-top: var(--spacing-xs);
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+    line-height: 1.55;
+    font-style: italic;
+  }
+  .docs-note code {
+    font-style: normal;
   }
   .docs-section h2 {
     font-family: var(--font-display);

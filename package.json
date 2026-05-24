@@ -37,7 +37,8 @@
   "scripts": {
     "build:skills": "bun run scripts/build.js",
     "build:site": "npx astro build",
-    "build": "bun run build:skills && bun run build:site",
+    "build:marketplace": "mkdir -p site/public/.claude-plugin && cp .claude-plugin/marketplace.json site/public/.claude-plugin/marketplace.json",
+    "build": "bun run build:skills && bun run build:marketplace && bun run build:site",
     "clean": "rm -rf dist build",
     "rebuild": "bun run clean && bun run build",
     "dev": "npx astro dev",

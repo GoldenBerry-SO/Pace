@@ -56,8 +56,7 @@ import Base from '../layouts/Base.astro';
             <span class="terminal-dot" data-dot="g"></span>
             <span class="terminal-label">install pace</span>
           </div>
-          <pre class="terminal-body"><code><span class="prompt">$</span> claude plugin marketplace add \
-    GoldenBerry-SO/pace.tools
+          <pre class="terminal-body"><code><span class="prompt">$</span> claude plugin marketplace add pace.tools
 <span class="muted">Registers 50 plugins.</span>
 <span class="prompt">$</span> claude plugin install sales@pace.tools
 <span class="prompt">$</span> /sales:call-prep Acme Corp</code></pre>
@@ -371,7 +370,7 @@ import Base from '../layouts/Base.astro';
             <span class="terminal-dot" data-dot="g"></span>
             <span class="terminal-label">register</span>
           </div>
-          <pre class="terminal-body"><code><span class="prompt">$</span> claude plugin marketplace add GoldenBerry-SO/pace.tools</code></pre>
+          <pre class="terminal-body"><code><span class="prompt">$</span> claude plugin marketplace add pace.tools</code></pre>
         </div>
       </div>
 
@@ -509,7 +508,7 @@ import Base from '../layouts/Base.astro';
           <summary>Can I install just one plugin?</summary>
           <div class="faq-answer">
             <p>Yes. After registering the marketplace, you install plugins individually:</p>
-            <pre><code>claude plugin marketplace add GoldenBerry-SO/pace.tools
+            <pre><code>claude plugin marketplace add pace.tools
 claude plugin install sales@pace.tools</code></pre>
             <p>That's the whole flow. Install <code>pace</code> for the company router, <code>sales</code> for sales commands, <code>data</code> for SQL workflows, etc. The plugins don't depend on each other.</p>
           </div>

@@ -49,3 +49,4 @@ site/public/js/generated/
 !.codex/agents/
 !.codex/agents/**
 .astro/
+site/public/.claude-plugin/
