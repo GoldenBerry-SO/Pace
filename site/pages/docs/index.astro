@@ -175,6 +175,24 @@ npx skills add . --copy</code></pre>
       <p>Pin creates a lightweight redirect skill that delegates to the router; updates to the router still flow through. Unpin with <code>--unpin</code>.</p>
     </section>
 
+    <section class="docs-section" id="impeccable">
+      <h2>Impeccable (design)</h2>
+
+      <p>For code-level frontend design (the actual CSS, typography, color, motion, layout of a UI), pace defers to <a href="https://impeccable.style">impeccable</a>. It's a separate skill with its own router (<code>/impeccable</code>), authored by Paul Bakaus.</p>
+
+      <h3>Why two design things</h3>
+      <p>Pace's marketplace already includes Anthropic's <code>design</code> plugin, which covers UX research, design system management, accessibility audits, dev handoff, and research synthesis. Impeccable covers a different layer: the visual + interaction craft of writing the UI code itself: typography choices, color tokens, spatial rhythm, motion design, responsive layout, the things a designer would obsess over when looking at the rendered pixels.</p>
+
+      <p>Most projects want both. Use <code>/design:*</code> for UX work, <code>/impeccable</code> for code-level UI craft.</p>
+
+      <h3>Install impeccable alongside pace</h3>
+      <pre class="docs-pre"><code>npx impeccable skills install</code></pre>
+      <p>The pace CLI (<code>npx pace skills install</code>) prompts to install impeccable on first run. You can re-run impeccable's installer anytime.</p>
+
+      <h3>Pace's relationship to impeccable</h3>
+      <p>Pace's site, build system, multi-harness install machinery, and editorial bar are all forked from impeccable. See <a href="/NOTICE.md">NOTICE.md</a> for full attribution.</p>
+    </section>
+
     <section class="docs-section" id="authoring">
       <h2>Authoring commands</h2>
 

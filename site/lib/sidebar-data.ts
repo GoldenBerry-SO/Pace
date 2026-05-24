@@ -30,6 +30,7 @@ export const DOCS_SIDEBAR: SidebarGroup[] = [
       { href: '/docs#architecture', label: 'Architecture' },
       { href: '/docs#connectors', label: 'MCP connectors' },
       { href: '/docs#router', label: 'The /pace router' },
+      { href: '/docs#impeccable', label: 'Impeccable (design)' },
     ],
   },
   {
