@@ -1,0 +1,173 @@
+---
+import SubPage from '../../../layouts/SubPage.astro';
+import { TEAM_GUIDES } from '../../../lib/team-guides';
+import { DOCS_SIDEBAR } from '../../../lib/sidebar-data';
+
+const currentPath = '/docs/teams';
+---
+
+<SubPage
+  title="Teams · pace"
+  description="Team guides: which plugins to install, common workflows, tips, and connectors per role."
+  activeNav="docs"
+  canonicalPath={currentPath}
+  sidebarLabel="Docs"
+>
+  <Fragment slot="sidebar">
+    {DOCS_SIDEBAR.map((group) => (
+      <div class="subpage-sidebar-group">
+        <span class="subpage-sidebar-group-title">{group.title}</span>
+        <ul class="subpage-sidebar-list">
+          {group.items.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={item.href === currentPath ? 'page' : undefined}
+              >{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </Fragment>
+
+  <article class="teams-index">
+    <header class="teams-index-header">
+      <span class="teams-index-eyebrow">Reference</span>
+      <h1>Teams</h1>
+      <p class="teams-index-lede">
+        Curated guides per role. Each one lists which plugins to install, common workflows with example prompts, tips from teams who have already shipped a quarter or two on the stack, and the connectors that turn the plugin from useful to essential.
+      </p>
+      <p class="teams-index-note">
+        Most people install <a href="/docs/teams/everyone"><code>everyone</code></a> (cross-cutting productivity + search) plus the one or two role guides that match the work.
+      </p>
+    </header>
+
+    <section class="teams-grid">
+      {TEAM_GUIDES.map((t) => (
+        <a href={`/docs/teams/${t.slug}`} class="teams-card">
+          <div class="teams-card-head">
+            <h2>{t.name}</h2>
+            <span class="teams-card-arrow">→</span>
+          </div>
+          <p class="teams-card-tagline">{t.tagline}</p>
+          <div class="teams-card-plugins">
+            {t.plugins.filter(p => p.role === 'primary').map((p) => (
+              <code>{p.slug}</code>
+            ))}
+          </div>
+        </a>
+      ))}
+    </section>
+  </article>
+</SubPage>
+
+<style>
+  .teams-index {
+    max-width: 100%;
+  }
+  .teams-index-header {
+    margin-bottom: var(--spacing-2xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .teams-index-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    margin-bottom: var(--spacing-sm);
+    display: inline-block;
+  }
+  .teams-index-header h1 {
+    font-family: var(--font-display);
+    font-size: var(--fs-3xl);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-md);
+  }
+  .teams-index-lede {
+    font-size: var(--fs-md);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    margin-bottom: var(--spacing-md);
+    max-width: 64ch;
+  }
+  .teams-index-note {
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+    line-height: 1.55;
+    max-width: 64ch;
+  }
+  .teams-index-note a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .teams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+  }
+  .teams-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 10px;
+    color: inherit;
+    text-decoration: none;
+    transition:
+      border-color var(--duration-base) var(--ease-out-quart),
+      transform var(--duration-base) var(--ease-out-quart);
+  }
+  .teams-card:hover {
+    border-color: var(--color-forest-soft);
+    transform: translateY(-1px);
+  }
+  .teams-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .teams-card h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    margin: 0;
+  }
+  .teams-card-arrow {
+    font-family: var(--font-mono);
+    color: var(--color-forest);
+    font-size: var(--fs-lg);
+    transition: transform var(--duration-fast) var(--ease-out-quart);
+  }
+  .teams-card:hover .teams-card-arrow {
+    transform: translateX(2px);
+  }
+  .teams-card-tagline {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.5;
+    flex: 1;
+  }
+  .teams-card-plugins {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding-top: var(--spacing-xs);
+    border-top: 1px solid var(--color-mist);
+  }
+  .teams-card-plugins code {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--color-forest);
+    background: var(--color-forest-dim);
+    border: 1px solid var(--color-forest-soft);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+</style>

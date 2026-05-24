@@ -1,0 +1,384 @@
+---
+import SubPage from '../../../layouts/SubPage.astro';
+import { TEAM_GUIDES, type TeamGuide } from '../../../lib/team-guides';
+import { DOCS_SIDEBAR } from '../../../lib/sidebar-data';
+
+export async function getStaticPaths() {
+  const { TEAM_GUIDES } = await import('../../../lib/team-guides');
+  return TEAM_GUIDES.map((team) => ({
+    params: { team: team.slug },
+    props: { team },
+  }));
+}
+
+interface Props {
+  team: TeamGuide;
+}
+
+const { team } = Astro.props as Props;
+const currentPath = `/docs/teams/${team.slug}`;
+---
+
+<SubPage
+  title={`${team.name} · pace`}
+  description={team.tagline}
+  activeNav="docs"
+  canonicalPath={currentPath}
+  sidebarLabel="Docs"
+>
+  <Fragment slot="sidebar">
+    {DOCS_SIDEBAR.map((group) => (
+      <div class="subpage-sidebar-group">
+        <span class="subpage-sidebar-group-title">{group.title}</span>
+        <ul class="subpage-sidebar-list">
+          {group.items.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={item.href === currentPath ? 'page' : undefined}
+              >{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </Fragment>
+
+  <article class="team-page">
+    <header class="team-header">
+      <div class="team-breadcrumb">
+        <a href="/docs/teams">All teams</a>
+        <span>/</span>
+        <span>{team.name}</span>
+      </div>
+      <h1>{team.name}</h1>
+      <p class="team-tagline">{team.tagline}</p>
+      <p class="team-intro">{team.intro}</p>
+    </header>
+
+    <section class="team-section" id="plugins">
+      <h2>Plugins to install</h2>
+      <p class="team-section-lede">Pick from this set for the role. Primary plugins are essential; companions multiply value.</p>
+      <ul class="team-plugins-list">
+        {team.plugins.map((p) => (
+          <li class={`team-plugin team-plugin-${p.role}`}>
+            <div class="team-plugin-head">
+              <a class="team-plugin-name" href={`/plugins/${p.slug}`}>{p.slug}</a>
+              <span class={`team-plugin-role team-plugin-role-${p.role}`}>{p.role}</span>
+            </div>
+            <p class="team-plugin-why">{p.why}</p>
+            <code class="team-plugin-install">claude plugin install {p.slug}@pace.tools</code>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="team-section" id="connectors">
+      <h2>Connectors to set up</h2>
+      <p class="team-section-lede">Claude prompts to authorize each one the first time a relevant skill fires. You only do this once per project.</p>
+      <ul class="team-connectors">
+        {team.connectors.map((c) => (
+          <li>{c}</li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="team-section" id="workflows">
+      <h2>Workflows</h2>
+      <p class="team-section-lede">Common ways teams use these plugins day to day. Each one is a starting point; adapt the prompt to your context.</p>
+      <ul class="team-workflows">
+        {team.workflows.map((w) => (
+          <li class="team-workflow">
+            <h3>{w.title}</h3>
+            <p>{w.description}</p>
+            {w.prompt && <code class="team-workflow-prompt">{w.prompt}</code>}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="team-section" id="tips">
+      <h2>Tips &amp; tricks</h2>
+      <p class="team-section-lede">Field-tested patterns from teams that have already shipped a quarter or two on these plugins.</p>
+      <ul class="team-tips">
+        {team.tips.map((t) => (
+          <li class="team-tip">
+            <h3>{t.title}</h3>
+            <p>{t.body}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    {team.seeAlso.length > 0 && (
+      <section class="team-section team-see-also" id="see-also">
+        <h2>See also</h2>
+        <ul class="team-see-also-list">
+          {team.seeAlso.map((s) => (
+            <li>
+              <a href={`/docs/teams/${s.slug}`}>
+                <strong>{s.label}</strong>
+                <span>{s.why}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </article>
+</SubPage>
+
+<style>
+  .team-page {
+    max-width: 760px;
+  }
+  .team-header {
+    margin-bottom: var(--spacing-2xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .team-breadcrumb {
+    display: flex;
+    gap: var(--spacing-xs);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--color-ash);
+    margin-bottom: var(--spacing-md);
+  }
+  .team-breadcrumb a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .team-header h1 {
+    font-family: var(--font-display);
+    font-size: var(--fs-3xl);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-sm);
+  }
+  .team-tagline {
+    font-size: var(--fs-md);
+    color: var(--color-charcoal);
+    line-height: 1.5;
+    margin-bottom: var(--spacing-md);
+  }
+  .team-intro {
+    font-size: var(--fs-base);
+    color: var(--color-ink);
+    line-height: 1.65;
+  }
+  .team-section {
+    margin-bottom: var(--spacing-2xl);
+    scroll-margin-top: 96px;
+  }
+  .team-section h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .team-section-lede {
+    font-size: var(--fs-base);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    margin-bottom: var(--spacing-md);
+  }
+
+  /* Plugins list */
+  .team-plugins-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--spacing-sm);
+  }
+  .team-plugin {
+    padding: var(--spacing-md);
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+  }
+  .team-plugin-primary {
+    border-left: 3px solid var(--color-forest);
+  }
+  .team-plugin-companion {
+    border-left: 3px solid var(--color-clay);
+  }
+  .team-plugin-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
+  }
+  .team-plugin-name {
+    font-family: var(--font-mono);
+    font-size: var(--fs-base);
+    font-weight: 600;
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .team-plugin-role {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+  .team-plugin-role-primary {
+    background: var(--color-forest-dim);
+    color: var(--color-forest);
+  }
+  .team-plugin-role-companion {
+    background: var(--color-clay-dim);
+    color: var(--color-clay-hover);
+  }
+  .team-plugin-why {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    margin-bottom: var(--spacing-sm);
+  }
+  .team-plugin-install {
+    display: block;
+    padding: 8px 12px;
+    background: oklch(18% 0.015 150);
+    color: oklch(92% 0.005 150);
+    border-radius: 4px;
+    border: 0;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    overflow-x: auto;
+  }
+
+  /* Connectors */
+  .team-connectors {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+  }
+  .team-connectors li {
+    padding: 6px 12px;
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 999px;
+    font-size: var(--fs-xs);
+    color: var(--color-charcoal);
+    font-family: var(--font-mono);
+  }
+
+  /* Workflows */
+  .team-workflows {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--spacing-md);
+  }
+  .team-workflow {
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+    background: var(--color-paper-elev);
+  }
+  .team-workflow h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    margin-bottom: var(--spacing-xs);
+  }
+  .team-workflow p {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    margin-bottom: var(--spacing-sm);
+  }
+  .team-workflow-prompt {
+    display: block;
+    padding: 8px 12px;
+    background: oklch(18% 0.015 150);
+    color: oklch(92% 0.005 150);
+    border-radius: 4px;
+    border: 0;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    overflow-x: auto;
+  }
+
+  /* Tips */
+  .team-tips {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--spacing-md);
+  }
+  .team-tip {
+    padding-left: var(--spacing-md);
+    border-left: 2px solid var(--color-mist);
+  }
+  .team-tip h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-base);
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    color: var(--color-ink);
+    margin-bottom: 4px;
+  }
+  .team-tip p {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+  }
+
+  /* See also */
+  .team-see-also-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--spacing-sm);
+  }
+  .team-see-also-list a {
+    display: block;
+    padding: var(--spacing-md);
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+    transition: border-color var(--duration-fast) var(--ease-out-quart);
+    text-decoration: none;
+    color: inherit;
+  }
+  .team-see-also-list a:hover {
+    border-color: var(--color-forest-soft);
+  }
+  .team-see-also-list strong {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--color-ink);
+    margin-bottom: 4px;
+  }
+  .team-see-also-list span {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.5;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: var(--color-code-bg);
+    padding: 1px 7px;
+    border-radius: 4px;
+    border: 1px solid var(--color-code-border);
+    color: var(--color-ink);
+  }
+</style>

@@ -25,6 +25,24 @@ export const DOCS_SIDEBAR: SidebarGroup[] = [
     ],
   },
   {
+    title: 'Teams',
+    items: [
+      { href: '/docs/teams', label: 'All teams' },
+      { href: '/docs/teams/sales', label: 'Sales' },
+      { href: '/docs/teams/marketing', label: 'Marketing' },
+      { href: '/docs/teams/engineering', label: 'Engineering' },
+      { href: '/docs/teams/data', label: 'Data' },
+      { href: '/docs/teams/product', label: 'Product' },
+      { href: '/docs/teams/design', label: 'Design' },
+      { href: '/docs/teams/finance', label: 'Finance' },
+      { href: '/docs/teams/legal', label: 'Legal' },
+      { href: '/docs/teams/operations', label: 'Operations' },
+      { href: '/docs/teams/people', label: 'People' },
+      { href: '/docs/teams/customer-support', label: 'Customer support' },
+      { href: '/docs/teams/everyone', label: 'Everyone' },
+    ],
+  },
+  {
     title: 'Reference',
     items: [
       { href: '/docs#architecture', label: 'Architecture' },
