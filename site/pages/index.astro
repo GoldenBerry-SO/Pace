@@ -1,12 +1,49 @@
 ---
 import Base from '../layouts/Base.astro';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Pace',
+    url: 'https://pace.tools',
+    logo: 'https://pace.tools/og-image.svg',
+    description: 'Curated Claude Code plugin marketplace. Role-specific AI plugins for sales, marketing, engineering, finance, product, ops.',
+    sameAs: ['https://github.com/GoldenBerry-SO/pace.tools'],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Pace',
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'macOS, Linux, Windows',
+    description: 'A Claude Code plugin marketplace that ships role-specific AI plugins for every team at your company. 50+ plugins across sales, marketing, engineering, data, product, finance, legal, ops, HR, customer support, and more. Each plugin connects to your real tools via MCP (Slack, HubSpot, Snowflake, Notion, Linear, and dozens of others). Apache 2.0, open source.',
+    url: 'https://pace.tools',
+    license: 'https://www.apache.org/licenses/LICENSE-2.0',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    softwareVersion: '0.2.0',
+    aggregateRating: undefined,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Pace',
+    url: 'https://pace.tools',
+    publisher: { '@type': 'Organization', name: 'GoldenBerry Software' },
+  },
+];
 ---
 
 <Base
-  title="Pace: company-wide skills for AI coding agents"
-  description="One router, many commands across engineering, product, ops, and marketing. For design, Pace defers to impeccable."
+  title="Pace: AI specialists for every team at your company"
+  description="Curated Claude Code plugin marketplace. Role-specific AI plugins for sales, marketing, engineering, data, product, finance, legal, ops, HR. Connects to your real tools (HubSpot, Slack, Snowflake, Notion) via MCP. Apache 2.0."
   activeNav="home"
   canonicalPath="/"
+  jsonLd={jsonLd}
 >
   <!-- ============================================
        HERO

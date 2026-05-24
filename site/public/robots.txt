@@ -3,4 +3,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pace.tools/sitemap.xml
+Sitemap: https://pace.tools/sitemap-index.xml
