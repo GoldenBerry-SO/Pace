@@ -1,6 +1,6 @@
 # pace
 
-Company-wide skills for AI coding agents. Engineering, product, ops, marketing — one router, many commands.
+Company-wide skills for AI coding agents. Engineering, product, ops, marketing: one router, many commands.
 
 For frontend design, pace defers to [impeccable](https://impeccable.style).
 

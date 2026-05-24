@@ -21,7 +21,7 @@ Commands:
   skills check                     Check if skill updates are available
 
 For frontend design skills, pace defers to impeccable. The installer offers
-to bring impeccable along — say yes if you do any frontend work.
+to bring impeccable along; say yes if you do any frontend work.
 
 Options:
   --help       Show this help message

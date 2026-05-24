@@ -1,0 +1,12 @@
+{
+  "name": "pace",
+  "description": "Company-wide skills for AI coding agents. One router (/pace), many commands across engineering, product, ops, marketing. Built on the same install tech as impeccable.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Chris Jimenez",
+    "email": "cjimenez16@gmail.com"
+  },
+  "homepage": "https://pace.tools",
+  "repository": "https://github.com/GoldenBerry-SO/pace.tools",
+  "skills": "./skills/"
+}

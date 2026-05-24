@@ -10,7 +10,7 @@ license: Apache 2.0. Scaffold based on impeccable (https://impeccable.style). Se
 
 Pace is the GoldenBerry company-wide skill router. One entry point (`/pace`), many sub-commands, each one a repeatable way of working that humans and AI agents can share.
 
-For frontend design specifically, pace defers to **impeccable**: install it alongside pace and call `/impeccable <command>` for design work. Pace covers everything else — engineering review, product specs, ops runbooks, marketing copy, and more as commands land.
+For frontend design specifically, pace defers to **impeccable**: install it alongside pace and call `/impeccable <command>` for design work. Pace covers everything else: engineering review, product specs, ops runbooks, marketing copy, and more as commands land.
 
 ## Setup
 
@@ -27,7 +27,7 @@ Consume the full JSON output. The output's `contextDir` field tells you where th
 
 ## Commands
 
-Sub-commands live in `reference/<command>.md`. The router below is the source of truth — `bun run build` reads it to wire up the harness output dirs.
+Sub-commands live in `reference/<command>.md`. The router below is the source of truth; `bun run build` reads it to wire up the harness output dirs.
 
 | Command | When to use |
 | --- | --- |

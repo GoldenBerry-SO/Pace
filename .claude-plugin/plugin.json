@@ -1,7 +1,7 @@
 {
   "name": "pace",
-  "description": "Design fluency for frontend development. 1 skill with 23 commands (/pace polish, /pace audit, /pace critique, etc.) and curated anti-pattern detection.",
-  "version": "3.1.1",
+  "description": "Company-wide skills for AI coding agents. One router (/pace), many commands across engineering, product, ops, marketing. Built on the same install tech as impeccable.",
+  "version": "0.1.0",
   "author": {
     "name": "Chris Jimenez",
     "email": "cjimenez16@gmail.com"

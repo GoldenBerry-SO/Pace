@@ -30,26 +30,38 @@ function ask(question) {
 // ─── skills help ──────────────────────────────────────────────────────────────
 
 async function showHelp() {
+  const printShell = () => {
+    console.log('\n  Pace Skills & Commands\n');
+    console.log('  Install:  npx pace skills install');
+    console.log('  Update:   npx pace skills update');
+    console.log('  Docs:     https://pace.tools\n');
+  };
+
   let commands;
   try {
     const res = await fetch(`${API_BASE}/api/commands`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     commands = await res.json();
-  } catch {
-    console.error('Could not fetch command list from pace.tools. Check your network connection.');
-    process.exit(1);
+  } catch (err) {
+    // Pace.tools may not be reachable (no network, or the API is not yet
+    // deployed). Print a useful shell so `skills help` is never a dead end.
+    printShell();
+    console.log(`  Command list unavailable: ${err.message || 'network error'}.`);
+    console.log(`  Visit https://pace.tools for the current command catalog.\n`);
+    return;
   }
 
   const pad = (s, n) => s + ' '.repeat(Math.max(0, n - s.length));
+  printShell();
 
-  console.log('\n  Pace Skills & Commands\n');
-  console.log('  Install:  npx pace skills install');
-  console.log('  Update:   npx pace skills update');
-  console.log('  Docs:     https://pace.tools/cheatsheet\n');
+  if (!Array.isArray(commands) || commands.length === 0) {
+    console.log('  No commands published yet.\n');
+    return;
+  }
+
   console.log(`  ${pad('Command', 22)} Description`);
   console.log(`  ${'-'.repeat(22)} ${'-'.repeat(52)}`);
-
   for (const cmd of commands.sort((a, b) => a.id.localeCompare(b.id))) {
-    // Trim description to fit terminal
     const desc = cmd.description.length > 72
       ? cmd.description.substring(0, 69) + '...'
       : cmd.description;

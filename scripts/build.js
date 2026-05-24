@@ -52,7 +52,8 @@ function generateCounts(rootDir, skills, buildDir) {
     commandCount = activeCommands.length;
   }
 
-  // Count detection rules from the detector registry.
+  // Pace does not ship a detector; the count exists only so the validator
+  // can still flag stale references in docs without a separate code path.
   const detectionCount = new Set(ANTIPATTERNS.map(rule => rule.id)).size;
 
   // Write generated counts module
@@ -69,7 +70,6 @@ function generateCounts(rootDir, skills, buildDir) {
     'site/pages/index.astro',
     'README.md',
     'NOTICE.md',
-    'AGENTS.md',
     '.claude-plugin/plugin.json',
     '.claude-plugin/marketplace.json',
   ];
@@ -382,7 +382,7 @@ function assembleUniversal(distDir) {
   // Add a visible README so macOS users don't see an empty folder
   // (all provider dirs are dotfiles, hidden by default in Finder)
   fs.writeFileSync(path.join(universalDir, 'README.txt'),
-`Pace. Design fluency for AI harnesses.
+`Pace. Company-wide skills for AI coding agents.
 https://pace.tools
 
 This folder contains skills for all supported tools:
@@ -555,30 +555,20 @@ function generateCFConfig(buildDir) {
 `;
   fs.writeFileSync(path.join(buildDir, '_headers'), headers);
 
-  // _redirects: rewrite JSON API routes to static files (200 = rewrite, not redirect).
-  // Plus permanent redirects for legacy URLs.
+  // _redirects: rewrite JSON API routes to static files (200 = rewrite,
+  // not redirect). Pace ships no legacy URLs yet; add lines here when the
+  // site adds them.
   const redirects = `/api/skills /_data/api/skills.json 200
 /api/commands /_data/api/commands.json 200
-/api/patterns /_data/api/patterns.json 200
 /api/command-source/:id /_data/api/command-source/:id.json 200
-/gallery /slop#try-it-live 301
-/cheatsheet /docs 301
-/skills /docs 301
-/skills/:id /docs/:id 301
-/anti-patterns /slop#catalog 301
-/visual-mode /slop#see-it 301
-/neon-mirai /neo-mirai/ 301
-/neon-mirai/ /neo-mirai/ 301
-/cases/neon-mirai /cases/neo-mirai 301
-/cases/neon-mirai/ /cases/neo-mirai 301
 `;
   fs.writeFileSync(path.join(buildDir, '_redirects'), redirects);
 
-  // _routes.json: tell Cloudflare Pages which paths invoke Functions
-  // Without this, the SPA fallback serves index.html for function routes
+  // _routes.json: tell Cloudflare Pages which paths invoke Functions.
+  // Pace ships no Functions yet, so the include list is empty.
   const routes = {
     version: 1,
-    include: ['/api/download/*'],
+    include: [],
     exclude: [],
   };
   fs.writeFileSync(path.join(buildDir, '_routes.json'), JSON.stringify(routes, null, 2));

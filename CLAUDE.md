@@ -38,7 +38,7 @@ There is **one** user-invocable skill, `pace`, with **N commands** underneath it
 
 Same shape as impeccable. `bun run build` reads `skill/` and writes a per-harness transformed copy to each of the 13 harness output dirs (`.claude/`, `.cursor/`, `.agents/`, `.codex/`, `.gemini/`, `.kiro/`, `.opencode/`, `.pi/`, `.qoder/`, `.rovodev/`, `.trae/`, `.trae-cn/`, `.github/`).
 
-These harness dirs are **intentionally committed** so `npx pace skills install` can read them straight from the repo. Don't gitignore them. Run the build after editing `skill/`.
+These harness dirs are **build outputs that should be committed** so `npx pace skills install` can read them straight from the repo. Don't gitignore them. They're empty in the initial scaffold; run `bun run build` after editing `skill/` to populate, then commit.
 
 Source placeholders that get replaced per-provider:
 - `{{model}}` — Model name (Claude, Gemini, GPT, etc.)

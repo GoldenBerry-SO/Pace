@@ -51,6 +51,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "archiver": "^7.0.1",
     "astro": "^6.2.1",
     "wrangler": "^4.85.0"
   }

@@ -1,0 +1,4 @@
+interface:
+  display_name: Pace
+  short_description: Use when the user invokes a /pace sub-command, or wants a company-standard way to do...
+  default_prompt: Use Pace to redesign, critique, audit, or polish this frontend.
