@@ -1,0 +1,229 @@
+---
+import SubPage from '../../../layouts/SubPage.astro';
+import { DOCS_SIDEBAR } from '../../../lib/sidebar-data';
+import {
+  getSkillsByCategory,
+  getAllSkillPages,
+  SKILL_CATEGORY_ORDER,
+  SKILL_CATEGORY_LABELS,
+  SKILL_CATEGORY_BLURBS,
+} from '../../../lib/skill-pages';
+
+const currentPath = '/docs/skills';
+const repoRoot = process.cwd();
+const grouped = getSkillsByCategory(repoRoot);
+const all = getAllSkillPages(repoRoot);
+const total = all.length;
+---
+
+<SubPage
+  title="Skill catalog · Pace"
+  description="Full reference for every engineering skill: what each does, when to reach for it, how it pairs with the others."
+  activeNav="docs"
+  canonicalPath={currentPath}
+  sidebarLabel="Docs"
+>
+  <Fragment slot="sidebar">
+    {DOCS_SIDEBAR.map((group) => (
+      <div class="subpage-sidebar-group">
+        <span class="subpage-sidebar-group-title">{group.title}</span>
+        <ul class="subpage-sidebar-list">
+          {group.items.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={item.href === currentPath ? 'page' : undefined}
+              >{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </Fragment>
+
+  <article class="skillindex">
+    <header class="skillindex-header">
+      <span class="skillindex-eyebrow">Reference</span>
+      <h1>Engineering skill catalog</h1>
+      <p class="skillindex-lede">
+        Every skill in the <a href="/plugins/engineering">engineering</a> plugin, grouped by what it's for. Each row links to a dedicated page with the full instructions, trigger phrases, and skills it pairs with. <strong>{total} skills total.</strong>
+      </p>
+    </header>
+
+    <nav class="skillindex-toc" aria-label="Jump to category">
+      <span class="skillindex-toc-label">Jump to</span>
+      <ul class="skillindex-toc-list">
+        {SKILL_CATEGORY_ORDER.map((cat) =>
+          grouped[cat] && grouped[cat].length > 0 ? (
+            <li><a href={`#${cat}`}>{SKILL_CATEGORY_LABELS[cat]} ({grouped[cat].length})</a></li>
+          ) : null
+        )}
+      </ul>
+    </nav>
+
+    {SKILL_CATEGORY_ORDER.map((cat) =>
+      grouped[cat] && grouped[cat].length > 0 ? (
+        <section class="skillindex-category" id={cat}>
+          <header class="skillindex-category-head">
+            <h2>{SKILL_CATEGORY_LABELS[cat]}</h2>
+            <p class="skillindex-category-blurb">{SKILL_CATEGORY_BLURBS[cat]}</p>
+          </header>
+          <ul class="skillindex-list">
+            {grouped[cat].map((s) => (
+              <li class="skillindex-item">
+                <a href={`/docs/skills/${s.slug}`} class="skillindex-item-link">
+                  <div class="skillindex-item-name">
+                    <code>/{s.plugin}:{s.slug}</code>
+                  </div>
+                  <p class="skillindex-item-desc">{s.description.slice(0, 200)}{s.description.length > 200 ? '…' : ''}</p>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null
+    )}
+  </article>
+</SubPage>
+
+<style>
+  .skillindex {
+    max-width: 100%;
+  }
+  .skillindex-header {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .skillindex-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    margin-bottom: var(--spacing-sm);
+    display: inline-block;
+  }
+  .skillindex-header h1 {
+    font-family: var(--font-display);
+    font-size: var(--fs-3xl);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-md);
+  }
+  .skillindex-lede {
+    font-size: var(--fs-md);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    max-width: 70ch;
+  }
+  .skillindex-lede a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .skillindex-lede strong {
+    color: var(--color-ink);
+  }
+  .skillindex-toc {
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+  }
+  .skillindex-toc-label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+    display: block;
+    margin-bottom: var(--spacing-sm);
+  }
+  .skillindex-toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px var(--spacing-md);
+    font-size: var(--fs-sm);
+  }
+  .skillindex-toc-list a {
+    color: var(--color-charcoal);
+    border-bottom: 1px solid transparent;
+    transition: color var(--duration-fast) var(--ease-out-quart), border-color var(--duration-fast) var(--ease-out-quart);
+  }
+  .skillindex-toc-list a:hover {
+    color: var(--color-forest);
+    border-color: var(--color-forest-soft);
+  }
+  .skillindex-category {
+    margin-bottom: var(--spacing-2xl);
+    scroll-margin-top: 96px;
+  }
+  .skillindex-category-head {
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .skillindex-category-head h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+    margin-bottom: var(--spacing-xs);
+  }
+  .skillindex-category-blurb {
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+    line-height: 1.55;
+    max-width: 70ch;
+  }
+  .skillindex-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--spacing-sm);
+  }
+  @media (max-width: 880px) {
+    .skillindex-list {
+      grid-template-columns: 1fr;
+    }
+  }
+  .skillindex-item {
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+    transition: border-color var(--duration-fast) var(--ease-out-quart), transform var(--duration-fast) var(--ease-out-quart);
+  }
+  .skillindex-item:hover {
+    border-color: var(--color-forest-soft);
+    transform: translateY(-1px);
+  }
+  .skillindex-item-link {
+    display: block;
+    padding: var(--spacing-md);
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 0;
+  }
+  .skillindex-item-name {
+    margin-bottom: var(--spacing-xs);
+  }
+  .skillindex-item-name code {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    color: var(--color-forest);
+    background: transparent;
+    border: 0;
+    padding: 0;
+    font-weight: 600;
+  }
+  .skillindex-item-desc {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.5;
+  }
+</style>

@@ -47,6 +47,7 @@ export const DOCS_SIDEBAR: SidebarGroup[] = [
     items: [
       { href: '/docs#architecture', label: 'Architecture' },
       { href: '/docs/connectors', label: 'Connectors & MCP' },
+      { href: '/docs/skills', label: 'Skill catalog' },
       { href: '/docs#router', label: 'The /pace router' },
       { href: '/docs#impeccable', label: 'Impeccable (design)' },
     ],

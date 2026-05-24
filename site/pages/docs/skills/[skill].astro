@@ -1,0 +1,401 @@
+---
+import SubPage from '../../../layouts/SubPage.astro';
+import { DOCS_SIDEBAR } from '../../../lib/sidebar-data';
+import type { SkillPage } from '../../../lib/skill-pages';
+
+export async function getStaticPaths() {
+  const { getAllSkillPages, SKILL_CATEGORY_LABELS } = await import('../../../lib/skill-pages');
+  const repoRoot = process.cwd();
+  const all = getAllSkillPages(repoRoot);
+  return all.map((s) => ({
+    params: { skill: s.slug },
+    props: { skill: s, all, categoryLabel: SKILL_CATEGORY_LABELS[s.category] ?? s.category },
+  }));
+}
+
+interface Props {
+  skill: SkillPage;
+  all: SkillPage[];
+  categoryLabel: string;
+}
+
+const { skill, all, categoryLabel } = Astro.props as Props;
+const currentPath = `/docs/skills/${skill.slug}`;
+
+// Resolve "pairs with" slugs to skill names that actually exist in the catalog.
+const allBySlug = Object.fromEntries(all.map((s) => [s.slug, s]));
+const pairs = skill.pairsWith
+  .map((slug) => allBySlug[slug])
+  .filter((s): s is SkillPage => Boolean(s) && s.slug !== skill.slug);
+---
+
+<SubPage
+  title={`${skill.slug} · Pace`}
+  description={skill.description.slice(0, 160)}
+  activeNav="docs"
+  canonicalPath={currentPath}
+  sidebarLabel="Docs"
+>
+  <Fragment slot="sidebar">
+    {DOCS_SIDEBAR.map((group) => (
+      <div class="subpage-sidebar-group">
+        <span class="subpage-sidebar-group-title">{group.title}</span>
+        <ul class="subpage-sidebar-list">
+          {group.items.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={item.href === currentPath ? 'page' : undefined}
+              >{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </Fragment>
+
+  <article class="skillpage">
+    <header class="skillpage-header">
+      <div class="skillpage-breadcrumb">
+        <a href="/docs/skills">All skills</a>
+        <span class="skillpage-breadcrumb-sep">/</span>
+        <span>{categoryLabel}</span>
+      </div>
+      <h1 class="skillpage-title">
+        <code>/{skill.plugin}:{skill.slug}</code>
+      </h1>
+      <p class="skillpage-display-title">{skill.title}</p>
+      <p class="skillpage-description">{skill.description}</p>
+      {skill.argumentHint && (
+        <div class="skillpage-arghint">
+          <span class="skillpage-arghint-label">Argument</span>
+          <code>{skill.argumentHint}</code>
+        </div>
+      )}
+    </header>
+
+    {skill.lead && (
+      <section class="skillpage-lead">
+        <p>{skill.lead}</p>
+      </section>
+    )}
+
+    <section class="skillpage-body">
+      <h2 class="skillpage-section-title">Full skill instructions</h2>
+      <p class="skillpage-source-note">
+        This is the same file the agent loads when the skill triggers. Source: <a href={skill.sourceUrl} target="_blank" rel="noopener"><code>{skill.sourcePath}</code></a>.
+      </p>
+      <div class="skillpage-body-content" set:html={skill.bodyHtml} />
+    </section>
+
+    <section class="skillpage-meta">
+      <div class="skillpage-meta-block">
+        <h3>Plugin</h3>
+        <p>Part of the <a href={`/plugins/${skill.plugin}`}>{skill.pluginDisplay}</a> plugin. Install with <code>claude plugin install {skill.plugin}@pace.tools</code>.</p>
+      </div>
+
+      {pairs.length > 0 && (
+        <div class="skillpage-meta-block">
+          <h3>Pairs with</h3>
+          <ul class="skillpage-pairs">
+            {pairs.map((p) => (
+              <li>
+                <a href={`/docs/skills/${p.slug}`}>
+                  <code>/{p.plugin}:{p.slug}</code>
+                </a>
+                <span class="skillpage-pairs-desc">{p.description.slice(0, 120)}{p.description.length > 120 ? '…' : ''}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </section>
+
+    <footer class="skillpage-footer">
+      <a href="/docs/skills">&larr; All skills</a>
+      <a href={skill.sourceUrl} target="_blank" rel="noopener">View source on GitHub &rarr;</a>
+    </footer>
+  </article>
+</SubPage>
+
+<style>
+  .skillpage {
+    max-width: 100%;
+  }
+  .skillpage-header {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .skillpage-breadcrumb {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    gap: var(--spacing-xs);
+    align-items: center;
+  }
+  .skillpage-breadcrumb a {
+    color: var(--color-forest);
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--duration-fast) var(--ease-out-quart);
+  }
+  .skillpage-breadcrumb a:hover {
+    border-color: var(--color-forest-soft);
+  }
+  .skillpage-breadcrumb-sep {
+    color: var(--color-mist);
+  }
+  .skillpage-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-2xl);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-sm);
+  }
+  .skillpage-title code {
+    background: transparent;
+    padding: 0;
+    border: 0;
+    color: var(--color-forest);
+    font-family: var(--font-mono);
+  }
+  .skillpage-display-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    color: var(--color-ash);
+    margin-bottom: var(--spacing-md);
+  }
+  .skillpage-description {
+    font-size: var(--fs-base);
+    color: var(--color-charcoal);
+    line-height: 1.6;
+    max-width: 70ch;
+  }
+  .skillpage-arghint {
+    margin-top: var(--spacing-md);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 6px 12px;
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 6px;
+  }
+  .skillpage-arghint-label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+  }
+  .skillpage-arghint code {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: var(--color-ink);
+  }
+  .skillpage-lead {
+    margin-bottom: var(--spacing-xl);
+  }
+  .skillpage-lead p {
+    font-size: var(--fs-md);
+    color: var(--color-ink);
+    line-height: 1.55;
+    max-width: 64ch;
+    font-weight: 500;
+  }
+  .skillpage-body {
+    margin-bottom: var(--spacing-xl);
+  }
+  .skillpage-section-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-lg);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .skillpage-source-note {
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+    margin-bottom: var(--spacing-md);
+    font-style: italic;
+  }
+  .skillpage-source-note a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .skillpage-source-note code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: inherit;
+  }
+  .skillpage-body-content {
+    font-size: var(--fs-base);
+    color: var(--color-charcoal);
+    line-height: 1.65;
+    max-width: 70ch;
+  }
+  .skillpage-body-content :global(h1),
+  .skillpage-body-content :global(h2),
+  .skillpage-body-content :global(h3) {
+    font-family: var(--font-display);
+    color: var(--color-ink);
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+  }
+  .skillpage-body-content :global(h2) {
+    font-size: var(--fs-md);
+    letter-spacing: -0.01em;
+  }
+  .skillpage-body-content :global(h3) {
+    font-size: var(--fs-base);
+    font-weight: 600;
+  }
+  .skillpage-body-content :global(p) {
+    margin-bottom: var(--spacing-sm);
+  }
+  .skillpage-body-content :global(ul),
+  .skillpage-body-content :global(ol) {
+    padding-left: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+  }
+  .skillpage-body-content :global(li) {
+    margin-bottom: 4px;
+  }
+  .skillpage-body-content :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: var(--color-code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--color-code-border);
+    color: var(--color-ink);
+  }
+  .skillpage-body-content :global(pre) {
+    background: oklch(18% 0.015 150);
+    color: oklch(92% 0.005 150);
+    padding: var(--spacing-md);
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: var(--spacing-md) 0;
+    font-size: var(--fs-sm);
+    line-height: 1.5;
+  }
+  .skillpage-body-content :global(pre code) {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+  }
+  .skillpage-body-content :global(blockquote) {
+    border-left: 3px solid var(--color-forest-soft);
+    padding-left: var(--spacing-md);
+    margin-left: 0;
+    color: var(--color-charcoal);
+    font-style: italic;
+  }
+  .skillpage-body-content :global(strong) {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .skillpage-body-content :global(a) {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .skillpage-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+  }
+  @media (max-width: 720px) {
+    .skillpage-meta {
+      grid-template-columns: 1fr;
+    }
+  }
+  .skillpage-meta h3 {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+    margin-bottom: var(--spacing-sm);
+  }
+  .skillpage-meta p {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.5;
+  }
+  .skillpage-meta a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .skillpage-meta code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    background: var(--color-code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--color-code-border);
+    color: var(--color-ink);
+  }
+  .skillpage-pairs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .skillpage-pairs li {
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--color-mist);
+  }
+  .skillpage-pairs li:last-child {
+    border-bottom: 0;
+  }
+  .skillpage-pairs a {
+    text-decoration: none;
+    border-bottom: 0;
+  }
+  .skillpage-pairs code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    color: var(--color-forest);
+    background: transparent;
+    border: 0;
+    padding: 0;
+  }
+  .skillpage-pairs-desc {
+    display: block;
+    font-size: var(--fs-xs);
+    color: var(--color-ash);
+    margin-top: 2px;
+  }
+  .skillpage-footer {
+    display: flex;
+    justify-content: space-between;
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-mist);
+    font-size: var(--fs-sm);
+  }
+  .skillpage-footer a {
+    color: var(--color-forest);
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--duration-fast) var(--ease-out-quart);
+  }
+  .skillpage-footer a:hover {
+    border-color: var(--color-forest-soft);
+  }
+</style>
