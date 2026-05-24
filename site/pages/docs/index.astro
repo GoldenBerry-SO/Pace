@@ -1,13 +1,28 @@
 ---
-import Base from '../../layouts/Base.astro';
+import SubPage from '../../layouts/SubPage.astro';
+import { DOCS_SIDEBAR } from '../../lib/sidebar-data';
 ---
 
-<Base
+<SubPage
   title="Docs · pace"
   description="How pace works: marketplace structure, the /pace router, install + usage, MCP connectors, customization, authoring guide."
   activeNav="docs"
   canonicalPath="/docs"
+  sidebarLabel="Docs"
 >
+  <Fragment slot="sidebar">
+    {DOCS_SIDEBAR.map((group) => (
+      <div class="subpage-sidebar-group">
+        <span class="subpage-sidebar-group-title">{group.title}</span>
+        <ul class="subpage-sidebar-list">
+          {group.items.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </Fragment>
+
   <article class="docs-page">
     <header class="docs-header">
       <span class="docs-eyebrow">Reference</span>
@@ -16,21 +31,6 @@ import Base from '../../layouts/Base.astro';
         Pace is a Claude Code marketplace plus a company router. This page covers both: how the pieces fit together, how to install, how to use, how to customize, and how to author new commands.
       </p>
     </header>
-
-    <nav class="docs-toc" aria-label="Table of contents">
-      <h2>On this page</h2>
-      <ul>
-        <li><a href="#architecture">Architecture</a></li>
-        <li><a href="#install">Installing</a></li>
-        <li><a href="#usage">Using commands</a></li>
-        <li><a href="#connectors">MCP connectors</a></li>
-        <li><a href="#router">The /pace router</a></li>
-        <li><a href="#authoring">Authoring commands</a></li>
-        <li><a href="#customizing">Customizing plugins</a></li>
-        <li><a href="#updating">Updating</a></li>
-        <li><a href="#fork">Forking pace for your company</a></li>
-      </ul>
-    </nav>
 
     <section class="docs-section" id="architecture">
       <h2>Architecture</h2>
@@ -271,13 +271,11 @@ rsync -a /path/to/knowledge-work-plugins/&lt;plugin&gt;/ plugins/&lt;plugin&gt;/
       <p>License is Apache 2.0; attribution to Anthropic, partners, and impeccable stays in <code>NOTICE.md</code>.</p>
     </section>
   </article>
-</Base>
+</SubPage>
 
 <style>
   .docs-page {
-    max-width: var(--width-content);
-    margin: 0 auto;
-    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
+    max-width: 760px;
   }
   .docs-header {
     margin-bottom: var(--spacing-xl);
@@ -304,39 +302,6 @@ rsync -a /path/to/knowledge-work-plugins/&lt;plugin&gt;/ plugins/&lt;plugin&gt;/
     color: var(--color-charcoal);
     line-height: 1.55;
     max-width: 64ch;
-  }
-  .docs-toc {
-    background: var(--color-paper-elev);
-    border: 1px solid var(--color-mist);
-    border-radius: 10px;
-    padding: var(--spacing-md);
-    margin-bottom: var(--spacing-2xl);
-  }
-  .docs-toc h2 {
-    font-family: var(--font-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-ash);
-    margin-bottom: var(--spacing-sm);
-  }
-  .docs-toc ul {
-    columns: 2;
-    column-gap: var(--spacing-lg);
-    padding: 0;
-    list-style: none;
-  }
-  .docs-toc li {
-    padding: 2px 0;
-  }
-  .docs-toc a {
-    color: var(--color-charcoal);
-    font-size: var(--fs-sm);
-    border-bottom: 1px solid transparent;
-  }
-  .docs-toc a:hover {
-    color: var(--color-forest);
-    border-color: var(--color-forest-soft);
   }
   .docs-section {
     margin-bottom: var(--spacing-2xl);

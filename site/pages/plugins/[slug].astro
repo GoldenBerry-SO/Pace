@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import Base from '../../layouts/Base.astro';
+import SubPage from '../../layouts/SubPage.astro';
 import marketplace from '../../../.claude-plugin/marketplace.json';
 import {
   enumeratePlugins,
@@ -11,6 +11,11 @@ import {
   type ConnectorEntry,
   type PluginEntry,
 } from '../../lib/plugin-details';
+import {
+  PLUGIN_CATEGORIES,
+  PLUGIN_CATEGORY_LABELS,
+  PLUGIN_CATEGORY_ORDER,
+} from '../../lib/sidebar-data';
 
 export async function getStaticPaths() {
   // Re-import inside getStaticPaths so the prerender chunk can find them.
@@ -60,15 +65,57 @@ const {
 
 const pluginName = manifest.name ?? slug;
 const slashPrefix = `/${pluginName}:`;
+
+// Build sidebar with all local plugins, grouped + sorted, same as
+// the /plugins index sidebar. Mirrors impeccable's pattern of keeping
+// nav state stable across the index and detail routes.
+type SidebarPlugin = { slug: string };
+const sidebarItems: Record<string, SidebarPlugin[]> = {};
+for (const cat of PLUGIN_CATEGORY_ORDER) sidebarItems[cat] = [];
+{
+  type LocalEntry = { name: string; source?: string };
+  const local = (marketplace.plugins ?? []).filter(
+    (p): p is LocalEntry => typeof (p as LocalEntry).source === 'string' && (p as LocalEntry).source!.startsWith('./plugins/'),
+  );
+  for (const p of local) {
+    const cat = PLUGIN_CATEGORIES[p.name] ?? 'specialized';
+    sidebarItems[cat].push({ slug: p.name });
+  }
+  for (const cat of PLUGIN_CATEGORY_ORDER) {
+    sidebarItems[cat].sort((a, b) => a.slug.localeCompare(b.slug));
+  }
+}
 ---
 
 
-<Base
+<SubPage
   title={`${displayName} · pace`}
   description={marketplaceDescription}
   activeNav="plugins"
   canonicalPath={`/plugins/${slug}`}
+  sidebarLabel="Plugins"
 >
+  <Fragment slot="sidebar">
+    <div class="subpage-sidebar-group">
+      <span class="subpage-sidebar-group-title">All plugins</span>
+      <ul class="subpage-sidebar-list">
+        <li><a href="/plugins">Catalog</a></li>
+      </ul>
+    </div>
+    {PLUGIN_CATEGORY_ORDER.map((cat) => (
+      sidebarItems[cat].length > 0 && (
+        <div class="subpage-sidebar-group">
+          <span class="subpage-sidebar-group-title">{PLUGIN_CATEGORY_LABELS[cat]}</span>
+          <ul class="subpage-sidebar-list">
+            {sidebarItems[cat].map((item) => (
+              <li><a href={`/plugins/${item.slug}`} aria-current={item.slug === slug ? 'page' : undefined}>{item.slug}</a></li>
+            ))}
+          </ul>
+        </div>
+      )
+    ))}
+  </Fragment>
+
   <article class="plugin-page">
     <header class="plugin-header">
       <div class="plugin-breadcrumb">
@@ -163,13 +210,11 @@ const slashPrefix = `/${pluginName}:`;
       </p>
     </section>
   </article>
-</Base>
+</SubPage>
 
 <style>
   .plugin-page {
-    max-width: var(--width-content);
-    margin: 0 auto;
-    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
+    max-width: 760px;
   }
   .plugin-header {
     margin-bottom: var(--spacing-2xl);

@@ -1,0 +1,209 @@
+---
+// ABOUTME: Sub-page shell with sticky sidebar + main content grid.
+// ABOUTME: Mirrors impeccable's sub-pages layout. Slots: sidebar, default.
+
+import Base from './Base.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  activeNav?: 'home' | 'plugins' | 'docs' | 'tutorials' | 'cases';
+  canonicalPath?: string;
+  sidebarLabel?: string;
+}
+
+const {
+  title,
+  description,
+  activeNav,
+  canonicalPath,
+  sidebarLabel = 'Navigation',
+} = Astro.props;
+---
+
+<Base
+  title={title}
+  description={description}
+  activeNav={activeNav}
+  canonicalPath={canonicalPath}
+>
+  <div class="subpage-layout">
+    <aside class="subpage-sidebar" aria-label={sidebarLabel}>
+      <button
+        class="subpage-sidebar-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="subpage-sidebar-inner"
+      >
+        <span class="subpage-sidebar-toggle-label">{sidebarLabel}</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+      <div class="subpage-sidebar-inner" id="subpage-sidebar-inner">
+        <slot name="sidebar" />
+      </div>
+    </aside>
+
+    <div class="subpage-main">
+      <slot />
+    </div>
+  </div>
+
+  <script is:inline>
+    document.addEventListener('click', (e) => {
+      const toggle = e.target.closest('.subpage-sidebar-toggle');
+      if (!toggle) return;
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+    });
+  </script>
+</Base>
+
+<style is:global>
+  :root {
+    --subpage-sidebar-width: 240px;
+    --site-header-height: 72px;
+  }
+
+  .subpage-layout {
+    display: grid;
+    grid-template-columns: var(--subpage-sidebar-width) minmax(0, 1fr);
+    gap: clamp(var(--spacing-lg), 4vw, var(--spacing-2xl));
+    padding: 0 clamp(var(--spacing-md), 4vw, var(--spacing-2xl));
+    align-items: start;
+    max-width: var(--width-max);
+    margin: 0 auto;
+  }
+
+  .subpage-sidebar {
+    position: sticky;
+    top: var(--site-header-height);
+    align-self: start;
+    max-height: calc(100vh - var(--site-header-height));
+    overflow-y: auto;
+    padding: var(--spacing-lg) 0 var(--spacing-2xl);
+    border-right: 1px solid var(--color-mist);
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-mist) transparent;
+  }
+
+  .subpage-sidebar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .subpage-sidebar::-webkit-scrollbar-thumb {
+    background: var(--color-mist);
+    border-radius: 3px;
+  }
+
+  .subpage-sidebar-inner {
+    padding-right: var(--spacing-md);
+  }
+
+  .subpage-sidebar-toggle {
+    display: none;
+  }
+
+  .subpage-sidebar-group {
+    margin-bottom: var(--spacing-md);
+  }
+  .subpage-sidebar-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .subpage-sidebar-group-title {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-ash);
+    margin: 0 0 6px;
+    padding: 0 0 0 14px;
+    display: block;
+  }
+
+  .subpage-sidebar-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .subpage-sidebar-list li {
+    margin: 0;
+  }
+  .subpage-sidebar-list a {
+    display: block;
+    padding: 5px 0 5px 12px;
+    border-left: 2px solid transparent;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--color-charcoal);
+    text-decoration: none;
+    transition:
+      color var(--duration-fast) var(--ease-out-quart),
+      border-color var(--duration-fast) var(--ease-out-quart),
+      background var(--duration-fast) var(--ease-out-quart);
+  }
+  .subpage-sidebar-list a:hover {
+    color: var(--color-forest);
+    background: var(--color-forest-dim);
+  }
+  .subpage-sidebar-list a[aria-current="page"] {
+    color: var(--color-forest);
+    border-left-color: var(--color-forest);
+    background: var(--color-forest-dim);
+  }
+
+  .subpage-main {
+    padding: var(--spacing-xl) 0 var(--spacing-3xl);
+    min-width: 0;
+  }
+
+  @media (max-width: 880px) {
+    .subpage-layout {
+      grid-template-columns: 1fr;
+      padding: 0 var(--spacing-md);
+    }
+    .subpage-sidebar {
+      position: static;
+      max-height: none;
+      border-right: 0;
+      border-bottom: 1px solid var(--color-mist);
+      padding: var(--spacing-md) 0;
+      margin-bottom: var(--spacing-md);
+    }
+    .subpage-sidebar-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: var(--spacing-sm) 0;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: var(--fs-sm);
+      color: var(--color-ink);
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+    }
+    .subpage-sidebar-toggle svg {
+      transition: transform var(--duration-base) var(--ease-out-quart);
+    }
+    .subpage-sidebar-toggle[aria-expanded="true"] svg {
+      transform: rotate(180deg);
+    }
+    .subpage-sidebar-inner {
+      display: none;
+      padding-right: 0;
+      padding-top: var(--spacing-sm);
+    }
+    .subpage-sidebar-toggle[aria-expanded="true"] + .subpage-sidebar-inner {
+      display: block;
+    }
+    .subpage-main {
+      padding: var(--spacing-md) 0 var(--spacing-2xl);
+    }
+  }
+</style>
