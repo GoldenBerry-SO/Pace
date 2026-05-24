@@ -102,8 +102,18 @@ import Base from '../../layouts/Base.astro';
     <section class="usecases-team" id="engineering">
       <header class="usecases-team-head">
         <h2>Engineering</h2>
-        <p class="usecases-team-tagline">Pre-review on every PR. Deploy checklist enforced. Incidents triaged faster.</p>
+        <p class="usecases-team-tagline">Spec → stacked PRs → review → ship, with disciplined diagnosis for hard bugs and a careful-review pass before merge. The engineering plugin's 34 skills cover the whole arc.</p>
       </header>
+
+      <article class="usecase-card">
+        <h3>Spec a feature, ship it as stacked PRs</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Interactive, when starting a new feature</dd></div>
+          <div><dt>Skills</dt><dd><code>/engineering:spec</code> → <code>/engineering:implement</code> → <code>/engineering:review</code> → <code>/engineering:topr</code> → <code>/engineering:next</code></dd></div>
+          <div><dt>Features</dt><dd>Sub-agents per sub-issue, plan mode, GitHub connector, stacked git branches</dd></div>
+        </dl>
+        <p><code>/engineering:spec</code> walks the feature into a parent epic with ordered sub-issues, one PR each. <code>/engineering:implement</code> builds them in stacked branches, opening one stacked PR per sub-issue. As reviews come in, <code>/engineering:review</code> handles the comment queue. When an upstream PR merges, <code>/engineering:topr</code> rebases the next one cleanly (correctly dropping commits that squash-merged). <code>/engineering:next</code> resets for the next task. The whole arc lives in one disciplined flow instead of being reinvented each time. <a href="/docs/skills/spec">Read the workflow &rarr;</a></p>
+      </article>
 
       <article class="usecase-card">
         <h3>Self-review before the human gets paged</h3>
@@ -113,6 +123,46 @@ import Base from '../../layouts/Base.astro';
           <div><dt>Features</dt><dd>Routines (GitHub trigger), plan mode, sub-agent per file</dd></div>
         </dl>
         <p>Every new PR runs an auto-review that catches naming, obvious bugs, missing tests, and convention drift. Findings post as draft comments the author can accept or dismiss before tagging a human reviewer. The human gets to focus on intent and architecture, not whitespace.</p>
+      </article>
+
+      <article class="usecase-card">
+        <h3>Careful-review pass before opening the PR</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Interactive, end of a coding session</dd></div>
+          <div><dt>Skills</dt><dd><code>/engineering:careful-review</code> → <code>/engineering:ship-pr</code></dd></div>
+          <div><dt>Features</dt><dd>Plan mode, plus optional <code>/engineering:codex-review</code> for a second-opinion pass against the base ref</dd></div>
+        </dl>
+        <p>Before opening a PR, <code>/engineering:careful-review</code> re-reads everything the session touched with fresh eyes (bugs, stale comments, dead code, weak tests) and fixes what it finds. Optionally, <code>/engineering:codex-review</code> runs an OpenAI Codex pass against <code>main</code> for an independent second opinion on P0/P1 issues. Then <code>/engineering:ship-pr</code> commits, pushes, and opens the PR with a proper summary and test plan. NEVER skips hooks.</p>
+      </article>
+
+      <article class="usecase-card">
+        <h3>Disciplined diagnosis for the bugs that hide</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Interactive, when "I tried a few things and can't reproduce it"</dd></div>
+          <div><dt>Skills</dt><dd><code>/engineering:diagnose</code></dd></div>
+          <div><dt>Features</dt><dd>Sub-agents for hypothesis testing, bisection harness, plan mode</dd></div>
+        </dl>
+        <p>The bug that resists casual debugging needs a feedback loop, not more staring. <code>/engineering:diagnose</code> imposes the discipline: construct a fast deterministic pass/fail signal first (failing test, curl, replay, bisection harness), <em>then</em> bisect, hypothesise, instrument, fix, regression-test. The first phase is the entire skill; once the signal exists, the cause falls out. <a href="/docs/skills/diagnose">Read the discipline &rarr;</a></p>
+      </article>
+
+      <article class="usecase-card">
+        <h3>TDD that doesn't write crap tests</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Interactive, when building a new behavior or hardening a known bug</dd></div>
+          <div><dt>Skills</dt><dd><code>/engineering:tdd</code>, <code>/engineering:find-missing-tests</code></dd></div>
+          <div><dt>Features</dt><dd>Vertical-slice tracer bullets, integration-style tests, plan mode for the red-green-refactor steps</dd></div>
+        </dl>
+        <p><code>/engineering:tdd</code> insists on vertical slices: one test → one implementation → repeat. No writing all the tests upfront ("horizontal slicing"), because that produces tests that verify shape, not behavior. Tests go through public interfaces, not internals. The bundled <code>tdd/mocking.md</code>, <code>tests.md</code>, and <code>deep-modules.md</code> reference files travel with the skill. Pair with <code>/engineering:find-missing-tests</code> for a coverage-gap survey first.</p>
+      </article>
+
+      <article class="usecase-card">
+        <h3>Deploy checklist that actually blocks</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, API trigger fired by your CI pipeline before the prod step</dd></div>
+          <div><dt>Skills</dt><dd><code>/engineering:deploy-checklist</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (API trigger), Linear + Slack connectors, exit code gates the deploy</dd></div>
+        </dl>
+        <p>Your CD pipeline POSTs to the routine's <code>/fire</code> endpoint before the prod step. The routine runs <code>/engineering:deploy-checklist</code>: migrations reviewed, tests green, feature flag set, runbook linked, on-call notified. Anything missing returns a non-zero result and the pipeline halts with a Slack message explaining what's left.</p>
       </article>
 
       <article class="usecase-card">
