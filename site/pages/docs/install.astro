@@ -58,22 +58,22 @@ const currentPath = '/docs/install';
       </p>
 
       <h3>1. Register the marketplace</h3>
-      <p>One-time per project. Tells Claude Code that <code>pace.tools</code> is a source of plugins.</p>
-      <pre class="installpage-pre"><code>claude plugin marketplace add pace.tools</code></pre>
+      <p>One-time per project. Tells Claude Code where to find Pace's catalog.</p>
+      <pre class="installpage-pre"><code>claude plugin marketplace add GoldenBerry-SO/Pace</code></pre>
       <p class="installpage-aside">
-        Behind the scenes this fetches <a href="/.claude-plugin/marketplace.json">marketplace.json</a> and registers the 50 plugins it lists. You don't install all 50; you install the ones your team uses.
+        Claude Code clones the GitHub repo and reads its <a href="https://github.com/GoldenBerry-SO/Pace/blob/main/.claude-plugin/marketplace.json">marketplace.json</a>. The marketplace registers as <code>pace</code>; you install plugins with the <code>@pace</code> suffix.
       </p>
 
       <h3>2. Install the plugins your team uses</h3>
       <p>Install one plugin per team or function. The router (<code>pace</code>) is optional but recommended; it's where your company-specific commands go.</p>
       <pre class="installpage-pre"><code><span class="installpage-comment"># The router (company commands like /pace teach)</span>
-claude plugin install pace@pace.tools
+claude plugin install pace@pace
 
 <span class="installpage-comment"># Department plugins (install only what you use)</span>
-claude plugin install sales@pace.tools
-claude plugin install engineering@pace.tools
-claude plugin install data@pace.tools
-claude plugin install marketing@pace.tools</code></pre>
+claude plugin install sales@pace
+claude plugin install engineering@pace
+claude plugin install data@pace
+claude plugin install marketing@pace</code></pre>
       <p>
         Not sure which to install? See <a href="#picking">Picking plugins</a> below, or jump to the <a href="/docs/teams">team guides</a> for role-based recommendations.
       </p>
@@ -98,12 +98,12 @@ claude plugin install marketing@pace.tools</code></pre>
         Each plugin has a deep link that opens Cowork and adds the Pace marketplace plus the plugin in a single step. Open one of these in your browser (Cowork has to be installed first):
       </p>
       <pre class="installpage-pre"><code><span class="installpage-comment"># Pattern</span>
-https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/pace.tools&amp;plugin=&lt;name&gt;
+https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&amp;plugin=&lt;name&gt;
 
 <span class="installpage-comment"># Examples</span>
-https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/pace.tools&amp;plugin=sales
-https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/pace.tools&amp;plugin=marketing
-https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/pace.tools&amp;plugin=engineering</code></pre>
+https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&amp;plugin=sales
+https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&amp;plugin=marketing
+https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&amp;plugin=engineering</code></pre>
       <p>
         Cowork prompts you to confirm the install. Restart the app once the install finishes so connectors register cleanly. The pattern is the same the Anthropic-published partner plugins (Apollo, Slack, Zoom, etc.) use; see Cowork's own docs for the current UI specifics.
       </p>
@@ -140,33 +140,33 @@ https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/pace.
     </section>
 
     <section class="installpage-section" id="pace-cli">
-      <h2>The <code>pace</code> CLI</h2>
+      <h2>The <code>pace-tools</code> CLI</h2>
       <p>
-        Pace also ships a small Node CLI you can run with <code>npx</code>. It's an alternative to the Claude Code marketplace flow, useful in two cases:
-      </p>
-      <ul class="installpage-bullets">
-        <li>You want the same skills installed across <strong>multiple AI harnesses</strong> in the same project (Claude Code, Cursor, Gemini CLI, Codex CLI, etc.). The CLI copies into all of them at once.</li>
-        <li>You want a <strong>scripted, repeatable install</strong> for onboarding new repos, dev containers, or CI.</li>
-      </ul>
-
-      <pre class="installpage-pre"><code><span class="installpage-comment"># Install pace skills into every detected harness</span>
-npx pace skills install
-
-<span class="installpage-comment"># Check if updates are available</span>
-npx pace skills check
-
-<span class="installpage-comment"># Update to the latest skills</span>
-npx pace skills update
-
-<span class="installpage-comment"># List every command pace ships</span>
-npx pace skills help</code></pre>
-
-      <p>
-        Harness directories it writes into: <code>.claude</code>, <code>.cursor</code>, <code>.gemini</code>, <code>.agents</code>, <code>.github</code>, <code>.kiro</code>, <code>.opencode</code>, <code>.pi</code>, <code>.qoder</code>, <code>.rovodev</code>, <code>.trae</code>, <code>.trae-cn</code>. Only harnesses present in your project are touched.
+        Pace ships a small Node CLI you can run with <code>npx</code>. It's a thin wrapper around <code>claude plugin</code>, useful when you want to install many plugins at once or script the setup for an onboarding flow.
       </p>
 
-      <div class="installpage-callout installpage-callout-warning">
-        <strong>What the CLI installs.</strong> <code>npx pace skills install</code> installs the <code>pace</code> router skills and offers to bring <a href="https://impeccable.style">impeccable</a> along for frontend design. It does <strong>not</strong> install the department plugins (sales, engineering, etc.); those are Claude Code marketplace plugins. Use <code>claude plugin install</code> for them, or install through the Cowork UI.
+      <pre class="installpage-pre"><code><span class="installpage-comment"># One-time: register the Pace marketplace with Claude Code</span>
+npx pace-tools marketplace add
+
+<span class="installpage-comment"># Install one or more plugins</span>
+npx pace-tools install sales
+npx pace-tools install engineering data
+
+<span class="installpage-comment"># Browse the full catalog</span>
+npx pace-tools list
+
+<span class="installpage-comment"># See per-role starter sets</span>
+npx pace-tools teams
+npx pace-tools teams sales
+
+<span class="installpage-comment"># What's installed?</span>
+npx pace-tools status
+
+<span class="installpage-comment"># Remove a plugin</span>
+npx pace-tools uninstall sales</code></pre>
+
+      <div class="installpage-callout">
+        <strong>Requires Claude Code.</strong> The CLI wraps <code>claude plugin install</code>, so the <code>claude</code> binary must be on PATH. If you only use Cowork, install through the deep links above instead.
       </div>
     </section>
 
@@ -174,16 +174,16 @@ npx pace skills help</code></pre>
       <h2>Updating</h2>
 
       <h3>Claude Code</h3>
-      <p>Marketplace plugins update with the same command they install with:</p>
-      <pre class="installpage-pre"><code>claude plugin marketplace update pace.tools</code></pre>
-      <p>That refreshes Pace's catalog. Per-plugin updates land when Claude Code re-resolves the marketplace.</p>
+      <p>Refresh the marketplace; reinstall plugins to pick up the new versions:</p>
+      <pre class="installpage-pre"><code>claude plugin marketplace update pace
+claude plugin install &lt;name&gt;@pace      <span class="installpage-comment"># reinstalls; picks up new version</span></code></pre>
 
       <h3>Cowork</h3>
       <p>Cowork pulls plugin updates from the marketplace whenever you reopen the app or re-run a plugin install link. The exact in-app update UI is app-version dependent; see Cowork's docs for the current flow.</p>
 
       <h3>Pace CLI</h3>
-      <pre class="installpage-pre"><code>npx pace skills update</code></pre>
-      <p>Reads the latest skills from the GitHub source and refreshes every harness directory.</p>
+      <pre class="installpage-pre"><code>npx pace-tools status     <span class="installpage-comment"># what's installed + which marketplaces are registered</span></code></pre>
+      <p>Re-run <code>npx pace-tools install &lt;name&gt;</code> after a marketplace refresh to upgrade a plugin.</p>
     </section>
 
     <section class="installpage-section" id="verifying">
@@ -195,7 +195,7 @@ npx pace skills help</code></pre>
         Connectors stay <em>declared but not authorized</em> until the first skill that needs them runs. That's by design: authorization is just-in-time, so a fresh install doesn't barrage you with OAuth windows you don't need yet.
       </p>
       <p>
-        Stuck? Open an issue at <a href="https://github.com/GoldenBerry-SO/pace.tools/issues">github.com/GoldenBerry-SO/pace.tools</a>.
+        Stuck? Open an issue at <a href="https://github.com/GoldenBerry-SO/Pace/issues">github.com/GoldenBerry-SO/Pace</a>.
       </p>
     </section>
   </article>

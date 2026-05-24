@@ -68,25 +68,28 @@ import { DOCS_SIDEBAR } from '../../lib/sidebar-data';
 
       <h3>Register the marketplace</h3>
       <p>Done once per project (or globally per machine). This tells Claude where to find Pace's plugins.</p>
-      <pre class="docs-pre"><code>claude plugin marketplace add pace.tools</code></pre>
+      <pre class="docs-pre"><code>claude plugin marketplace add GoldenBerry-SO/Pace</code></pre>
 
       <h3>Install plugins individually</h3>
       <p>Pick what your role actually uses. There's no "install all" recommended path; most people use 2-4 plugins.</p>
       <pre class="docs-pre"><code><span class="docs-comment"># The company router</span>
-claude plugin install pace@pace.tools
+claude plugin install pace@pace
 
 <span class="docs-comment"># Department plugins</span>
-claude plugin install sales@pace.tools
-claude plugin install engineering@pace.tools
-claude plugin install data@pace.tools
-claude plugin install marketing@pace.tools
-claude plugin install finance@pace.tools
-claude plugin install legal@pace.tools
+claude plugin install sales@pace
+claude plugin install engineering@pace
+claude plugin install data@pace
+claude plugin install marketing@pace
+claude plugin install finance@pace
+claude plugin install legal@pace
 <span class="docs-comment"># … 43 more available; see /plugins for the full catalog</span></code></pre>
 
       <h3>Or use the Pace CLI</h3>
-      <p>The Pace CLI wraps the marketplace flow with an interactive picker and offers <a href="https://impeccable.style">impeccable</a> for design.</p>
-      <pre class="docs-pre"><code>npx pace skills install</code></pre>
+      <p>The <code>pace-tools</code> CLI wraps <code>claude plugin</code> with marketplace auto-registration and multi-plugin install:</p>
+      <pre class="docs-pre"><code>npx pace-tools marketplace add
+npx pace-tools install sales engineering data
+npx pace-tools list      <span class="docs-comment"># browse the catalog</span>
+npx pace-tools teams     <span class="docs-comment"># per-role starter sets</span></code></pre>
 
       <h3>From-repo install for development</h3>
       <p>If you're contributing to Pace itself, clone the repo and use <code>--copy</code> to install from your local working tree:</p>
@@ -269,7 +272,7 @@ mkdir -p plugins/yourco-onboarding/skills/welcome-day-one
         <li>Add an entry to <code>marketplace.json</code> pointing at <code>./plugins/sales-custom</code> with the same shape as other plugins.</li>
         <li>Edit the skill files in <code>plugins/sales-custom/skills/</code> as needed.</li>
       </ol>
-      <p>Both plugins live in the marketplace. Users opt into your fork by installing <code>sales-custom@pace.tools</code> instead of <code>sales@pace.tools</code>.</p>
+      <p>Both plugins live in the marketplace. Users opt into your fork by installing <code>sales-custom@pace</code> instead of <code>sales@pace</code>.</p>
     </section>
 
     <section class="docs-section" id="updating">

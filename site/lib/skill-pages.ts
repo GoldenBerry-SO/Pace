@@ -189,8 +189,8 @@ function loadSkillsFromPlugin(repoRoot: string, pluginSlug: string, pluginDispla
 
     const sourcePath = `plugins/${pluginSlug}/skills/${entry}/SKILL.md`;
     const sourceDir = `plugins/${pluginSlug}/skills/${entry}`;
-    const sourceUrl = `https://github.com/GoldenBerry-SO/pace.tools/blob/main/${sourcePath}`;
-    const sourceDirUrl = `https://github.com/GoldenBerry-SO/pace.tools/blob/main/${sourceDir}`;
+    const sourceUrl = `https://github.com/GoldenBerry-SO/Pace/blob/main/${sourcePath}`;
+    const sourceDirUrl = `https://github.com/GoldenBerry-SO/Pace/blob/main/${sourceDir}`;
 
     // Rewrite relative .md links in the body to point at the GitHub source.
     // The SKILL.md often references supporting files in the same skill dir

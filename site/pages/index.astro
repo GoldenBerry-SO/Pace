@@ -9,7 +9,7 @@ const jsonLd = [
     url: 'https://pace.tools',
     logo: 'https://pace.tools/og-image.svg',
     description: 'Curated Claude Code plugin marketplace. Role-specific AI plugins for sales, marketing, engineering, finance, product, ops.',
-    sameAs: ['https://github.com/GoldenBerry-SO/pace.tools'],
+    sameAs: ['https://github.com/GoldenBerry-SO/Pace'],
   },
   {
     '@context': 'https://schema.org',
@@ -93,9 +93,9 @@ const jsonLd = [
             <span class="terminal-dot" data-dot="g"></span>
             <span class="terminal-label">install pace</span>
           </div>
-          <pre class="terminal-body"><code><span class="prompt">$</span> claude plugin marketplace add pace.tools
+          <pre class="terminal-body"><code><span class="prompt">$</span> claude plugin marketplace add GoldenBerry-SO/Pace
 <span class="muted">Registers 50 plugins.</span>
-<span class="prompt">$</span> claude plugin install sales@pace.tools
+<span class="prompt">$</span> claude plugin install sales@pace
 <span class="prompt">$</span> /sales:call-prep Acme Corp</code></pre>
         </div>
       </aside>
@@ -328,7 +328,7 @@ const jsonLd = [
 
       <div class="catalog-footnote">
         <a href="/plugins" class="text-link">Browse the full plugin catalog &rarr;</a>
-        <p class="catalog-credit">Plugins are authored by their listed owners; Pace curates and bundles them. <a href="https://github.com/GoldenBerry-SO/pace.tools/blob/main/NOTICE.md">Full attribution &rarr;</a></p>
+        <p class="catalog-credit">Plugins are authored by their listed owners; Pace curates and bundles them. <a href="https://github.com/GoldenBerry-SO/Pace/blob/main/NOTICE.md">Full attribution &rarr;</a></p>
       </div>
     </div>
   </section>
@@ -397,7 +397,7 @@ const jsonLd = [
             <span class="terminal-dot" data-dot="g"></span>
             <span class="terminal-label">register</span>
           </div>
-          <pre class="terminal-body"><code><span class="prompt">$</span> claude plugin marketplace add pace.tools</code></pre>
+          <pre class="terminal-body"><code><span class="prompt">$</span> claude plugin marketplace add GoldenBerry-SO/Pace</code></pre>
         </div>
       </div>
 
@@ -414,10 +414,10 @@ const jsonLd = [
             <span class="terminal-dot" data-dot="g"></span>
             <span class="terminal-label">install</span>
           </div>
-          <pre class="terminal-body"><code><span class="prompt">$</span> claude plugin install pace@pace.tools          <span class="muted"># company router</span>
-<span class="prompt">$</span> claude plugin install sales@pace.tools         <span class="muted"># /sales:* commands</span>
-<span class="prompt">$</span> claude plugin install engineering@pace.tools   <span class="muted"># /engineering:* commands</span>
-<span class="prompt">$</span> claude plugin install data@pace.tools          <span class="muted"># /data:* commands</span></code></pre>
+          <pre class="terminal-body"><code><span class="prompt">$</span> claude plugin install pace@pace          <span class="muted"># company router</span>
+<span class="prompt">$</span> claude plugin install sales@pace         <span class="muted"># /sales:* commands</span>
+<span class="prompt">$</span> claude plugin install engineering@pace   <span class="muted"># /engineering:* commands</span>
+<span class="prompt">$</span> claude plugin install data@pace          <span class="muted"># /data:* commands</span></code></pre>
         </div>
 
         <p class="install-note">
@@ -425,13 +425,16 @@ const jsonLd = [
         </p>
 
         <details class="install-alt">
-          <summary>Or use the Pace CLI for a guided picker</summary>
+          <summary>Or use the <code>pace-tools</code> CLI</summary>
           <div class="install-alt-body">
-            <p>The Pace CLI wraps the marketplace flow with an interactive prompt:</p>
+            <p>A thin wrapper around <code>claude plugin</code> that handles marketplace registration + multi-plugin install in one command:</p>
             <div class="terminal terminal-compact">
-              <pre class="terminal-body"><code><span class="prompt">$</span> npx pace skills install</code></pre>
+              <pre class="terminal-body"><code><span class="prompt">$</span> npx pace-tools marketplace add
+<span class="prompt">$</span> npx pace-tools install sales engineering data
+<span class="prompt">$</span> npx pace-tools list      <span class="muted"># browse the catalog</span>
+<span class="prompt">$</span> npx pace-tools teams     <span class="muted"># per-role starter sets</span></code></pre>
             </div>
-            <p>The picker installs the Pace router and offers to bring impeccable along for design.</p>
+            <p>Requires the <code>claude</code> CLI on PATH (it wraps <code>claude plugin install</code>).</p>
           </div>
         </details>
       </div>
@@ -482,7 +485,7 @@ const jsonLd = [
         </li>
       </ul>
       <p class="changelog-footnote">
-        Track work in progress on <a href="https://github.com/GoldenBerry-SO/pace.tools" class="text-link">GitHub</a>.
+        Track work in progress on <a href="https://github.com/GoldenBerry-SO/Pace" class="text-link">GitHub</a>.
       </p>
     </div>
   </section>
@@ -531,8 +534,8 @@ const jsonLd = [
           <summary>How do I install it?</summary>
           <div class="faq-answer">
             <p>From inside your Claude Code project:</p>
-            <pre><code>claude plugin marketplace add pace.tools
-claude plugin install sales@pace.tools</code></pre>
+            <pre><code>claude plugin marketplace add GoldenBerry-SO/Pace
+claude plugin install sales@pace</code></pre>
             <p>Plugins install independently. Pick what you need; skip what you don't.</p>
           </div>
         </details>
@@ -602,7 +605,7 @@ claude plugin install sales@pace.tools</code></pre>
         Pace is open source. Fork it, rename the router, and write the commands that match how your company works.
       </p>
       <div class="company-cta-row">
-        <a href="https://github.com/GoldenBerry-SO/pace.tools" class="cta cta-primary" target="_blank" rel="noopener">Fork on GitHub</a>
+        <a href="https://github.com/GoldenBerry-SO/Pace" class="cta cta-primary" target="_blank" rel="noopener">Fork on GitHub</a>
       </div>
 
       <div class="company-cta-enablement">

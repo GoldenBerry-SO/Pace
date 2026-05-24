@@ -27,7 +27,7 @@ const COMPONENTS = {
     artifacts: ['dist/universal.zip'],
     postReleaseHint: null,
     tweetHeader: (v) => `Pace v${v} is out.`,
-    tweetCta: 'Install / update: npx skills add GoldenBerry-SO/pace.tools',
+    tweetCta: 'Install / update: npx skills add GoldenBerry-SO/Pace',
   },
   cli: {
     manifest: 'package.json',
@@ -53,7 +53,7 @@ const COMPONENTS = {
   },
 };
 
-const REPO_URL = 'https://github.com/GoldenBerry-SO/pace.tools';
+const REPO_URL = 'https://github.com/GoldenBerry-SO/Pace';
 const TWEET_LIMIT = 280;
 
 const args = process.argv.slice(2);

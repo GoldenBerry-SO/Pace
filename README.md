@@ -9,7 +9,7 @@ For frontend code-level design, pace defers to [impeccable](https://impeccable.s
 Register the marketplace once:
 
 ```bash
-claude plugin marketplace add GoldenBerry-SO/pace.tools
+claude plugin marketplace add GoldenBerry-SO/Pace
 ```
 
 Then install whichever plugins you need:

@@ -691,7 +691,7 @@ async function build() {
   // The Claude Code marketplace is configured with `source: "./plugin"`, so
   // the plugin cache only copies this slim directory (~0.3 MB) instead of
   // the entire monorepo (~291 MB on the previous "./" source). The harness
-  // dirs above stay where they are because `npx skills add GoldenBerry-SO/pace.tools`
+  // dirs above stay where they are because `npx skills add GoldenBerry-SO/Pace`
   // reads them directly from the GitHub repo at install time.
   const pluginRoot = path.join(ROOT_DIR, 'plugin');
   const pluginManifestDir = path.join(pluginRoot, '.claude-plugin');

@@ -249,7 +249,7 @@ async function install(flags) {
     // directories have meaningfully different per-provider content (frontmatter,
     // command prefix, paths), and the default symlink also fails silently when
     // .claude/ doesn't exist yet or on Windows without elevated privileges (#140).
-    execSync(`npx skills add GoldenBerry-SO/pace.tools --copy${yes ? ' -y' : ''}`, { stdio: 'inherit' });
+    execSync(`npx skills add GoldenBerry-SO/Pace --copy${yes ? ' -y' : ''}`, { stdio: 'inherit' });
   } catch (e) {
     process.exit(e.status ?? 1);
   }
@@ -444,7 +444,7 @@ async function update(flags = []) {
   // symlinks (matches the install behavior).
   console.log('Updating pace skills via npx skills...\n');
   try {
-    execSync(`npx skills add GoldenBerry-SO/pace.tools --copy${yes ? ' -y' : ''}`, { stdio: 'inherit' });
+    execSync(`npx skills add GoldenBerry-SO/Pace --copy${yes ? ' -y' : ''}`, { stdio: 'inherit' });
   } catch (e) {
     console.error(`Update failed: ${e.message || ''}`);
     process.exit(e.status ?? 1);

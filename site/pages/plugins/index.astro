@@ -137,7 +137,7 @@ for (const cat of PLUGIN_CATEGORY_ORDER) {
         Pace bundles <strong>{total} plugins</strong> across four origins: the Pace router (your team's commands), first-party plugins, partner-built plugins, and external plugins referenced from upstream repos.
       </p>
       <div class="plugins-install">
-        <code>claude plugin marketplace add pace.tools</code>
+        <code>claude plugin marketplace add GoldenBerry-SO/Pace</code>
       </div>
     </header>
 
@@ -186,10 +186,10 @@ for (const cat of PLUGIN_CATEGORY_ORDER) {
 
     <section class="plugins-howto">
       <h2>Install a plugin</h2>
-      <pre><code>claude plugin marketplace add pace.tools
-claude plugin install &lt;name&gt;@pace.tools</code></pre>
+      <pre><code>claude plugin marketplace add GoldenBerry-SO/Pace
+claude plugin install &lt;name&gt;@pace</code></pre>
       <p>
-        Replace <code>&lt;name&gt;</code> with any value in the Plugin column. The pace CLI (<code>npx pace skills install</code>) wraps this with an interactive picker that also offers <a href="https://impeccable.style">impeccable</a> for frontend design.
+        Replace <code>&lt;name&gt;</code> with any value in the Plugin column. The <code>pace-tools</code> CLI (<code>npx pace-tools install &lt;name&gt;</code>) wraps this for multi-plugin installs. For frontend design, install <a href="https://impeccable.style">impeccable</a> alongside.
       </p>
     </section>
   </article>
