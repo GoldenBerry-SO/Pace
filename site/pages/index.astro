@@ -1,0 +1,80 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Pace — company-wide skills for AI coding agents"
+  description="One router, many commands across engineering, product, ops, and marketing. For design, pace defers to impeccable."
+  canonicalPath="/"
+>
+  <article class="prose">
+    <h1>pace</h1>
+    <p class="lede">
+      Company-wide skills for AI coding agents. One router (<code>/pace</code>),
+      many commands across engineering, product, ops, and marketing.
+    </p>
+
+    <p>
+      For frontend design, pace defers to <a href="https://impeccable.style">impeccable</a>.
+      The installer offers to bring it along.
+    </p>
+
+    <h2>Install</h2>
+    <pre><code>npx pace skills install</code></pre>
+
+    <h2>Use</h2>
+    <pre><code>/pace &lt;command&gt; [target]</code></pre>
+
+    <p class="status">
+      Pace is in scaffold. Commands ship as they're authored.
+      Track progress on <a href="https://github.com/GoldenBerry-SO/pace.tools">GitHub</a>.
+    </p>
+  </article>
+</Base>
+
+<style>
+  .prose h1 {
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    letter-spacing: -0.03em;
+    color: var(--color-ink);
+    margin-bottom: var(--spacing-md);
+  }
+  .prose .lede {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    color: var(--color-charcoal);
+    margin-bottom: var(--spacing-lg);
+  }
+  .prose h2 {
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+  }
+  .prose p {
+    margin-bottom: var(--spacing-md);
+    line-height: 1.65;
+  }
+  .prose pre {
+    background: var(--color-mist);
+    padding: var(--spacing-md);
+    border-radius: 4px;
+    overflow-x: auto;
+    font-size: 0.95rem;
+  }
+  .prose code {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 0.95em;
+  }
+  .prose .status {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-mist);
+    color: var(--color-ash);
+    font-size: 0.95rem;
+  }
+</style>

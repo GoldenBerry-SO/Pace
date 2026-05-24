@@ -1,0 +1,6 @@
+# robots.txt for pace.tools
+
+User-agent: *
+Allow: /
+
+Sitemap: https://pace.tools/sitemap.xml

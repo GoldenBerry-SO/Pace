@@ -1,0 +1,12 @@
+{
+  "name": "pace",
+  "description": "Design fluency for frontend development. 1 skill with 23 commands (/pace polish, /pace audit, /pace critique, etc.) and curated anti-pattern detection.",
+  "version": "3.1.1",
+  "author": {
+    "name": "Chris Jimenez",
+    "email": "cjimenez16@gmail.com"
+  },
+  "homepage": "https://pace.tools",
+  "repository": "https://github.com/GoldenBerry-SO/pace.tools",
+  "skills": "./.claude/skills/"
+}

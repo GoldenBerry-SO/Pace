@@ -1,0 +1,26 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "pace",
+  "metadata": {
+    "description": "Company-wide skills for AI harnesses. Engineering, product, ops, marketing — one router, many commands."
+  },
+  "owner": {
+    "name": "Chris Jimenez",
+    "email": "cjimenez16@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "pace",
+      "description": "Company-wide skills for AI coding agents. One router (/pace), many commands across engineering, product, ops, marketing.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Chris Jimenez",
+        "email": "cjimenez16@gmail.com"
+      },
+      "source": "./plugin",
+      "category": "productivity",
+      "homepage": "https://pace.tools",
+      "tags": ["skills", "commands", "engineering", "product", "ops", "marketing"]
+    }
+  ]
+}

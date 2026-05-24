@@ -1,0 +1,57 @@
+{
+  "name": "pace",
+  "version": "0.1.0",
+  "author": "Chris Jimenez",
+  "description": "Company-wide skills for AI coding agents. Engineering, product, ops, marketing — one router, many commands.",
+  "keywords": [
+    "skills",
+    "ai",
+    "agents",
+    "claude",
+    "cursor",
+    "gemini",
+    "codex",
+    "engineering",
+    "product",
+    "ops",
+    "marketing"
+  ],
+  "license": "Apache-2.0",
+  "homepage": "https://pace.tools",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GoldenBerry-SO/pace.tools.git"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "type": "module",
+  "bin": {
+    "pace": "cli/bin/cli.js"
+  },
+  "files": [
+    "cli/",
+    "LICENSE",
+    "NOTICE.md"
+  ],
+  "scripts": {
+    "build:skills": "bun run scripts/build.js",
+    "build:site": "npx astro build",
+    "build": "bun run build:skills && bun run build:site",
+    "clean": "rm -rf dist build",
+    "rebuild": "bun run clean && bun run build",
+    "dev": "npx astro dev",
+    "preview": "bun run build && npx astro preview",
+    "deploy": "bun run build && wrangler pages deploy build/",
+    "audit": "bun audit --audit-level=moderate",
+    "prepack": "cp README.md README.repo.md && cp README.npm.md README.md",
+    "postpack": "cp README.repo.md README.md && rm README.repo.md",
+    "release:skill": "node scripts/release.mjs skill",
+    "release:cli": "node scripts/release.mjs cli"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "astro": "^6.2.1",
+    "wrangler": "^4.85.0"
+  }
+}

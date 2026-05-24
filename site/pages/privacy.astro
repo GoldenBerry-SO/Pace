@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Privacy — pace.tools"
+  description="Privacy notice for pace.tools."
+  canonicalPath="/privacy"
+>
+  <article class="prose">
+    <h1>Privacy</h1>
+    <p>
+      Pace.tools is a static site. It does not collect personal data, set
+      tracking cookies, or run analytics on visitors.
+    </p>
+    <p>
+      The <code>npx pace skills install</code> CLI runs entirely on your
+      machine. It fetches skill bundles from pace.tools but does not send
+      any identifying information back.
+    </p>
+    <p>
+      Questions: <a href="https://github.com/GoldenBerry-SO/pace.tools/issues">open an issue on GitHub</a>.
+    </p>
+  </article>
+
+  <style>
+    .prose h1 {
+      font-family: 'Instrument Sans', sans-serif;
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: var(--spacing-lg);
+    }
+    .prose p {
+      margin-bottom: var(--spacing-md);
+      line-height: 1.65;
+    }
+  </style>
+</Base>

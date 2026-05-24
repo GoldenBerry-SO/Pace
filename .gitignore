@@ -1,0 +1,51 @@
+# Dependencies
+node_modules/
+
+# npm lockfile (project uses bun.lock; npm may regenerate this)
+package-lock.json
+
+# Generated files
+dist/
+build/
+
+# Build artifacts
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Claude Code local state
+.claude/projects/
+.claude/scheduled_tasks.lock
+.claude/settings.local.json
+
+# Environment
+.env
+.env.local
+
+# Cloudflare
+.wrangler/
+
+# Build artifacts written to site/public/ so Astro copies them to build/
+site/public/_data/
+site/public/_headers
+site/public/_redirects
+site/public/_routes.json
+site/public/js/generated/
+
+# Note: harness skill directories (.claude/skills/, .cursor/skills/, etc.)
+# are intentionally tracked. npx pace reads them from this repo at install
+# time, and they enable clean submodule use. Run `bun run build` to refresh
+# them after editing skill/.
+#
+# Codex CLI consumes `.agents/skills/`; native custom agents live under
+# `.codex/agents/`. Keep only those agent definitions tracked.
+.codex/*
+!.codex/agents/
+!.codex/agents/**
+.astro/
