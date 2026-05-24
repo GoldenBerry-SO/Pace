@@ -44,7 +44,7 @@ export const TEAM_GUIDES: TeamGuide[] = [
     name: 'Sales',
     tagline: 'Prep calls, manage pipeline, write personalized outreach that moves deals.',
     intro:
-      "Sales teams burn most of the week on prep, research, and pipeline hygiene — the work between the actual selling. Pace gives every rep an account researcher, a call coach, a pipeline analyst, and a writer that already knows your tone. Connect HubSpot and Slack and most of the work happens before you ask.",
+      "Sales teams burn most of the week on prep, research, and pipeline hygiene; the work between the actual selling. Pace gives every rep an account researcher, a call coach, a pipeline analyst, and a writer that already knows your tone. Connect HubSpot and Slack and most of the work happens before you ask.",
     plugins: [
       { slug: 'sales', role: 'primary', why: 'Account research, call prep, pipeline review, outreach drafting, competitive intel.' },
       { slug: 'customer-support', role: 'companion', why: 'When deals turn into accounts: hand-off context, escalation history, common questions.' },
@@ -159,7 +159,7 @@ export const TEAM_GUIDES: TeamGuide[] = [
       "Engineering teams spend half their week on non-coding work: PR review, standup updates, on-call, architecture conversations, docs. Pace tightens each one. The engineering plugin works standalone (no required connectors), and pairs with /data:* for the 'why is this slow' questions that show up in reviews.",
     plugins: [
       { slug: 'engineering', role: 'primary', why: 'Code review, architecture decisions, incident response, tech debt audits, deploy checklists, testing strategy, docs.' },
-      { slug: 'data', role: 'companion', why: 'When reviews touch performance, SQL, or analytics — pair with /data:* to ground in real numbers.' },
+      { slug: 'data', role: 'companion', why: 'When reviews touch performance, SQL, or analytics; pair with /data:* to ground in real numbers.' },
       { slug: 'productivity', role: 'companion', why: 'Standups, daily focus blocks, memory of past architecture decisions.' },
     ],
     connectors: ['(none required for engineering itself)', 'Snowflake / Databricks / BigQuery (via /data:*)', 'Linear / Jira / Slack (via /productivity:*)'],
@@ -216,7 +216,7 @@ export const TEAM_GUIDES: TeamGuide[] = [
     name: 'Data',
     tagline: 'Write SQL, visualize, validate, ship dashboards, interpret without bullshit.',
     intro:
-      'Data work splits roughly three ways: writing SQL, understanding what it returned, and explaining the result. Pace handles all three. Connect your warehouse once and /data:write-query learns your schema. Use /data:validate-analysis before sharing a conclusion — it has caught Simpson\'s-paradox-shaped errors more than once.',
+      'Data work splits roughly three ways: writing SQL, understanding what it returned, and explaining the result. Pace handles all three. Connect your warehouse once and /data:write-query learns your schema. Use /data:validate-analysis before sharing a conclusion; it has caught Simpson\'s-paradox-shaped errors more than once.',
     plugins: [
       { slug: 'data', role: 'primary', why: 'SQL drafting, visualization, statistical validation, dashboards, anomaly interpretation.' },
       { slug: 'engineering', role: 'companion', why: 'When data questions overflow into pipeline or schema territory.' },
@@ -307,7 +307,7 @@ export const TEAM_GUIDES: TeamGuide[] = [
       },
       {
         title: 'Competitive landscape scan',
-        description: 'Pulls competitor product updates from the last week or quarter and writes a brief — what is shipping, what is shifting.',
+        description: 'Pulls competitor product updates from the last week or quarter and writes a brief on what is shipping, what is shifting.',
         prompt: '/product-management:competitive scan our space this week',
       },
     ],
@@ -337,7 +337,7 @@ export const TEAM_GUIDES: TeamGuide[] = [
       { slug: 'design', role: 'primary', why: 'Critique, design system, UX writing, a11y audits, research synthesis, dev handoff.' },
       { slug: 'product-management', role: 'companion', why: 'Spec + research synthesis lives at the design/product seam.' },
     ],
-    connectors: ['(none required — works on Figma exports, screenshots, and pasted briefs)'],
+    connectors: ['(none required; works on Figma exports, screenshots, and pasted briefs)'],
     workflows: [
       {
         title: 'Design critique',
@@ -505,15 +505,15 @@ export const TEAM_GUIDES: TeamGuide[] = [
     name: 'Operations',
     tagline: 'Vendors, processes, change management, capacity planning, compliance tracking.',
     intro:
-      "Ops touches everything: vendors, processes, compliance, capacity, change management. The work is mostly about institutionalizing repeat patterns — turning tribal knowledge into docs, ad-hoc evaluations into scoring matrices, and one-off rollouts into reusable plans. /operations:* is the systematization engine.",
+      "Ops touches everything: vendors, processes, compliance, capacity, change management. The work is mostly about institutionalizing repeat patterns: turning tribal knowledge into docs, ad-hoc evaluations into scoring matrices, and one-off rollouts into reusable plans. /operations:* is the systematization engine.",
     plugins: [
       { slug: 'operations', role: 'primary', why: 'Vendor evaluation, process docs, change management, capacity planning, compliance tracking.' },
       { slug: 'finance', role: 'companion', why: 'Vendor and procurement workflows touch AP.' },
       { slug: 'legal', role: 'companion', why: 'Contract review feeds vendor selection.' },
-      { slug: 'people', role: 'companion', why: 'Capacity planning ties to headcount and HR planning.' },
+      { slug: 'human-resources', role: 'companion', why: 'Capacity planning ties to headcount and HR planning.' },
       { slug: 'productivity', role: 'companion', why: 'Cross-team coordination + meeting prep.' },
     ],
-    connectors: ['(none required — many ops skills work from pasted context)'],
+    connectors: ['(none required; many ops skills work from pasted context)'],
     workflows: [
       {
         title: 'Vendor evaluation',
@@ -691,7 +691,7 @@ export const TEAM_GUIDES: TeamGuide[] = [
       },
       {
         title: 'Memory of past decisions',
-        description: 'Recalls what your team decided about X last sprint, quarter, or year — across docs, Slack, and tickets.',
+        description: 'Recalls what your team decided about X last sprint, quarter, or year, across docs, Slack, and tickets.',
         prompt: '/productivity:memory remind me what we decided about pricing last sprint',
       },
       {
