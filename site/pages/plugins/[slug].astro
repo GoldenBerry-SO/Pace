@@ -174,7 +174,7 @@ for (const cat of PLUGIN_CATEGORY_ORDER) sidebarItems[cat] = [];
       <section class="plugin-section">
         <h2>Connectors</h2>
         <p class="plugin-section-lede">
-          MCP servers this plugin integrates with, grouped by category. Bundled servers are pre-configured in <code>.mcp.json</code>. Alternatives slot in via <a href="/docs/connectors#category-placeholders">the <code>~~category</code> placeholder pattern</a>.
+          MCP servers this plugin integrates with, grouped by category. Bundled servers are pre-configured in <code>.mcp.json</code>. Alternatives slot in via <a href="/docs/connectors#placeholders">the <code>~~category</code> placeholder pattern</a>.
         </p>
         <div class="plugin-connectors-table" role="table">
           <div class="plugin-connectors-row plugin-connectors-row-head" role="row">
@@ -210,6 +210,24 @@ for (const cat of PLUGIN_CATEGORY_ORDER) sidebarItems[cat] = [];
             <a href={`https://github.com/GoldenBerry-SO/pace.tools/blob/main/${pluginDir}/CONNECTORS.md`}>Full CONNECTORS.md on GitHub &rarr;</a>
           )}
         </p>
+      </section>
+    )}
+
+    {connectorCategories.length === 0 && connectors.length > 0 && (
+      <section class="plugin-section">
+        <h2>Connectors</h2>
+        <p class="plugin-section-lede">
+          MCP servers this plugin can talk to. Claude prompts for authorization on first use.
+          <a href="/docs/connectors"> How MCP and connectors work &rarr;</a>
+        </p>
+        <ul class="plugin-connectors">
+          {connectors.map((c) => (
+            <li class="plugin-connector">
+              <span class="plugin-connector-name">{c.name}</span>
+              {c.type && <span class="plugin-connector-type">{c.type}</span>}
+            </li>
+          ))}
+        </ul>
       </section>
     )}
 
