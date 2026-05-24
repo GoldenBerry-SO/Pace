@@ -2,7 +2,7 @@
   "name": "pace",
   "version": "0.1.0",
   "author": "Chris Jimenez",
-  "description": "Company-wide skills for AI coding agents. Engineering, product, ops, marketing — one router, many commands.",
+  "description": "Company-wide skills for AI coding agents. Engineering, product, ops, marketing: one router, many commands.",
   "keywords": [
     "skills",
     "ai",
@@ -51,6 +51,8 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@fontsource-variable/geist": "^5.2.5",
+    "@fontsource-variable/geist-mono": "^5.2.5",
     "archiver": "^7.0.1",
     "astro": "^6.2.1",
     "wrangler": "^4.85.0"

@@ -1,39 +1,86 @@
 ---
+interface Props {
+  activeNav?: 'home' | 'docs' | 'tutorials' | 'cases';
+}
+const { activeNav } = Astro.props;
 ---
 
 <header class="site-header">
   <a href="/" class="site-header-brand" aria-label="Pace home">
-    <span class="site-header-brand-name">pace</span>
+    <svg class="site-header-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <rect width="32" height="32" rx="7" fill="currentColor" class="site-header-mark-bg" />
+      <text x="16" y="22" text-anchor="middle" font-family="Geist Mono Variable, ui-monospace, monospace" font-size="16" font-weight="600" fill="currentColor" class="site-header-mark-fg">/</text>
+    </svg>
+    <span class="site-header-name">pace</span>
   </a>
   <nav class="site-header-nav" aria-label="Primary">
+    <a href="/" data-nav="home" aria-current={activeNav === 'home' ? 'page' : undefined}>Home</a>
+    <a href="/docs" data-nav="docs" aria-current={activeNav === 'docs' ? 'page' : undefined}>Docs</a>
+    <a href="/tutorials" data-nav="tutorials" aria-current={activeNav === 'tutorials' ? 'page' : undefined}>Tutorials</a>
     <a href="https://github.com/GoldenBerry-SO/pace.tools" target="_blank" rel="noopener">GitHub</a>
-    <a href="https://impeccable.style" target="_blank" rel="noopener">Impeccable</a>
   </nav>
 </header>
 
 <style>
   .site-header {
-    max-width: 680px;
+    max-width: var(--width-max);
     margin: 0 auto;
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md) var(--spacing-lg);
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
-  }
-  .site-header-brand-name {
-    font-family: 'Instrument Sans', sans-serif;
-    font-weight: 600;
-    font-size: 1.125rem;
-    letter-spacing: -0.01em;
-    color: var(--color-ink);
-    text-decoration: none;
+    align-items: center;
+    gap: var(--spacing-md);
   }
   .site-header-brand {
-    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--color-ink);
+  }
+  .site-header-mark {
+    width: 26px;
+    height: 26px;
+  }
+  .site-header-mark-bg {
+    color: var(--color-forest);
+  }
+  .site-header-mark-fg {
+    color: var(--color-paper);
+  }
+  .site-header-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    letter-spacing: -0.015em;
   }
   .site-header-nav {
     display: flex;
     gap: var(--spacing-md);
-    font-size: 0.95rem;
+    align-items: center;
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+  }
+  .site-header-nav a {
+    padding: 6px 0;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--duration-base) var(--ease-out-quart), color var(--duration-base) var(--ease-out-quart);
+  }
+  .site-header-nav a:hover {
+    color: var(--color-ink);
+    border-color: var(--color-mist);
+  }
+  .site-header-nav a[aria-current="page"] {
+    color: var(--color-ink);
+    border-color: var(--color-forest);
+  }
+  @media (max-width: 720px) {
+    .site-header {
+      flex-wrap: wrap;
+      padding: var(--spacing-md);
+    }
+    .site-header-nav {
+      gap: var(--spacing-sm);
+      font-size: var(--fs-xs);
+    }
   }
 </style>

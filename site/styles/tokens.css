@@ -1,8 +1,6 @@
 /*
- * pace.tools — design tokens + minimal reset
- *
- * Shared by every page on the site (landing + generated sub-pages).
- * Keep this file small and dependency-free.
+ * ABOUTME: Design tokens + minimal reset for pace.tools. Forest + clay
+ * ABOUTME: palette, Geist typography, OKLCH colors. Shared by every page.
  */
 
 /* ============================================
@@ -26,77 +24,127 @@ button, input, textarea, select {
   font: inherit;
 }
 
+button {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
 /* ============================================
    DESIGN TOKENS
    ============================================ */
 
 :root {
-  /* Typography */
-  --font-display: 'Cormorant Garamond', Georgia, serif;
-  --font-body: 'Instrument Sans', system-ui, sans-serif;
-  --font-mono: 'Space Grotesk', monospace;
+  /* Typography (Geist via @fontsource-variable in Base.astro) */
+  --font-display: 'Geist Variable', system-ui, -apple-system, sans-serif;
+  --font-body: 'Geist Variable', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
 
-  /* Spacing Scale */
+  /* Type scale */
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.9375rem;
+  --fs-base: 1.0625rem;
+  --fs-md: 1.1875rem;
+  --fs-lg: 1.4375rem;
+  --fs-xl: 1.875rem;
+  --fs-2xl: 2.625rem;
+  --fs-3xl: 3.75rem;
+  --fs-display: clamp(3.5rem, 9vw, 7rem);
+
+  /* Spacing scale */
   --spacing-xs: 8px;
   --spacing-sm: 16px;
   --spacing-md: 24px;
-  --spacing-lg: 32px;
-  --spacing-xl: 48px;
-  --spacing-2xl: 80px;
-  --spacing-3xl: 120px;
+  --spacing-lg: 40px;
+  --spacing-xl: 64px;
+  --spacing-2xl: 96px;
+  --spacing-3xl: 160px;
 
-  /* Width */
-  --width-max: 1400px;
-  --width-content: 900px;
+  /* Layout */
+  --width-max: 1280px;
+  --width-content: 880px;
+  --width-narrow: 640px;
 
   /* Animation */
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 0.15s;
   --duration-base: 0.3s;
   --duration-slow: 0.6s;
-  --duration-slower: 0.8s;
-  --duration-slowest: 1.2s;
 
-  /* Core Colors - Light Mode */
-  --color-ink: oklch(10% 0 0);
-  --color-text: oklch(10% 0 0);
-  --color-paper: oklch(98% 0 0);
-  --color-cream: oklch(96% 0.005 350);
-  --color-charcoal: oklch(25% 0 0);
-  --color-ash: oklch(55% 0 0);
-  --color-mist: oklch(92% 0 0);
-  --color-bg: oklch(96% 0.005 350);
+  /* ============================================
+     Forest + Clay palette (OKLCH)
+     ============================================ */
 
-  /* Accent - Vibrant Magenta/Rose (original) */
-  --color-accent: oklch(60% 0.25 350);
-  --color-accent-hover: oklch(52% 0.25 350);
-  --color-accent-dim: oklch(60% 0.25 350 / 0.15);
-  --color-accent-soft: oklch(60% 0.25 350 / 0.25);
+  /* Paper: warm cream, tinted toward forest */
+  --color-paper: oklch(96% 0.008 140);
+  --color-paper-elev: oklch(98% 0.005 140);
+  --color-bg: var(--color-paper);
 
-  /* Framework category colors - Light mode */
-  --cat-create-bg: #fdf2f8;
-  --cat-create-border: #ec4899;
-  --cat-create-text: #be185d;
+  /* Ink: near-black with a green hint */
+  --color-ink: oklch(15% 0.012 150);
+  --color-text: var(--color-ink);
 
-  --cat-evaluate-bg: #fdf4ff;
-  --cat-evaluate-border: #d946ef;
-  --cat-evaluate-text: #a21caf;
+  /* Charcoal: heads + larger body */
+  --color-charcoal: oklch(28% 0.018 150);
 
-  --cat-refine-bg: #eff6ff;
-  --cat-refine-border: #3b82f6;
-  --cat-refine-text: #1d4ed8;
+  /* Ash: secondary labels, captions */
+  --color-ash: oklch(52% 0.014 150);
 
-  --cat-simplify-bg: #fffbeb;
-  --cat-simplify-border: #f59e0b;
-  --cat-simplify-text: #b45309;
+  /* Mist: borders + dividers */
+  --color-mist: oklch(89% 0.012 150);
+  --color-mist-soft: oklch(93% 0.008 150);
 
-  --cat-harden-bg: #f0fdf4;
-  --cat-harden-border: #22c55e;
-  --cat-harden-text: #15803d;
+  /* Forest: primary accent (links, CTAs, section numbers) */
+  --color-forest: oklch(38% 0.085 155);
+  --color-forest-hover: oklch(32% 0.09 155);
+  --color-forest-dim: oklch(38% 0.085 155 / 0.12);
+  --color-forest-soft: oklch(38% 0.085 155 / 0.22);
 
-  --cat-system-bg: #f5f5f4;
-  --cat-system-border: #78716c;
-  --cat-system-text: #44403c;
+  /* Clay: secondary accent (tags, highlights, secondary CTAs) */
+  --color-clay: oklch(58% 0.10 45);
+  --color-clay-hover: oklch(50% 0.11 45);
+  --color-clay-dim: oklch(58% 0.10 45 / 0.12);
+  --color-clay-soft: oklch(58% 0.10 45 / 0.22);
+
+  /* Code surface */
+  --color-code-bg: oklch(94% 0.01 150);
+  --color-code-border: oklch(86% 0.014 150);
+
+  /* Focus ring */
+  --color-focus: var(--color-forest);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: 1.55;
+  color: var(--color-ink);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+  border-radius: 2px;
 }

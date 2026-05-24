@@ -1,0 +1,90 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base
+  title="Tutorials · pace"
+  description="Walkthroughs for setting up pace, authoring commands, and integrating with your team's existing workflows."
+  activeNav="tutorials"
+  canonicalPath="/tutorials"
+>
+  <article class="tutorials-page">
+    <header class="tutorials-header">
+      <span class="tutorials-eyebrow">Tutorials</span>
+      <h1>Walkthroughs</h1>
+      <p class="tutorials-lede">
+        Step-by-step guides for setting up pace, authoring commands, and pairing it with impeccable when design work shows up.
+      </p>
+    </header>
+
+    <section class="tutorials-empty">
+      <p class="tutorials-empty-title">No tutorials published yet.</p>
+      <p>
+        Tutorials land here as commands ship. Expect entries for: <em>Installing pace from zero</em>, <em>Authoring your first command</em>, <em>Pairing pace with impeccable</em>, <em>Forking pace for your own company</em>.
+      </p>
+      <p class="tutorials-empty-cta">
+        Want a specific walkthrough? <a href="https://github.com/GoldenBerry-SO/pace.tools/issues/new">Open an issue</a>.
+      </p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .tutorials-page {
+    max-width: var(--width-content);
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
+  }
+  .tutorials-header {
+    margin-bottom: var(--spacing-2xl);
+    border-bottom: 1px solid var(--color-mist);
+    padding-bottom: var(--spacing-lg);
+  }
+  .tutorials-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    margin-bottom: var(--spacing-sm);
+    display: inline-block;
+  }
+  .tutorials-header h1 {
+    font-family: var(--font-display);
+    font-size: var(--fs-3xl);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-md);
+  }
+  .tutorials-lede {
+    font-size: var(--fs-md);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    max-width: 56ch;
+  }
+  .tutorials-empty {
+    background: var(--color-paper-elev);
+    border: 1px dashed var(--color-mist);
+    border-radius: 12px;
+    padding: var(--spacing-lg);
+    color: var(--color-charcoal);
+    font-size: var(--fs-base);
+    line-height: 1.6;
+  }
+  .tutorials-empty-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--color-ink);
+    margin-bottom: var(--spacing-sm);
+  }
+  .tutorials-empty p {
+    margin-bottom: var(--spacing-sm);
+  }
+  .tutorials-empty-cta {
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--color-mist);
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+  }
+</style>

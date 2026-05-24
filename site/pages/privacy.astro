@@ -7,32 +7,92 @@ import Base from '../layouts/Base.astro';
   description="Privacy notice for pace.tools."
   canonicalPath="/privacy"
 >
-  <article class="prose">
-    <h1>Privacy</h1>
-    <p>
-      Pace.tools is a static site. It does not collect personal data, set
-      tracking cookies, or run analytics on visitors.
-    </p>
-    <p>
-      The <code>npx pace skills install</code> CLI runs entirely on your
-      machine. It fetches skill bundles from pace.tools but does not send
-      any identifying information back.
-    </p>
-    <p>
-      Questions: <a href="https://github.com/GoldenBerry-SO/pace.tools/issues">open an issue on GitHub</a>.
-    </p>
-  </article>
+  <article class="privacy-page">
+    <header class="privacy-header">
+      <span class="privacy-eyebrow">Legal</span>
+      <h1>Privacy</h1>
+    </header>
 
-  <style>
-    .prose h1 {
-      font-family: 'Instrument Sans', sans-serif;
-      font-weight: 700;
-      font-size: 2rem;
-      margin-bottom: var(--spacing-lg);
-    }
-    .prose p {
-      margin-bottom: var(--spacing-md);
-      line-height: 1.65;
-    }
-  </style>
+    <section class="privacy-section">
+      <h2>What pace.tools does</h2>
+      <p>
+        Pace.tools is a static website. It does not collect personal data, set tracking cookies, or run analytics on visitors.
+      </p>
+    </section>
+
+    <section class="privacy-section">
+      <h2>What the CLI does</h2>
+      <p>
+        The <code>npx pace skills install</code> CLI runs entirely on your machine. It downloads skill bundles from GitHub through <code>npx skills add</code>. No identifying information is sent back to pace.tools or GoldenBerry.
+      </p>
+      <p>
+        Network traffic goes to <a href="https://github.com">github.com</a> (to fetch the harness output dirs) and, if you accept the optional install, to <a href="https://impeccable.style">impeccable.style</a> through <code>npx impeccable skills install</code>. Each of those services has its own privacy posture.
+      </p>
+    </section>
+
+    <section class="privacy-section">
+      <h2>Hosting</h2>
+      <p>
+        Pace.tools is hosted on Cloudflare Pages. Cloudflare may collect standard web request logs for security and operations. See <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare's privacy policy</a> for details.
+      </p>
+    </section>
+
+    <section class="privacy-section">
+      <h2>Questions</h2>
+      <p>
+        <a href="https://github.com/GoldenBerry-SO/pace.tools/issues">Open an issue on GitHub</a>.
+      </p>
+    </section>
+  </article>
 </Base>
+
+<style>
+  .privacy-page {
+    max-width: var(--width-content);
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
+  }
+  .privacy-header {
+    margin-bottom: var(--spacing-2xl);
+    border-bottom: 1px solid var(--color-mist);
+    padding-bottom: var(--spacing-lg);
+  }
+  .privacy-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    margin-bottom: var(--spacing-sm);
+    display: inline-block;
+  }
+  .privacy-header h1 {
+    font-family: var(--font-display);
+    font-size: var(--fs-3xl);
+    letter-spacing: -0.03em;
+  }
+  .privacy-section {
+    margin-bottom: var(--spacing-xl);
+  }
+  .privacy-section h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--spacing-md);
+  }
+  .privacy-section p {
+    font-size: var(--fs-base);
+    color: var(--color-charcoal);
+    line-height: 1.65;
+    margin-bottom: var(--spacing-sm);
+  }
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: var(--color-code-bg);
+    padding: 1px 7px;
+    border-radius: 4px;
+    border: 1px solid var(--color-code-border);
+    color: var(--color-ink);
+  }
+</style>

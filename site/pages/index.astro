@@ -3,78 +3,1076 @@ import Base from '../layouts/Base.astro';
 ---
 
 <Base
-  title="Pace: company-wide skills for AI coding agents"
+  title="pace: company-wide skills for AI coding agents"
   description="One router, many commands across engineering, product, ops, and marketing. For design, pace defers to impeccable."
+  activeNav="home"
   canonicalPath="/"
 >
-  <article class="prose">
-    <h1>pace</h1>
-    <p class="lede">
-      Company-wide skills for AI coding agents. One router (<code>/pace</code>),
-      many commands across engineering, product, ops, and marketing.
-    </p>
+  <!-- ============================================
+       HERO
+       ============================================ -->
+  <section class="hero" id="hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <h1 class="hero-title">pace</h1>
+        <p class="hero-tagline">Company-wide skills for AI coding agents.</p>
 
-    <p>
-      For frontend design, pace defers to <a href="https://impeccable.style">impeccable</a>.
-      The installer offers to bring it along.
-    </p>
+        <p class="hero-lede">
+          A shared way of working between humans and the agents that build with us. One router, many commands across engineering, product, ops, marketing. For frontend design, pace defers to <a href="https://impeccable.style" class="hero-link">impeccable</a>.
+        </p>
 
-    <h2>Install</h2>
-    <pre><code>npx pace skills install</code></pre>
+        <div class="hero-included">
+          <span class="hero-included-label">What's included</span>
+          <div class="hero-included-row">
+            <span><em>pace</em> agent skill with the company command set</span>
+            <span class="hero-sep">·</span>
+            <span>CLI installer that bundles impeccable for design</span>
+          </div>
+        </div>
 
-    <h2>Use</h2>
-    <pre><code>/pace &lt;command&gt; [target]</code></pre>
+        <div class="hero-cta-row">
+          <a href="#downloads" class="cta cta-primary">Get started</a>
+          <a href="/docs" class="cta cta-secondary">Browse commands</a>
+        </div>
 
-    <p class="status">
-      Pace is in scaffold. Commands ship as they're authored.
-      Track progress on <a href="https://github.com/GoldenBerry-SO/pace.tools">GitHub</a>.
-    </p>
-  </article>
+        <div class="hero-harnesses">
+          <span class="hero-harnesses-label">Works with</span>
+          <ul class="hero-harnesses-list">
+            <li>Cursor</li>
+            <li>Claude Code</li>
+            <li>Gemini CLI</li>
+            <li>Codex CLI</li>
+            <li>VS Code Copilot</li>
+            <li>Kiro</li>
+            <li>OpenCode</li>
+            <li>Pi</li>
+            <li>Qoder</li>
+            <li>RovoDev</li>
+            <li>Trae</li>
+          </ul>
+        </div>
+      </div>
+
+      <aside class="hero-right" aria-label="Quick install">
+        <div class="hero-terminal">
+          <div class="terminal-bar">
+            <span class="terminal-dot" data-dot="r"></span>
+            <span class="terminal-dot" data-dot="y"></span>
+            <span class="terminal-dot" data-dot="g"></span>
+            <span class="terminal-label">install pace</span>
+          </div>
+          <pre class="terminal-body"><code><span class="prompt">$</span> npx pace skills install
+<span class="muted">Installs pace into your AI harness.
+Offers to install impeccable
+alongside for design work.</span>
+<span class="prompt">$</span> /pace &lt;command&gt;</code></pre>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============================================
+       01. THE FOUNDATION
+       ============================================ -->
+  <section class="section foundation" id="foundation">
+    <div class="section-head">
+      <span class="section-number">01</span>
+      <h2 class="section-title">The Foundation</h2>
+    </div>
+    <div class="section-body">
+      <p class="section-lede">
+        Before any command runs, pace loads your company's context. A small set of reference files describes how <em>we</em> work: the product, the users, the tone, the constraints. Every command reads them before doing anything.
+      </p>
+
+      <div class="foundation-grid">
+        <article class="foundation-card">
+          <h3>PRODUCT.md</h3>
+          <p>Users, brand voice, anti-references, principles. The strategic ground every command stands on.</p>
+          <span class="foundation-card-status">Required</span>
+        </article>
+        <article class="foundation-card">
+          <h3>Register</h3>
+          <p>Brand or product. Tells every command whether the work is marketing surface or app surface, and adjusts decisions accordingly.</p>
+          <span class="foundation-card-status">Required</span>
+        </article>
+        <article class="foundation-card">
+          <h3>Reference files</h3>
+          <p>One file per command in <code>skill/reference/</code>. The command-specific playbook the agent loads on invocation.</p>
+          <span class="foundation-card-status">Per command</span>
+        </article>
+      </div>
+
+      <div class="foundation-cta">
+        <p>
+          Run <code><span class="slash">/</span>pace teach</code> once to set your project's context. Every command benefits.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       02. THE LANGUAGE
+       ============================================ -->
+  <section class="section language" id="language">
+    <div class="section-head">
+      <span class="section-number">02</span>
+      <h2 class="section-title">The Language</h2>
+    </div>
+    <div class="section-body">
+      <p class="section-lede">
+        Each pace command is a small piece of shared vocabulary. <code>/pace review</code> means the same thing across the company. <code>/pace ship</code> follows the same checklist for engineering and marketing alike. The vocabulary is the product.
+      </p>
+
+      <div class="language-table" role="table" aria-label="Command catalog">
+        <div class="language-row language-row-head" role="row">
+          <span role="columnheader">Domain</span>
+          <span role="columnheader">Commands</span>
+          <span role="columnheader">When</span>
+        </div>
+        <div class="language-row" role="row">
+          <span class="language-domain" role="cell">Engineering</span>
+          <span class="language-commands" role="cell"><em>Coming as they ship.</em></span>
+          <span class="language-when" role="cell">Reviews, on-call, deploys, refactors.</span>
+        </div>
+        <div class="language-row" role="row">
+          <span class="language-domain" role="cell">Product</span>
+          <span class="language-commands" role="cell"><em>Coming as they ship.</em></span>
+          <span class="language-when" role="cell">Specs, PRDs, kickoffs, retros.</span>
+        </div>
+        <div class="language-row" role="row">
+          <span class="language-domain" role="cell">Ops</span>
+          <span class="language-commands" role="cell"><em>Coming as they ship.</em></span>
+          <span class="language-when" role="cell">Runbooks, incidents, postmortems.</span>
+        </div>
+        <div class="language-row" role="row">
+          <span class="language-domain" role="cell">Marketing</span>
+          <span class="language-commands" role="cell"><em>Coming as they ship.</em></span>
+          <span class="language-when" role="cell">Launches, posts, briefs, copy passes.</span>
+        </div>
+        <div class="language-row language-row-deferred" role="row">
+          <span class="language-domain" role="cell">Design</span>
+          <span class="language-commands" role="cell">Full catalog at <a href="https://impeccable.style">impeccable.style</a></span>
+          <span class="language-when" role="cell">Pace defers to impeccable for design.</span>
+        </div>
+      </div>
+
+      <div class="language-footnote">
+        <a href="/docs" class="text-link">Browse the full reference &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       03. THE CASE
+       ============================================ -->
+  <section class="section case" id="case">
+    <div class="section-head">
+      <span class="section-number">03</span>
+      <h2 class="section-title">The Case</h2>
+    </div>
+    <div class="section-body">
+      <p class="section-lede">
+        Without shared vocabulary, every team teaches their AI the same things in different words, and gets back outputs that drift from how the company actually works. Pace is the fix: codify the way once, use it everywhere.
+      </p>
+
+      <ol class="case-list">
+        <li class="case-item">
+          <h3 class="case-title">One vocabulary, many functions</h3>
+          <p>Engineering, product, ops, and marketing share commands instead of inventing private dialects. The agent stops guessing what each team means.</p>
+        </li>
+        <li class="case-item">
+          <h3 class="case-title">Same shape across harnesses</h3>
+          <p>Cursor, Claude Code, Gemini CLI, Codex CLI, and 8 more: pace installs the same skill into each. One process, one set of reviews, one company.</p>
+        </li>
+        <li class="case-item">
+          <h3 class="case-title">Defers to specialists</h3>
+          <p>Design lives at <a href="https://impeccable.style">impeccable</a>. Pace doesn't compete, it routes. The installer offers impeccable alongside.</p>
+        </li>
+        <li class="case-item">
+          <h3 class="case-title">Codified, not memorized</h3>
+          <p>Your way of working stops living in tribal knowledge and starts living in <code>skill/reference/</code>. New hires and new agents pick it up the same way.</p>
+        </li>
+        <li class="case-item">
+          <h3 class="case-title">Ships code and artifacts, not advice</h3>
+          <p>Each command produces an actual output: a PR review, a spec doc, a runbook entry. No vague suggestions.</p>
+        </li>
+        <li class="case-item">
+          <h3 class="case-title">Open and forkable</h3>
+          <p>Apache 2.0. Use it at GoldenBerry, fork it for your company, contribute commands back.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================
+       04. GET STARTED
+       ============================================ -->
+  <section class="section downloads" id="downloads">
+    <div class="section-head">
+      <span class="section-number">04</span>
+      <h2 class="section-title">Get Started</h2>
+    </div>
+    <div class="section-body">
+      <div class="install-primary">
+        <h3 class="install-step"><span class="step-num">1</span>Install the skill</h3>
+        <p class="install-desc">
+          One agent skill that teaches your AI how we work, with sub-commands bundled inside. Drops into every supported harness.
+        </p>
+
+        <div class="terminal">
+          <div class="terminal-bar">
+            <span class="terminal-dot" data-dot="r"></span>
+            <span class="terminal-dot" data-dot="y"></span>
+            <span class="terminal-dot" data-dot="g"></span>
+            <span class="terminal-label">install</span>
+          </div>
+          <pre class="terminal-body"><code><span class="prompt">$</span> npx pace skills install</code></pre>
+        </div>
+
+        <p class="install-note">
+          The installer asks whether you want <strong>impeccable</strong> alongside (for design). Say yes if you do any frontend work.
+        </p>
+
+        <details class="install-alt">
+          <summary>Other install methods</summary>
+          <div class="install-alt-body">
+            <p>Pull straight from GitHub:</p>
+            <div class="terminal terminal-compact">
+              <pre class="terminal-body"><code><span class="prompt">$</span> npx skills add GoldenBerry-SO/pace.tools --copy</code></pre>
+            </div>
+            <p>Or as a Claude Code plugin:</p>
+            <div class="terminal terminal-compact">
+              <pre class="terminal-body"><code><span class="prompt">/</span>plugin install GoldenBerry-SO/pace.tools</code></pre>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <div class="install-followup">
+        <h3 class="install-step"><span class="step-num">2</span>Set the context</h3>
+        <p class="install-desc">
+          Run <code><span class="slash">/</span>pace teach</code> once. It interviews you about how your team works and writes <code>PRODUCT.md</code> at the project root. Every command reads it on every run.
+        </p>
+
+        <h3 class="install-step"><span class="step-num">3</span>Use the commands</h3>
+        <p class="install-desc">
+          Type <code>/pace &lt;command&gt;</code> in your harness. The agent loads the matching reference file and follows your company's process.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       05. WHAT'S NEW
+       ============================================ -->
+  <section class="section changelog" id="changelog">
+    <div class="section-head">
+      <span class="section-number">05</span>
+      <h2 class="section-title">What's New</h2>
+    </div>
+    <div class="section-body">
+      <ul class="changelog-items">
+        <li class="changelog-entry">
+          <div class="changelog-meta">
+            <span class="changelog-version">v0.1.0</span>
+            <span class="changelog-date">May 2026</span>
+          </div>
+          <div class="changelog-content">
+            <h3>Initial scaffold</h3>
+            <p>The pace skill router lands as a lean fork of impeccable's install machinery: multi-harness build, Astro site shell, CLI installer with impeccable handoff. Router starts empty; commands ship as they're authored.</p>
+          </div>
+        </li>
+      </ul>
+      <p class="changelog-footnote">
+        Track work in progress on <a href="https://github.com/GoldenBerry-SO/pace.tools" class="text-link">GitHub</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================
+       06. FAQ
+       ============================================ -->
+  <section class="section faq" id="faq">
+    <div class="section-head">
+      <span class="section-number">06</span>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="section-body">
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>How is pace different from impeccable?</summary>
+          <div class="faq-answer">
+            <p><strong>Impeccable</strong> is a design skill focused entirely on frontend craft. <strong>Pace</strong> is the company-wide skill router: commands across engineering, product, ops, and marketing.</p>
+            <p>For design, pace defers to impeccable. The installer offers impeccable as a paired install. Use both.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>What commands does pace ship today?</summary>
+          <div class="faq-answer">
+            <p>Pace is in scaffold (v0.1). The router is wired up and the install flow works, but no sub-commands have been authored yet.</p>
+            <p>Authoring a command is documented in <code>CLAUDE.md</code>: drop a reference file at <code>skill/reference/&lt;command&gt;.md</code>, register it in the router and metadata, run <code>bun run build</code>, and ship a PR.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Where do I put the downloaded files?</summary>
+          <div class="faq-answer">
+            <p>Use <code>npx pace skills install</code>. It detects your AI harness and places files in the right hidden directory: <code>.cursor/skills/pace/</code>, <code>.claude/skills/pace/</code>, etc.</p>
+            <p>Project-level install takes precedence over user-level. Version-control the harness directories alongside your code so the whole team gets the same skill set.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>How do I update to the latest version?</summary>
+          <div class="faq-answer">
+            <p>Run <code>npx pace skills update</code> from your project root. It pulls the latest harness output from <code>GoldenBerry-SO/pace.tools</code> on GitHub.</p>
+            <p>Your <code>PRODUCT.md</code> is never overwritten.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can I pin <code>/pace audit</code> to just <code>/audit</code>?</summary>
+          <div class="faq-answer">
+            <p>Yes. Pace inherits impeccable's pin mechanism: <code>node skill/scripts/pin.mjs pin &lt;command&gt;</code> creates a lightweight redirect so <code>/audit</code> delegates to <code>/pace audit</code>.</p>
+            <p>Available once that command is in the allowlist. Empty in v0.1.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Why does pace use the same install tech as impeccable?</summary>
+          <div class="faq-answer">
+            <p>Because it works. Impeccable's build system writes the same skill into 13 different harness directories so the install experience is identical regardless of what AI tool you use. Pace inherits that machinery wholesale.</p>
+            <p>See <a href="/NOTICE.md" class="text-link">NOTICE.md</a> for full attribution.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       07. USE PACE AT YOUR COMPANY
+       ============================================ -->
+  <section class="section company-cta" id="adopt">
+    <div class="company-cta-inner">
+      <h2 class="company-cta-title">Use pace at your company</h2>
+      <p class="company-cta-lede">
+        Pace is open source. Fork it, rename the router, and write the commands that match how your company works. The install machinery and editorial bar carry over for free.
+      </p>
+      <div class="company-cta-row">
+        <a href="https://github.com/GoldenBerry-SO/pace.tools" class="cta cta-primary" target="_blank" rel="noopener">Fork on GitHub</a>
+        <a href="https://github.com/GoldenBerry-SO" class="cta cta-secondary" target="_blank" rel="noopener">About GoldenBerry</a>
+      </div>
+    </div>
+  </section>
 </Base>
 
 <style>
-  .prose h1 {
-    font-family: 'Instrument Sans', sans-serif;
+  /* ============================================
+     HERO
+     ============================================ */
+  .hero {
+    max-width: var(--width-max);
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-display);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
     font-weight: 700;
-    font-size: clamp(2.5rem, 6vw, 4rem);
+    color: var(--color-ink);
+    margin-bottom: var(--spacing-md);
+  }
+  .hero-tagline {
+    font-size: var(--fs-lg);
+    line-height: 1.3;
+    color: var(--color-charcoal);
+    margin-bottom: var(--spacing-lg);
+    max-width: 22ch;
+  }
+  .hero-lede {
+    font-size: var(--fs-md);
+    line-height: 1.55;
+    color: var(--color-ink);
+    margin-bottom: var(--spacing-lg);
+    max-width: 52ch;
+  }
+  .hero-link {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+    transition: border-color var(--duration-fast) var(--ease-out-quart);
+  }
+  .hero-link:hover {
+    border-color: var(--color-forest);
+  }
+  .hero-included {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+    margin-bottom: var(--spacing-lg);
+    max-width: 52ch;
+    font-size: var(--fs-sm);
+  }
+  .hero-included-label {
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+  }
+  .hero-included-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    align-items: center;
+    color: var(--color-charcoal);
+  }
+  .hero-included em {
+    font-style: normal;
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .hero-sep {
+    color: var(--color-ash);
+  }
+  .hero-cta-row {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-xl);
+  }
+  .hero-harnesses {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+  .hero-harnesses-label {
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+  }
+  .hero-harnesses-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  .hero-harnesses-list li {
+    font-size: var(--fs-xs);
+    padding: 4px 10px;
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 999px;
+    color: var(--color-charcoal);
+  }
+
+  .hero-right {
+    position: sticky;
+    top: var(--spacing-lg);
+  }
+  .hero-terminal {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px -16px oklch(15% 0.012 150 / 0.18), 0 2px 4px -2px oklch(15% 0.012 150 / 0.1);
+  }
+
+  /* ============================================
+     CTA buttons
+     ============================================ */
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-family: var(--font-display);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    transition: background var(--duration-fast) var(--ease-out-quart),
+                color var(--duration-fast) var(--ease-out-quart),
+                border-color var(--duration-fast) var(--ease-out-quart),
+                transform var(--duration-fast) var(--ease-out-quart);
+  }
+  .cta-primary {
+    background: var(--color-forest);
+    color: var(--color-paper);
+  }
+  .cta-primary:hover {
+    background: var(--color-forest-hover);
+    transform: translateY(-1px);
+  }
+  .cta-secondary {
+    background: transparent;
+    color: var(--color-ink);
+    border: 1px solid var(--color-mist);
+  }
+  .cta-secondary:hover {
+    border-color: var(--color-forest);
+    color: var(--color-forest);
+  }
+
+  /* ============================================
+     Terminal
+     ============================================ */
+  .terminal {
+    border-radius: 10px;
+    overflow: hidden;
+    background: oklch(18% 0.015 150);
+    border: 1px solid oklch(28% 0.018 150);
+  }
+  .terminal-compact {
+    margin: var(--spacing-sm) 0;
+  }
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    background: oklch(22% 0.015 150);
+    border-bottom: 1px solid oklch(28% 0.018 150);
+  }
+  .terminal-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+  }
+  .terminal-dot[data-dot='r'] { background: oklch(62% 0.18 25); }
+  .terminal-dot[data-dot='y'] { background: oklch(78% 0.14 80); }
+  .terminal-dot[data-dot='g'] { background: oklch(68% 0.14 150); }
+  .terminal-label {
+    margin-left: 6px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: oklch(70% 0.01 150);
+  }
+  .terminal-body {
+    padding: var(--spacing-md);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: oklch(92% 0.005 150);
+    overflow-x: auto;
+  }
+  .terminal-body .prompt {
+    color: var(--color-clay);
+    margin-right: 8px;
+  }
+  .terminal-body .muted {
+    color: oklch(60% 0.01 150);
+    font-size: 0.82rem;
+    display: block;
+    margin: 4px 0 8px 0;
+  }
+
+  /* ============================================
+     Section scaffolding
+     ============================================ */
+  .section {
+    max-width: var(--width-max);
+    margin: 0 auto;
+    padding: var(--spacing-3xl) var(--spacing-lg);
+    border-top: 1px solid var(--color-mist);
+  }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+  }
+  .section-number {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    color: var(--color-forest);
+    letter-spacing: 0.04em;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-2xl);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+  .section-lede {
+    font-size: var(--fs-md);
+    line-height: 1.55;
+    color: var(--color-charcoal);
+    max-width: var(--width-narrow);
+    margin-bottom: var(--spacing-xl);
+  }
+  .section-body {
+    max-width: var(--width-content);
+  }
+
+  /* ============================================
+     FOUNDATION
+     ============================================ */
+  .foundation-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+  }
+  .foundation-card {
+    padding: var(--spacing-md);
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+  .foundation-card h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--color-ink);
+    letter-spacing: -0.01em;
+  }
+  .foundation-card p {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    flex: 1;
+  }
+  .foundation-card-status {
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-clay);
+    padding-top: var(--spacing-xs);
+    border-top: 1px solid var(--color-mist);
+  }
+  .foundation-cta {
+    padding: var(--spacing-md);
+    border-left: 3px solid var(--color-forest);
+    background: var(--color-forest-dim);
+    border-radius: 0 8px 8px 0;
+    font-size: var(--fs-md);
+    color: var(--color-ink);
+  }
+  .foundation-cta code {
+    font-family: var(--font-mono);
+    background: var(--color-paper);
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--color-mist);
+    font-size: 0.95em;
+  }
+  .slash {
+    color: var(--color-forest);
+    font-weight: 700;
+  }
+
+  /* ============================================
+     LANGUAGE table
+     ============================================ */
+  .language-table {
+    border: 1px solid var(--color-mist);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: var(--spacing-md);
+  }
+  .language-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 1.4fr;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--color-mist);
+    align-items: baseline;
+  }
+  .language-row:last-child {
+    border-bottom: 0;
+  }
+  .language-row-head {
+    background: var(--color-paper-elev);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+    font-weight: 600;
+  }
+  .language-domain {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--color-ink);
+    font-size: var(--fs-base);
+  }
+  .language-commands {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+  }
+  .language-commands em {
+    font-family: var(--font-body);
+    font-style: italic;
+    color: var(--color-ash);
+  }
+  .language-when {
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+    line-height: 1.5;
+  }
+  .language-row-deferred {
+    background: var(--color-clay-dim);
+  }
+  .language-row-deferred .language-domain {
+    color: var(--color-clay-hover);
+  }
+  .language-row-deferred a {
+    color: var(--color-clay-hover);
+    border-bottom: 1px solid var(--color-clay-soft);
+  }
+  .language-row-deferred a:hover {
+    border-color: var(--color-clay);
+  }
+  .language-footnote {
+    margin-top: var(--spacing-md);
+    text-align: right;
+  }
+  .text-link {
+    color: var(--color-forest);
+    font-size: var(--fs-sm);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .text-link:hover {
+    border-color: var(--color-forest);
+  }
+
+  /* ============================================
+     CASE list
+     ============================================ */
+  .case-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: case;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+  }
+  .case-item {
+    counter-increment: case;
+    padding: var(--spacing-md);
+    border-left: 2px solid var(--color-mist);
+    padding-left: var(--spacing-md);
+    position: relative;
+  }
+  .case-item::before {
+    content: counter(case, decimal-leading-zero);
+    position: absolute;
+    left: -1px;
+    top: 0;
+    transform: translateX(-100%) translateX(-12px);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--color-ash);
+    letter-spacing: 0.04em;
+  }
+  .case-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--color-ink);
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: -0.01em;
+  }
+  .case-item p {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.6;
+  }
+  .case-item a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+
+  /* ============================================
+     DOWNLOADS
+     ============================================ */
+  .install-step {
+    font-family: var(--font-display);
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-ink);
+  }
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-forest);
+    color: var(--color-paper);
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+  }
+  .install-primary {
+    margin-bottom: var(--spacing-2xl);
+  }
+  .install-desc {
+    font-size: var(--fs-md);
+    color: var(--color-charcoal);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.5;
+  }
+  .install-note {
+    margin-top: var(--spacing-sm);
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+  }
+  .install-note strong {
+    color: var(--color-clay-hover);
+  }
+  .install-alt {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm) 0;
+    border-top: 1px solid var(--color-mist);
+  }
+  .install-alt summary {
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+  }
+  .install-alt summary::after {
+    content: '+';
+    margin-left: auto;
+    font-family: var(--font-mono);
+    transition: transform var(--duration-fast) var(--ease-out-quart);
+  }
+  .install-alt[open] summary::after {
+    transform: rotate(45deg);
+  }
+  .install-alt-body {
+    padding-top: var(--spacing-sm);
+    color: var(--color-charcoal);
+    font-size: var(--fs-sm);
+  }
+  .install-followup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  /* ============================================
+     CHANGELOG
+     ============================================ */
+  .changelog-items {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--spacing-md) 0;
+  }
+  .changelog-entry {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .changelog-entry:last-child {
+    border-bottom: 0;
+  }
+  .changelog-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .changelog-version {
+    font-family: var(--font-mono);
+    font-size: var(--fs-base);
+    color: var(--color-forest);
+    font-weight: 600;
+  }
+  .changelog-date {
+    font-size: var(--fs-xs);
+    color: var(--color-ash);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .changelog-content h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--color-ink);
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: -0.01em;
+  }
+  .changelog-content p {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.6;
+  }
+  .changelog-footnote {
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+  }
+
+  /* ============================================
+     FAQ
+     ============================================ */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .faq-item {
+    border-top: 1px solid var(--color-mist);
+    padding: var(--spacing-md) 0;
+  }
+  .faq-item:last-child {
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .faq-item summary {
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 500;
+    color: var(--color-ink);
+    list-style: none;
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-md);
+  }
+  .faq-item summary::after {
+    content: '+';
+    margin-left: auto;
+    font-family: var(--font-mono);
+    color: var(--color-forest);
+    font-size: var(--fs-lg);
+    line-height: 1;
+    transition: transform var(--duration-base) var(--ease-out-quart);
+  }
+  .faq-item[open] summary::after {
+    transform: rotate(45deg);
+  }
+  .faq-answer {
+    padding-top: var(--spacing-sm);
+    color: var(--color-charcoal);
+    font-size: var(--fs-base);
+    line-height: 1.6;
+  }
+  .faq-answer p {
+    margin-bottom: var(--spacing-sm);
+  }
+  .faq-answer p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ============================================
+     COMPANY CTA
+     ============================================ */
+  .company-cta {
+    margin-top: var(--spacing-2xl);
+  }
+  .company-cta-inner {
+    max-width: var(--width-narrow);
+    margin: 0 auto;
+    text-align: center;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    background: var(--color-forest-dim);
+    border-radius: 16px;
+    border: 1px solid var(--color-forest-soft);
+  }
+  .company-cta-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-2xl);
+    line-height: 1.1;
     letter-spacing: -0.03em;
     color: var(--color-ink);
     margin-bottom: var(--spacing-md);
   }
-  .prose .lede {
-    font-size: 1.25rem;
-    line-height: 1.5;
+  .company-cta-lede {
+    font-size: var(--fs-md);
+    line-height: 1.55;
     color: var(--color-charcoal);
     margin-bottom: var(--spacing-lg);
   }
-  .prose h2 {
-    font-family: 'Instrument Sans', sans-serif;
-    font-weight: 600;
-    font-size: 1.25rem;
-    letter-spacing: -0.01em;
-    margin-top: var(--spacing-xl);
-    margin-bottom: var(--spacing-sm);
+  .company-cta-row {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    flex-wrap: wrap;
   }
-  .prose p {
-    margin-bottom: var(--spacing-md);
-    line-height: 1.65;
-  }
-  .prose pre {
-    background: var(--color-mist);
-    padding: var(--spacing-md);
+
+  /* ============================================
+     Inline code
+     ============================================ */
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: var(--color-code-bg);
+    padding: 1px 7px;
     border-radius: 4px;
-    overflow-x: auto;
-    font-size: 0.95rem;
+    border: 1px solid var(--color-code-border);
+    color: var(--color-ink);
   }
-  .prose code {
-    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
-    font-size: 0.95em;
+  .terminal-body code,
+  .terminal-body code .prompt {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: inherit;
   }
-  .prose .status {
-    margin-top: var(--spacing-xl);
-    padding-top: var(--spacing-md);
-    border-top: 1px solid var(--color-mist);
-    color: var(--color-ash);
-    font-size: 0.95rem;
+
+  /* ============================================
+     RESPONSIVE
+     ============================================ */
+  @media (max-width: 960px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+    }
+    .hero-right {
+      position: static;
+    }
+    .foundation-grid {
+      grid-template-columns: 1fr;
+    }
+    .case-list {
+      grid-template-columns: 1fr;
+    }
+    .language-row {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-xs);
+    }
+    .language-row-head {
+      display: none;
+    }
+    .changelog-entry {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 720px) {
+    .section {
+      padding: var(--spacing-2xl) var(--spacing-md);
+    }
+    .hero {
+      padding: var(--spacing-lg) var(--spacing-md) var(--spacing-2xl);
+    }
   }
 </style>

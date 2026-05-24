@@ -2,36 +2,123 @@
 ---
 
 <footer class="site-footer">
-  <div class="footer-row">
-    <span class="footer-credit">
-      <a href="https://github.com/GoldenBerry-SO" target="_blank" rel="noopener">GoldenBerry</a>
-      · scaffold based on <a href="https://impeccable.style" target="_blank" rel="noopener">impeccable</a>
-    </span>
-    <nav class="footer-links" aria-label="Footer">
-      <a href="/privacy">Privacy</a>
-      <a href="https://github.com/GoldenBerry-SO/pace.tools" target="_blank" rel="noopener">GitHub</a>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="footer-name">pace</span>
+      <span class="footer-tagline">Company-wide skills for AI coding agents.</span>
+    </div>
+    <nav class="footer-nav" aria-label="Footer">
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="/docs">Docs</a>
+        <a href="/tutorials">Tutorials</a>
+        <a href="/#downloads">Install</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="https://github.com/GoldenBerry-SO" target="_blank" rel="noopener">GoldenBerry</a>
+        <a href="https://impeccable.style" target="_blank" rel="noopener">Impeccable</a>
+        <a href="/privacy">Privacy</a>
+      </div>
+      <div class="footer-col">
+        <h4>Open source</h4>
+        <a href="https://github.com/GoldenBerry-SO/pace.tools" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/GoldenBerry-SO/pace.tools/blob/main/LICENSE" target="_blank" rel="noopener">License</a>
+      </div>
     </nav>
+  </div>
+  <div class="footer-credit">
+    <span>Built by <a href="https://github.com/PiXeL16" target="_blank" rel="noopener">Chris Jimenez</a> at GoldenBerry.</span>
+    <span>Scaffold based on <a href="https://impeccable.style" target="_blank" rel="noopener">impeccable</a>. Apache 2.0.</span>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    max-width: 680px;
-    margin: var(--spacing-xl) auto var(--spacing-lg);
-    padding: var(--spacing-lg);
+    max-width: var(--width-max);
+    margin: var(--spacing-3xl) auto 0;
+    padding: var(--spacing-2xl) var(--spacing-lg) var(--spacing-xl);
     border-top: 1px solid var(--color-mist);
-    font-size: 0.875rem;
-    color: var(--color-ash);
+    color: var(--color-charcoal);
   }
-  .footer-row {
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: var(--spacing-2xl);
+    margin-bottom: var(--spacing-xl);
+  }
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+  .footer-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -0.025em;
+    color: var(--color-ink);
+  }
+  .footer-tagline {
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+    max-width: 24ch;
+    line-height: 1.4;
+  }
+  .footer-nav {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--spacing-lg);
+  }
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    font-size: var(--fs-sm);
+  }
+  .footer-col h4 {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-ash);
+    margin-bottom: 4px;
+  }
+  .footer-col a {
+    color: var(--color-charcoal);
+    transition: color var(--duration-fast) var(--ease-out-quart);
+  }
+  .footer-col a:hover {
+    color: var(--color-forest);
+  }
+  .footer-credit {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
     flex-wrap: wrap;
-    gap: var(--spacing-md);
+    gap: var(--spacing-sm);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-mist);
+    font-size: var(--fs-xs);
+    color: var(--color-ash);
   }
-  .footer-links {
-    display: flex;
-    gap: var(--spacing-md);
+  .footer-credit a {
+    color: var(--color-charcoal);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .footer-credit a:hover {
+    color: var(--color-forest);
+    border-color: var(--color-forest);
+  }
+  @media (max-width: 720px) {
+    .footer-inner {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-lg);
+    }
+    .footer-nav {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .footer-credit {
+      flex-direction: column;
+    }
   }
 </style>

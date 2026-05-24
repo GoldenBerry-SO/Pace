@@ -1,0 +1,144 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base
+  title="Docs · pace"
+  description="Command reference for the pace skill router. One entry per /pace sub-command."
+  activeNav="docs"
+  canonicalPath="/docs"
+>
+  <article class="docs-page">
+    <header class="docs-header">
+      <span class="docs-eyebrow">Reference</span>
+      <h1>Docs</h1>
+      <p class="docs-lede">
+        Command reference for the pace skill router. One entry per <code>/pace</code> sub-command, plus the conventions every command follows.
+      </p>
+    </header>
+
+    <section class="docs-section">
+      <h2>The router</h2>
+      <p>
+        Pace ships as a single skill, <code>/pace</code>, with sub-commands underneath. Type <code>/pace &lt;command&gt;</code> in your AI harness and the agent loads <code>skill/reference/&lt;command&gt;.md</code> before doing the work.
+      </p>
+      <p>
+        For design, pace defers to <a href="https://impeccable.style">impeccable</a>. Install both side by side; the pace installer offers to bring impeccable along.
+      </p>
+    </section>
+
+    <section class="docs-section">
+      <h2>Commands</h2>
+      <div class="docs-empty">
+        <p class="docs-empty-title">No commands published yet.</p>
+        <p class="docs-empty-body">
+          Pace is in scaffold (v0.1). Commands land here as they're authored. Each one will get its own page with: when to use it, the inputs it expects, the artifact it produces, and the conventions it follows.
+        </p>
+        <p class="docs-empty-cta">
+          Authoring a command is documented in <a href="https://github.com/GoldenBerry-SO/pace.tools/blob/main/CLAUDE.md">CLAUDE.md</a>. Drop a reference file at <code>skill/reference/&lt;command&gt;.md</code>, register it in the router, run <code>bun run build</code>, ship a PR.
+        </p>
+      </div>
+    </section>
+
+    <section class="docs-section">
+      <h2>Conventions</h2>
+      <p>Every pace command follows the same shape:</p>
+      <ol class="docs-list">
+        <li>Reads <code>PRODUCT.md</code> at the project root to load context.</li>
+        <li>Loads its own <code>reference/&lt;command&gt;.md</code> file with the playbook.</li>
+        <li>Does the work in the form the command names. <code>/pace review</code> produces a review. <code>/pace ship</code> produces a ship checklist.</li>
+        <li>Leaves an artifact in the repo (a PR comment, a doc, a runbook entry), never a verbal summary in chat alone.</li>
+      </ol>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .docs-page {
+    max-width: var(--width-content);
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
+  }
+  .docs-header {
+    margin-bottom: var(--spacing-2xl);
+    border-bottom: 1px solid var(--color-mist);
+    padding-bottom: var(--spacing-lg);
+  }
+  .docs-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    margin-bottom: var(--spacing-sm);
+    display: inline-block;
+  }
+  .docs-header h1 {
+    font-family: var(--font-display);
+    font-size: var(--fs-3xl);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-md);
+  }
+  .docs-lede {
+    font-size: var(--fs-md);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    max-width: 56ch;
+  }
+  .docs-section {
+    margin-bottom: var(--spacing-2xl);
+  }
+  .docs-section h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--spacing-md);
+  }
+  .docs-section p {
+    font-size: var(--fs-base);
+    color: var(--color-charcoal);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-sm);
+  }
+  .docs-empty {
+    background: var(--color-paper-elev);
+    border: 1px dashed var(--color-mist);
+    border-radius: 12px;
+    padding: var(--spacing-lg);
+  }
+  .docs-empty-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--color-ink);
+    margin-bottom: var(--spacing-sm) !important;
+  }
+  .docs-empty-body {
+    color: var(--color-charcoal);
+  }
+  .docs-empty-cta {
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--color-mist);
+    font-size: var(--fs-sm) !important;
+    color: var(--color-ash) !important;
+  }
+  .docs-list {
+    padding-left: var(--spacing-md);
+    color: var(--color-charcoal);
+    font-size: var(--fs-base);
+    line-height: 1.6;
+  }
+  .docs-list li {
+    margin-bottom: var(--spacing-xs);
+  }
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: var(--color-code-bg);
+    padding: 1px 7px;
+    border-radius: 4px;
+    border: 1px solid var(--color-code-border);
+    color: var(--color-ink);
+  }
+</style>
