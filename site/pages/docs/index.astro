@@ -177,19 +177,36 @@ npx skills add . --copy</code></pre>
     <section class="docs-section" id="impeccable">
       <h2>Impeccable (design)</h2>
 
-      <p>For code-level frontend design (the actual CSS, typography, color, motion, layout of a UI), Pace defers to <a href="https://impeccable.style">impeccable</a>. It's a separate skill with its own router (<code>/impeccable</code>), authored by Paul Bakaus.</p>
+      <p>For frontend code design (the actual CSS, typography, color, layout, motion of a UI), Pace defers to <a href="https://impeccable.style">impeccable</a>. It's a separate Apache 2.0 skill kit with its own router (<code>/impeccable</code>), authored by Paul Bakaus, with 23 sub-commands covering the visual + interaction craft of shipping UI code.</p>
+
+      <h3>What impeccable covers</h3>
+      <p>One router, 23 sub-commands grouped by the work they do:</p>
+      <ul>
+        <li><strong>Audit + fix:</strong> <code>audit</code>, <code>polish</code>, <code>critique</code>, <code>quieter</code>, <code>bolder</code></li>
+        <li><strong>Visual craft:</strong> <code>typeset</code>, <code>colorize</code>, <code>layout</code>, <code>animate</code>, <code>delight</code></li>
+        <li><strong>System work:</strong> <code>design-system</code>, <code>tokens</code>, <code>variants</code>, <code>responsive</code></li>
+        <li><strong>Frontier:</strong> <code>data-viz</code>, <code>3d</code>, <code>print</code>, <code>email</code>, <code>game-ui</code></li>
+        <li><strong>Setup + teach:</strong> <code>teach</code>, <code>onboard</code>, <code>brand-or-product</code>, <code>live</code></li>
+      </ul>
+      <p>Impeccable also ships an <strong>anti-pattern detector</strong> (~50 rules) that catches the visual tells of AI-generated frontend slop: low-contrast text, icon-tile stacks, gradient-on-gradient, dead-center hero layouts, flat type hierarchy, decorative emoji bullets, etc. The detector runs as a CLI (<code>npx impeccable detect</code>), a browser overlay, and a Chrome extension.</p>
 
       <h3>Why two design things</h3>
-      <p>Pace's marketplace already includes the <code>design</code> plugin, which covers UX research, design system management, accessibility audits, dev handoff, and research synthesis. Impeccable covers a different layer: the visual + interaction craft of writing the UI code itself: typography choices, color tokens, spatial rhythm, motion design, responsive layout, the things a designer would obsess over when looking at the rendered pixels.</p>
-
-      <p>Most projects want both. Use <code>/design:*</code> for UX work, <code>/impeccable</code> for code-level UI craft.</p>
+      <p>Different layers of the same craft:</p>
+      <ul>
+        <li><strong>Pace's <code>/design</code> plugin</strong> works at the policy + research level: UX research synthesis, design-system management as a workflow, accessibility audits as policy reviews, dev handoff at the brief level. The work a design <em>team</em> does day-to-day.</li>
+        <li><strong>Impeccable</strong> works at the code level: the typography choices, color tokens, spatial rhythm, motion design, responsive breakpoints, and accessibility implementation that ship in the actual CSS and JSX. The work a designer would obsess over when looking at the rendered pixels.</li>
+      </ul>
+      <p>Most projects want both. Use <code>/design:*</code> when you're setting rules or synthesizing research; <code>/impeccable</code> when you're writing UI code.</p>
 
       <h3>Install impeccable alongside Pace</h3>
       <pre class="docs-pre"><code>npx impeccable skills install</code></pre>
-      <p>The Pace CLI (<code>npx pace skills install</code>) prompts to install impeccable on first run. You can re-run impeccable's installer anytime.</p>
+      <p>The Pace CLI (<code>npx pace skills install</code>) prompts to install impeccable on first run. You can re-run impeccable's installer anytime. Like Pace, impeccable installs across every harness it detects: Claude Code, Cursor, Gemini CLI, Codex CLI, Kiro, OpenCode, RovoDev, Trae, and more.</p>
 
       <h3>Pace's relationship to impeccable</h3>
-      <p>Pace's site, build system, multi-harness install machinery, and editorial bar are all forked from impeccable. See <a href="/NOTICE.md">NOTICE.md</a> for full attribution.</p>
+      <p>Pace's site, build system, multi-harness install machinery, and editorial bar are all forked from impeccable. The two projects share a maintainer ethos (Apache 2.0, multi-harness, ~no-Tailwind, plain CSS, evergreen prose) but ship independently with separate release cadences. See <a href="/NOTICE.md">NOTICE.md</a> for full attribution.</p>
+
+      <h3>See it in action</h3>
+      <p>The <a href="/tutorials#design">Use cases cookbook</a> has a Design section with three concrete workflows that pair Pace with impeccable: per-PR design audit on frontend repos, polish pass on a feature branch before merging, and cross-tool design-system sync between Pace's <code>/design</code> and impeccable's token-aware sub-commands.</p>
     </section>
 
     <section class="docs-section" id="authoring">

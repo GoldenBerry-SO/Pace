@@ -342,14 +342,14 @@ export const TEAM_GUIDES: TeamGuide[] = [
   {
     slug: 'design',
     name: 'Design',
-    tagline: 'For design work, Pace defers to impeccable.',
+    tagline: 'For frontend code design, Pace defers to impeccable.',
     intro:
-      "Design is its own discipline with its own dedicated tool. Rather than duplicate the work, Pace points designers and frontend engineers at impeccable, a separate Apache 2.0 skill kit focused entirely on design fluency for AI coding agents: typography, color, layout, motion, accessibility, UX writing, design systems, dev handoff. Install impeccable alongside Pace.",
+      "Design is its own discipline with its own dedicated tool, and frontend code design in particular has so much depth that it deserves a whole skill kit rather than a single Pace plugin. So Pace points designers and frontend engineers at impeccable: a separate Apache 2.0 router (/impeccable) with 23 sub-commands across typography, color, layout, motion, accessibility, UX writing, design systems, and dev handoff. Impeccable also ships a detector that catches AI-generated design slop (low-contrast text, icon-tile stacks, gradient-on-gradient, dead-center heroes, flat type hierarchy) via CLI, browser overlay, and Chrome extension. Pace's own /design plugin handles the policy layer: UX research synthesis, design-system management, accessibility as a workflow, dev-handoff briefs. Most teams install both.",
     redirect: {
       url: 'https://impeccable.style/docs',
       cta: 'Read the impeccable docs',
       reason:
-        "Impeccable is the design counterpart to Pace. A richer command set focused exclusively on design craft: typography, color, layout, motion, accessibility, UX writing, design systems, dev handoff.",
+        "Impeccable is the frontend-craft counterpart to Pace. 23 sub-commands focused entirely on the design work that ships in actual UI code — typography, color, layout, motion, a11y — plus ~50 anti-pattern detection rules and a multi-harness install (Claude Code, Cursor, Gemini, Codex, and more).",
     },
     plugins: [],
     connectors: [],
