@@ -4,7 +4,7 @@ import Base from '../../layouts/Base.astro';
 
 <Base
   title="Docs · pace"
-  description="Command reference for the pace skill router. One entry per /pace sub-command."
+  description="How pace works: marketplace structure, the /pace router, install + usage, MCP connectors, customization, authoring guide."
   activeNav="docs"
   canonicalPath="/docs"
 >
@@ -13,42 +13,262 @@ import Base from '../../layouts/Base.astro';
       <span class="docs-eyebrow">Reference</span>
       <h1>Docs</h1>
       <p class="docs-lede">
-        Command reference for the pace skill router. One entry per <code>/pace</code> sub-command, plus the conventions every command follows.
+        Pace is a Claude Code marketplace plus a company router. This page covers both: how the pieces fit together, how to install, how to use, how to customize, and how to author new commands.
       </p>
     </header>
 
-    <section class="docs-section">
-      <h2>The router</h2>
-      <p>
-        Pace ships as a single skill, <code>/pace</code>, with sub-commands underneath. Type <code>/pace &lt;command&gt;</code> in your AI harness and the agent loads <code>skill/reference/&lt;command&gt;.md</code> before doing the work.
-      </p>
-      <p>
-        For design, pace defers to <a href="https://impeccable.style">impeccable</a>. Install both side by side; the pace installer offers to bring impeccable along.
-      </p>
+    <nav class="docs-toc" aria-label="Table of contents">
+      <h2>On this page</h2>
+      <ul>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#install">Installing</a></li>
+        <li><a href="#usage">Using commands</a></li>
+        <li><a href="#connectors">MCP connectors</a></li>
+        <li><a href="#router">The /pace router</a></li>
+        <li><a href="#authoring">Authoring commands</a></li>
+        <li><a href="#customizing">Customizing plugins</a></li>
+        <li><a href="#updating">Updating</a></li>
+        <li><a href="#fork">Forking pace for your company</a></li>
+      </ul>
+    </nav>
+
+    <section class="docs-section" id="architecture">
+      <h2>Architecture</h2>
+      <p>Pace lives in one repo with two distinct halves:</p>
+
+      <pre class="docs-tree"><code>pace.tools/
+├── skill/                      <span class="docs-comment">← the /pace router (GoldenBerry's commands)</span>
+│   ├── SKILL.md
+│   ├── reference/&lt;cmd&gt;.md
+│   └── scripts/
+│
+├── plugins/                    <span class="docs-comment">← the marketplace catalog</span>
+│   ├── sales/
+│   │   ├── .claude-plugin/plugin.json
+│   │   ├── skills/&lt;skill&gt;/SKILL.md
+│   │   └── .mcp.json
+│   ├── marketing/
+│   ├── engineering/
+│   ├── … 14 more first-party
+│   └── partner-built/&lt;vendor&gt;/
+│
+└── .claude-plugin/
+    └── marketplace.json        <span class="docs-comment">← registers pace + every plugin</span></code></pre>
+
+      <h3>Why two halves</h3>
+      <ul>
+        <li><strong>Different patterns.</strong> The <code>/pace</code> router uses a single-skill-with-sub-commands design. Imported plugins use Anthropic's pattern: many independent auto-triggering skills, namespaced by slash command (<code>/sales:call-prep</code>).</li>
+        <li><strong>Different ownership.</strong> The router is GoldenBerry's code; we evolve it. The plugins are imported verbatim from Anthropic + partners; we sync from upstream and don't edit.</li>
+        <li><strong>Different install granularity.</strong> The marketplace lets users install only what they need. The router is one cohesive thing.</li>
+      </ul>
     </section>
 
-    <section class="docs-section">
-      <h2>Commands</h2>
-      <div class="docs-empty">
-        <p class="docs-empty-title">No commands published yet.</p>
-        <p class="docs-empty-body">
-          Pace is in scaffold (v0.1). Commands land here as they're authored. Each one will get its own page with: when to use it, the inputs it expects, the artifact it produces, and the conventions it follows.
-        </p>
-        <p class="docs-empty-cta">
-          Authoring a command is documented in <a href="https://github.com/GoldenBerry-SO/pace.tools/blob/main/CLAUDE.md">CLAUDE.md</a>. Drop a reference file at <code>skill/reference/&lt;command&gt;.md</code>, register it in the router, run <code>bun run build</code>, ship a PR.
-        </p>
-      </div>
+    <section class="docs-section" id="install">
+      <h2>Installing</h2>
+
+      <h3>Register the marketplace</h3>
+      <p>Done once per project (or globally per machine). This tells Claude where to find pace's plugins.</p>
+      <pre class="docs-pre"><code>claude plugin marketplace add GoldenBerry-SO/pace.tools</code></pre>
+
+      <h3>Install plugins individually</h3>
+      <p>Pick what your role actually uses. There's no "install all" recommended path; most people use 2-4 plugins.</p>
+      <pre class="docs-pre"><code><span class="docs-comment"># The company router</span>
+claude plugin install pace@pace.tools
+
+<span class="docs-comment"># Department plugins</span>
+claude plugin install sales@pace.tools
+claude plugin install engineering@pace.tools
+claude plugin install data@pace.tools
+claude plugin install marketing@pace.tools
+claude plugin install finance@pace.tools
+claude plugin install legal@pace.tools
+<span class="docs-comment"># … 43 more available; see /plugins for the full catalog</span></code></pre>
+
+      <h3>Or use the pace CLI</h3>
+      <p>The pace CLI wraps the marketplace flow with an interactive picker and offers <a href="https://impeccable.style">impeccable</a> for design.</p>
+      <pre class="docs-pre"><code>npx pace skills install</code></pre>
+
+      <h3>From-repo install for development</h3>
+      <p>If you're contributing to pace itself, clone the repo and use <code>--copy</code> to install from your local working tree:</p>
+      <pre class="docs-pre"><code>git clone https://github.com/GoldenBerry-SO/pace.tools
+cd pace.tools
+npx skills add . --copy</code></pre>
     </section>
 
-    <section class="docs-section">
-      <h2>Conventions</h2>
-      <p>Every pace command follows the same shape:</p>
-      <ol class="docs-list">
-        <li>Reads <code>PRODUCT.md</code> at the project root to load context.</li>
-        <li>Loads its own <code>reference/&lt;command&gt;.md</code> file with the playbook.</li>
-        <li>Does the work in the form the command names. <code>/pace review</code> produces a review. <code>/pace ship</code> produces a ship checklist.</li>
-        <li>Leaves an artifact in the repo (a PR comment, a doc, a runbook entry), never a verbal summary in chat alone.</li>
+    <section class="docs-section" id="usage">
+      <h2>Using commands</h2>
+
+      <p>Pace surfaces in two ways: namespaced slash commands and natural-language auto-trigger.</p>
+
+      <h3>Namespaced slash commands</h3>
+      <p>Each plugin's skills are namespaced by the plugin's name:</p>
+      <pre class="docs-pre"><code>/pace teach                <span class="docs-comment">← company router</span>
+/sales:call-prep Acme      <span class="docs-comment">← sales plugin, namespace `sales:`</span>
+/data:write-query
+/engineering:code-review
+/marketing:campaign-plan
+/legal:nda-review</code></pre>
+      <p>Type <code>/sales:</code> in your harness to see all sales skills. Type <code>/</code> to see every installed skill.</p>
+
+      <h3>Natural-language auto-trigger</h3>
+      <p>Skills publish a <code>description</code> field that Claude uses to auto-match. You don't need to remember the exact command:</p>
+      <ul>
+        <li>"prep me for my call with Acme" → <code>/sales:call-prep</code></li>
+        <li>"write a SQL query against Snowflake" → <code>/data:write-query</code></li>
+        <li>"review this NDA" → <code>/legal:nda-review</code></li>
+      </ul>
+      <p>The slash command is the explicit version; the natural-language form is the same skill behind a different invocation.</p>
+    </section>
+
+    <section class="docs-section" id="connectors">
+      <h2>MCP connectors</h2>
+
+      <p>Plugins integrate with external systems (Slack, HubSpot, Snowflake, Notion, Linear, etc.) through Model Context Protocol servers. Each plugin's <code>.mcp.json</code> declares which connectors it can use.</p>
+
+      <h3>How authorization works</h3>
+      <ol>
+        <li>You install a plugin like <code>sales</code>.</li>
+        <li>The first time a sales skill needs Slack or HubSpot, Claude prompts you to authorize that connector via OAuth.</li>
+        <li>Authorization is per-MCP-server, not per-skill. Once you authorize HubSpot, every sales skill can read your CRM.</li>
       </ol>
+
+      <h3>Working without connectors</h3>
+      <p>Plugins gracefully degrade. <code>/sales:call-prep Acme</code> works on day one with no Slack or HubSpot. Claude does web research and works from whatever context you paste in. Connecting tools makes the same skill more powerful.</p>
+
+      <h3>Available connectors by plugin</h3>
+      <p>See each plugin's <code>CONNECTORS.md</code> for specifics. Quick summary:</p>
+      <ul>
+        <li><strong>sales:</strong> Slack, HubSpot, Close, Clay, ZoomInfo, Fireflies, Microsoft 365</li>
+        <li><strong>marketing:</strong> Slack, Canva, Figma, HubSpot, Amplitude, Notion, Ahrefs, Klaviyo, SimilarWeb</li>
+        <li><strong>data:</strong> Snowflake, Databricks, BigQuery, Hex, Amplitude, Jira</li>
+        <li><strong>customer-support:</strong> Slack, Intercom, HubSpot, Guru, Jira, Notion</li>
+        <li><strong>finance:</strong> Snowflake, Databricks, BigQuery, Microsoft 365</li>
+        <li><strong>product-management:</strong> Slack, Linear, Asana, Monday, ClickUp, Jira, Notion, Figma, Amplitude, Pendo, Intercom, Fireflies</li>
+        <li><strong>legal:</strong> Slack, Box, Egnyte, Jira, Microsoft 365</li>
+        <li><strong>enterprise-search:</strong> Slack, Notion, Guru, Jira, Asana, Microsoft 365</li>
+        <li><strong>productivity:</strong> Slack, Notion, Asana, Linear, Jira, Monday, ClickUp, Microsoft 365</li>
+        <li><strong>bio-research:</strong> PubMed, BioRender, bioRxiv, ClinicalTrials.gov, ChEMBL, Synapse, Wiley, Owkin, Open Targets, Benchling</li>
+        <li><strong>engineering, design, operations, HR:</strong> standalone (no required connectors)</li>
+      </ul>
+    </section>
+
+    <section class="docs-section" id="router">
+      <h2>The /pace router</h2>
+
+      <p>The <code>/pace</code> router is GoldenBerry's company-specific command surface. It's optional; install it only if you're at GoldenBerry or want pace's specific conventions.</p>
+
+      <h3>Context loading</h3>
+      <p>Every router command reads <code>PRODUCT.md</code> at the project root before doing work. The file describes how <em>your</em> company works:</p>
+      <ul>
+        <li><strong>Users:</strong> who you build for</li>
+        <li><strong>Brand voice:</strong> tone, anti-references</li>
+        <li><strong>Principles:</strong> non-negotiables</li>
+        <li><strong>Register:</strong> brand or product (signals to commands whether work is marketing surface or app surface)</li>
+      </ul>
+
+      <p>Run <code>/pace teach</code> once per project to generate <code>PRODUCT.md</code> through a guided interview. The file lives in your repo; you edit it like any other doc.</p>
+
+      <h3>Pinning commands</h3>
+      <p>You can promote any router sub-command to a top-level slash command:</p>
+      <pre class="docs-pre"><code>node skill/scripts/pin.mjs pin audit
+<span class="docs-comment"># now /audit is a shortcut for /pace audit</span></code></pre>
+      <p>Pin creates a lightweight redirect skill that delegates to the router; updates to the router still flow through. Unpin with <code>--unpin</code>.</p>
+    </section>
+
+    <section class="docs-section" id="authoring">
+      <h2>Authoring commands</h2>
+
+      <h3>Add a command to the /pace router</h3>
+      <p>For GoldenBerry-specific workflows. Drop a reference file, register it, build:</p>
+      <pre class="docs-pre"><code><span class="docs-comment"># 1. Create the reference file</span>
+echo '...' > skill/reference/ship.md
+
+<span class="docs-comment"># 2. Add a row to skill/SKILL.md command table</span>
+
+<span class="docs-comment"># 3. Add entry to skill/scripts/command-metadata.json</span>
+&#123;
+  "ship": &#123;
+    "description": "Ship checklist for GoldenBerry releases.",
+    "argumentHint": "[release name]"
+  &#125;
+&#125;
+
+<span class="docs-comment"># 4. Add to PACE_SUB_COMMANDS in scripts/lib/utils.js</span>
+
+<span class="docs-comment"># 5. Build (fans out to harness output dirs)</span>
+bun run build
+
+<span class="docs-comment"># 6. Ship a PR</span></code></pre>
+
+      <h3>Add a new plugin to the marketplace</h3>
+      <p>For commands that don't belong in the company router and don't already exist in an imported plugin:</p>
+      <pre class="docs-pre"><code><span class="docs-comment"># 1. Create the plugin directory</span>
+mkdir -p plugins/gb-onboarding/skills/welcome-day-one
+
+<span class="docs-comment"># 2. Add .claude-plugin/plugin.json (name, version, description, author)</span>
+
+<span class="docs-comment"># 3. Add skills/&lt;name&gt;/SKILL.md with frontmatter (name, description)</span>
+
+<span class="docs-comment"># 4. Add an entry to .claude-plugin/marketplace.json:</span>
+&#123;
+  "name": "gb-onboarding",
+  "displayName": "GoldenBerry Onboarding",
+  "source": "./plugins/gb-onboarding",
+  "description": "Onboarding workflows for new GoldenBerry hires.",
+  "author": &#123; "name": "GoldenBerry" &#125;
+&#125;
+
+<span class="docs-comment"># 5. Optional: add a .mcp.json if the plugin needs MCP servers</span>
+
+<span class="docs-comment"># 6. Ship a PR</span></code></pre>
+    </section>
+
+    <section class="docs-section" id="customizing">
+      <h2>Customizing imported plugins</h2>
+
+      <p><strong>Don't edit <code>plugins/sales/</code> directly.</strong> The imported plugins are kept verbatim so we can re-sync from Anthropic's upstream without merge conflicts.</p>
+
+      <p>When you need a GoldenBerry-specific version of an imported plugin:</p>
+      <ol>
+        <li>Copy it: <code>cp -R plugins/sales plugins/sales-gb</code></li>
+        <li>Edit <code>plugins/sales-gb/.claude-plugin/plugin.json</code>: rename to <code>sales-gb</code>, change <code>author</code> to GoldenBerry.</li>
+        <li>Add an entry to <code>marketplace.json</code> pointing at <code>./plugins/sales-gb</code> with the same shape as other plugins.</li>
+        <li>Edit the skill files in <code>plugins/sales-gb/skills/</code> as needed.</li>
+      </ol>
+      <p>Both plugins live in the marketplace. Users opt into your fork by installing <code>sales-gb@pace.tools</code> instead of <code>sales@pace.tools</code>.</p>
+    </section>
+
+    <section class="docs-section" id="updating">
+      <h2>Updating</h2>
+
+      <h3>Update all plugins at once</h3>
+      <pre class="docs-pre"><code>claude plugin update --all</code></pre>
+
+      <h3>Update just the /pace router</h3>
+      <pre class="docs-pre"><code>npx pace skills update</code></pre>
+
+      <h3>How pace stays in sync with Anthropic upstream</h3>
+      <p>Periodically, a maintainer runs the upstream sync (manually for now, automated CI later):</p>
+      <pre class="docs-pre"><code><span class="docs-comment"># in pace.tools repo</span>
+rsync -a /path/to/knowledge-work-plugins/&lt;plugin&gt;/ plugins/&lt;plugin&gt;/
+<span class="docs-comment"># update version in marketplace.json if it shifted, commit, ship a pace release</span></code></pre>
+      <p>Users then run <code>claude plugin update --all</code> to pick up the new versions.</p>
+    </section>
+
+    <section class="docs-section" id="fork">
+      <h2>Forking pace for your company</h2>
+
+      <p>Pace is structured to be forkable. The /pace router pattern, the marketplace shape, the install machinery, and the site framework all carry over.</p>
+
+      <ol>
+        <li>Fork <a href="https://github.com/GoldenBerry-SO/pace.tools">GoldenBerry-SO/pace.tools</a> to your org.</li>
+        <li>Rename the router: <code>/pace</code> → <code>/yourco</code>. Update <code>.claude-plugin/plugin.json</code>, <code>SKILL.md</code>, <code>marketplace.json</code>, <code>cli/bin/cli.js</code>, and the site copy.</li>
+        <li>Update the marketplace name in <code>.claude-plugin/marketplace.json</code> from <code>pace</code> to <code>yourco</code>.</li>
+        <li>Decide which Anthropic plugins to keep in <code>plugins/</code>. Drop the ones your company doesn't need; keep the rest.</li>
+        <li>Author your own router commands at <code>skill/reference/&lt;cmd&gt;.md</code> for company-specific workflows.</li>
+        <li>Deploy the site to <code>yourco.tools</code> or wherever your team prefers.</li>
+      </ol>
+      <p>License is Apache 2.0; attribution to Anthropic + GoldenBerry + impeccable stays in <code>NOTICE.md</code>.</p>
     </section>
   </article>
 </Base>
@@ -60,7 +280,7 @@ import Base from '../../layouts/Base.astro';
     padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
   }
   .docs-header {
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: var(--spacing-xl);
     border-bottom: 1px solid var(--color-mist);
     padding-bottom: var(--spacing-lg);
   }
@@ -83,54 +303,100 @@ import Base from '../../layouts/Base.astro';
     font-size: var(--fs-md);
     color: var(--color-charcoal);
     line-height: 1.55;
-    max-width: 56ch;
+    max-width: 64ch;
+  }
+  .docs-toc {
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 10px;
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-2xl);
+  }
+  .docs-toc h2 {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+    margin-bottom: var(--spacing-sm);
+  }
+  .docs-toc ul {
+    columns: 2;
+    column-gap: var(--spacing-lg);
+    padding: 0;
+    list-style: none;
+  }
+  .docs-toc li {
+    padding: 2px 0;
+  }
+  .docs-toc a {
+    color: var(--color-charcoal);
+    font-size: var(--fs-sm);
+    border-bottom: 1px solid transparent;
+  }
+  .docs-toc a:hover {
+    color: var(--color-forest);
+    border-color: var(--color-forest-soft);
   }
   .docs-section {
     margin-bottom: var(--spacing-2xl);
+    scroll-margin-top: var(--spacing-md);
   }
   .docs-section h2 {
     font-family: var(--font-display);
     font-size: var(--fs-xl);
     letter-spacing: -0.02em;
     margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .docs-section h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
   }
   .docs-section p {
     font-size: var(--fs-base);
     color: var(--color-charcoal);
-    line-height: 1.6;
+    line-height: 1.65;
     margin-bottom: var(--spacing-sm);
   }
-  .docs-empty {
-    background: var(--color-paper-elev);
-    border: 1px dashed var(--color-mist);
-    border-radius: 12px;
-    padding: var(--spacing-lg);
-  }
-  .docs-empty-title {
-    font-family: var(--font-display);
-    font-size: var(--fs-md);
-    font-weight: 600;
-    color: var(--color-ink);
-    margin-bottom: var(--spacing-sm) !important;
-  }
-  .docs-empty-body {
-    color: var(--color-charcoal);
-  }
-  .docs-empty-cta {
-    margin-top: var(--spacing-sm);
-    padding-top: var(--spacing-sm);
-    border-top: 1px solid var(--color-mist);
-    font-size: var(--fs-sm) !important;
-    color: var(--color-ash) !important;
-  }
-  .docs-list {
+  .docs-section ul,
+  .docs-section ol {
     padding-left: var(--spacing-md);
     color: var(--color-charcoal);
     font-size: var(--fs-base);
-    line-height: 1.6;
+    line-height: 1.65;
+    margin-bottom: var(--spacing-sm);
   }
-  .docs-list li {
+  .docs-section li {
     margin-bottom: var(--spacing-xs);
+  }
+  .docs-pre,
+  .docs-tree {
+    background: oklch(18% 0.015 150);
+    color: oklch(92% 0.005 150);
+    padding: var(--spacing-md);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.5;
+  }
+  .docs-pre code,
+  .docs-tree code {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+  }
+  .docs-comment {
+    color: oklch(62% 0.04 150);
   }
   code {
     font-family: var(--font-mono);

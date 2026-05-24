@@ -1,7 +1,7 @@
 ---
 name: pace
 description: Use when the user invokes a /pace sub-command, or wants a company-standard way to do work across engineering, product, ops, marketing, or other functions. Provides shared vocabulary and repeatable processes between humans and AI coding agents. Not for one-off code tasks that don't match a sub-command.
-version: 0.1.0
+version: 0.2.0
 license: Apache 2.0. Scaffold based on impeccable (https://impeccable.style). See NOTICE.md.
 ---
 

@@ -1,0 +1,413 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import Base from '../../layouts/Base.astro';
+import marketplace from '../../../.claude-plugin/marketplace.json';
+import {
+  enumeratePlugins,
+  type PluginDetail,
+  type Skill,
+  type ConnectorEntry,
+  type PluginEntry,
+} from '../../lib/plugin-details';
+
+export async function getStaticPaths() {
+  // Re-import inside getStaticPaths so the prerender chunk can find them.
+  const { enumeratePlugins } = await import('../../lib/plugin-details');
+  const fs = await import('node:fs');
+  const path = await import('node:path');
+  const { fileURLToPath } = await import('node:url');
+  const marketplace = (await import('../../../.claude-plugin/marketplace.json', { with: { type: 'json' } })).default;
+
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
+  const repoRoot = path.resolve(__dirname, '../../../');
+  const plugins = (marketplace.plugins ?? []) as PluginEntry[];
+
+  return enumeratePlugins(repoRoot, plugins).map(({ slug, detail }) => ({
+    params: { slug },
+    props: detail,
+  }));
+}
+
+interface Props {
+  slug: string;
+  manifest: PluginDetail['manifest'];
+  displayName: string;
+  marketplaceDescription: string;
+  marketplaceAuthor: string;
+  pluginDir: string;
+  skills: Skill[];
+  connectors: ConnectorEntry[];
+  readmeExcerpt: string | null;
+  hasConnectorsDoc: boolean;
+  isPartner: boolean;
+}
+
+const {
+  slug,
+  manifest,
+  displayName,
+  marketplaceDescription,
+  marketplaceAuthor,
+  pluginDir,
+  skills,
+  connectors,
+  readmeExcerpt,
+  hasConnectorsDoc,
+  isPartner,
+} = Astro.props as Props;
+
+const pluginName = manifest.name ?? slug;
+const slashPrefix = `/${pluginName}:`;
+---
+
+
+<Base
+  title={`${displayName} · pace`}
+  description={marketplaceDescription}
+  activeNav="plugins"
+  canonicalPath={`/plugins/${slug}`}
+>
+  <article class="plugin-page">
+    <header class="plugin-header">
+      <div class="plugin-breadcrumb">
+        <a href="/plugins">All plugins</a>
+        <span>/</span>
+        <span>{displayName}</span>
+      </div>
+      <div class="plugin-meta-row">
+        <span class="plugin-slash"><code>{slashPrefix}*</code></span>
+        {manifest.version && <span class="plugin-version">v{manifest.version}</span>}
+        <span class="plugin-author">{marketplaceAuthor}</span>
+        {isPartner && <span class="plugin-tag">Partner-built</span>}
+      </div>
+      <h1>{displayName}</h1>
+      <p class="plugin-lede">{marketplaceDescription}</p>
+
+      <div class="plugin-install">
+        <span class="plugin-install-label">Install</span>
+        <code>claude plugin install {pluginName}@pace.tools</code>
+      </div>
+    </header>
+
+    {readmeExcerpt && (
+      <section class="plugin-section plugin-readme">
+        <h2>Overview</h2>
+        <p>{readmeExcerpt}</p>
+        <p class="plugin-readme-cta">
+          <a href={`https://github.com/GoldenBerry-SO/pace.tools/tree/main/${pluginDir}`}>Read the full README on GitHub &rarr;</a>
+        </p>
+      </section>
+    )}
+
+    <section class="plugin-section">
+      <h2>Skills ({skills.length})</h2>
+      <p class="plugin-section-lede">
+        Each skill auto-triggers when its description matches what you're doing, or you can invoke explicitly via the slash command.
+      </p>
+      <ul class="plugin-skills-list">
+        {skills.map((s) => (
+          <li class="plugin-skill">
+            <div class="plugin-skill-head">
+              <code class="plugin-skill-cmd">{slashPrefix}{s.name}</code>
+            </div>
+            <p class="plugin-skill-desc">{s.description || s.bodyPreview || '(no description)'}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    {connectors.length > 0 && (
+      <section class="plugin-section">
+        <h2>Connectors ({connectors.length})</h2>
+        <p class="plugin-section-lede">
+          MCP servers this plugin can integrate with. Claude prompts for authorization on first use. The plugin works without them; connectors unlock the supercharged version.
+        </p>
+        <ul class="plugin-connectors">
+          {connectors.map((c) => (
+            <li class="plugin-connector">
+              <span class="plugin-connector-name">{c.name}</span>
+              {c.type && <span class="plugin-connector-type">{c.type}</span>}
+            </li>
+          ))}
+        </ul>
+        {hasConnectorsDoc && (
+          <p class="plugin-readme-cta">
+            <a href={`https://github.com/GoldenBerry-SO/pace.tools/blob/main/${pluginDir}/CONNECTORS.md`}>Full connector documentation on GitHub &rarr;</a>
+          </p>
+        )}
+      </section>
+    )}
+
+    <section class="plugin-section">
+      <h2>Source</h2>
+      <ul class="plugin-source-list">
+        <li><strong>Path:</strong> <code>{pluginDir}</code></li>
+        <li><strong>Author:</strong> {marketplaceAuthor}</li>
+        {manifest.version && <li><strong>Version:</strong> v{manifest.version}</li>}
+        <li><strong>License:</strong> Apache 2.0</li>
+        <li>
+          <strong>Upstream:</strong>{' '}
+          {isPartner ? (
+            <span>Distributed via Anthropic's knowledge-work-plugins marketplace.</span>
+          ) : (
+            <a href={`https://github.com/anthropics/knowledge-work-plugins/tree/main/${pluginName}`}>
+              anthropics/knowledge-work-plugins/{pluginName}
+            </a>
+          )}
+        </li>
+      </ul>
+      <p class="plugin-source-note">
+        Pace imports this plugin verbatim from upstream. We don't edit it here; customize by forking to a new directory (e.g. <code>plugins/{pluginName}-gb/</code>) and registering it separately in the marketplace.
+      </p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .plugin-page {
+    max-width: var(--width-content);
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
+  }
+  .plugin-header {
+    margin-bottom: var(--spacing-2xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .plugin-breadcrumb {
+    display: flex;
+    gap: var(--spacing-xs);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--color-ash);
+    margin-bottom: var(--spacing-md);
+  }
+  .plugin-breadcrumb a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .plugin-meta-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-md);
+  }
+  .plugin-slash code {
+    font-family: var(--font-mono);
+    font-size: var(--fs-md);
+    color: var(--color-forest);
+    background: var(--color-forest-dim);
+    padding: 4px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--color-forest-soft);
+    font-weight: 500;
+  }
+  .plugin-version {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--color-ash);
+    padding: 4px 10px;
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 999px;
+  }
+  .plugin-author {
+    font-size: var(--fs-xs);
+    color: var(--color-ash);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .plugin-tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-clay-hover);
+    padding: 2px 10px;
+    background: var(--color-clay-dim);
+    border: 1px solid var(--color-clay-soft);
+    border-radius: 999px;
+  }
+  .plugin-header h1 {
+    font-family: var(--font-display);
+    font-size: var(--fs-3xl);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-md);
+  }
+  .plugin-lede {
+    font-size: var(--fs-md);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    margin-bottom: var(--spacing-lg);
+    max-width: 64ch;
+  }
+  .plugin-install {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+  }
+  .plugin-install-label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+  }
+  .plugin-install code {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: var(--color-ink);
+  }
+  .plugin-section {
+    margin-bottom: var(--spacing-2xl);
+  }
+  .plugin-section h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .plugin-section-lede {
+    font-size: var(--fs-base);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    margin-bottom: var(--spacing-md);
+    max-width: 64ch;
+  }
+  .plugin-readme {
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 10px;
+    padding: var(--spacing-md);
+  }
+  .plugin-readme h2 {
+    border-bottom: 0;
+    padding-bottom: 0;
+    margin-bottom: var(--spacing-xs);
+    font-size: var(--fs-md);
+  }
+  .plugin-readme p {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+  }
+  .plugin-readme-cta {
+    margin-top: var(--spacing-sm);
+    font-size: var(--fs-sm);
+  }
+  .plugin-readme-cta a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .plugin-skills-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--spacing-sm);
+  }
+  .plugin-skill {
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+    background: var(--color-paper-elev);
+  }
+  .plugin-skill-head {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
+  }
+  .plugin-skill-cmd {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    color: var(--color-forest);
+    background: transparent;
+    border: 0;
+    padding: 0;
+    font-weight: 500;
+  }
+  .plugin-skill-desc {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+  }
+  .plugin-connectors {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+  }
+  .plugin-connector {
+    padding: 6px 12px;
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 999px;
+    font-size: var(--fs-xs);
+    color: var(--color-charcoal);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .plugin-connector-name {
+    font-family: var(--font-mono);
+    color: var(--color-ink);
+    text-transform: lowercase;
+  }
+  .plugin-connector-type {
+    font-family: var(--font-mono);
+    color: var(--color-ash);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+  }
+  .plugin-source-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+  }
+  .plugin-source-list li {
+    line-height: 1.55;
+  }
+  .plugin-source-list a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .plugin-source-note {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm);
+    background: var(--color-clay-dim);
+    border-left: 3px solid var(--color-clay);
+    border-radius: 0 6px 6px 0;
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+  }
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: var(--color-code-bg);
+    padding: 1px 7px;
+    border-radius: 4px;
+    border: 1px solid var(--color-code-border);
+    color: var(--color-ink);
+  }
+</style>

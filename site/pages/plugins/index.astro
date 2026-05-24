@@ -62,6 +62,22 @@ function sourceText(p: PluginEntry): string {
   if (p.source && typeof p.source === 'object') return p.source.url ?? '(external)';
   return '(none)';
 }
+
+function detailHref(p: PluginEntry): string | null {
+  // We generate detail pages for local in-repo plugins (./plugins/...).
+  // External plugins (object source) link directly to their upstream.
+  if (typeof p.source === 'string' && p.source.startsWith('./plugins/')) {
+    return `/plugins/${p.name}`;
+  }
+  if (p.source && typeof p.source === 'object' && p.source.url) {
+    return p.source.url;
+  }
+  return null;
+}
+
+function detailIsExternal(p: PluginEntry): boolean {
+  return p.source != null && typeof p.source === 'object';
+}
 ---
 
 <Base
@@ -93,18 +109,34 @@ function sourceText(p: PluginEntry): string {
             <span role="columnheader">Description</span>
             <span role="columnheader">Author</span>
           </div>
-          {groups[groupKey].map((p) => (
-            <div class="plugins-row" role="row">
-              <span class="plugins-name" role="cell">
-                <code>{p.name}</code>
-                {p.displayName && p.displayName !== p.name && (
-                  <span class="plugins-displayname">{p.displayName}</span>
-                )}
-              </span>
-              <span class="plugins-desc" role="cell">{p.description ?? '(none)'}</span>
-              <span class="plugins-author" role="cell">{authorName(p)}</span>
-            </div>
-          ))}
+          {groups[groupKey].map((p) => {
+            const href = detailHref(p);
+            const external = detailIsExternal(p);
+            return (
+              <div class="plugins-row" role="row">
+                <span class="plugins-name" role="cell">
+                  {href ? (
+                    <a
+                      href={href}
+                      class="plugins-name-link"
+                      target={external ? '_blank' : undefined}
+                      rel={external ? 'noopener' : undefined}
+                    >
+                      <code>{p.name}</code>
+                      {external && <span class="plugins-name-ext" aria-label="External link"> &nearr;</span>}
+                    </a>
+                  ) : (
+                    <code>{p.name}</code>
+                  )}
+                  {p.displayName && p.displayName !== p.name && (
+                    <span class="plugins-displayname">{p.displayName}</span>
+                  )}
+                </span>
+                <span class="plugins-desc" role="cell">{p.description ?? '(none)'}</span>
+                <span class="plugins-author" role="cell">{authorName(p)}</span>
+              </div>
+            );
+          })}
         </div>
       </section>
     ))}
@@ -216,6 +248,20 @@ claude plugin install &lt;name&gt;@pace.tools</code></pre>
     padding: 0;
     color: var(--color-forest);
     font-weight: 500;
+  }
+  .plugins-name-link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 2px;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--duration-fast) var(--ease-out-quart);
+  }
+  .plugins-name-link:hover {
+    border-color: var(--color-forest-soft);
+  }
+  .plugins-name-ext {
+    font-size: 0.7rem;
+    color: var(--color-ash);
   }
   .plugins-displayname {
     font-size: var(--fs-xs);

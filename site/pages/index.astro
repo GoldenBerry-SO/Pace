@@ -18,21 +18,23 @@ import Base from '../layouts/Base.astro';
         <p class="hero-tagline">Company-wide skills for AI coding agents.</p>
 
         <p class="hero-lede">
-          A shared way of working between humans and the agents that build with us. One router, many commands across engineering, product, ops, marketing. For frontend design, pace defers to <a href="https://impeccable.style" class="hero-link">impeccable</a>.
+          A curated Claude Code marketplace plus a company router. Install the <code>/pace</code> router for GoldenBerry-specific commands, plus any of <strong>49 plugins</strong> from <a href="https://github.com/anthropics/knowledge-work-plugins" class="hero-link">Anthropic's knowledge-work-plugins</a> and partners: sales, marketing, finance, legal, engineering, data, customer support, product, HR, ops, design, and more. For frontend code design, pace defers to <a href="https://impeccable.style" class="hero-link">impeccable</a>.
         </p>
 
         <div class="hero-included">
           <span class="hero-included-label">What's included</span>
           <div class="hero-included-row">
-            <span><em>pace</em> agent skill with the company command set</span>
+            <span><em>/pace</em> company router</span>
             <span class="hero-sep">·</span>
-            <span>CLI installer that bundles impeccable for design</span>
+            <span>17 first-party + 5 partner-built plugins</span>
+            <span class="hero-sep">·</span>
+            <span>27 external plugins by reference</span>
           </div>
         </div>
 
         <div class="hero-cta-row">
           <a href="#downloads" class="cta cta-primary">Get started</a>
-          <a href="/docs" class="cta cta-secondary">Browse commands</a>
+          <a href="/plugins" class="cta cta-secondary">Browse the catalog</a>
         </div>
 
         <div class="hero-harnesses">
@@ -61,11 +63,11 @@ import Base from '../layouts/Base.astro';
             <span class="terminal-dot" data-dot="g"></span>
             <span class="terminal-label">install pace</span>
           </div>
-          <pre class="terminal-body"><code><span class="prompt">$</span> npx pace skills install
-<span class="muted">Installs pace into your AI harness.
-Offers to install impeccable
-alongside for design work.</span>
-<span class="prompt">$</span> /pace &lt;command&gt;</code></pre>
+          <pre class="terminal-body"><code><span class="prompt">$</span> claude plugin marketplace add \
+    GoldenBerry-SO/pace.tools
+<span class="muted">Registers 50 plugins.</span>
+<span class="prompt">$</span> claude plugin install sales@pace.tools
+<span class="prompt">$</span> /sales:call-prep Acme Corp</code></pre>
         </div>
       </aside>
     </div>
@@ -81,30 +83,30 @@ alongside for design work.</span>
     </div>
     <div class="section-body">
       <p class="section-lede">
-        Before any command runs, pace loads your company's context. A small set of reference files describes how <em>we</em> work: the product, the users, the tone, the constraints. Every command reads them before doing anything.
+        Pace is two things in one repo: a Claude Code marketplace that registers <strong>50 plugins</strong>, and a GoldenBerry-specific <code>/pace</code> router for our internal way of working. Both halves install independently and coexist.
       </p>
 
       <div class="foundation-grid">
         <article class="foundation-card">
-          <h3>PRODUCT.md</h3>
-          <p>Users, brand voice, anti-references, principles. The strategic ground every command stands on.</p>
-          <span class="foundation-card-status">Required</span>
+          <h3>The marketplace manifest</h3>
+          <p><code>.claude-plugin/marketplace.json</code> registers every plugin in this repo plus external git references. Adding the marketplace once gives Claude visibility to all 50.</p>
+          <span class="foundation-card-status">One source of truth</span>
         </article>
         <article class="foundation-card">
-          <h3>Register</h3>
-          <p>Brand or product. Tells every command whether the work is marketing surface or app surface, and adjusts decisions accordingly.</p>
-          <span class="foundation-card-status">Required</span>
+          <h3>Plugins as folders</h3>
+          <p>Each plugin lives at <code>plugins/&lt;name&gt;/</code> with its own <code>plugin.json</code>, <code>skills/</code> directory, and optional <code>.mcp.json</code> for connectors. Self-contained; we don't edit them.</p>
+          <span class="foundation-card-status">Verbatim from upstream</span>
         </article>
         <article class="foundation-card">
-          <h3>Reference files</h3>
-          <p>One file per command in <code>skill/reference/</code>. The command-specific playbook the agent loads on invocation.</p>
-          <span class="foundation-card-status">Per command</span>
+          <h3>The /pace router</h3>
+          <p>One skill at <code>skill/</code> for company-specific commands. Reads <code>PRODUCT.md</code> for context. Sub-commands ship as we author them, layered on top of the marketplace.</p>
+          <span class="foundation-card-status">GoldenBerry-authored</span>
         </article>
       </div>
 
       <div class="foundation-cta">
         <p>
-          Run <code><span class="slash">/</span>pace teach</code> once to set your project's context. Every command benefits.
+          Register the marketplace once with <code><span class="slash">$</span> claude plugin marketplace add GoldenBerry-SO/pace.tools</code>, then install only the plugins your team needs.
         </p>
       </div>
     </div>
@@ -373,9 +375,26 @@ alongside for design work.</span>
     </div>
     <div class="section-body">
       <div class="install-primary">
-        <h3 class="install-step"><span class="step-num">1</span>Install the skill</h3>
+        <h3 class="install-step"><span class="step-num">1</span>Register the marketplace</h3>
         <p class="install-desc">
-          One agent skill that teaches your AI how we work, with sub-commands bundled inside. Drops into every supported harness.
+          One command registers all 50 plugins with Claude. You only do this once per project.
+        </p>
+
+        <div class="terminal">
+          <div class="terminal-bar">
+            <span class="terminal-dot" data-dot="r"></span>
+            <span class="terminal-dot" data-dot="y"></span>
+            <span class="terminal-dot" data-dot="g"></span>
+            <span class="terminal-label">register</span>
+          </div>
+          <pre class="terminal-body"><code><span class="prompt">$</span> claude plugin marketplace add GoldenBerry-SO/pace.tools</code></pre>
+        </div>
+      </div>
+
+      <div class="install-primary">
+        <h3 class="install-step"><span class="step-num">2</span>Install the plugins you need</h3>
+        <p class="install-desc">
+          Pick what your team actually uses. A salesperson installs <code>sales</code>. An engineer installs <code>engineering</code> + <code>data</code>. Everyone can install the <code>pace</code> router for GoldenBerry-specific commands.
         </p>
 
         <div class="terminal">
@@ -385,37 +404,37 @@ alongside for design work.</span>
             <span class="terminal-dot" data-dot="g"></span>
             <span class="terminal-label">install</span>
           </div>
-          <pre class="terminal-body"><code><span class="prompt">$</span> npx pace skills install</code></pre>
+          <pre class="terminal-body"><code><span class="prompt">$</span> claude plugin install pace@pace.tools          <span class="muted"># company router</span>
+<span class="prompt">$</span> claude plugin install sales@pace.tools         <span class="muted"># /sales:* commands</span>
+<span class="prompt">$</span> claude plugin install engineering@pace.tools   <span class="muted"># /engineering:* commands</span>
+<span class="prompt">$</span> claude plugin install data@pace.tools          <span class="muted"># /data:* commands</span></code></pre>
         </div>
 
         <p class="install-note">
-          The installer asks whether you want <strong>impeccable</strong> alongside (for design). Say yes if you do any frontend work.
+          Browse the full catalog at <a href="/plugins">/plugins</a>. For frontend code design, install <a href="https://impeccable.style"><strong>impeccable</strong></a> alongside.
         </p>
 
         <details class="install-alt">
-          <summary>Other install methods</summary>
+          <summary>Or use the pace CLI for a guided picker</summary>
           <div class="install-alt-body">
-            <p>Pull straight from GitHub:</p>
+            <p>The pace CLI wraps the marketplace flow with an interactive prompt:</p>
             <div class="terminal terminal-compact">
-              <pre class="terminal-body"><code><span class="prompt">$</span> npx skills add GoldenBerry-SO/pace.tools --copy</code></pre>
+              <pre class="terminal-body"><code><span class="prompt">$</span> npx pace skills install</code></pre>
             </div>
-            <p>Or as a Claude Code plugin:</p>
-            <div class="terminal terminal-compact">
-              <pre class="terminal-body"><code><span class="prompt">/</span>plugin install GoldenBerry-SO/pace.tools</code></pre>
-            </div>
+            <p>The picker installs the pace router and offers to bring impeccable along for design.</p>
           </div>
         </details>
       </div>
 
       <div class="install-followup">
-        <h3 class="install-step"><span class="step-num">2</span>Set the context</h3>
+        <h3 class="install-step"><span class="step-num">3</span>Configure connectors (optional)</h3>
         <p class="install-desc">
-          Run <code><span class="slash">/</span>pace teach</code> once. It interviews you about how your team works and writes <code>PRODUCT.md</code> at the project root. Every command reads it on every run.
+          Plugins like <code>sales</code>, <code>data</code>, <code>marketing</code> ship with <code>.mcp.json</code> for connectors (Slack, HubSpot, Snowflake, etc.). Most work without them; connecting unlocks the supercharged version.
         </p>
 
-        <h3 class="install-step"><span class="step-num">3</span>Use the commands</h3>
+        <h3 class="install-step"><span class="step-num">4</span>Use the commands</h3>
         <p class="install-desc">
-          Type <code>/pace &lt;command&gt;</code> in your harness. The agent loads the matching reference file and follows your company's process.
+          Type <code>/pace &lt;cmd&gt;</code> for the GoldenBerry router. Type <code>/sales:call-prep</code>, <code>/data:write-query</code>, <code>/marketing:campaign-plan</code> for namespaced department commands. Skills also auto-trigger from natural language, so <em>"prep me for my call with Acme"</em> finds <code>/sales:call-prep</code> on its own.
         </p>
       </div>
     </div>
@@ -431,6 +450,16 @@ alongside for design work.</span>
     </div>
     <div class="section-body">
       <ul class="changelog-items">
+        <li class="changelog-entry">
+          <div class="changelog-meta">
+            <span class="changelog-version">v0.2.0</span>
+            <span class="changelog-date">May 2026</span>
+          </div>
+          <div class="changelog-content">
+            <h3>Marketplace pivot</h3>
+            <p>Pace becomes a curated Claude Code marketplace. Imports <a href="https://github.com/anthropics/knowledge-work-plugins">Anthropic's knowledge-work-plugins</a> verbatim (17 first-party + 5 partner-built), references 27 external plugins by git URL, and keeps the <code>/pace</code> router as our company-specific layer on top. New <code>/plugins</code> page lists the full catalog with attribution per plugin.</p>
+          </div>
+        </li>
         <li class="changelog-entry">
           <div class="changelog-meta">
             <span class="changelog-version">v0.1.0</span>
@@ -459,34 +488,81 @@ alongside for design work.</span>
     <div class="section-body">
       <div class="faq-list">
         <details class="faq-item">
+          <summary>What is pace, exactly?</summary>
+          <div class="faq-answer">
+            <p>Pace is two things in one repo:</p>
+            <ol>
+              <li><strong>A Claude Code marketplace</strong> that registers 50 plugins: <a href="https://github.com/anthropics/knowledge-work-plugins">Anthropic's knowledge-work-plugins</a> (sales, marketing, engineering, data, finance, legal, etc.) imported verbatim, 5 partner-built plugins, and 27 external plugins referenced by git URL.</li>
+              <li><strong>A company router</strong> (<code>/pace</code>) for GoldenBerry-specific commands. Empty in v0.2; we add as we author.</li>
+            </ol>
+            <p>One marketplace URL gives Claude visibility to everything. Pick which plugins to install per project or per person.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
           <summary>How is pace different from impeccable?</summary>
           <div class="faq-answer">
-            <p><strong>Impeccable</strong> is a design skill focused entirely on frontend craft. <strong>Pace</strong> is the company-wide skill router: commands across engineering, product, ops, and marketing.</p>
-            <p>For design, pace defers to impeccable. The installer offers impeccable as a paired install. Use both.</p>
+            <p><strong>Impeccable</strong> is a single design skill focused entirely on frontend code craft (typography, color, layout, motion at the CSS/component level).</p>
+            <p><strong>Pace</strong> is a marketplace covering every other knowledge-work domain plus a company router. Anthropic's <code>design</code> plugin also lives in pace, but that's about UX research / dev handoff / accessibility audits, not code-level CSS.</p>
+            <p>Most projects want both. The pace CLI offers to install impeccable alongside.</p>
           </div>
         </details>
 
         <details class="faq-item">
-          <summary>What commands does pace ship today?</summary>
+          <summary>Why import Anthropic's plugins verbatim instead of writing our own?</summary>
           <div class="faq-answer">
-            <p>Pace is in scaffold (v0.1). The router is wired up and the install flow works, but no sub-commands have been authored yet.</p>
-            <p>Authoring a command is documented in <code>CLAUDE.md</code>: drop a reference file at <code>skill/reference/&lt;command&gt;.md</code>, register it in the router and metadata, run <code>bun run build</code>, and ship a PR.</p>
+            <p>Anthropic's <a href="https://github.com/anthropics/knowledge-work-plugins">knowledge-work-plugins</a> are Apache 2.0, well-researched, and already cover most knowledge-work scenarios. Reinventing them would be slower and probably worse.</p>
+            <p>By importing verbatim, we get:</p>
+            <ul>
+              <li><strong>Upstream sync</strong>: Anthropic ships an improvement, we re-sync and ship it too.</li>
+              <li><strong>No drift</strong>: we don't accidentally diverge from a well-curated baseline.</li>
+              <li><strong>A clean customization story</strong>: when GoldenBerry needs to customize a plugin, we fork it to a new name (<code>plugins/sales-gb/</code>) rather than editing the imported one.</li>
+            </ul>
           </div>
         </details>
 
         <details class="faq-item">
-          <summary>Where do I put the downloaded files?</summary>
+          <summary>Can I install just one plugin?</summary>
           <div class="faq-answer">
-            <p>Use <code>npx pace skills install</code>. It detects your AI harness and places files in the right hidden directory: <code>.cursor/skills/pace/</code>, <code>.claude/skills/pace/</code>, etc.</p>
-            <p>Project-level install takes precedence over user-level. Version-control the harness directories alongside your code so the whole team gets the same skill set.</p>
+            <p>Yes. After registering the marketplace, you install plugins individually:</p>
+            <pre><code>claude plugin marketplace add GoldenBerry-SO/pace.tools
+claude plugin install sales@pace.tools</code></pre>
+            <p>That's the whole flow. Install <code>pace</code> for the company router, <code>sales</code> for sales commands, <code>data</code> for SQL workflows, etc. The plugins don't depend on each other.</p>
           </div>
         </details>
 
         <details class="faq-item">
-          <summary>How do I update to the latest version?</summary>
+          <summary>How do MCP connectors work?</summary>
           <div class="faq-answer">
-            <p>Run <code>npx pace skills update</code> from your project root. It pulls the latest harness output from <code>GoldenBerry-SO/pace.tools</code> on GitHub.</p>
-            <p>Your <code>PRODUCT.md</code> is never overwritten.</p>
+            <p>Plugins like <code>sales</code>, <code>marketing</code>, <code>data</code>, <code>productivity</code> ship with a <code>.mcp.json</code> declaring the MCP servers they integrate with (Slack, HubSpot, Snowflake, Notion, etc.).</p>
+            <p>Claude prompts you to authorize each connector the first time a skill needs it. You don't need to install or configure anything manually. Plugins still work without their connectors; skills degrade gracefully to "tell me about your account, I'll work with what you give me."</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>What if I want to customize a plugin for our company?</summary>
+          <div class="faq-answer">
+            <p>Don't edit the imported plugin under <code>plugins/&lt;name&gt;/</code> directly: that forks you from upstream and breaks sync.</p>
+            <p>Instead: copy the plugin to a new directory (e.g., <code>plugins/sales-gb/</code>), update its <code>plugin.json</code> name + author, and edit there. Add an entry to <code>marketplace.json</code> pointing at the new path. Users opt into your fork explicitly.</p>
+            <p>For company-specific commands that don't fit any imported plugin, add them to the <code>/pace</code> router under <code>skill/reference/&lt;cmd&gt;.md</code>. That's what the router exists for.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>What commands does the /pace router ship?</summary>
+          <div class="faq-answer">
+            <p>None yet (v0.2 is the marketplace pivot; the router still starts empty). Commands ship to the router as we author them.</p>
+            <p>Authoring a router command: drop a reference file at <code>skill/reference/&lt;cmd&gt;.md</code>, register it in <code>skill/SKILL.md</code> and <code>skill/scripts/command-metadata.json</code>, run <code>bun run build</code>, ship a PR. See <a href="/docs" class="text-link">/docs</a> for the full guide.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>How do I update to the latest plugins?</summary>
+          <div class="faq-answer">
+            <p>From any installed project:</p>
+            <pre><code>claude plugin update --all</code></pre>
+            <p>Pace's CLI also exposes <code>npx pace skills update</code> which updates the <code>/pace</code> router specifically.</p>
+            <p>Pace itself periodically re-syncs from Anthropic's upstream repo. New plugins and updated SKILL.md files land in our marketplace as a normal pace release.</p>
           </div>
         </details>
 
@@ -494,15 +570,15 @@ alongside for design work.</span>
           <summary>Can I pin <code>/pace audit</code> to just <code>/audit</code>?</summary>
           <div class="faq-answer">
             <p>Yes. Pace inherits impeccable's pin mechanism: <code>node skill/scripts/pin.mjs pin &lt;command&gt;</code> creates a lightweight redirect so <code>/audit</code> delegates to <code>/pace audit</code>.</p>
-            <p>Available once that command is in the allowlist. Empty in v0.1.</p>
+            <p>Available once the command is in the allowlist; the allowlist is empty in v0.2.</p>
           </div>
         </details>
 
         <details class="faq-item">
-          <summary>Why does pace use the same install tech as impeccable?</summary>
+          <summary>Is pace open source?</summary>
           <div class="faq-answer">
-            <p>Because it works. Impeccable's build system writes the same skill into 13 different harness directories so the install experience is identical regardless of what AI tool you use. Pace inherits that machinery wholesale.</p>
-            <p>See <a href="/NOTICE.md" class="text-link">NOTICE.md</a> for full attribution.</p>
+            <p>Yes. Apache 2.0 throughout. Pace's original code (router + marketplace) is GoldenBerry's; the imported plugins remain attributed to Anthropic and the partner authors. See <a href="https://github.com/GoldenBerry-SO/pace.tools/blob/main/NOTICE.md" class="text-link">NOTICE.md</a> for full attribution.</p>
+            <p>Fork it for your company; the marketplace shape and install machinery carry over for free.</p>
           </div>
         </details>
       </div>
