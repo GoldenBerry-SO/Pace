@@ -25,14 +25,10 @@ const HARNESS_DIRS = [
   '.trae', '.trae-cn', '.pi', '.opencode', '.kiro', '.rovodev',
 ];
 
-// Valid sub-command names
-const VALID_COMMANDS = [
-  'craft', 'teach', 'extract', 'document', 'shape',
-  'critique', 'audit',
-  'polish', 'bolder', 'quieter', 'distill', 'harden', 'onboard', 'live',
-  'animate', 'colorize', 'typeset', 'layout', 'delight', 'overdrive',
-  'clarify', 'adapt', 'optimize',
-];
+// Valid sub-command names. Must mirror the Commands table in
+// skill/SKILL.md and PACE_SUB_COMMANDS in scripts/lib/utils.js. Empty
+// until pace ships its first command.
+const VALID_COMMANDS = [];
 
 // Marker to identify pinned skills (so unpin doesn't delete user skills)
 const PIN_MARKER = '<!-- pace-pinned-skill -->';

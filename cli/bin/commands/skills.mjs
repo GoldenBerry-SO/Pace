@@ -8,19 +8,18 @@
  */
 
 import { execSync } from 'node:child_process';
-import { existsSync, readFileSync, readdirSync, statSync, lstatSync, symlinkSync, readlinkSync, unlinkSync, mkdirSync, writeFileSync, rmSync, renameSync, createWriteStream, realpathSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync, lstatSync, symlinkSync, readlinkSync, unlinkSync, mkdirSync, writeFileSync, rmSync, renameSync } from 'node:fs';
 import { join, resolve, dirname } from 'node:path';
 import { createInterface } from 'node:readline';
 import { fileURLToPath } from 'node:url';
-import { get } from 'node:https';
-import { createHash } from 'node:crypto';
-import { tmpdir } from 'node:os';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const API_BASE = 'https://pace.tools';
 
-// Provider folder names in project roots
-const PROVIDER_DIRS = ['.claude', '.cursor', '.gemini', '.agents', '.github', '.kiro', '.opencode', '.pi', '.qoder', '.trae', '.trae-cn'];
+// Provider folder names in project roots. Must include every harness the
+// build emits into; otherwise `check`, `update`, prefixing, and install
+// detection silently skip that harness.
+const PROVIDER_DIRS = ['.claude', '.cursor', '.gemini', '.agents', '.github', '.kiro', '.opencode', '.pi', '.qoder', '.rovodev', '.trae', '.trae-cn'];
 
 function ask(question) {
   const rl = createInterface({ input: process.stdin, output: process.stdout });
@@ -86,97 +85,10 @@ function getSkillsVersion(root) {
   return null;
 }
 
-/**
- * Hash all SKILL.md files in a directory tree for comparison.
- * Returns a sorted string of "name:hash" pairs.
- */
-function hashSkillsDir(skillsDir) {
-  if (!existsSync(skillsDir)) return '';
-  const entries = [];
-  for (const name of readdirSync(skillsDir).sort()) {
-    const skillMd = join(skillsDir, name, 'SKILL.md');
-    if (!existsSync(skillMd)) continue;
-    const hash = createHash('sha256').update(readFileSync(skillMd)).digest('hex').slice(0, 12);
-    entries.push(`${name}:${hash}`);
-  }
-  return entries.join(',');
-}
-
-/**
- * Download the universal bundle to a temp dir and return its path.
- * Caller is responsible for cleanup.
- */
-async function downloadAndExtractBundle() {
-  const tmpZip = join(tmpdir(), `pace-update-${Date.now()}.zip`);
-  const tmpDir = join(tmpdir(), `pace-update-${Date.now()}`);
-  await downloadFile(`${API_BASE}/api/download/bundle/universal`, tmpZip);
-  mkdirSync(tmpDir, { recursive: true });
-  execSync(`unzip -qo "${tmpZip}" -d "${tmpDir}"`, { encoding: 'utf8' });
-  rmSync(tmpZip, { force: true });
-  return tmpDir;
-}
-
-/**
- * Normalize a SKILL.md's content for comparison by stripping
- * provider-specific paths. Different install methods (npx skills add
- * vs our bundle) resolve {{scripts_path}} to different provider dirs
- * (e.g. .agents vs .claude), so we strip those differences.
- */
-function normalizeForHash(content) {
-  return content
-    .replace(/\.(claude|cursor|agents|github|gemini|codex|kiro|opencode|pi|qoder|trae|trae-cn|rovodev)\/skills\//g, '.PROVIDER/skills/')
-    .replace(/^version:\s*.+$/m, 'version: NORMALIZED');
-}
-
-/**
- * Deduplicate providers by resolved path. When .claude/skills is a
- * symlink to ../.agents/skills, both resolve to the same directory.
- * Returns an array of { provider, localSkillsDir } with one entry
- * per unique real path. The first provider that maps to a real path
- * wins (so the bundle uses that provider's build).
- */
-function deduplicateProviders(root, providers) {
-  const seen = new Map(); // realPath -> { provider, localSkillsDir }
-  for (const provider of providers) {
-    const skillsDir = join(root, provider, 'skills');
-    if (!existsSync(skillsDir)) continue;
-    const real = realpathSync(skillsDir);
-    if (!seen.has(real)) {
-      seen.set(real, { provider, localSkillsDir: skillsDir });
-    }
-  }
-  return [...seen.values()];
-}
-
-/**
- * Compare local skills against a downloaded bundle.
- * Only checks skills that exist in the bundle (ignores user's custom
- * skills that aren't part of pace). Deduplicates providers that
- * share the same real path (symlinks). Normalizes provider-specific
- * paths and version fields before comparing.
- * Returns true if every bundle skill matches the local copy.
- */
-function isUpToDate(root, providers, bundleDir) {
-  const unique = deduplicateProviders(root, providers);
-  if (unique.length === 0) return false;
-
-  for (const { provider, localSkillsDir } of unique) {
-    const bundleSkillsDir = join(bundleDir, provider, 'skills');
-    if (!existsSync(bundleSkillsDir)) continue;
-
-    for (const name of readdirSync(bundleSkillsDir)) {
-      const bundleMd = join(bundleSkillsDir, name, 'SKILL.md');
-      const localMd = join(localSkillsDir, name, 'SKILL.md');
-      if (!existsSync(bundleMd)) continue;
-      if (!existsSync(localMd)) return false;
-
-      const bundleHash = createHash('sha256').update(normalizeForHash(readFileSync(bundleMd, 'utf-8'))).digest('hex');
-      const localHash = createHash('sha256').update(normalizeForHash(readFileSync(localMd, 'utf-8'))).digest('hex');
-      if (bundleHash !== localHash) return false;
-    }
-  }
-  return true;
-}
+// `downloadAndExtractBundle` (which hit /api/download/bundle/universal) was
+// removed: pace.tools serves no such endpoint. `update` now reuses
+// `npx skills add` instead, the same code path `install` uses, which reads
+// directly from the GitHub repo's harness directories.
 
 // ─── skills check ────────────────────────────────────────────────────────────
 
@@ -190,25 +102,9 @@ async function check() {
     process.exit(0);
   }
 
-  const providers = findInstalledProviders(root);
-
-  console.log('Checking for updates...\n');
-  try {
-    const bundleDir = await downloadAndExtractBundle();
-    const upToDate = isUpToDate(root, providers, bundleDir);
-    rmSync(bundleDir, { recursive: true, force: true });
-
-    if (upToDate) {
-      const v = getSkillsVersion(root);
-      console.log(`Skills are up to date${v ? ` (v${v})` : ''}.`);
-    } else {
-      console.log('Updates available.');
-      console.log('Run `npx pace skills update` to update.');
-    }
-  } catch (e) {
-    console.error(`Could not check for updates: ${e.message}`);
-    process.exit(1);
-  }
+  const v = getSkillsVersion(root);
+  console.log(`Installed${v ? ` (v${v})` : ''}.`);
+  console.log('Run `npx pace skills update` to refresh from the GitHub source.');
 }
 
 // ─── skills install ───────────────────────────────────────────────────────────
@@ -520,35 +416,19 @@ function getModifiedSkillFiles(root, providerDirs) {
   return modified;
 }
 
-function downloadFile(url, dest) {
-  return new Promise((resolve, reject) => {
-    const file = createWriteStream(dest);
-    get(url, (res) => {
-      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-        // Follow redirect
-        get(res.headers.location, (res2) => {
-          res2.pipe(file);
-          file.on('finish', () => { file.close(); resolve(); });
-        }).on('error', reject);
-        return;
-      }
-      if (res.statusCode !== 200) {
-        reject(new Error(`HTTP ${res.statusCode}`));
-        return;
-      }
-      res.pipe(file);
-      file.on('finish', () => { file.close(); resolve(); });
-    }).on('error', reject);
-  });
-}
-
 async function update(flags = []) {
   const yes = flags.includes('-y') || flags.includes('--yes');
+  const root = findProjectRoot();
 
-  // Clean up deprecated skills from previous versions.
+  if (!isAlreadyInstalled(root)) {
+    console.log('Pace is not installed in this project.');
+    console.log('Run `npx pace skills install` to install first.');
+    process.exit(1);
+  }
+
+  // Clean up deprecated skills from previous versions before pulling fresh ones.
   try {
     const { cleanup } = await import('../../../skill/scripts/cleanup-deprecated.mjs');
-    const root = findProjectRoot();
     const result = cleanup(root);
     const total = result.deletedPaths.length + result.removedLockEntries.length;
     if (total > 0) {
@@ -558,94 +438,35 @@ async function update(flags = []) {
     // Cleanup script not available (e.g. running from npm package) -- skip
   }
 
-  // Download the latest skills directly from pace.tools.
-  // We skip `npx skills update` because it has a known upstream bug
-  // (vercel-labs/skills#775) where it can't find the lock file.
-  const root = findProjectRoot();
-  const providers = findInstalledProviders(root);
-
-  if (providers.length === 0) {
-    console.log('No pace skill folders found in this project.');
-    console.log('Run `npx pace skills install` to install first.');
-    process.exit(1);
-  }
-
-  console.log('Checking for updates...');
-
-  let tmpDir;
+  // `npx skills add` reads the harness output dirs straight from the GitHub
+  // repo, so we don't depend on pace.tools serving a bundle URL. Same code
+  // path `install` uses; --copy forces per-provider files instead of
+  // symlinks (matches the install behavior).
+  console.log('Updating pace skills via npx skills...\n');
   try {
-    tmpDir = await downloadAndExtractBundle();
+    execSync(`npx skills add GoldenBerry-SO/pace.tools --copy${yes ? ' -y' : ''}`, { stdio: 'inherit' });
   } catch (e) {
-    console.error(`Download failed: ${e.message}`);
-    process.exit(1);
+    console.error(`Update failed: ${e.message || ''}`);
+    process.exit(e.status ?? 1);
   }
 
-  // Compare local vs remote -- skip if already up to date
-  if (isUpToDate(root, providers, tmpDir)) {
-    rmSync(tmpDir, { recursive: true, force: true });
-    const v = getSkillsVersion(root);
-    console.log(`Skills are up to date${v ? ` (v${v})` : ''}. Nothing to do.`);
-    process.exit(0);
+  // Re-apply prefix if the install used one (e.g. /i-pace).
+  const prefix = detectPrefix(root);
+  if (prefix) {
+    const count = renameSkillsWithPrefix(root, prefix);
+    if (count > 0) console.log(`Re-applied "${prefix}" prefix to ${count} skills.`);
   }
 
-  console.log(`Found skills in: ${providers.join(', ')}`);
-
-  if (!yes) {
-    const ans = await ask(`Update skills in ${providers.length} provider folder(s)? (Y/n) `);
-    if (ans === 'n' || ans === 'no') {
-      rmSync(tmpDir, { recursive: true, force: true });
-      console.log('Aborted.');
-      process.exit(0);
-    }
-  }
-
+  // Final sweep to clear any deprecated stubs the fresh download brought.
   try {
-
-    // Copy from the bundle to each unique provider folder.
-    // Deduplicate so symlinked dirs (e.g. .claude/skills -> .agents/skills)
-    // are only written once with the correct provider's content.
-    const unique = deduplicateProviders(root, providers);
-    let updated = 0;
-    for (const { provider, localSkillsDir } of unique) {
-      const srcDir = join(tmpDir, provider, 'skills');
-      if (!existsSync(srcDir)) continue;
-
-      const skills = readdirSync(srcDir, { withFileTypes: true });
-      for (const skill of skills) {
-        if (!skill.isDirectory()) continue;
-        const src = join(srcDir, skill.name);
-        const dest = join(localSkillsDir, skill.name);
-        if (existsSync(dest)) rmSync(dest, { recursive: true });
-        copyDirSync(src, dest);
-        updated++;
-      }
-    }
-
-    rmSync(tmpDir, { recursive: true, force: true });
-
-    // Re-apply prefix if detected
-    const prefix = detectPrefix(root);
-    if (prefix) {
-      const count = renameSkillsWithPrefix(root, prefix);
-      if (count > 0) console.log(`Re-applied "${prefix}" prefix to ${count} skills.`);
-    }
-
-    // Run cleanup to remove deprecated stubs from the fresh download
-    try {
-      const { cleanup: postCleanup } = await import('../../../skill/scripts/cleanup-deprecated.mjs');
-      postCleanup(root);
-    } catch {
-      // Not available -- skip
-    }
-
-    const v = getSkillsVersion(root);
-    console.log(`Updated ${updated} skill(s)${v ? ` to v${v}` : ''}.`);
-    console.log('Done!\n');
-  } catch (e) {
-    console.error(`Update failed: ${e.message}`);
-    if (tmpDir) rmSync(tmpDir, { recursive: true, force: true });
-    process.exit(1);
+    const { cleanup: postCleanup } = await import('../../../skill/scripts/cleanup-deprecated.mjs');
+    postCleanup(root);
+  } catch {
+    // Not available -- skip
   }
+
+  const v = getSkillsVersion(root);
+  console.log(`\nDone${v ? ` (v${v})` : ''}.\n`);
 }
 
 function copyDirSync(src, dest) {
