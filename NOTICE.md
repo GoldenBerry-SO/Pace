@@ -4,7 +4,7 @@ Pace is a marketplace. Several distinct sets of code with distinct authors live 
 
 ## Pace router (this repo's original work)
 
-The `/pace` router and the marketplace infrastructure are authored by Chris Jimenez at GoldenBerry. Apache License 2.0.
+The `/pace` router and the marketplace infrastructure are authored by Chris Jimenez. Apache License 2.0.
 
 ## Origin: impeccable
 

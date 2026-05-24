@@ -33,7 +33,7 @@ The picker asks which plugins you want and offers to install impeccable alongsid
 ## Use
 
 ```
-/pace <command>             # company router (GoldenBerry-specific commands)
+/pace <command>             # company router (your team's commands)
 /sales:call-prep            # imported Anthropic plugin
 /data:write-query
 /engineering:code-review
@@ -44,7 +44,7 @@ Each plugin's commands are namespaced under its name. Pace's router commands liv
 
 ## What's in here
 
-- `skill/`: the `/pace` router, GoldenBerry's company-wide commands
+- `skill/`: the `/pace` router, your team's commands
 - `plugins/`: Anthropic's knowledge-work plugins (17 first-party + 5 partner-built), copied verbatim
 - `.claude-plugin/marketplace.json`: registers everything (49 plugins as of import)
 - `site/`: pace.tools landing site (Astro)
@@ -54,11 +54,11 @@ Each plugin's commands are namespaced under its name. Pace's router commands liv
 
 A company doesn't need 49 separate marketplaces to install. It needs one curated entry point that bundles what we actually use, with the company's specific commands layered on top.
 
-Pace is that entry point for GoldenBerry. Fork it for your company; the install machinery and the marketplace shape carry over for free.
+Pace is an entry point you can fork for your company; the install machinery and the marketplace shape carry over for free.
 
 ## Author + attribution
 
-- Pace router + marketplace: Chris Jimenez ([@PiXeL16](https://github.com/PiXeL16)) at GoldenBerry.
+- Pace router + marketplace: Chris Jimenez ([@PiXeL16](https://github.com/PiXeL16)).
 - Install scaffold: based on [impeccable](https://impeccable.style) by Paul Bakaus.
 - Imported plugins: [Anthropic](https://github.com/anthropics/knowledge-work-plugins) and the listed partner authors.
 

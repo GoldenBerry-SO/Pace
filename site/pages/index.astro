@@ -15,22 +15,15 @@ import Base from '../layouts/Base.astro';
     <div class="hero-inner">
       <div class="hero-left">
         <h1 class="hero-title">pace</h1>
-        <p class="hero-tagline">Company-wide skills for AI coding agents.</p>
+        <p class="hero-tagline">Superpower your company with AI specialists for every role.</p>
 
         <p class="hero-lede">
-          A curated Claude Code marketplace plus a company router. Install the <code>/pace</code> router for GoldenBerry-specific commands, plus any of <strong>49 plugins</strong> from <a href="https://github.com/anthropics/knowledge-work-plugins" class="hero-link">Anthropic's knowledge-work-plugins</a> and partners: sales, marketing, finance, legal, engineering, data, customer support, product, HR, ops, design, and more. For frontend code design, pace defers to <a href="https://impeccable.style" class="hero-link">impeccable</a>.
+          Sales prep their calls. Engineers review their PRs. Finance closes the month. Marketing ships campaigns. Each role gets Claude with the right skills loaded, connected to the tools they actually use, tuned to how your team works.
         </p>
 
-        <div class="hero-included">
-          <span class="hero-included-label">What's included</span>
-          <div class="hero-included-row">
-            <span><em>/pace</em> company router</span>
-            <span class="hero-sep">·</span>
-            <span>17 first-party + 5 partner-built plugins</span>
-            <span class="hero-sep">·</span>
-            <span>27 external plugins by reference</span>
-          </div>
-        </div>
+        <p class="hero-lede hero-lede-second">
+          One marketplace, every department. Install only what your team uses. Add your team's own commands on top with the <code>/pace</code> router.
+        </p>
 
         <div class="hero-cta-row">
           <a href="#downloads" class="cta cta-primary">Get started</a>
@@ -83,30 +76,30 @@ import Base from '../layouts/Base.astro';
     </div>
     <div class="section-body">
       <p class="section-lede">
-        Pace is two things in one repo: a Claude Code marketplace that registers <strong>50 plugins</strong>, and a GoldenBerry-specific <code>/pace</code> router for our internal way of working. Both halves install independently and coexist.
+        Pace gives Claude the right toolkit for whatever you're working on. Pick the skills that match your role, connect the tools you already use, and Claude can do real work in your context.
       </p>
 
       <div class="foundation-grid">
         <article class="foundation-card">
-          <h3>The marketplace manifest</h3>
-          <p><code>.claude-plugin/marketplace.json</code> registers every plugin in this repo plus external git references. Adding the marketplace once gives Claude visibility to all 50.</p>
-          <span class="foundation-card-status">One source of truth</span>
+          <h3>Skills for every role</h3>
+          <p>A plugin per department: sales, marketing, finance, legal, engineering, data, customer support, product, HR, ops, design. Install only what your team uses. Each plugin's skills auto-trigger when the work matches.</p>
+          <span class="foundation-card-status">50 plugins</span>
         </article>
         <article class="foundation-card">
-          <h3>Plugins as folders</h3>
-          <p>Each plugin lives at <code>plugins/&lt;name&gt;/</code> with its own <code>plugin.json</code>, <code>skills/</code> directory, and optional <code>.mcp.json</code> for connectors. Self-contained; we don't edit them.</p>
-          <span class="foundation-card-status">Verbatim from upstream</span>
+          <h3>Connected to your stack</h3>
+          <p>Plugins talk to Slack, HubSpot, Snowflake, Notion, Linear, and the rest through MCP. Claude reads your actual data and writes back to your actual tools, not invented examples.</p>
+          <span class="foundation-card-status">Your tools</span>
         </article>
         <article class="foundation-card">
-          <h3>The /pace router</h3>
-          <p>One skill at <code>skill/</code> for company-specific commands. Reads <code>PRODUCT.md</code> for context. Sub-commands ship as we author them, layered on top of the marketplace.</p>
-          <span class="foundation-card-status">GoldenBerry-authored</span>
+          <h3>Your team's way</h3>
+          <p>The <code>/pace</code> router sits on top. Codify how <em>your</em> team ships, reviews, onboards, and operates. Sub-commands grow as your playbook crystallizes.</p>
+          <span class="foundation-card-status">Custom</span>
         </article>
       </div>
 
       <div class="foundation-cta">
         <p>
-          Register the marketplace once with <code><span class="slash">$</span> claude plugin marketplace add GoldenBerry-SO/pace.tools</code>, then install only the plugins your team needs.
+          Register the marketplace once, then install the plugins your team actually uses. <a href="#downloads" class="text-link">See get started &rarr;</a>
         </p>
       </div>
     </div>
@@ -122,7 +115,7 @@ import Base from '../layouts/Base.astro';
     </div>
     <div class="section-body">
       <p class="section-lede">
-        Pace is a marketplace. Install the <code>/pace</code> router for GoldenBerry-specific commands, and pick the department plugins your team actually needs. Built on the verbatim import of <a href="https://github.com/anthropics/knowledge-work-plugins">Anthropic's knowledge-work-plugins</a>.
+        Pick the plugins your team actually uses. Each one installs independently, brings its own skills, and stays sized for a specific role. The <code>/pace</code> router on top is for your team's own commands.
       </p>
 
       <div class="catalog-grid">
@@ -131,9 +124,9 @@ import Base from '../layouts/Base.astro';
             <span class="catalog-card-prefix">/pace</span>
             <span class="catalog-card-tag">Router</span>
           </div>
-          <h3>Company router</h3>
-          <p>GoldenBerry-specific commands. Empty in v0.1; we add as we author. <code>/pace teach</code> sets up project context.</p>
-          <span class="catalog-card-author">GoldenBerry</span>
+          <h3>Your team's commands</h3>
+          <p>Codify how your team ships, reviews, onboards, and operates. <code>/pace teach</code> sets up project context once. Build commands as your playbook crystallizes.</p>
+          <span class="catalog-card-author">Custom</span>
         </article>
 
         <article class="catalog-card">
@@ -317,8 +310,9 @@ import Base from '../layouts/Base.astro';
         </article>
       </div>
 
-      <div class="language-footnote">
+      <div class="catalog-footnote">
         <a href="/plugins" class="text-link">Browse the full plugin catalog &rarr;</a>
+        <p class="catalog-credit">Imported plugins are authored by Anthropic, partner companies, and others. Pace curates and bundles them. <a href="https://github.com/GoldenBerry-SO/pace.tools/blob/main/NOTICE.md">Full attribution &rarr;</a></p>
       </div>
     </div>
   </section>
@@ -359,7 +353,7 @@ import Base from '../layouts/Base.astro';
         </li>
         <li class="case-item">
           <h3 class="case-title">Open and forkable</h3>
-          <p>Apache 2.0. Use it at GoldenBerry, fork it for your company, contribute commands back.</p>
+          <p>Apache 2.0. Fork it for your company, contribute commands back.</p>
         </li>
       </ol>
     </div>
@@ -394,7 +388,7 @@ import Base from '../layouts/Base.astro';
       <div class="install-primary">
         <h3 class="install-step"><span class="step-num">2</span>Install the plugins you need</h3>
         <p class="install-desc">
-          Pick what your team actually uses. A salesperson installs <code>sales</code>. An engineer installs <code>engineering</code> + <code>data</code>. Everyone can install the <code>pace</code> router for GoldenBerry-specific commands.
+          Pick what your team actually uses. A salesperson installs <code>sales</code>. An engineer installs <code>engineering</code> + <code>data</code>. Everyone can install the <code>pace</code> router for company-specific commands.
         </p>
 
         <div class="terminal">
@@ -427,14 +421,14 @@ import Base from '../layouts/Base.astro';
       </div>
 
       <div class="install-followup">
-        <h3 class="install-step"><span class="step-num">3</span>Configure connectors (optional)</h3>
+        <h3 class="install-step"><span class="step-num">3</span>Connect your tools</h3>
         <p class="install-desc">
-          Plugins like <code>sales</code>, <code>data</code>, <code>marketing</code> ship with <code>.mcp.json</code> for connectors (Slack, HubSpot, Snowflake, etc.). Most work without them; connecting unlocks the supercharged version.
+          This is what makes pace useful. <code>/sales:*</code> talks to your HubSpot. <code>/data:*</code> queries your Snowflake. <code>/marketing:*</code> drafts in your Canva. Each plugin's <code>.mcp.json</code> declares which MCP servers it integrates with, and Claude prompts you to authorize the first time. A plugin without its connectors can still do web research and work from pasted context, but the connected version is the version that does real work on your real data.
         </p>
 
         <h3 class="install-step"><span class="step-num">4</span>Use the commands</h3>
         <p class="install-desc">
-          Type <code>/pace &lt;cmd&gt;</code> for the GoldenBerry router. Type <code>/sales:call-prep</code>, <code>/data:write-query</code>, <code>/marketing:campaign-plan</code> for namespaced department commands. Skills also auto-trigger from natural language, so <em>"prep me for my call with Acme"</em> finds <code>/sales:call-prep</code> on its own.
+          Type <code>/pace &lt;cmd&gt;</code> for your team's commands. Type <code>/sales:call-prep</code>, <code>/data:write-query</code>, <code>/marketing:campaign-plan</code> for namespaced department commands. Skills also auto-trigger from natural language, so <em>"prep me for my call with Acme"</em> finds <code>/sales:call-prep</code> on its own.
         </p>
       </div>
     </div>
@@ -493,7 +487,7 @@ import Base from '../layouts/Base.astro';
             <p>Pace is two things in one repo:</p>
             <ol>
               <li><strong>A Claude Code marketplace</strong> that registers 50 plugins: <a href="https://github.com/anthropics/knowledge-work-plugins">Anthropic's knowledge-work-plugins</a> (sales, marketing, engineering, data, finance, legal, etc.) imported verbatim, 5 partner-built plugins, and 27 external plugins referenced by git URL.</li>
-              <li><strong>A company router</strong> (<code>/pace</code>) for GoldenBerry-specific commands. Empty in v0.2; we add as we author.</li>
+              <li><strong>A company router</strong> (<code>/pace</code>) for your team's own commands. Codify how your team works, on top of the marketplace.</li>
             </ol>
             <p>One marketplace URL gives Claude visibility to everything. Pick which plugins to install per project or per person.</p>
           </div>
@@ -516,7 +510,7 @@ import Base from '../layouts/Base.astro';
             <ul>
               <li><strong>Upstream sync</strong>: Anthropic ships an improvement, we re-sync and ship it too.</li>
               <li><strong>No drift</strong>: we don't accidentally diverge from a well-curated baseline.</li>
-              <li><strong>A clean customization story</strong>: when GoldenBerry needs to customize a plugin, we fork it to a new name (<code>plugins/sales-gb/</code>) rather than editing the imported one.</li>
+              <li><strong>A clean customization story</strong>: when you need to customize a plugin, you fork it to a new name (<code>plugins/sales-custom/</code>) rather than editing the imported one.</li>
             </ul>
           </div>
         </details>
@@ -577,7 +571,7 @@ claude plugin install sales@pace.tools</code></pre>
         <details class="faq-item">
           <summary>Is pace open source?</summary>
           <div class="faq-answer">
-            <p>Yes. Apache 2.0 throughout. Pace's original code (router + marketplace) is GoldenBerry's; the imported plugins remain attributed to Anthropic and the partner authors. See <a href="https://github.com/GoldenBerry-SO/pace.tools/blob/main/NOTICE.md" class="text-link">NOTICE.md</a> for full attribution.</p>
+            <p>Yes. Apache 2.0 throughout. Pace's original code (router + marketplace) is open source; the imported plugins remain attributed to Anthropic and the partner authors. See <a href="https://github.com/GoldenBerry-SO/pace.tools/blob/main/NOTICE.md" class="text-link">NOTICE.md</a> for full attribution.</p>
             <p>Fork it for your company; the marketplace shape and install machinery carry over for free.</p>
           </div>
         </details>
@@ -596,7 +590,7 @@ claude plugin install sales@pace.tools</code></pre>
       </p>
       <div class="company-cta-row">
         <a href="https://github.com/GoldenBerry-SO/pace.tools" class="cta cta-primary" target="_blank" rel="noopener">Fork on GitHub</a>
-        <a href="https://github.com/GoldenBerry-SO" class="cta cta-secondary" target="_blank" rel="noopener">About GoldenBerry</a>
+        <a href="/docs#fork" class="cta cta-secondary">Forking guide</a>
       </div>
     </div>
   </section>
@@ -1077,6 +1071,33 @@ claude plugin install sales@pace.tools</code></pre>
   .language-footnote {
     margin-top: var(--spacing-md);
     text-align: right;
+  }
+  .catalog-footnote {
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-mist);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+  .catalog-credit {
+    font-size: var(--fs-xs);
+    color: var(--color-ash);
+    line-height: 1.55;
+    margin: 0;
+  }
+  .catalog-credit a {
+    color: var(--color-ash);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .catalog-credit a:hover {
+    color: var(--color-forest);
+    border-color: var(--color-forest-soft);
+  }
+  .hero-lede-second {
+    font-size: var(--fs-base);
+    color: var(--color-charcoal);
+    margin-top: calc(var(--spacing-md) * -0.5);
   }
   .text-link {
     color: var(--color-forest);

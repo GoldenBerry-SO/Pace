@@ -1,12 +1,12 @@
 # Project Instructions for Claude
 
-You are **Skidmark Diesel**, working with **Krispatron 3000** (aka Chris) on `pace.tools` — GoldenBerry's curated marketplace of AI coding skills. This file overrides defaults. Read it before doing work.
+You are **Skidmark Diesel**, working with **Krispatron 3000** (aka Chris) on `pace.tools` — a curated marketplace of AI coding skills. This file overrides defaults. Read it before doing work.
 
 ## What pace is
 
 Pace is **two things in one repo**:
 
-1. **A company router** — one installable skill (`/pace`) that fans out to GoldenBerry-specific sub-commands. Lives in `skill/`. Starts empty; we add commands as we author them.
+1. **A company router** — one installable skill (`/pace`) that fans out to company-specific sub-commands. Lives in `skill/`. Starts empty; we add commands as we author them.
 2. **A Claude Code marketplace** — a curated catalog of plugins under `plugins/`, primarily a verbatim import of [Anthropic's knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins). Sales, marketing, finance, legal, engineering, data, customer-support, product, HR, ops, design, and more (~150 skills).
 
 The marketplace is registered via `.claude-plugin/marketplace.json` (49 plugin entries: pace + 17 first-party Anthropic + 5 partner-built + 27 external by git URL).
@@ -17,7 +17,7 @@ The marketplace is registered via `.claude-plugin/marketplace.json` (49 plugin e
 
 This repo combines three lineages:
 
-- **Pace's router + scaffold:** original work by Chris Jimenez, GoldenBerry. Apache 2.0.
+- **Pace's router + scaffold:** original work by Chris Jimenez. Apache 2.0.
 - **Build system + install tech:** forked from [impeccable](https://github.com/pbakaus/impeccable) by Paul Bakaus. Apache 2.0.
 - **Imported plugins:** copied from [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins) and the partner-built additions. Apache 2.0, attributed in `NOTICE.md`.
 
@@ -68,9 +68,9 @@ plugins/                    ← THE MARKETPLACE (verbatim Anthropic imports)
 
 For Anthropic upstream sync: `rsync -a /path/to/knowledge-work-plugins/<plugin>/ plugins/<plugin>/` then update version in `marketplace.json` if it shifted.
 
-For a new GoldenBerry-authored plugin: create `plugins/<name>/` with `.claude-plugin/plugin.json` + `skills/<skill>/SKILL.md` + optional `.mcp.json`. Then add an entry to `.claude-plugin/marketplace.json` with `source: "./plugins/<name>"` and `author: { name: "GoldenBerry" }`.
+For a new company-authored plugin: create `plugins/<name>/` with `.claude-plugin/plugin.json` + `skills/<skill>/SKILL.md` + optional `.mcp.json`. Then add an entry to `.claude-plugin/marketplace.json` with `source: "./plugins/<name>"` and `author: { name: "Your Company" }`.
 
-**Do not edit imported plugins under `plugins/` casually.** That forks us from Anthropic and breaks `git pull`-style upstream syncs. If you must customize, copy to a new name (e.g., `plugins/sales-gb/`) and edit there.
+**Do not edit imported plugins under `plugins/` casually.** That forks us from Anthropic and breaks `git pull`-style upstream syncs. If you must customize, copy to a new name (e.g., `plugins/sales-custom/`) and edit there.
 
 ### Adding a new command
 

@@ -37,7 +37,7 @@ const total = plugins.length;
 const groupLabels: Record<string, { title: string; lede: string }> = {
   router: {
     title: 'Pace router',
-    lede: "GoldenBerry's company-specific commands.",
+    lede: "Your team's company-specific commands.",
   },
   'first-party': {
     title: 'First-party (Anthropic)',
@@ -91,7 +91,7 @@ function detailIsExternal(p: PluginEntry): boolean {
       <span class="plugins-eyebrow">Marketplace</span>
       <h1>Plugins</h1>
       <p class="plugins-lede">
-        Pace bundles <strong>{total} plugins</strong> across four origins: GoldenBerry's pace router, Anthropic's knowledge-work-plugins (verbatim), partner-built plugins, and external plugins referenced from upstream repos.
+        Pace bundles <strong>{total} plugins</strong> across four origins: the pace router (your team's commands), Anthropic's knowledge-work-plugins (verbatim), partner-built plugins, and external plugins referenced from upstream repos.
       </p>
       <div class="plugins-install">
         <code>claude plugin marketplace add GoldenBerry-SO/pace.tools</code>

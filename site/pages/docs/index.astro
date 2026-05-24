@@ -37,7 +37,7 @@ import Base from '../../layouts/Base.astro';
       <p>Pace lives in one repo with two distinct halves:</p>
 
       <pre class="docs-tree"><code>pace.tools/
-├── skill/                      <span class="docs-comment">← the /pace router (GoldenBerry's commands)</span>
+├── skill/                      <span class="docs-comment">← the /pace router (your team's commands)</span>
 │   ├── SKILL.md
 │   ├── reference/&lt;cmd&gt;.md
 │   └── scripts/
@@ -58,7 +58,7 @@ import Base from '../../layouts/Base.astro';
       <h3>Why two halves</h3>
       <ul>
         <li><strong>Different patterns.</strong> The <code>/pace</code> router uses a single-skill-with-sub-commands design. Imported plugins use Anthropic's pattern: many independent auto-triggering skills, namespaced by slash command (<code>/sales:call-prep</code>).</li>
-        <li><strong>Different ownership.</strong> The router is GoldenBerry's code; we evolve it. The plugins are imported verbatim from Anthropic + partners; we sync from upstream and don't edit.</li>
+        <li><strong>Different ownership.</strong> The router is your team's code; you evolve it. The plugins are imported verbatim from Anthropic + partners; we sync from upstream and don't edit.</li>
         <li><strong>Different install granularity.</strong> The marketplace lets users install only what they need. The router is one cohesive thing.</li>
       </ul>
     </section>
@@ -155,7 +155,7 @@ npx skills add . --copy</code></pre>
     <section class="docs-section" id="router">
       <h2>The /pace router</h2>
 
-      <p>The <code>/pace</code> router is GoldenBerry's company-specific command surface. It's optional; install it only if you're at GoldenBerry or want pace's specific conventions.</p>
+      <p>The <code>/pace</code> router is the company-specific command surface. It's optional; install it only if you want pace's conventions for your team.</p>
 
       <h3>Context loading</h3>
       <p>Every router command reads <code>PRODUCT.md</code> at the project root before doing work. The file describes how <em>your</em> company works:</p>
@@ -179,7 +179,7 @@ npx skills add . --copy</code></pre>
       <h2>Authoring commands</h2>
 
       <h3>Add a command to the /pace router</h3>
-      <p>For GoldenBerry-specific workflows. Drop a reference file, register it, build:</p>
+      <p>For company-specific workflows. Drop a reference file, register it, build:</p>
       <pre class="docs-pre"><code><span class="docs-comment"># 1. Create the reference file</span>
 echo '...' > skill/reference/ship.md
 
@@ -188,7 +188,7 @@ echo '...' > skill/reference/ship.md
 <span class="docs-comment"># 3. Add entry to skill/scripts/command-metadata.json</span>
 &#123;
   "ship": &#123;
-    "description": "Ship checklist for GoldenBerry releases.",
+    "description": "Ship checklist for company releases.",
     "argumentHint": "[release name]"
   &#125;
 &#125;
@@ -203,7 +203,7 @@ bun run build
       <h3>Add a new plugin to the marketplace</h3>
       <p>For commands that don't belong in the company router and don't already exist in an imported plugin:</p>
       <pre class="docs-pre"><code><span class="docs-comment"># 1. Create the plugin directory</span>
-mkdir -p plugins/gb-onboarding/skills/welcome-day-one
+mkdir -p plugins/yourco-onboarding/skills/welcome-day-one
 
 <span class="docs-comment"># 2. Add .claude-plugin/plugin.json (name, version, description, author)</span>
 
@@ -211,11 +211,11 @@ mkdir -p plugins/gb-onboarding/skills/welcome-day-one
 
 <span class="docs-comment"># 4. Add an entry to .claude-plugin/marketplace.json:</span>
 &#123;
-  "name": "gb-onboarding",
-  "displayName": "GoldenBerry Onboarding",
-  "source": "./plugins/gb-onboarding",
-  "description": "Onboarding workflows for new GoldenBerry hires.",
-  "author": &#123; "name": "GoldenBerry" &#125;
+  "name": "yourco-onboarding",
+  "displayName": "Your Company Onboarding",
+  "source": "./plugins/yourco-onboarding",
+  "description": "Onboarding workflows for new hires.",
+  "author": &#123; "name": "Your Company" &#125;
 &#125;
 
 <span class="docs-comment"># 5. Optional: add a .mcp.json if the plugin needs MCP servers</span>
@@ -228,14 +228,14 @@ mkdir -p plugins/gb-onboarding/skills/welcome-day-one
 
       <p><strong>Don't edit <code>plugins/sales/</code> directly.</strong> The imported plugins are kept verbatim so we can re-sync from Anthropic's upstream without merge conflicts.</p>
 
-      <p>When you need a GoldenBerry-specific version of an imported plugin:</p>
+      <p>When you need a custom version of an imported plugin:</p>
       <ol>
-        <li>Copy it: <code>cp -R plugins/sales plugins/sales-gb</code></li>
-        <li>Edit <code>plugins/sales-gb/.claude-plugin/plugin.json</code>: rename to <code>sales-gb</code>, change <code>author</code> to GoldenBerry.</li>
-        <li>Add an entry to <code>marketplace.json</code> pointing at <code>./plugins/sales-gb</code> with the same shape as other plugins.</li>
-        <li>Edit the skill files in <code>plugins/sales-gb/skills/</code> as needed.</li>
+        <li>Copy it: <code>cp -R plugins/sales plugins/sales-custom</code></li>
+        <li>Edit <code>plugins/sales-custom/.claude-plugin/plugin.json</code>: rename to <code>sales-custom</code>, change <code>author</code> to your company.</li>
+        <li>Add an entry to <code>marketplace.json</code> pointing at <code>./plugins/sales-custom</code> with the same shape as other plugins.</li>
+        <li>Edit the skill files in <code>plugins/sales-custom/skills/</code> as needed.</li>
       </ol>
-      <p>Both plugins live in the marketplace. Users opt into your fork by installing <code>sales-gb@pace.tools</code> instead of <code>sales@pace.tools</code>.</p>
+      <p>Both plugins live in the marketplace. Users opt into your fork by installing <code>sales-custom@pace.tools</code> instead of <code>sales@pace.tools</code>.</p>
     </section>
 
     <section class="docs-section" id="updating">
@@ -268,7 +268,7 @@ rsync -a /path/to/knowledge-work-plugins/&lt;plugin&gt;/ plugins/&lt;plugin&gt;/
         <li>Author your own router commands at <code>skill/reference/&lt;cmd&gt;.md</code> for company-specific workflows.</li>
         <li>Deploy the site to <code>yourco.tools</code> or wherever your team prefers.</li>
       </ol>
-      <p>License is Apache 2.0; attribution to Anthropic + GoldenBerry + impeccable stays in <code>NOTICE.md</code>.</p>
+      <p>License is Apache 2.0; attribution to Anthropic, partners, and impeccable stays in <code>NOTICE.md</code>.</p>
     </section>
   </article>
 </Base>
