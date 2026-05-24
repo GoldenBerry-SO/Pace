@@ -38,7 +38,7 @@ export const DOCS_SIDEBAR: SidebarGroup[] = [
       { href: '/docs/teams/legal', label: 'Legal' },
       { href: '/docs/teams/operations', label: 'Operations' },
       { href: '/docs/teams/people', label: 'People' },
-      { href: '/docs/teams/customer-support', label: 'Customer support' },
+      { href: '/docs/teams/customer-support', label: 'Customer Support' },
       { href: '/docs/teams/everyone', label: 'Everyone' },
     ],
   },
