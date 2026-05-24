@@ -118,14 +118,13 @@ export const PLUGIN_CATEGORIES: Record<string, string> = {
   productivity: 'people',
   'enterprise-search': 'people',
 
-  'bio-research': 'specialized',
   'small-business': 'specialized',
   'pdf-viewer': 'specialized',
 
   apollo: 'partner',
   'brand-voice': 'partner',
   'common-room': 'partner',
-  slack: 'partner',
+  'slack': 'partner',
   'zoom-plugin': 'partner',
 
   'cowork-plugin-management': 'meta',

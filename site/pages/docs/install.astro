@@ -6,8 +6,8 @@ const currentPath = '/docs/install';
 ---
 
 <SubPage
-  title="Install · pace"
-  description="Install pace plugins in Claude Code, Cursor, Gemini, Codex, and the Cowork desktop app. Two flows for engineers and non-technical users."
+  title="Install · Pace"
+  description="Install Pace plugins in Claude Code, Cursor, Gemini, Codex, and the Cowork desktop app. Two flows for engineers and non-technical users."
   activeNav="docs"
   canonicalPath={currentPath}
   sidebarLabel="Docs"
@@ -33,7 +33,7 @@ const currentPath = '/docs/install';
   <article class="installpage">
     <header class="installpage-header">
       <span class="installpage-eyebrow">Get started</span>
-      <h1>Install pace</h1>
+      <h1>Install Pace</h1>
       <p class="installpage-lede">
         Pace is a Claude Code plugin marketplace. Register the marketplace once, then install the plugins your team uses. Two install paths: <strong>Claude Code CLI</strong> for engineers, and the <strong>Cowork desktop app</strong> for everyone else.
       </p>
@@ -90,32 +90,31 @@ claude plugin install marketing@pace.tools</code></pre>
     <section class="installpage-section" id="cowork">
       <h2>Cowork (non-technical users)</h2>
       <p>
-        <a href="https://cowork.com/">Cowork</a> is a desktop app that wraps Claude Code in a graphical interface. No terminal, no <code>npm</code>, no command-line install. Pace plugins are the same plugins; Cowork just installs them through clicks instead of commands.
+        Cowork is the Claude desktop app, a graphical interface to the same plugin ecosystem Claude Code uses in the terminal. Pace plugins install in Cowork the same way they install anywhere else, with one important difference: in Cowork you click a link instead of running a command.
       </p>
 
-      <h3>1. Install Cowork</h3>
-      <p>Download the desktop app from <a href="https://cowork.com/">cowork.com</a> and sign in with your Anthropic account. Cowork runs on macOS and Windows.</p>
-
-      <h3>2. Add the pace marketplace</h3>
-      <ol class="installpage-steps">
-        <li>Open Cowork and go to the <strong>Plugins</strong> tab.</li>
-        <li>Click <strong>Add marketplace</strong>.</li>
-        <li>Paste <code>pace.tools</code> as the marketplace URL.</li>
-        <li>Click <strong>Add</strong>. Cowork loads the catalog of 50 plugins.</li>
-      </ol>
-
-      <h3>3. Install plugins by clicking</h3>
+      <h3>One-click install per plugin</h3>
       <p>
-        Browse the catalog inside Cowork and click <strong>Install</strong> next to each plugin you want. A salesperson installs <code>sales</code>; a product manager installs <code>product-management</code>; an HR person installs <code>human-resources</code>. The <a href="/docs/teams">team guides</a> have starter sets for every role.
+        Each plugin has a deep link that opens Cowork and adds the Pace marketplace plus the plugin in a single step. Open one of these in your browser (Cowork has to be installed first):
+      </p>
+      <pre class="installpage-pre"><code><span class="installpage-comment"># Pattern</span>
+https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/pace.tools&amp;plugin=&lt;name&gt;
+
+<span class="installpage-comment"># Examples</span>
+https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/pace.tools&amp;plugin=sales
+https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/pace.tools&amp;plugin=marketing
+https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/pace.tools&amp;plugin=engineering</code></pre>
+      <p>
+        Cowork prompts you to confirm the install. Restart the app once the install finishes so connectors register cleanly. The pattern is the same the Anthropic-published partner plugins (Apollo, Slack, Zoom, etc.) use; see Cowork's own docs for the current UI specifics.
       </p>
 
-      <h3>4. Authorize connectors when prompted</h3>
+      <h3>Authorize connectors when prompted</h3>
       <p>
-        The first time a skill needs an external tool (Slack, HubSpot, Notion, etc.), Cowork opens an OAuth window. Sign in, approve, and the connector stays authorized.
+        The first time a skill needs an external tool (Slack, HubSpot, Notion, etc.), Cowork opens an OAuth window. Sign in once, approve the scope, and the connector stays authorized for every plugin that uses it.
       </p>
 
       <div class="installpage-callout">
-        <strong>One install, multiple users.</strong> If you're rolling pace out to a team of non-technical users, install Cowork once on a shared template machine, register pace, then have everyone sign in with their own Anthropic account. Each user authorizes their own connectors against their own accounts.
+        <strong>One install, multiple users.</strong> If you're rolling Pace out to a team of non-technical users, install Cowork on each user's machine and send them a shortlist of deep links for the plugins they need. Each person authorizes connectors against their own accounts, so HR sees only HR's HubSpot, sales sees only sales's HubSpot, and so on.
       </div>
     </section>
 
@@ -177,10 +176,10 @@ npx pace skills help</code></pre>
       <h3>Claude Code</h3>
       <p>Marketplace plugins update with the same command they install with:</p>
       <pre class="installpage-pre"><code>claude plugin marketplace update pace.tools</code></pre>
-      <p>That refreshes pace's catalog. Per-plugin updates land when Claude Code re-resolves the marketplace.</p>
+      <p>That refreshes Pace's catalog. Per-plugin updates land when Claude Code re-resolves the marketplace.</p>
 
       <h3>Cowork</h3>
-      <p>Open the Plugins tab and click <strong>Check for updates</strong> on the pace marketplace. Cowork pulls the latest version of each installed plugin.</p>
+      <p>Cowork pulls plugin updates from the marketplace whenever you reopen the app or re-run a plugin install link. The exact in-app update UI is app-version dependent; see Cowork's docs for the current flow.</p>
 
       <h3>Pace CLI</h3>
       <pre class="installpage-pre"><code>npx pace skills update</code></pre>

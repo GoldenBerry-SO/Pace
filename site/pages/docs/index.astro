@@ -4,8 +4,8 @@ import { DOCS_SIDEBAR } from '../../lib/sidebar-data';
 ---
 
 <SubPage
-  title="Docs · pace"
-  description="How pace works: marketplace structure, the /pace router, install + usage, MCP connectors, customization, authoring guide."
+  title="Docs · Pace"
+  description="How Pace works: marketplace structure, the /pace router, install + usage, MCP connectors, customization, authoring guide."
   activeNav="docs"
   canonicalPath="/docs"
   sidebarLabel="Docs"
@@ -53,12 +53,12 @@ import { DOCS_SIDEBAR } from '../../lib/sidebar-data';
 │   └── partner-built/&lt;vendor&gt;/
 │
 └── .claude-plugin/
-    └── marketplace.json        <span class="docs-comment">← registers pace + every plugin</span></code></pre>
+    └── marketplace.json        <span class="docs-comment">← registers Pace + every plugin</span></code></pre>
 
       <h3>Why two halves</h3>
       <ul>
-        <li><strong>Different patterns.</strong> The <code>/pace</code> router uses a single-skill-with-sub-commands design. Imported plugins use Anthropic's pattern: many independent auto-triggering skills, namespaced by slash command (<code>/sales:call-prep</code>).</li>
-        <li><strong>Different ownership.</strong> The router is your team's code; you evolve it. The plugins are imported verbatim from Anthropic + partners; we sync from upstream and don't edit.</li>
+        <li><strong>Different patterns.</strong> The <code>/pace</code> router uses a single-skill-with-sub-commands design. Imported plugins use a different pattern: many independent auto-triggering skills, namespaced by slash command (<code>/sales:call-prep</code>).</li>
+        <li><strong>Different ownership.</strong> The router is your team's code; you evolve it. The plugins are imported from partners; we sync from upstream and don't edit.</li>
         <li><strong>Different install granularity.</strong> The marketplace lets users install only what they need. The router is one cohesive thing.</li>
       </ul>
     </section>
@@ -67,7 +67,7 @@ import { DOCS_SIDEBAR } from '../../lib/sidebar-data';
       <h2>Installing</h2>
 
       <h3>Register the marketplace</h3>
-      <p>Done once per project (or globally per machine). This tells Claude where to find pace's plugins.</p>
+      <p>Done once per project (or globally per machine). This tells Claude where to find Pace's plugins.</p>
       <pre class="docs-pre"><code>claude plugin marketplace add pace.tools</code></pre>
 
       <h3>Install plugins individually</h3>
@@ -84,12 +84,12 @@ claude plugin install finance@pace.tools
 claude plugin install legal@pace.tools
 <span class="docs-comment"># … 43 more available; see /plugins for the full catalog</span></code></pre>
 
-      <h3>Or use the pace CLI</h3>
-      <p>The pace CLI wraps the marketplace flow with an interactive picker and offers <a href="https://impeccable.style">impeccable</a> for design.</p>
+      <h3>Or use the Pace CLI</h3>
+      <p>The Pace CLI wraps the marketplace flow with an interactive picker and offers <a href="https://impeccable.style">impeccable</a> for design.</p>
       <pre class="docs-pre"><code>npx pace skills install</code></pre>
 
       <h3>From-repo install for development</h3>
-      <p>If you're contributing to pace itself, clone the repo and use <code>--copy</code> to install from your local working tree:</p>
+      <p>If you're contributing to Pace itself, clone the repo and use <code>--copy</code> to install from your local working tree:</p>
       <pre class="docs-pre"><code>git clone &lt;pace-repo-url&gt;
 cd pace.tools
 npx skills add . --copy</code></pre>
@@ -147,7 +147,6 @@ npx skills add . --copy</code></pre>
         <li><strong>legal:</strong> Slack, Box, Egnyte, Jira, Microsoft 365</li>
         <li><strong>enterprise-search:</strong> Slack, Notion, Guru, Jira, Asana, Microsoft 365</li>
         <li><strong>productivity:</strong> Slack, Notion, Asana, Linear, Jira, Monday, ClickUp, Microsoft 365</li>
-        <li><strong>bio-research:</strong> PubMed, BioRender, bioRxiv, ClinicalTrials.gov, ChEMBL, Synapse, Wiley, Owkin, Open Targets, Benchling</li>
         <li><strong>engineering, design, operations, HR:</strong> standalone (no required connectors)</li>
       </ul>
     </section>
@@ -178,16 +177,16 @@ npx skills add . --copy</code></pre>
     <section class="docs-section" id="impeccable">
       <h2>Impeccable (design)</h2>
 
-      <p>For code-level frontend design (the actual CSS, typography, color, motion, layout of a UI), pace defers to <a href="https://impeccable.style">impeccable</a>. It's a separate skill with its own router (<code>/impeccable</code>), authored by Paul Bakaus.</p>
+      <p>For code-level frontend design (the actual CSS, typography, color, motion, layout of a UI), Pace defers to <a href="https://impeccable.style">impeccable</a>. It's a separate skill with its own router (<code>/impeccable</code>), authored by Paul Bakaus.</p>
 
       <h3>Why two design things</h3>
-      <p>Pace's marketplace already includes Anthropic's <code>design</code> plugin, which covers UX research, design system management, accessibility audits, dev handoff, and research synthesis. Impeccable covers a different layer: the visual + interaction craft of writing the UI code itself: typography choices, color tokens, spatial rhythm, motion design, responsive layout, the things a designer would obsess over when looking at the rendered pixels.</p>
+      <p>Pace's marketplace already includes the <code>design</code> plugin, which covers UX research, design system management, accessibility audits, dev handoff, and research synthesis. Impeccable covers a different layer: the visual + interaction craft of writing the UI code itself: typography choices, color tokens, spatial rhythm, motion design, responsive layout, the things a designer would obsess over when looking at the rendered pixels.</p>
 
       <p>Most projects want both. Use <code>/design:*</code> for UX work, <code>/impeccable</code> for code-level UI craft.</p>
 
-      <h3>Install impeccable alongside pace</h3>
+      <h3>Install impeccable alongside Pace</h3>
       <pre class="docs-pre"><code>npx impeccable skills install</code></pre>
-      <p>The pace CLI (<code>npx pace skills install</code>) prompts to install impeccable on first run. You can re-run impeccable's installer anytime.</p>
+      <p>The Pace CLI (<code>npx pace skills install</code>) prompts to install impeccable on first run. You can re-run impeccable's installer anytime.</p>
 
       <h3>Pace's relationship to impeccable</h3>
       <p>Pace's site, build system, multi-harness install machinery, and editorial bar are all forked from impeccable. See <a href="/NOTICE.md">NOTICE.md</a> for full attribution.</p>
@@ -244,7 +243,7 @@ mkdir -p plugins/yourco-onboarding/skills/welcome-day-one
     <section class="docs-section" id="customizing">
       <h2>Customizing imported plugins</h2>
 
-      <p><strong>Don't edit <code>plugins/sales/</code> directly.</strong> The imported plugins are kept verbatim so we can re-sync from Anthropic's upstream without merge conflicts.</p>
+      <p><strong>Don't edit <code>plugins/sales/</code> directly.</strong> The imported plugins are kept untouched so we can re-sync from upstream without merge conflicts.</p>
 
       <p>When you need a custom version of an imported plugin:</p>
       <ol>
@@ -265,11 +264,11 @@ mkdir -p plugins/yourco-onboarding/skills/welcome-day-one
       <h3>Update just the /pace router</h3>
       <pre class="docs-pre"><code>npx pace skills update</code></pre>
 
-      <h3>How pace stays in sync with Anthropic upstream</h3>
+      <h3>How Pace stays in sync with upstream</h3>
       <p>Periodically, a maintainer runs the upstream sync (manually for now, automated CI later):</p>
       <pre class="docs-pre"><code><span class="docs-comment"># in pace.tools repo</span>
-rsync -a /path/to/knowledge-work-plugins/&lt;plugin&gt;/ plugins/&lt;plugin&gt;/
-<span class="docs-comment"># update version in marketplace.json if it shifted, commit, ship a pace release</span></code></pre>
+rsync -a /path/to/upstream-plugins/&lt;plugin&gt;/ plugins/&lt;plugin&gt;/
+<span class="docs-comment"># update version in marketplace.json if it shifted, commit, ship a Pace release</span></code></pre>
       <p>Users then run <code>claude plugin update --all</code> to pick up the new versions.</p>
     </section>
   </article>

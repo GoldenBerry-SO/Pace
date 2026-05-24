@@ -209,7 +209,7 @@ export const TEAM_GUIDES: TeamGuide[] = [
     ],
     tips: [
       { title: 'Self-review before requesting review', body: '/engineering:code-review before you tag a human. Catches naming and silly mistakes; the human gets to focus on intent.' },
-      { title: 'Pin the deploy-checklist', body: 'Use /engineering:deploy-checklist before any prod push. Pin it (via pace router pin.mjs) once your team standardizes.' },
+      { title: 'Pin the deploy-checklist', body: 'Use /engineering:deploy-checklist before any prod push. Pin it (via the Pace router pin.mjs) once your team standardizes.' },
       { title: 'Testing strategy upfront', body: '/engineering:testing-strategy when scoping a feature, not when writing tests. Saves rewrite cycles.' },
       { title: 'Pair with /data for perf reviews', body: 'When the PR touches anything that hits the DB, run /data:write-query against staging to verify the query plan before merging.' },
       { title: 'Incident response > heroics', body: '/engineering:incident-response has saved hours at 3am. Beats inventing a playbook under pressure.' },
@@ -288,7 +288,7 @@ export const TEAM_GUIDES: TeamGuide[] = [
     name: 'Product',
     tagline: 'Specs, roadmaps, user research synthesis, stakeholder updates, competitive scans.',
     intro:
-      "PMs juggle synthesis: turning interviews into specs, backlog into roadmap, telemetry into stories. The mechanical part of that work is where pace earns its keep. Run /product-management:synthesize on a stack of interview transcripts and reclaim a day of your week.",
+      "PMs juggle synthesis: turning interviews into specs, backlog into roadmap, telemetry into stories. The mechanical part of that work is where Pace earns its keep. Run /product-management:synthesize on a stack of interview transcripts and reclaim a day of your week.",
     plugins: [
       { slug: 'product-management', role: 'primary', why: 'Specs, roadmaps, user research synthesis, stakeholder updates, competitive scans.' },
       { slug: 'design', role: 'companion', why: 'Research synthesis and dev-handoff conversations live across the seam.' },
@@ -342,14 +342,14 @@ export const TEAM_GUIDES: TeamGuide[] = [
   {
     slug: 'design',
     name: 'Design',
-    tagline: 'For design work, pace defers to impeccable.',
+    tagline: 'For design work, Pace defers to impeccable.',
     intro:
-      "Design is its own discipline with its own dedicated tool. Rather than duplicate the work, pace points designers and frontend engineers at impeccable, a separate Apache 2.0 skill kit focused entirely on design fluency for AI coding agents: typography, color, layout, motion, accessibility, UX writing, design systems, dev handoff. Install impeccable alongside pace.",
+      "Design is its own discipline with its own dedicated tool. Rather than duplicate the work, Pace points designers and frontend engineers at impeccable, a separate Apache 2.0 skill kit focused entirely on design fluency for AI coding agents: typography, color, layout, motion, accessibility, UX writing, design systems, dev handoff. Install impeccable alongside Pace.",
     redirect: {
       url: 'https://impeccable.style/docs',
       cta: 'Read the impeccable docs',
       reason:
-        "Impeccable is the design counterpart to pace. A richer command set focused exclusively on design craft: typography, color, layout, motion, accessibility, UX writing, design systems, dev handoff.",
+        "Impeccable is the design counterpart to Pace. A richer command set focused exclusively on design craft: typography, color, layout, motion, accessibility, UX writing, design systems, dev handoff.",
     },
     plugins: [],
     connectors: [],
@@ -368,7 +368,7 @@ export const TEAM_GUIDES: TeamGuide[] = [
     name: 'Finance',
     tagline: 'Journal entries, reconciliation, statements, variance analysis, audit prep.',
     intro:
-      'Finance work is rhythmic: month-end, quarter-end, year-end, audit. The repeatable part of each rhythm is where pace earns its keep. Connect your warehouse and /finance:* can query the ledger directly. /finance:variance-analysis surfaces what you should explain to the CEO before they ask.',
+      'Finance work is rhythmic: month-end, quarter-end, year-end, audit. The repeatable part of each rhythm is where Pace earns its keep. Connect your warehouse and /finance:* can query the ledger directly. /finance:variance-analysis surfaces what you should explain to the CEO before they ask.',
     plugins: [
       { slug: 'finance', role: 'primary', why: 'Journal entries, reconciliation, statements, variance analysis, month-end close, audit prep.' },
       { slug: 'operations', role: 'companion', why: 'Vendor management and procurement workflows that touch AP.' },
@@ -410,7 +410,7 @@ export const TEAM_GUIDES: TeamGuide[] = [
     tips: [
       { title: 'Connect the warehouse early', body: 'Without it, /finance:* works from pasted data. With it, queries fire directly against the GL.' },
       { title: 'Variance analysis pre-CEO', body: '/finance:variance-analysis surfaces the explanations before the CEO asks. Run it before every monthly close share-out.' },
-      { title: 'Month-end as a workflow', body: 'Adopt /finance:month-end as the canonical checklist. Pin it via pace router once your team standardizes its close steps.' },
+      { title: 'Month-end as a workflow', body: 'Adopt /finance:month-end as the canonical checklist. Pin it via the Pace router once your team standardizes its close steps.' },
       { title: 'Pair with operations', body: 'For vendor and procurement work, /finance:* + /operations:* covers the AP → vendor lifecycle.' },
       { title: 'Audit prep is incremental', body: "Run /finance:audit-prep monthly, not annually. By year-end, the documentation is already there." },
       { title: 'Statements need a sanity check', body: '/finance:generate-statements is fast but always reconcile the output to your source-of-truth ledger before sharing externally.' },
@@ -428,7 +428,7 @@ export const TEAM_GUIDES: TeamGuide[] = [
     name: 'Legal',
     tagline: 'Contract review, NDA triage, compliance, risk assessment.',
     intro:
-      'In-house legal teams field high volumes of similar work: NDAs, vendor agreements, employment letters, compliance questions. Pace triages, drafts, and flags risk so you spend less time on routine and more on the actual hard problems. Final calls still stay human; pace is research + first-pass review, not legal advice.',
+      'In-house legal teams field high volumes of similar work: NDAs, vendor agreements, employment letters, compliance questions. Pace triages, drafts, and flags risk so you spend less time on routine and more on the actual hard problems. Final calls still stay human; Pace is research + first-pass review, not legal advice.',
     plugins: [
       { slug: 'legal', role: 'primary', why: 'Contract review, NDA triage, compliance Q&A, risk assessment, templated responses.' },
       { slug: 'operations', role: 'companion', why: 'Vendor management and procurement workflows that legal touches.' },
@@ -467,7 +467,7 @@ export const TEAM_GUIDES: TeamGuide[] = [
       { title: 'Compliance question ≠ legal advice', body: 'Treat /legal:compliance-question output as research. Final call stays with you. The skill is good at surfacing precedent and frameworks, not making the decision.' },
       { title: 'Build templated responses for repeats', body: 'After three similar inbound questions, write a /legal:templated-response. Saves the fourth, fifth, and sixth.' },
       { title: 'Wrap in /pace router', body: 'For your standard contract review playbook, build a /pace router command that wraps /legal:contract-review with your specific flags. Reuse beats re-prompting.' },
-      { title: 'Document the why', body: 'When pace flags a clause, document why it matters in your playbook. The next reviewer (human or pace) benefits.' },
+      { title: 'Document the why', body: 'When Pace flags a clause, document why it matters in your playbook. The next reviewer (human or Pace) benefits.' },
     ],
     seeAlso: [
       { slug: 'finance', label: 'Finance', why: 'Contracts feed AP; close coordination on vendor onboarding.' },

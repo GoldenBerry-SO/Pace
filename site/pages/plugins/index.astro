@@ -45,8 +45,8 @@ const groupLabels: Record<string, { title: string; lede: string }> = {
     lede: "Your team's company-specific commands.",
   },
   'first-party': {
-    title: 'First-party (Anthropic)',
-    lede: 'Verbatim import of Anthropic\'s knowledge-work-plugins.',
+    title: 'First-party',
+    lede: 'Core plugins bundled with the Pace marketplace.',
   },
   partner: {
     title: 'Partner-built',
@@ -102,8 +102,8 @@ for (const cat of PLUGIN_CATEGORY_ORDER) {
 ---
 
 <SubPage
-  title="Plugins · pace"
-  description="Curated marketplace of AI coding skills. Pace router + Anthropic knowledge-work-plugins + partner-built + external."
+  title="Plugins · Pace"
+  description="Curated marketplace of AI coding skills. Pace router + first-party plugins + partner-built + external."
   activeNav="plugins"
   canonicalPath="/plugins"
   sidebarLabel="Plugins"
@@ -134,7 +134,7 @@ for (const cat of PLUGIN_CATEGORY_ORDER) {
       <span class="plugins-eyebrow">Marketplace</span>
       <h1>Plugins</h1>
       <p class="plugins-lede">
-        Pace bundles <strong>{total} plugins</strong> across four origins: the pace router (your team's commands), Anthropic's knowledge-work-plugins (verbatim), partner-built plugins, and external plugins referenced from upstream repos.
+        Pace bundles <strong>{total} plugins</strong> across four origins: the Pace router (your team's commands), first-party plugins, partner-built plugins, and external plugins referenced from upstream repos.
       </p>
       <div class="plugins-install">
         <code>claude plugin marketplace add pace.tools</code>

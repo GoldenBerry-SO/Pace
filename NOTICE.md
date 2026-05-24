@@ -18,7 +18,7 @@ The plugins under `plugins/` (excluding `plugins/partner-built/`) are imported v
 
 Plugins included:
 
-- `bio-research`, `cowork-plugin-management`, `customer-support`, `data`, `design`, `engineering`, `enterprise-search`, `finance`, `human-resources`, `legal`, `marketing`, `operations`, `pdf-viewer`, `product-management`, `productivity`, `sales`, `small-business`
+- `cowork-plugin-management`, `customer-support`, `data`, `design`, `engineering`, `enterprise-search`, `finance`, `human-resources`, `legal`, `marketing`, `operations`, `pdf-viewer`, `product-management`, `productivity`, `sales`, `small-business`
 
 Each plugin retains Anthropic's authorship in its `.claude-plugin/plugin.json`. Pace's `.claude-plugin/marketplace.json` references them with their original `displayName` and descriptions.
 

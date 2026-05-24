@@ -17,8 +17,7 @@ export interface ConnectorCategory {
     | 'finance-ops'
     | 'people'
     | 'legal'
-    | 'engineering'
-    | 'specialized';
+    | 'engineering';
 }
 
 export const CONNECTOR_CATEGORIES: ConnectorCategory[] = [
@@ -296,47 +295,6 @@ export const CONNECTOR_CATEGORIES: ConnectorCategory[] = [
     group: 'legal',
   },
 
-  // Specialized (bio-research)
-  {
-    name: 'Literature',
-    placeholder: '~~literature',
-    bundled: ['PubMed', 'bioRxiv', 'Consensus'],
-    alternatives: ['Google Scholar', 'Semantic Scholar'],
-    usedBy: ['bio-research'],
-    group: 'specialized',
-  },
-  {
-    name: 'Clinical trials',
-    placeholder: '~~clinical trials',
-    bundled: ['ClinicalTrials.gov'],
-    alternatives: ['EU Clinical Trials Register'],
-    usedBy: ['bio-research'],
-    group: 'specialized',
-  },
-  {
-    name: 'Chemical database',
-    placeholder: '~~chemical database',
-    bundled: ['ChEMBL'],
-    alternatives: ['PubChem', 'DrugBank'],
-    usedBy: ['bio-research'],
-    group: 'specialized',
-  },
-  {
-    name: 'Drug targets',
-    placeholder: '~~drug targets',
-    bundled: ['Open Targets'],
-    alternatives: ['UniProt', 'STRING'],
-    usedBy: ['bio-research'],
-    group: 'specialized',
-  },
-  {
-    name: 'Lab platform',
-    placeholder: '~~lab platform',
-    bundled: ['Benchling*'],
-    alternatives: [],
-    usedBy: ['bio-research'],
-    group: 'specialized',
-  },
 ];
 
 export const CONNECTOR_GROUP_ORDER = [
@@ -349,7 +307,6 @@ export const CONNECTOR_GROUP_ORDER = [
   'finance-ops',
   'people',
   'legal',
-  'specialized',
 ] as const;
 
 export const CONNECTOR_GROUP_LABELS: Record<string, string> = {
@@ -362,5 +319,4 @@ export const CONNECTOR_GROUP_LABELS: Record<string, string> = {
   'finance-ops': 'Finance & operations',
   people: 'People',
   legal: 'Legal',
-  specialized: 'Specialized (life sciences)',
 };

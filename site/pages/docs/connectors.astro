@@ -17,7 +17,7 @@ for (const c of CONNECTOR_CATEGORIES) {
 ---
 
 <SubPage
-  title="Connectors · pace"
+  title="Connectors · Pace"
   description="How MCP connectors install, authorize, and integrate with pace plugins. Master catalog of every connector category."
   activeNav="docs"
   canonicalPath={currentPath}
@@ -85,7 +85,7 @@ claude plugin install sales@pace.tools</code></pre>
       <ol>
         <li>You run a skill that needs the connector. Example: <code>/sales:call-prep Acme</code> needs HubSpot.</li>
         <li>Claude detects the connector isn't authorized yet and opens an OAuth URL in your browser.</li>
-        <li>You sign in to the vendor and approve pace's access scope.</li>
+        <li>You sign in to the vendor and approve Pace's access scope.</li>
         <li>The browser redirects back. Claude saves the token. The skill continues.</li>
         <li>Authorization persists per MCP server. Every plugin that talks to that server reuses the token.</li>
       </ol>
@@ -136,7 +136,7 @@ claude plugin install sales@pace.tools</code></pre>
     <section class="connectors-section" id="swapping">
       <h2>Swapping in your own connector</h2>
       <p>
-        Want to use a server pace doesn't pre-configure? Three ways:
+        Want to use a server Pace doesn't pre-configure? Three ways:
       </p>
       <ol>
         <li><strong>Authorize a different MCP server in the same category.</strong> Skills reference connectors by category (<code>~~CRM</code>), so any MCP server in that category resolves. Authorize Salesforce instead of HubSpot and the sales skills keep working.</li>
