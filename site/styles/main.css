@@ -25,13 +25,15 @@
   outline-offset: 3px;
 }
 
-/* Default link color in main content (page-level overrides usually win) */
-main a:not(.cta):not(.text-link):not([class*="hero-"]):not([class*="footer-"]):not([class*="site-"]) {
+/* Default link color in main content (page-level overrides usually win).
+   Exclude anything that looks like a button or CTA so we don't trample
+   per-component button styles. */
+main a:not(.cta):not(.text-link):not([class*="hero-"]):not([class*="footer-"]):not([class*="site-"]):not([class*="-btn"]):not([class*="-cta"]):not([class*="btn-"]):not([class*="cta-"]):not([class*="-card"]):not([class*="install-"]):not([class*="lockup"]) {
   color: var(--color-forest);
   border-bottom: 1px solid var(--color-forest-soft);
   transition: border-color var(--duration-fast) var(--ease-out-quart);
 }
-main a:not(.cta):not(.text-link):not([class*="hero-"]):not([class*="footer-"]):not([class*="site-"]):hover {
+main a:not(.cta):not(.text-link):not([class*="hero-"]):not([class*="footer-"]):not([class*="site-"]):not([class*="-btn"]):not([class*="-cta"]):not([class*="btn-"]):not([class*="cta-"]):not([class*="-card"]):not([class*="install-"]):not([class*="lockup"]):hover {
   border-color: var(--color-forest);
 }
 

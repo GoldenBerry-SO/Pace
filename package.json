@@ -53,6 +53,7 @@
     "release:cli": "node scripts/release.mjs cli"
   },
   "dependencies": {
+    "@fontsource-variable/geist": "^5.2.9",
     "marked": "^18.0.4"
   },
   "devDependencies": {

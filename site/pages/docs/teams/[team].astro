@@ -443,6 +443,12 @@ const cliInstallCmd = pluginSlugs.length > 0
     gap: var(--spacing-lg);
     margin-top: var(--spacing-md);
   }
+  /* Prevent grid items from refusing to shrink when they contain
+     wide <pre> blocks. Without this the cli install command pushes
+     the column past its allotted width. */
+  .team-install-block {
+    min-width: 0;
+  }
   @media (max-width: 720px) {
     .team-install-grid {
       grid-template-columns: 1fr;

@@ -1,7 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import '@fontsource-variable/inter';
+import '@fontsource-variable/geist';
 import '@fontsource-variable/jetbrains-mono';
 import '../styles/main.css';
 
@@ -17,6 +17,7 @@ interface Props {
   ogImage?: string;
   ogType?: 'website' | 'article';
   jsonLd?: object | object[];
+  theme?: 'light' | 'dark';
 }
 
 const {
@@ -31,6 +32,7 @@ const {
   ogImage = '/og-image.svg',
   ogType = 'website',
   jsonLd,
+  theme = 'light',
 } = Astro.props;
 
 const SITE_URL = 'https://pace.tools';
@@ -42,14 +44,14 @@ const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme={theme}>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
   <meta name="description" content={description}>
-  <meta name="theme-color" content="#f3f1e9">
-  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content={theme === 'dark' ? '#101615' : '#f3f1e9'}>
+  <meta name="color-scheme" content={theme}>
   {noIndex && <meta name="robots" content="noindex,nofollow">}
   {!noIndex && <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">}
   {canonical && <link rel="canonical" href={canonical}>}
@@ -75,6 +77,11 @@ const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
   <!-- Icons + sitemap -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
   <link rel="sitemap" type="application/xml" href="/sitemap-index.xml">
 
   {jsonLdArray.map((schema) => (
@@ -88,5 +95,28 @@ const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
     <slot />
   </main>
   {!hideFooter && <Footer />}
+
+  <script is:inline>
+    // Scroll-reveal: flip data-reveal-shown when elements enter the viewport.
+    // Once shown, they stay shown (no re-trigger on scroll back up).
+    (() => {
+      const els = document.querySelectorAll('[data-reveal], [data-reveal-stagger]');
+      if (!els.length) return;
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced || !('IntersectionObserver' in window)) {
+        els.forEach((el) => el.setAttribute('data-reveal-shown', ''));
+        return;
+      }
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.setAttribute('data-reveal-shown', '');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+      els.forEach((el) => obs.observe(el));
+    })();
+  </script>
 </body>
 </html>

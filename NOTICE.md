@@ -50,6 +50,10 @@ Each retains its original author attribution and license terms in the plugin dir
 
 Pace's `marketplace.json` also lists external plugins (Vanta, Miro, PlanetScale, Figma, Adobe, Box, S&P Global, and others) by git URL. Those plugins are not copied into this repo; they are fetched from their upstream repositories at install time. Each is governed by its own license; see the upstream repos.
 
+## Brand mark
+
+The running-rabbit silhouette used as the Pace logo (favicon, header chip, OG image) is derived from Adobe Stock asset #343861859, licensed by GoldenBerry Software. The vector trace shipped at `site/public/logo-svgs/pace-rabbit.svg` is the result of running `potrace` over the licensed raster preview. Use is covered by Adobe Stock's standard license; the underlying asset remains the property of its contributor.
+
 ## License
 
 Pace's original code is distributed under the Apache License, Version 2.0. See `LICENSE` for the full text. Imported plugins retain their original licenses; see each plugin's directory.

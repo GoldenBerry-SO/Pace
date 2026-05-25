@@ -1,6 +1,6 @@
 /*
- * ABOUTME: Design tokens + minimal reset for pace.tools. Forest + clay
- * ABOUTME: palette, Geist typography, OKLCH colors. Shared by every page.
+ * ABOUTME: Design tokens + minimal reset for pace.tools. Dual-theme system
+ * ABOUTME: (dark home, light catalog/docs), Geist + JetBrains Mono, OKLCH.
  */
 
 /* ============================================
@@ -42,9 +42,9 @@ a {
    ============================================ */
 
 :root {
-  /* Typography (Inter + JetBrains Mono via @fontsource-variable in Base.astro) */
-  --font-display: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Typography (Geist body + JetBrains Mono for labels/code) */
+  --font-display: 'Geist Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Geist Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
 
   /* Type scale */
@@ -80,29 +80,10 @@ a {
   --duration-slow: 0.6s;
 
   /* ============================================
-     Forest + Clay palette (OKLCH)
+     Core palette (theme-agnostic, OKLCH)
      ============================================ */
 
-  /* Paper: warm cream, tinted toward forest */
-  --color-paper: oklch(96% 0.008 140);
-  --color-paper-elev: oklch(98% 0.005 140);
-  --color-bg: var(--color-paper);
-
-  /* Ink: near-black with a green hint */
-  --color-ink: oklch(15% 0.012 150);
-  --color-text: var(--color-ink);
-
-  /* Charcoal: heads + larger body */
-  --color-charcoal: oklch(28% 0.018 150);
-
-  /* Ash: secondary labels, captions */
-  --color-ash: oklch(52% 0.014 150);
-
-  /* Mist: borders + dividers */
-  --color-mist: oklch(89% 0.012 150);
-  --color-mist-soft: oklch(93% 0.008 150);
-
-  /* Forest: primary accent (links, CTAs, section numbers) */
+  /* Forest: primary brand accent (links, CTAs, section numbers) */
   --color-forest: oklch(38% 0.085 155);
   --color-forest-hover: oklch(32% 0.09 155);
   --color-forest-dim: oklch(38% 0.085 155 / 0.12);
@@ -114,12 +95,81 @@ a {
   --color-clay-dim: oklch(58% 0.10 45 / 0.12);
   --color-clay-soft: oklch(58% 0.10 45 / 0.22);
 
+  /* ============================================
+     LIGHT THEME (default — catalog, docs, cookbook,
+     team pages, security, privacy, plugin detail)
+     ============================================ */
+
+  /* Surfaces */
+  --color-paper: oklch(96% 0.008 140);
+  --color-paper-elev: oklch(98% 0.005 140);
+  --color-bg: var(--color-paper);
+
+  /* Ink: near-black with green hint */
+  --color-ink: oklch(15% 0.012 150);
+  --color-text: var(--color-ink);
+  --color-charcoal: oklch(28% 0.018 150);
+  --color-ash: oklch(52% 0.014 150);
+
+  /* Borders */
+  --color-mist: oklch(89% 0.012 150);
+  --color-mist-soft: oklch(93% 0.008 150);
+
   /* Code surface */
   --color-code-bg: oklch(94% 0.01 150);
   --color-code-border: oklch(86% 0.014 150);
 
   /* Focus ring */
   --color-focus: var(--color-forest);
+
+  /* Header chrome (varies by theme — defaults to light translucent) */
+  --header-bg: color-mix(in oklch, var(--color-paper) 88%, transparent);
+  --header-border: var(--color-mist);
+  --header-ink: var(--color-ink);
+  --header-mute: var(--color-ash);
+  --header-mark-bg: var(--color-forest);
+  --header-mark-fg: var(--color-paper);
+}
+
+/* ============================================
+   DARK THEME (home + landing surfaces)
+   Set on <html data-theme="dark"> or specific
+   sections via [data-theme="dark"] block.
+   ============================================ */
+
+[data-theme="dark"] {
+  /* Surfaces */
+  --color-paper: oklch(13% 0.008 150);
+  --color-paper-elev: oklch(17% 0.008 150);
+  --color-bg: var(--color-paper);
+
+  /* Ink: warm cream */
+  --color-ink: oklch(96% 0.008 140);
+  --color-text: var(--color-ink);
+  --color-charcoal: oklch(88% 0.008 140);
+  --color-ash: oklch(64% 0.012 145);
+
+  /* Borders */
+  --color-mist: oklch(24% 0.012 150);
+  --color-mist-soft: oklch(20% 0.01 150);
+
+  /* Code surface */
+  --color-code-bg: oklch(10% 0.008 150);
+  --color-code-border: oklch(22% 0.012 150);
+
+  /* Forest reads lighter on dark for contrast */
+  --color-forest: oklch(72% 0.12 155);
+  --color-forest-hover: oklch(78% 0.13 155);
+  --color-forest-dim: oklch(72% 0.12 155 / 0.14);
+  --color-forest-soft: oklch(72% 0.12 155 / 0.24);
+
+  /* Header chrome — dark floating pill */
+  --header-bg: oklch(18% 0.008 150 / 0.78);
+  --header-border: oklch(28% 0.012 150);
+  --header-ink: oklch(96% 0.008 140);
+  --header-mute: oklch(64% 0.012 145);
+  --header-mark-bg: oklch(96% 0.008 140);
+  --header-mark-fg: oklch(13% 0.008 150);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -147,4 +197,167 @@ summary:focus-visible {
   outline: 2px solid var(--color-focus);
   outline-offset: 3px;
   border-radius: 2px;
+}
+
+/* ============================================
+   SHARED UTILITY: eyebrow chip
+   Small uppercase mono tag with square bullet,
+   used as section labels across both themes.
+   Aliased to all per-page *-eyebrow classes so the
+   pattern stays consistent without touching every page.
+   ============================================ */
+
+body .eyebrow,
+body .security-eyebrow,
+body .privacy-eyebrow,
+body .plugins-eyebrow,
+body .connectors-eyebrow,
+body .roles-eyebrow,
+body .docs-eyebrow,
+body .installpage-eyebrow,
+body .usecases-eyebrow,
+body .skillindex-eyebrow,
+body .teams-index-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ash);
+  padding: 5px 10px;
+  border: 1px solid var(--color-mist);
+  border-radius: 4px;
+  background: var(--color-paper-elev);
+  width: fit-content;
+}
+
+.eyebrow::before,
+.security-eyebrow::before,
+.privacy-eyebrow::before,
+.plugins-eyebrow::before,
+.connectors-eyebrow::before,
+.roles-eyebrow::before,
+.docs-eyebrow::before,
+.installpage-eyebrow::before,
+.usecases-eyebrow::before,
+.skillindex-eyebrow::before,
+.teams-index-eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: currentColor;
+}
+
+/* ============================================
+   SCROLL-REVEAL: opt-in fade-and-rise animation
+   Sections marked data-reveal start invisible + 24px
+   below their final position, and animate in once
+   IntersectionObserver flips data-reveal-shown.
+   ============================================ */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease-out-quart),
+              transform 0.7s var(--ease-out-quart);
+  will-change: opacity, transform;
+}
+
+[data-reveal][data-reveal-shown] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered children: each direct child fades up
+   with a slight delay sequence. */
+[data-reveal-stagger] > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.55s var(--ease-out-quart),
+              transform 0.55s var(--ease-out-quart);
+}
+
+[data-reveal-stagger][data-reveal-shown] > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-reveal-stagger][data-reveal-shown] > *:nth-child(1) { transition-delay: 0ms; }
+[data-reveal-stagger][data-reveal-shown] > *:nth-child(2) { transition-delay: 60ms; }
+[data-reveal-stagger][data-reveal-shown] > *:nth-child(3) { transition-delay: 120ms; }
+[data-reveal-stagger][data-reveal-shown] > *:nth-child(4) { transition-delay: 180ms; }
+[data-reveal-stagger][data-reveal-shown] > *:nth-child(5) { transition-delay: 240ms; }
+[data-reveal-stagger][data-reveal-shown] > *:nth-child(6) { transition-delay: 300ms; }
+[data-reveal-stagger][data-reveal-shown] > *:nth-child(7) { transition-delay: 360ms; }
+[data-reveal-stagger][data-reveal-shown] > *:nth-child(8) { transition-delay: 420ms; }
+[data-reveal-stagger][data-reveal-shown] > *:nth-child(9) { transition-delay: 480ms; }
+[data-reveal-stagger][data-reveal-shown] > *:nth-child(10) { transition-delay: 540ms; }
+[data-reveal-stagger][data-reveal-shown] > *:nth-child(11) { transition-delay: 600ms; }
+[data-reveal-stagger][data-reveal-shown] > *:nth-child(12) { transition-delay: 660ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal-stagger] > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ============================================
+   SHARED UTILITY: outlined uppercase button
+   ============================================ */
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  background: transparent;
+  border: 1px solid var(--color-ink);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background var(--duration-base) var(--ease-out-quart),
+              color var(--duration-base) var(--ease-out-quart);
+}
+
+.btn-outline:hover {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.btn-solid {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-paper);
+  background: var(--color-ink);
+  border: 1px solid var(--color-ink);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background var(--duration-base) var(--ease-out-quart),
+              color var(--duration-base) var(--ease-out-quart);
+}
+
+.btn-solid:hover {
+  background: var(--color-forest);
+  border-color: var(--color-forest);
 }

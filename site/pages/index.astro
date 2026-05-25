@@ -46,67 +46,75 @@ const jsonLd = [
   jsonLd={jsonLd}
 >
   <!-- ============================================
-       HERO
+       HERO, single-column centered with horizon glow
        ============================================ -->
   <section class="hero" id="hero">
+    <div class="hero-glow" aria-hidden="true"></div>
     <div class="hero-inner">
-      <div class="hero-left">
-        <h1 class="hero-title">Pace</h1>
-        <p class="hero-tagline">Superpower your company with AI specialists for every role.</p>
-
-        <p class="hero-lede">
-          Sales prep their calls. Engineers review their PRs. Finance closes the month. Marketing ships campaigns. Each role gets Claude with the right skills loaded, connected to the tools they actually use, tuned to how your team works.
-        </p>
-
-        <p class="hero-lede hero-lede-second">
-          One marketplace, every department. Install only what your team uses. Add your team's own commands on top with the <code>/pace</code> router.
-        </p>
-
-        <div class="hero-cta-row">
-          <a href="#downloads" class="cta cta-primary">Get started</a>
-          <a href="/plugins" class="cta cta-secondary">Browse the catalog</a>
-        </div>
-
-        <div class="hero-harnesses">
-          <span class="hero-harnesses-label">Works with</span>
-          <ul class="hero-harnesses-list">
-            <li>Cursor</li>
-            <li>Claude Code</li>
-            <li>Gemini CLI</li>
-            <li>Codex CLI</li>
-            <li>VS Code Copilot</li>
-            <li>Kiro</li>
-            <li>OpenCode</li>
-            <li>Pi</li>
-            <li>Qoder</li>
-            <li>RovoDev</li>
-            <li>Trae</li>
-          </ul>
-        </div>
+      <div class="hero-mark" aria-hidden="true">
+        <svg viewBox="0 0 1249.789 812.549" xmlns="http://www.w3.org/2000/svg">
+          <g fill="currentColor"><path d="M843.185.544c-9.7 3.2-12.9 8.1-13 19.5 0 9.4 1.5 17.5 6.2 33.9 10.7 37.1 25.9 64.6 51.8 93.7 4.1 4.6 22.9 23.8 41.6 42.5 35 34.9 41 41.9 46.4 54.5 3.6 8.6 3.9 18.7.6 28-4.8 14-14.1 24.6-26.1 29.8-5.3 2.3-7.3 2.6-17 2.6-18.4 0-32.9-4.9-71-24.1-77.6-39-113.4-51.6-169.3-59.5l-15.7-2.3-273.5-.3c-253.6-.3-274-.2-279.8 1.4-8.1 2.1-14.7 7.3-18.7 14.5-2.6 4.8-3 6.3-3 13.9 0 7.5.4 9 2.8 13.2 3.1 5.2 8.8 10.7 13.9 13.5 3.1 1.7 11.6 1.8 168.8 2.3 147.1.4 165.5.7 165.8 2 .1.9-3.8 5.3-9.2 10.3-10.5 9.7-23.1 24.8-31.3 37.5-3.3 5.1-6.3 8.6-7.9 9.2-1.6.7-71.6 1-192.2 1-215.2 0-195.1-.9-204.7 8.5-14.3 13.9-10.4 37.4 7.7 46.4l6.1 3.1h180.1c99.1 0 181.1.3 182.3.6s2.4 1.3 2.7 2.1-.1 8.4-.9 17-1.5 20.5-1.5 26.4c0 8.4-.3 11.1-1.6 12.3-1.4 1.4-15.2 1.6-137.4 1.6-134.2 0-136 0-141.4 2-11.6 4.4-18.8 14.4-18.9 26.5-.1 12.5 4.6 20.7 15.3 26.5l6.5 3.5 143.4.3c127.2.2 143.7.4 145.2 1.8.9.8 2.5 3.6 3.4 6.2 4.3 11.3 14.1 28.5 23.7 41.2 2.7 3.6 4.7 7.2 4.6 8-.3 1.3-9.9 1.6-77.3 2l-77 .5-5.1 2.7c-21.8 11.5-21.5 42.1.5 53l4.6 2.3 121 .5 121 .5 8.5 3.3c13.6 5.4 31.1 10 59 15.7 30.9 6.2 42.2 8.9 55.9 13.5 30.4 10.2 48.5 24.1 64 49.3 2.4 4 8.2 15.1 12.8 24.7s8.9 18.5 9.6 19.8c.6 1.3 4.4 5.4 8.4 9.2 14.4 13.7 21.7 13.5 80.9-2.1 75.9-20 86.1-21.8 124.7-22.6 28.9-.6 41.3.1 66.2 3.7 26.9 3.9 45.2 7.1 65.5 11.5 11.7 2.6 26.2 2.2 34.8-.8 10.1-3.5 15.7-7.1 23.2-14.6 9.5-9.6 11.7-16.7 8.3-26.7-4.3-13-16.7-24.7-36.4-34.6-14-7-32.1-10.7-51.9-10.8-16.1 0-73.6 2.8-101.5 5-48.1 3.8-84.6 8.7-132.7 18-11.7 2.3-14.5 2-18-1.7-4.4-4.6-3.6-25.9 2.7-79.3 3.8-32 4.3-55.3 1.6-76.1-6.7-51.9-25-89.4-59.9-123.1-14.5-13.9-26.2-22.4-42-30.5-19.2-9.7-18.9-9.5-16.4-10.4 3.3-1.2 23.1 2.3 35.2 6.3 33.7 10.9 64.2 33.8 83.8 62.8 7.8 11.6 17.6 30.2 23.3 44 15.6 38.3 21.8 72.5 20.5 113.5-.4 11.5-.9 23.1-1.2 25.7-.5 3.9-.3 4.9 1.1 5.4 2.6 1.1 47.2-21.6 70.8-35.9 31.2-19 43.7-28.5 63.8-48.6 15.4-15.4 21.2-22.9 36.4-46.2 35.5-54.3 50.2-61.7 129.5-64.9 54.1-2.2 73.2-7 88.1-21.9 9.1-9.1 13.4-18.7 15.4-34.1.7-5.9-1.7-19.7-5.5-30.7-16.3-46.8-18.1-51.4-25.3-63.8-13.1-22.6-38.4-45.1-77.2-68.2-10-6-12.3-7.3-39.5-21.8-34.7-18.6-40.7-21.9-55.5-31.4-11.6-7.4-27.2-20.1-36.5-29.7-10.9-11.3-18.2-21.5-37.4-51.8-27.5-43.4-45.9-61.3-75.5-73.4-13.8-5.6-26-8.3-39.6-8.7-6.6-.3-13.1-.1-14.5.4"/><path d="M762.585 85.644c-14.6 5.2-25.1 16.1-27.3 28.6-1.9 10.3 1.9 24.7 10 38.6 10.6 18.1 18.8 27.4 32.9 36.7 10.3 6.9 33.9 18.7 49 24.6 23 9 72.8 24.1 102 31 3 .7 9.1 2.2 13.5 3.4 9.6 2.5 10.4 2.5 11.1.6 1.2-2.9-16.3-24.3-33.4-41-9-8.8-24.1-24.6-33.5-35-60.5-67.2-74.7-80.1-96.6-87.6-7.2-2.5-20.6-2.5-27.7.1m-108.9 637c-2.7 2.2-8.4 6-12.6 8.5-21.2 12.3-29.8 13.5-55.4 8-22.4-4.9-34.2-5.7-47.7-3.1-10 1.9-15.9 4.7-21.7 10.1-8.4 7.8-12 20.3-10.1 35 1.9 15.2 8.6 24.4 20.7 28.5 6.3 2 9.1 2.3 36.8 2.7 31.7.6 46.2-.3 63-3.7 21.6-4.5 41.9-14.6 60.4-30 9.1-7.5 9.1-7.5 3.3-18.4-9.9-18.8-26.4-41.6-30-41.6-1 0-3.9 1.8-6.7 4"/></g>
+        </svg>
       </div>
+      <h1 class="hero-title">Pace</h1>
+      <p class="hero-supertitle">
+        Superpower your company with AI specialists for every role.
+      </p>
+      <p class="hero-subtitle">
+        Sales prep their calls. Engineers review their PRs. Finance closes the month. Marketing ships campaigns. Each role gets Claude with the right skills loaded, connected to the tools they actually use, tuned to how your team works.
+      </p>
+      <div class="hero-cta-row">
+        <a href="/docs/install" class="cta cta-primary">Get started for free</a>
+        <a href="mailto:hello@goldenberry.so" class="cta cta-secondary">Talk to us</a>
+      </div>
+    </div>
 
-      <aside class="hero-right" aria-label="Quick install">
-        <div class="hero-install-paths">
-          <a class="hero-install-card hero-install-card-cowork" href="/docs/install#cowork">
-            <span class="hero-install-card-label">Click to install</span>
-            <h3>Cowork (desktop)</h3>
-            <p>For sales, marketing, finance, ops, HR, anyone whose terminal stays closed. One link per plugin.</p>
-            <span class="hero-install-card-cta">Show me how &rarr;</span>
-          </a>
-          <div class="hero-install-card hero-install-card-terminal">
-            <span class="hero-install-card-label">Run in terminal</span>
-            <h3>Claude Code (CLI)</h3>
-            <p>For engineers and ops who'd rather paste a command. Three lines and you're in.</p>
-            <div class="hero-terminal">
-              <pre class="terminal-body"><code><span class="prompt">$</span> claude plugin marketplace add GoldenBerry-SO/Pace
+    <div class="hero-proof" aria-label="Works with" data-reveal>
+      <span class="hero-proof-label">Works with</span>
+      <ul class="hero-proof-list" role="list">
+        <li>Claude Code</li>
+        <li>Cursor</li>
+        <li>Gemini CLI</li>
+        <li>Codex CLI</li>
+        <li>VS Code Copilot</li>
+        <li>Kiro</li>
+        <li>OpenCode</li>
+        <li>RovoDev</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================
+       INSTALL PATHS, two-up below the hero
+       ============================================ -->
+  <section class="section install-paths" id="install-paths" aria-label="Install paths">
+    <div class="install-paths-inner" data-reveal-stagger>
+      <div class="install-card install-card-cowork">
+        <span class="install-card-label">Click to install</span>
+        <h3>Cowork (desktop)</h3>
+        <p>One link per plugin. Cowork opens and asks you to confirm. Pick the team you're on:</p>
+        <ul class="install-quicklinks" role="list">
+          <li><a class="install-quicklink" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=sales" target="_blank" rel="noopener"><span>Install sales</span><span aria-hidden="true">&nearr;</span></a></li>
+          <li><a class="install-quicklink" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=marketing" target="_blank" rel="noopener"><span>Install marketing</span><span aria-hidden="true">&nearr;</span></a></li>
+          <li><a class="install-quicklink" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=engineering" target="_blank" rel="noopener"><span>Install engineering</span><span aria-hidden="true">&nearr;</span></a></li>
+          <li><a class="install-quicklink" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=data" target="_blank" rel="noopener"><span>Install data</span><span aria-hidden="true">&nearr;</span></a></li>
+          <li><a class="install-quicklink" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=finance" target="_blank" rel="noopener"><span>Install finance</span><span aria-hidden="true">&nearr;</span></a></li>
+          <li><a class="install-quicklink" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=product-management" target="_blank" rel="noopener"><span>Install product</span><span aria-hidden="true">&nearr;</span></a></li>
+        </ul>
+        <a class="install-card-cta" href="/plugins">See all 49 plugins &rarr;</a>
+      </div>
+      <div class="install-card install-card-terminal">
+        <span class="install-card-label">Run in terminal</span>
+        <h3>Claude Code (CLI)</h3>
+        <p>Three lines and you're in. Replace <code>sales</code> with whichever team you're on.</p>
+        <div class="install-terminal">
+          <pre class="terminal-body"><code><span class="prompt">$</span> claude plugin marketplace add GoldenBerry-SO/Pace
 <span class="muted">Registers 50 plugins.</span>
 <span class="prompt">$</span> claude plugin install sales@pace
 <span class="prompt">$</span> /sales:call-prep Acme Corp</code></pre>
-            </div>
-            <a class="hero-install-card-cta" href="/docs/install#claude-code">Full install docs &rarr;</a>
-          </div>
         </div>
-      </aside>
+        <a class="install-card-cta" href="/docs/install#claude-code">Full install docs &rarr;</a>
+      </div>
     </div>
   </section>
 
@@ -115,7 +123,7 @@ const jsonLd = [
        ============================================ -->
   <section class="section roles" id="roles" aria-labelledby="roles-title">
     <div class="roles-inner">
-      <div class="roles-head">
+      <div class="roles-head" data-reveal>
         <span class="roles-eyebrow">Who's it for</span>
         <h2 class="roles-title" id="roles-title">Pick the team you're on.</h2>
         <p class="roles-lede">
@@ -123,7 +131,7 @@ const jsonLd = [
         </p>
       </div>
 
-      <ul class="roles-grid" role="list">
+      <ul class="roles-grid" role="list" data-reveal-stagger>
         <li><a class="role-card" href="/docs/teams/sales"><span class="role-card-name">Sales</span><span class="role-card-blurb">Prep calls, run pipeline reviews, draft outreach.</span></a></li>
         <li><a class="role-card" href="/docs/teams/marketing"><span class="role-card-name">Marketing</span><span class="role-card-blurb">Plan campaigns, draft content, enforce brand voice.</span></a></li>
         <li><a class="role-card" href="/docs/teams/engineering"><span class="role-card-name">Engineering</span><span class="role-card-blurb">Stacked-PR shipping, code review, diagnosis, TDD.</span></a></li>
@@ -150,7 +158,7 @@ const jsonLd = [
        01. THE FOUNDATION
        ============================================ -->
   <section class="section foundation" id="foundation">
-    <div class="section-head">
+    <div class="section-head" data-reveal>
       <span class="section-number">01</span>
       <h2 class="section-title">The Foundation</h2>
     </div>
@@ -159,7 +167,7 @@ const jsonLd = [
         Pace gives Claude the right toolkit for whatever you're working on. Pick the skills that match your role, connect the tools you already use, and Claude can do real work in your context.
       </p>
 
-      <div class="foundation-grid">
+      <div class="foundation-grid" data-reveal-stagger>
         <article class="foundation-card">
           <h3>Skills for every role</h3>
           <p>A plugin per department: sales, marketing, finance, legal, engineering, data, customer support, product, HR, ops, design. Install only what your team uses. Each plugin's skills auto-trigger when the work matches.</p>
@@ -189,7 +197,7 @@ const jsonLd = [
        02. THE LANGUAGE
        ============================================ -->
   <section class="section language" id="language">
-    <div class="section-head">
+    <div class="section-head" data-reveal>
       <span class="section-number">02</span>
       <h2 class="section-title">The Catalog</h2>
     </div>
@@ -381,7 +389,7 @@ const jsonLd = [
        03. THE CASE
        ============================================ -->
   <section class="section case" id="case">
-    <div class="section-head">
+    <div class="section-head" data-reveal>
       <span class="section-number">03</span>
       <h2 class="section-title">The Case</h2>
     </div>
@@ -423,7 +431,7 @@ const jsonLd = [
        04. GET STARTED
        ============================================ -->
   <section class="section downloads" id="downloads">
-    <div class="section-head">
+    <div class="section-head" data-reveal>
       <span class="section-number">04</span>
       <h2 class="section-title">Get Started</h2>
     </div>
@@ -501,12 +509,12 @@ const jsonLd = [
        05. WHAT'S NEW
        ============================================ -->
   <section class="section changelog" id="changelog">
-    <div class="section-head">
+    <div class="section-head" data-reveal>
       <span class="section-number">05</span>
       <h2 class="section-title">What's New</h2>
     </div>
     <div class="section-body">
-      <ul class="changelog-items">
+      <ul class="changelog-items" data-reveal-stagger>
         <li class="changelog-entry">
           <div class="changelog-meta">
             <span class="changelog-version">v0.2.0</span>
@@ -538,7 +546,7 @@ const jsonLd = [
        06. FAQ
        ============================================ -->
   <section class="section faq" id="faq">
-    <div class="section-head">
+    <div class="section-head" data-reveal>
       <span class="section-number">06</span>
       <h2 class="section-title">Frequently Asked Questions</h2>
     </div>
@@ -640,25 +648,27 @@ claude plugin install sales@pace</code></pre>
   </section>
 
   <!-- ============================================
-       07. USE PACE AT YOUR COMPANY
+       07. CLOSING CTA, dark slab with the rabbit logo
        ============================================ -->
-  <section class="section company-cta" id="adopt">
-    <div class="company-cta-inner">
-      <h2 class="company-cta-title">Use Pace at your company</h2>
-      <p class="company-cta-lede">
-        Pace is open source. Fork it, rename the router, and write the commands that match how your company works.
+  <section class="closing-cta" id="adopt" data-theme="dark" data-reveal>
+    <div class="closing-cta-glow" aria-hidden="true"></div>
+    <div class="closing-cta-inner">
+      <div class="closing-cta-mark" aria-hidden="true">
+        <svg viewBox="0 0 1249.789 812.549" xmlns="http://www.w3.org/2000/svg">
+          <g fill="currentColor"><path d="M843.185.544c-9.7 3.2-12.9 8.1-13 19.5 0 9.4 1.5 17.5 6.2 33.9 10.7 37.1 25.9 64.6 51.8 93.7 4.1 4.6 22.9 23.8 41.6 42.5 35 34.9 41 41.9 46.4 54.5 3.6 8.6 3.9 18.7.6 28-4.8 14-14.1 24.6-26.1 29.8-5.3 2.3-7.3 2.6-17 2.6-18.4 0-32.9-4.9-71-24.1-77.6-39-113.4-51.6-169.3-59.5l-15.7-2.3-273.5-.3c-253.6-.3-274-.2-279.8 1.4-8.1 2.1-14.7 7.3-18.7 14.5-2.6 4.8-3 6.3-3 13.9 0 7.5.4 9 2.8 13.2 3.1 5.2 8.8 10.7 13.9 13.5 3.1 1.7 11.6 1.8 168.8 2.3 147.1.4 165.5.7 165.8 2 .1.9-3.8 5.3-9.2 10.3-10.5 9.7-23.1 24.8-31.3 37.5-3.3 5.1-6.3 8.6-7.9 9.2-1.6.7-71.6 1-192.2 1-215.2 0-195.1-.9-204.7 8.5-14.3 13.9-10.4 37.4 7.7 46.4l6.1 3.1h180.1c99.1 0 181.1.3 182.3.6s2.4 1.3 2.7 2.1-.1 8.4-.9 17-1.5 20.5-1.5 26.4c0 8.4-.3 11.1-1.6 12.3-1.4 1.4-15.2 1.6-137.4 1.6-134.2 0-136 0-141.4 2-11.6 4.4-18.8 14.4-18.9 26.5-.1 12.5 4.6 20.7 15.3 26.5l6.5 3.5 143.4.3c127.2.2 143.7.4 145.2 1.8.9.8 2.5 3.6 3.4 6.2 4.3 11.3 14.1 28.5 23.7 41.2 2.7 3.6 4.7 7.2 4.6 8-.3 1.3-9.9 1.6-77.3 2l-77 .5-5.1 2.7c-21.8 11.5-21.5 42.1.5 53l4.6 2.3 121 .5 121 .5 8.5 3.3c13.6 5.4 31.1 10 59 15.7 30.9 6.2 42.2 8.9 55.9 13.5 30.4 10.2 48.5 24.1 64 49.3 2.4 4 8.2 15.1 12.8 24.7s8.9 18.5 9.6 19.8c.6 1.3 4.4 5.4 8.4 9.2 14.4 13.7 21.7 13.5 80.9-2.1 75.9-20 86.1-21.8 124.7-22.6 28.9-.6 41.3.1 66.2 3.7 26.9 3.9 45.2 7.1 65.5 11.5 11.7 2.6 26.2 2.2 34.8-.8 10.1-3.5 15.7-7.1 23.2-14.6 9.5-9.6 11.7-16.7 8.3-26.7-4.3-13-16.7-24.7-36.4-34.6-14-7-32.1-10.7-51.9-10.8-16.1 0-73.6 2.8-101.5 5-48.1 3.8-84.6 8.7-132.7 18-11.7 2.3-14.5 2-18-1.7-4.4-4.6-3.6-25.9 2.7-79.3 3.8-32 4.3-55.3 1.6-76.1-6.7-51.9-25-89.4-59.9-123.1-14.5-13.9-26.2-22.4-42-30.5-19.2-9.7-18.9-9.5-16.4-10.4 3.3-1.2 23.1 2.3 35.2 6.3 33.7 10.9 64.2 33.8 83.8 62.8 7.8 11.6 17.6 30.2 23.3 44 15.6 38.3 21.8 72.5 20.5 113.5-.4 11.5-.9 23.1-1.2 25.7-.5 3.9-.3 4.9 1.1 5.4 2.6 1.1 47.2-21.6 70.8-35.9 31.2-19 43.7-28.5 63.8-48.6 15.4-15.4 21.2-22.9 36.4-46.2 35.5-54.3 50.2-61.7 129.5-64.9 54.1-2.2 73.2-7 88.1-21.9 9.1-9.1 13.4-18.7 15.4-34.1.7-5.9-1.7-19.7-5.5-30.7-16.3-46.8-18.1-51.4-25.3-63.8-13.1-22.6-38.4-45.1-77.2-68.2-10-6-12.3-7.3-39.5-21.8-34.7-18.6-40.7-21.9-55.5-31.4-11.6-7.4-27.2-20.1-36.5-29.7-10.9-11.3-18.2-21.5-37.4-51.8-27.5-43.4-45.9-61.3-75.5-73.4-13.8-5.6-26-8.3-39.6-8.7-6.6-.3-13.1-.1-14.5.4"/><path d="M762.585 85.644c-14.6 5.2-25.1 16.1-27.3 28.6-1.9 10.3 1.9 24.7 10 38.6 10.6 18.1 18.8 27.4 32.9 36.7 10.3 6.9 33.9 18.7 49 24.6 23 9 72.8 24.1 102 31 3 .7 9.1 2.2 13.5 3.4 9.6 2.5 10.4 2.5 11.1.6 1.2-2.9-16.3-24.3-33.4-41-9-8.8-24.1-24.6-33.5-35-60.5-67.2-74.7-80.1-96.6-87.6-7.2-2.5-20.6-2.5-27.7.1m-108.9 637c-2.7 2.2-8.4 6-12.6 8.5-21.2 12.3-29.8 13.5-55.4 8-22.4-4.9-34.2-5.7-47.7-3.1-10 1.9-15.9 4.7-21.7 10.1-8.4 7.8-12 20.3-10.1 35 1.9 15.2 8.6 24.4 20.7 28.5 6.3 2 9.1 2.3 36.8 2.7 31.7.6 46.2-.3 63-3.7 21.6-4.5 41.9-14.6 60.4-30 9.1-7.5 9.1-7.5 3.3-18.4-9.9-18.8-26.4-41.6-30-41.6-1 0-3.9 1.8-6.7 4"/></g>
+        </svg>
+      </div>
+      <h2 class="closing-cta-title">Bring Pace to your company.</h2>
+      <p class="closing-cta-lede">
+        GoldenBerry helps companies adopt Pace end-to-end: install + connector setup, command authoring tuned to your team's workflows, training, and ongoing enablement as your playbook grows.
       </p>
-      <div class="company-cta-row">
-        <a href="https://github.com/GoldenBerry-SO/Pace" class="cta cta-primary" target="_blank" rel="noopener">Fork on GitHub</a>
+      <div class="closing-cta-row">
+        <a href="mailto:hello@goldenberry.so" class="cta cta-primary">Talk to GoldenBerry</a>
+        <a href="https://goldenberry.so" class="cta cta-secondary" target="_blank" rel="noopener">About GoldenBerry</a>
       </div>
-
-      <div class="company-cta-enablement">
-        <span class="company-cta-enablement-label">Need help rolling Pace out to your team?</span>
-        <p>
-          GoldenBerry offers training and enablement: install + connector setup, command authoring for your company's workflows, and ongoing support as your playbook grows.
-        </p>
-        <a href="mailto:hello@goldenberry.so" class="cta cta-secondary">Get in touch</a>
-      </div>
+      <p class="closing-cta-note">
+        Pace itself is Apache 2.0 and open source. <a href="https://github.com/GoldenBerry-SO/Pace" target="_blank" rel="noopener">see it on GitHub</a> if you want to read the code or self-host.
+      </p>
     </div>
   </section>
 </Base>
@@ -667,39 +677,93 @@ claude plugin install sales@pace</code></pre>
   /* ============================================
      HERO
      ============================================ */
+  /* ============================================
+     HERO, single-column centered with horizon glow
+     ============================================ */
   .hero {
-    max-width: var(--width-max);
-    margin: 0 auto;
-    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
+    position: relative;
+    min-height: 78vh;
+    padding: 120px var(--spacing-lg) 64px;
+    margin: 0;
+    max-width: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+  }
+  /* Soft horizon glow tuned for cream/light theme:
+     a subtle pastel-clay band that frames the type
+     instead of washing over it. */
+  .hero-glow {
+    position: absolute;
+    inset: -10% 0 0 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(45% 30% at 82% 65%, oklch(78% 0.11 32 / 0.32) 0%, transparent 75%),
+      radial-gradient(35% 24% at 18% 60%, oklch(82% 0.07 145 / 0.32) 0%, transparent 78%);
+    filter: blur(45px);
+    animation: hero-drift 26s ease-in-out infinite alternate;
+  }
+  @keyframes hero-drift {
+    0%   { transform: translate3d(0%, 0%, 0) scale(1); opacity: 0.85; }
+    50%  { transform: translate3d(3%, -1%, 0) scale(1.05); opacity: 1; }
+    100% { transform: translate3d(-2%, 1%, 0) scale(1.02); opacity: 0.92; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-glow { animation: none; }
   }
   .hero-inner {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: var(--spacing-2xl);
-    align-items: start;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-lg);
+    max-width: 920px;
+    width: 100%;
+  }
+  .hero-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(96px, 12vw, 144px);
+    height: clamp(64px, 8vw, 96px);
+    color: var(--color-ink);
+    margin-bottom: 8px;
+  }
+  .hero-mark svg {
+    width: 100%;
+    height: 100%;
   }
   .hero-title {
     font-family: var(--font-display);
-    font-size: var(--fs-display);
+    font-size: clamp(4rem, 11vw, 8rem);
     line-height: 0.95;
     letter-spacing: -0.04em;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--color-ink);
-    margin-bottom: var(--spacing-md);
   }
-  .hero-tagline {
-    font-size: var(--fs-lg);
-    line-height: 1.3;
+  .hero-supertitle {
+    font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+    line-height: 1.25;
     color: var(--color-charcoal);
-    margin-bottom: var(--spacing-lg);
-    max-width: 22ch;
+    max-width: 30ch;
+    margin: 0 auto;
+    letter-spacing: -0.01em;
   }
+  .hero-subtitle {
+    font-size: clamp(1rem, 1.4vw, 1.0625rem);
+    line-height: 1.6;
+    color: var(--color-ash);
+    max-width: 60ch;
+    margin: 0 auto;
+  }
+  .hero-tagline,
   .hero-lede {
-    font-size: var(--fs-md);
-    line-height: 1.55;
-    color: var(--color-ink);
-    margin-bottom: var(--spacing-lg);
-    max-width: 52ch;
+    display: none;
   }
   .hero-link {
     color: var(--color-forest);
@@ -744,67 +808,73 @@ claude plugin install sales@pace</code></pre>
   }
   .hero-cta-row {
     display: flex;
-    gap: var(--spacing-sm);
+    gap: 12px;
     flex-wrap: wrap;
-    margin-bottom: var(--spacing-xl);
+    justify-content: center;
+    margin-top: var(--spacing-xs);
   }
-  .hero-harnesses {
+  /* Hero proof strip: faint partner-logo style row */
+  .hero-proof {
+    position: relative;
+    z-index: 1;
+    margin-top: var(--spacing-3xl);
+    padding-top: var(--spacing-lg);
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-xs);
+    align-items: center;
+    gap: 14px;
+    border-top: 1px solid var(--color-mist);
+    max-width: 920px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
   }
-  .hero-harnesses-label {
-    font-size: var(--fs-xs);
+  .hero-proof-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.12em;
     color: var(--color-ash);
   }
-  .hero-harnesses-list {
+  .hero-proof-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px 10px;
+    justify-content: center;
+    gap: 28px;
     padding: 0;
     margin: 0;
     list-style: none;
   }
-  .hero-harnesses-list li {
-    font-size: var(--fs-xs);
-    padding: 4px 10px;
-    background: var(--color-paper-elev);
-    border: 1px solid var(--color-mist);
-    border-radius: 999px;
+  .hero-proof-list li {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--color-ash);
+    transition: color var(--duration-base) var(--ease-out-quart);
+  }
+  .hero-proof-list li:hover {
     color: var(--color-charcoal);
   }
 
-  .hero-right {
-    position: sticky;
-    top: var(--spacing-lg);
+  /* ============================================
+     INSTALL PATHS, two-up cards below the hero
+     ============================================ */
+  .install-paths {
+    max-width: var(--width-max);
+    margin: 0 auto;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    border-top: none;
   }
-  .hero-terminal {
-    border-radius: 8px;
-    overflow: hidden;
-    margin-top: var(--spacing-xs);
-  }
-  .hero-terminal .terminal-body {
-    padding: var(--spacing-sm) var(--spacing-md);
-    background: oklch(18% 0.015 150);
-    color: oklch(92% 0.005 150);
-    font-family: var(--font-mono);
-    font-size: var(--fs-xs);
-    line-height: 1.55;
-    overflow-x: auto;
-    margin: 0;
-  }
-  .hero-install-paths {
-    display: flex;
-    flex-direction: column;
+  .install-paths-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: var(--spacing-md);
   }
-  .hero-install-card {
+  .install-card {
     background: var(--color-paper-elev);
     border: 1px solid var(--color-mist);
     border-radius: 12px;
-    padding: var(--spacing-md) var(--spacing-lg);
+    padding: var(--spacing-lg);
     display: flex;
     flex-direction: column;
     gap: var(--spacing-xs);
@@ -814,26 +884,26 @@ claude plugin install sales@pace</code></pre>
                 background var(--duration-fast) var(--ease-out-quart),
                 transform var(--duration-fast) var(--ease-out-quart);
   }
-  a.hero-install-card:hover {
+  a.install-card:hover {
     border-color: var(--color-forest);
     background: color-mix(in oklch, var(--color-paper-elev) 88%, var(--color-forest-dim));
     transform: translateY(-2px);
   }
-  .hero-install-card-cowork {
+  .install-card-cowork {
     border-color: var(--color-forest);
     background: color-mix(in oklch, var(--color-paper-elev) 88%, var(--color-forest-dim));
   }
-  a.hero-install-card-cowork:hover {
+  a.install-card-cowork:hover {
     background: color-mix(in oklch, var(--color-paper-elev) 78%, var(--color-forest-dim));
   }
-  .hero-install-card-label {
+  .install-card-label {
     font-family: var(--font-mono);
-    font-size: var(--fs-xs);
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--color-forest);
   }
-  .hero-install-card h3 {
+  .install-card h3 {
     font-family: var(--font-display);
     font-size: var(--fs-md);
     font-weight: 600;
@@ -841,18 +911,81 @@ claude plugin install sales@pace</code></pre>
     color: var(--color-ink);
     margin: 0;
   }
-  .hero-install-card p {
+  .install-card p {
     font-size: var(--fs-sm);
     color: var(--color-charcoal);
     line-height: 1.55;
   }
-  .hero-install-card-cta {
+  .install-terminal {
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: var(--spacing-xs);
+  }
+  .install-terminal .terminal-body {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: oklch(18% 0.015 150);
+    color: oklch(92% 0.005 150);
     font-family: var(--font-mono);
     font-size: var(--fs-xs);
+    line-height: 1.55;
+    overflow-x: auto;
+    margin: 0;
+  }
+  .install-card-cta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
     color: var(--color-forest);
     font-weight: 600;
     text-decoration: none;
     margin-top: var(--spacing-xs);
+  }
+  .install-quicklinks {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .install-quicklink {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: var(--color-paper);
+    border: 1px solid var(--color-mist);
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--color-ink);
+    text-decoration: none;
+    transition: border-color var(--duration-base) var(--ease-out-quart),
+                background var(--duration-base) var(--ease-out-quart),
+                color var(--duration-base) var(--ease-out-quart);
+  }
+  .install-quicklink:hover {
+    border-color: var(--color-forest);
+    background: var(--color-forest);
+    color: var(--color-paper);
+  }
+  .install-quicklink span:last-child {
+    color: var(--color-forest);
+    font-size: 11px;
+    transition: color var(--duration-base) var(--ease-out-quart);
+  }
+  .install-quicklink:hover span:last-child {
+    color: var(--color-paper);
+  }
+  @media (max-width: 720px) {
+    .install-paths-inner {
+      grid-template-columns: 1fr;
+    }
+    .install-quicklinks {
+      grid-template-columns: 1fr;
+    }
   }
   a.hero-install-card-cta:hover {
     text-decoration: underline;
@@ -961,39 +1094,40 @@ claude plugin install sales@pace</code></pre>
   }
 
   /* ============================================
-     CTA buttons
+     CTA buttons, uppercase mono outlined
      ============================================ */
   .cta {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-family: var(--font-display);
-    font-size: var(--fs-sm);
+    gap: 8px;
+    padding: 12px 22px;
+    border-radius: 2px;
+    font-family: var(--font-mono);
+    font-size: 13px;
     font-weight: 500;
-    letter-spacing: -0.01em;
-    transition: background var(--duration-fast) var(--ease-out-quart),
-                color var(--duration-fast) var(--ease-out-quart),
-                border-color var(--duration-fast) var(--ease-out-quart),
-                transform var(--duration-fast) var(--ease-out-quart);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: 1px solid var(--color-ink);
+    transition: background var(--duration-base) var(--ease-out-quart),
+                color var(--duration-base) var(--ease-out-quart),
+                border-color var(--duration-base) var(--ease-out-quart);
   }
   .cta-primary {
-    background: var(--color-forest);
+    background: var(--color-ink);
     color: var(--color-paper);
   }
   .cta-primary:hover {
-    background: var(--color-forest-hover);
-    transform: translateY(-1px);
+    background: var(--color-forest);
+    border-color: var(--color-forest);
   }
   .cta-secondary {
     background: transparent;
     color: var(--color-ink);
-    border: 1px solid var(--color-mist);
   }
   .cta-secondary:hover {
-    border-color: var(--color-forest);
-    color: var(--color-forest);
+    background: var(--color-ink);
+    color: var(--color-paper);
   }
 
   /* ============================================
@@ -1060,39 +1194,43 @@ claude plugin install sales@pace</code></pre>
   }
   .section-head {
     display: flex;
-    align-items: baseline;
-    gap: var(--spacing-md);
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
     margin-bottom: var(--spacing-xl);
+    text-align: center;
   }
   .section-number {
     font-family: var(--font-mono);
-    font-size: var(--fs-base);
+    font-size: 12px;
     color: var(--color-forest);
     font-weight: 600;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.08em;
     padding: 4px 10px;
     border: 1px solid var(--color-forest-soft);
     border-radius: 999px;
     background: var(--color-forest-dim);
-    align-self: center;
   }
   .section-title {
     font-family: var(--font-display);
-    font-size: var(--fs-2xl);
+    font-size: clamp(2rem, 4.2vw, 3rem);
     line-height: 1.1;
     letter-spacing: -0.03em;
     font-weight: 600;
     color: var(--color-ink);
+    max-width: 22ch;
   }
   .section-lede {
     font-size: var(--fs-md);
-    line-height: 1.55;
+    line-height: 1.6;
     color: var(--color-charcoal);
-    max-width: var(--width-narrow);
-    margin-bottom: var(--spacing-xl);
+    max-width: 60ch;
+    margin: 0 auto var(--spacing-xl);
+    text-align: center;
   }
   .section-body {
     max-width: var(--width-content);
+    margin: 0 auto;
   }
 
   /* ============================================
@@ -1596,65 +1734,94 @@ claude plugin install sales@pace</code></pre>
   }
 
   /* ============================================
-     COMPANY CTA
+     CLOSING CTA, dark slab with the rabbit logo
      ============================================ */
-  .company-cta {
-    margin-top: var(--spacing-2xl);
-  }
-  .company-cta-inner {
-    max-width: var(--width-narrow);
-    margin: 0 auto;
-    text-align: center;
+  .closing-cta {
+    position: relative;
+    margin: var(--spacing-3xl) auto 0;
+    max-width: var(--width-max);
     padding: var(--spacing-2xl) var(--spacing-lg);
-    background: var(--color-forest-dim);
-    border-radius: 16px;
-    border: 1px solid var(--color-forest-soft);
-  }
-  .company-cta-title {
-    font-family: var(--font-display);
-    font-size: var(--fs-2xl);
-    line-height: 1.1;
-    letter-spacing: -0.03em;
+    background: var(--color-paper);
+    border-radius: 20px;
+    overflow: hidden;
     color: var(--color-ink);
-    margin-bottom: var(--spacing-md);
   }
-  .company-cta-lede {
-    font-size: var(--fs-md);
-    line-height: 1.55;
-    color: var(--color-charcoal);
-    margin-bottom: var(--spacing-lg);
+  .closing-cta-glow {
+    position: absolute;
+    inset: -20% -10% auto -10%;
+    height: 80%;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(45% 35% at 75% 50%, oklch(48% 0.10 32 / 0.45) 0%, transparent 75%),
+      radial-gradient(40% 30% at 22% 55%, oklch(40% 0.08 145 / 0.5) 0%, transparent 78%);
+    filter: blur(60px);
+    animation: hero-drift 28s ease-in-out infinite alternate;
   }
-  .company-cta-row {
-    display: flex;
-    gap: var(--spacing-sm);
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .company-cta-enablement {
-    margin-top: var(--spacing-xl);
-    padding-top: var(--spacing-lg);
-    border-top: 1px solid var(--color-forest-soft);
+  .closing-cta-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: var(--spacing-2xl) 0;
+    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--spacing-sm);
-    max-width: 56ch;
-    margin-left: auto;
-    margin-right: auto;
+    gap: 18px;
   }
-  .company-cta-enablement-label {
-    font-family: var(--font-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-forest);
+  .closing-cta-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 84px;
+    height: 56px;
+    padding: 6px;
+    color: var(--color-ink);
+    margin-bottom: 6px;
   }
-  .company-cta-enablement p {
-    font-size: var(--fs-sm);
+  .closing-cta-mark svg {
+    width: 100%;
+    height: 100%;
+  }
+  .closing-cta-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 4.6vw, 3.4rem);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+    color: var(--color-ink);
+    max-width: 18ch;
+  }
+  .closing-cta-lede {
+    font-size: clamp(0.98rem, 1.3vw, 1.0625rem);
+    line-height: 1.6;
     color: var(--color-charcoal);
+    max-width: 50ch;
+  }
+  .closing-cta-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .closing-cta-note {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-mist);
+    width: 100%;
+    max-width: 50ch;
+    font-size: 13px;
+    color: var(--color-ash);
     line-height: 1.55;
-    margin: 0;
-    text-align: center;
+  }
+  @media (max-width: 720px) {
+    .closing-cta {
+      border-radius: 0;
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
 
   /* ============================================

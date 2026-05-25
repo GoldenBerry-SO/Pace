@@ -1,0 +1,234 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Page not found · Pace"
+  description="The page you're looking for doesn't exist on pace.tools. Try the catalog, the docs, or the cookbook."
+  noIndex={true}
+  theme="dark"
+>
+  <article class="oh-no">
+    <div class="huge-404" aria-hidden="true">404</div>
+
+    <div class="window-stack">
+      <div class="window window-back-3"><span class="window-bar">pace :: error</span><span class="window-x">&times;</span></div>
+      <div class="window window-back-2"><span class="window-bar">pace :: error</span><span class="window-x">&times;</span></div>
+      <div class="window window-back-1"><span class="window-bar">pace :: error</span><span class="window-x">&times;</span></div>
+
+      <div class="window window-front" role="alertdialog" aria-labelledby="oh-no-title">
+        <div class="window-titlebar">
+          <span class="window-title">pace :: error</span>
+          <span class="window-x" aria-hidden="true">&times;</span>
+        </div>
+        <div class="window-body">
+          <span class="window-icon" aria-hidden="true">!</span>
+          <div class="window-message">
+            <p id="oh-no-title" class="window-message-title">We don't have a workflow for this URL.</p>
+            <p class="window-message-body">Try the <a href="/plugins">catalog</a>, the <a href="/cookbook">cookbook</a>, or the <a href="/docs">docs</a>.</p>
+          </div>
+        </div>
+        <div class="window-buttons">
+          <a class="cta-outline" href="/">Take me home</a>
+          <a class="cta-outline cta-outline-quiet" href="/plugins">Browse plugins</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="taskbar" aria-hidden="true">
+      <span class="taskbar-tile">pace</span>
+      <span class="taskbar-clock">5:08 pm · 2026</span>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .oh-no {
+    position: relative;
+    min-height: calc(100vh - 76px - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
+    overflow: hidden;
+  }
+  .huge-404 {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(18rem, 38vw, 32rem);
+    letter-spacing: -0.05em;
+    color: var(--color-paper-elev);
+    line-height: 1;
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+    user-select: none;
+  }
+  .window-stack {
+    position: relative;
+    z-index: 1;
+    width: min(560px, 100%);
+  }
+  .window {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-charcoal);
+    box-shadow: 0 12px 32px -16px rgba(0, 0, 0, 0.55);
+  }
+  .window-back-1, .window-back-2, .window-back-3 {
+    height: 32px;
+    padding: 9px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .window-back-3 {
+    transform: translate(-32px, -32px);
+    opacity: 0.55;
+  }
+  .window-back-2 {
+    transform: translate(-22px, -22px);
+    opacity: 0.7;
+  }
+  .window-back-1 {
+    transform: translate(-12px, -12px);
+    opacity: 0.85;
+  }
+  .window-x { opacity: 0.5; }
+  .window-front {
+    position: relative;
+  }
+  .window-titlebar {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--color-mist);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--color-paper-elev);
+    border-radius: 6px 6px 0 0;
+  }
+  .window-title {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-ink);
+  }
+  .window-body {
+    display: flex;
+    gap: 16px;
+    padding: 22px 22px 14px;
+    align-items: flex-start;
+  }
+  .window-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--color-clay-dim);
+    color: var(--color-clay);
+    font-family: var(--font-mono);
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .window-message {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-family: var(--font-body);
+  }
+  .window-message-title {
+    font-size: 1rem;
+    color: var(--color-ink);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .window-message-body {
+    font-size: 0.9375rem;
+    color: var(--color-charcoal);
+    line-height: 1.55;
+  }
+  .window-message-body a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .window-buttons {
+    padding: 0 22px 22px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+  .cta-outline {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+    background: transparent;
+    border: 1px solid var(--color-ink);
+    border-radius: 2px;
+    transition: background var(--duration-base) var(--ease-out-quart),
+                color var(--duration-base) var(--ease-out-quart);
+  }
+  .cta-outline:hover {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+  .cta-outline-quiet {
+    border-color: var(--color-mist);
+    color: var(--color-charcoal);
+  }
+  .cta-outline-quiet:hover {
+    background: var(--color-charcoal);
+    color: var(--color-paper);
+    border-color: var(--color-charcoal);
+  }
+  .taskbar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background: oklch(10% 0.008 150);
+    border-top: 1px solid var(--color-mist);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 16px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-ash);
+  }
+  .taskbar-tile {
+    background: var(--color-forest);
+    color: var(--color-paper);
+    padding: 4px 12px;
+    border-radius: 2px;
+    text-transform: lowercase;
+    letter-spacing: 0.04em;
+  }
+  @media (max-width: 720px) {
+    .huge-404 { font-size: clamp(12rem, 50vw, 22rem); }
+    .window-back-3, .window-back-2, .window-back-1 {
+      transform: none;
+      display: none;
+    }
+  }
+</style>
