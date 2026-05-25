@@ -96,9 +96,45 @@ before posting to #async-standup.`} />
           <div><dt>Features</dt><dd>Auto memory (CLAUDE.md), cross-app context retrieval</dd></div>
         </dl>
         <p><code>start</code> re-hydrates yesterday's context from <code>memory-management</code>: open threads, the decisions you made, the things you said you'd come back to. No more spending the first 20 minutes of every session reading old messages.</p>
-              <PromptBlock prompt={`I need to find: [what we decided about pricing in the Q3 launch retro].
+              <div class="usecase-setup">
+
+                <h4 class="usecase-setup-title">How to use it</h4>
+
+                <ol class="usecase-steps">
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">1</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Ready to use</h5>
+
+                      <p>No routine to configure for this one. Just open Cowork (or Claude Code) and paste the prompt below.</p>
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">2</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Try it with this prompt</h5>
+
+                      <PromptBlock prompt={`I need to find: [what we decided about pricing in the Q3 launch retro].
 
 Search across Slack channel histories (#product, #pricing, #leadership), Notion docs, Linear comments, and GitHub PR discussion. Surface the actual decision (not just the discussion), with the date it was made and a link back to the source.`} label="Project memory prompt" />
+
+                    </div>
+
+                  </li>
+
+                </ol>
+
+              </div>
       </article>
       <article class="usecase-card">
         <h3>End-of-week recap, written for you</h3>
@@ -123,9 +159,59 @@ Park the draft in Notion under /personal/recaps so I can edit before sending.`} 
           <div><dt>Skills</dt><dd><code>memory-search</code>, <code>synthesize</code></dd></div>
           <div><dt>Features</dt><dd>Cowork chat, multi-source connectors (Slack + Notion + Linear + GitHub), enterprise-search pairing</dd></div>
         </dl>
-              <PromptBlock prompt={`I need to find: [what we decided about pricing in the Q3 launch retro].
+              <div class="usecase-setup">
+
+                <h4 class="usecase-setup-title">How to set it up</h4>
+
+                <ol class="usecase-steps">
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">1</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Create the Cowork hook</h5>
+
+                      <p>In Cowork, open <strong>Hooks</strong> &rarr; <strong>New hook</strong>. Match the trigger described above (file upload, message, schedule).</p>
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">2</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Paste this as the routine prompt</h5>
+
+                      <PromptBlock prompt={`I need to find: [what we decided about pricing in the Q3 launch retro].
 
 Search across Slack channel histories (#product, #pricing, #leadership), Notion docs, Linear comments, and GitHub PR discussion. Surface the actual decision (not just the discussion), with the date it was made and a link back to the source.`} label="Project memory prompt" />
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">3</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Click <strong>Run now</strong> to verify</h5>
+
+                      <p>Eyeball the first run for accuracy. Once it looks right, the routine fires on its trigger from then on. Assumes the plugin from the marquee above is already installed and connectors authorized.</p>
+
+                    </div>
+
+                  </li>
+
+                </ol>
+
+              </div>
       </article>
     </div>
 

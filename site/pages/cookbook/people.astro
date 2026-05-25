@@ -46,7 +46,7 @@ import PromptBlock from '../../components/PromptBlock.astro';
               <span class="usecase-step-num">2</span>
               <div class="usecase-step-body">
                 <h5>Authorize your ATS + Slack</h5>
-                <p>Whichever ATS your team uses (Ashby, Greenhouse, Lever). The major ones authorize through OAuth in the browser like Slack does; for less-common ATS choices, see the <a href="/docs/connectors">connector docs</a>. If you want us to handle setup across your stack, <a href="mailto:hello@goldenberry.so">talk to GoldenBerry</a>.</p>
+                <p>Most ATSes (Ashby, Greenhouse, Lever, and others) don't have first-party MCP servers yet. The skill still works against pasted exports, structured docs in Notion, or via the Custom URL pattern in the <a href="/docs/connectors">connector docs</a>. If you want us to set this up against your specific ATS, <a href="mailto:hello@goldenberry.so">talk to GoldenBerry</a>.</p>
               </div>
             </li>
             <li class="usecase-step">
@@ -103,13 +103,63 @@ to their reqs so they get a heads-up DM.`} />
           <div><dt>Skills</dt><dd><code>onboarding-plan</code>, <code>review-feedback</code></dd></div>
           <div><dt>Features</dt><dd>Routines (calendar webhook), Linear + GitHub + Slack + Notion connectors</dd></div>
         </dl>
-              <PromptBlock prompt={`30 minutes before any 1:1 on my calendar, assemble a brief on the direct I'm meeting with:
+              <div class="usecase-setup">
+
+                <h4 class="usecase-setup-title">How to set it up</h4>
+
+                <ol class="usecase-steps">
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">1</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Create the API-triggered routine</h5>
+
+                      <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong> &rarr; <strong>API</strong>. Save and copy the routine URL + bearer token; point the upstream webhook at it (e.g. calendar provider, Intercom webhook, PagerDuty webhook, depending on the trigger).</p>
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">2</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Paste this as the routine prompt</h5>
+
+                      <PromptBlock prompt={`30 minutes before any 1:1 on my calendar, assemble a brief on the direct I'm meeting with:
 
 - What they shipped this week (Linear closed, GitHub merged).
 - What they're stuck on (open PRs over 3 days old, Slack threads where they pinged me, blocked Linear tickets).
 - What came up in our last 1:1 notes in Notion.
 
 Drop the brief into the calendar event description so I see it when I open the meeting.`} label="1:1 prep prompt" />
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">3</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Click <strong>Run now</strong> to verify</h5>
+
+                      <p>Eyeball the first run for accuracy. Once it looks right, the routine fires on its trigger from then on. Assumes the plugin from the marquee above is already installed and connectors authorized.</p>
+
+                    </div>
+
+                  </li>
+
+                </ol>
+
+              </div>
       </article>
       <article class="usecase-card">
         <h3>Offer letter drafted from the candidate record</h3>
@@ -117,11 +167,61 @@ Drop the brief into the calendar event description so I see it when I open the m
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, API trigger fired by ATS stage-change to "offer"</dd></div>
           <div><dt>Skills</dt><dd><code>job-description</code>, <code>comp-analysis</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (API trigger), Greenhouse / Ashby connectors, plan mode for people-ops review</dd></div>
+          <div><dt>Features</dt><dd>Routines (API trigger), ATS data (via Notion exports or Custom URL), plan mode for people-ops review</dd></div>
         </dl>
-              <PromptBlock prompt={`When a candidate hits the "offer" stage in our ATS, pull their record: role, level, band, recruiter notes, start date. Draft the offer letter from our standard template with the right comp (base + variable), equity grant per the band, and start-date language.
+              <div class="usecase-setup">
+
+                <h4 class="usecase-setup-title">How to set it up</h4>
+
+                <ol class="usecase-steps">
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">1</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Create the API-triggered routine</h5>
+
+                      <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong> &rarr; <strong>API</strong>. Save and copy the routine URL + bearer token; point the upstream webhook at it (e.g. calendar provider, Intercom webhook, PagerDuty webhook, depending on the trigger).</p>
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">2</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Paste this as the routine prompt</h5>
+
+                      <PromptBlock prompt={`When a candidate hits the "offer" stage in our ATS, pull their record: role, level, band, recruiter notes, start date. Draft the offer letter from our standard template with the right comp (base + variable), equity grant per the band, and start-date language.
 
 Park the draft in plan mode for people-ops to review. Once approved, the recruiter sends from the ATS.`} label="Offer letter prompt" />
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">3</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Click <strong>Run now</strong> to verify</h5>
+
+                      <p>Eyeball the first run for accuracy. Once it looks right, the routine fires on its trigger from then on. Assumes the plugin from the marquee above is already installed and connectors authorized.</p>
+
+                    </div>
+
+                  </li>
+
+                </ol>
+
+              </div>
       </article>
     </div>
 

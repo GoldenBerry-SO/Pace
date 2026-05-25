@@ -94,9 +94,59 @@ agreements.`} />
           <div><dt>Features</dt><dd>Cowork hooks (file upload), Box connector for template lookup, plan mode for review</dd></div>
         </dl>
         <p>The hook diffs the inbound NDA against your standard template and produces a redlined version with explanations next to each change. Plan mode parks the redline for your sign-off; one click posts it back to the requester. Frees up the lawyer for the agreements that actually need them.</p>
-              <PromptBlock prompt={`When a counter-party uploads an NDA to the legal intake folder, diff it against our standard template. For each meaningful change, annotate next to it: what changed, whether it's acceptable per the playbook, and the suggested counter (if any).
+              <div class="usecase-setup">
+
+                <h4 class="usecase-setup-title">How to set it up</h4>
+
+                <ol class="usecase-steps">
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">1</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Create the Cowork hook</h5>
+
+                      <p>In Cowork, open <strong>Hooks</strong> &rarr; <strong>New hook</strong>. Match the trigger described above (file upload, message, schedule).</p>
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">2</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Paste this as the routine prompt</h5>
+
+                      <PromptBlock prompt={`When a counter-party uploads an NDA to the legal intake folder, diff it against our standard template. For each meaningful change, annotate next to it: what changed, whether it's acceptable per the playbook, and the suggested counter (if any).
 
 Park the redline in plan mode for the lawyer to sign off. Once approved, post the redlined version back to the requester via email.`} label="NDA redline prompt" />
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">3</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Click <strong>Run now</strong> to verify</h5>
+
+                      <p>Eyeball the first run for accuracy. Once it looks right, the routine fires on its trigger from then on. Assumes the plugin from the marquee above is already installed and connectors authorized.</p>
+
+                    </div>
+
+                  </li>
+
+                </ol>
+
+              </div>
       </article>
       <article class="usecase-card">
         <h3>Quarterly compliance audit prep</h3>
@@ -106,9 +156,59 @@ Park the redline in plan mode for the lawyer to sign off. Once approved, post th
           <div><dt>Features</dt><dd>Routines (cloud schedule), GitHub + Box connectors, multi-step audit walk</dd></div>
         </dl>
         <p>Walks the current state against your compliance framework (SOC 2, GDPR, HIPAA, whichever applies), produces the gap report, and stages evidence requests as Linear tickets routed to the right owners. The first run is the longest; subsequent quarters compare deltas.</p>
-              <PromptBlock prompt={`On the last business day of every quarter, walk the current state of our compliance framework (SOC 2 + GDPR, whichever applies). For each control, check the evidence is current. For gaps, draft an evidence-request Linear ticket routed to the owner who handles that control.
+              <div class="usecase-setup">
+
+                <h4 class="usecase-setup-title">How to set it up</h4>
+
+                <ol class="usecase-steps">
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">1</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Create the scheduled routine in Cowork</h5>
+
+                      <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong> &rarr; <strong>Schedule</strong>. Match the cadence described in the trigger above.</p>
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">2</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Paste this as the routine prompt</h5>
+
+                      <PromptBlock prompt={`On the last business day of every quarter, walk the current state of our compliance framework (SOC 2 + GDPR, whichever applies). For each control, check the evidence is current. For gaps, draft an evidence-request Linear ticket routed to the owner who handles that control.
 
 Produce a quarterly gap report: what's in place, what's pending, what's overdue.`} label="Compliance audit prep prompt" />
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">3</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Click <strong>Run now</strong> to verify</h5>
+
+                      <p>Eyeball the first run for accuracy. Once it looks right, the routine fires on its trigger from then on. Assumes the plugin from the marquee above is already installed and connectors authorized.</p>
+
+                    </div>
+
+                  </li>
+
+                </ol>
+
+              </div>
       </article>
 
       <article class="usecase-card">
@@ -117,7 +217,7 @@ Produce a quarterly gap report: what's in place, what's pending, what's overdue.
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, API trigger fired by procurement workflow</dd></div>
           <div><dt>Skills</dt><dd><code>contract-review</code>, <code>risk-assessment</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (API trigger), Box + Vanta connectors, parallel skill execution</dd></div>
+          <div><dt>Features</dt><dd>Routines (API trigger), Box connector (for SOC 2 reports + policy docs), parallel skill execution</dd></div>
         </dl>
               <PromptBlock prompt={`When a new vendor enters procurement, run two reviews in parallel:
 

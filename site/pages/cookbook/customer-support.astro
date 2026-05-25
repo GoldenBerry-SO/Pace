@@ -23,9 +23,9 @@ import PromptBlock from '../../components/PromptBlock.astro';
         <h3>Real-time ticket triage with macro suggestion</h3>
         <p class="usecase-outcome">First-response time drops; quality stays high.</p>
         <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, API trigger fired by Intercom / Zendesk new-conversation webhook</dd></div>
+          <div><dt>Trigger</dt><dd>Routine, API trigger fired by Intercom new-conversation webhook</dd></div>
           <div><dt>Skills</dt><dd><code>ticket-triage</code>, <code>draft-response</code>, <code>customer-escalation</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (API trigger), Intercom/Zendesk + HubSpot connectors, plan mode for the draft, Slack escalation routing</dd></div>
+          <div><dt>Features</dt><dd>Routines (API trigger), Intercom + HubSpot connectors, plan mode for the draft, Slack escalation routing</dd></div>
         </dl>
         <p>Every new ticket arrives with a pre-classified urgency, account context from HubSpot, and a draft response in the right tone for the customer segment. The agent reads the draft, makes a tweak, sends. First-response time drops; quality stays high.</p>
 
@@ -45,8 +45,8 @@ import PromptBlock from '../../components/PromptBlock.astro';
             <li class="usecase-step">
               <span class="usecase-step-num">2</span>
               <div class="usecase-step-body">
-                <h5>Authorize Intercom (or Zendesk), HubSpot, Slack</h5>
-                <p>Intercom / Zendesk for the ticket queue; HubSpot for account context; Slack for escalations.</p>
+                <h5>Authorize Intercom, HubSpot, Slack</h5>
+                <p>Intercom for the ticket queue; HubSpot for account context; Slack for escalations.</p>
               </div>
             </li>
             <li class="usecase-step">
@@ -59,8 +59,8 @@ import PromptBlock from '../../components/PromptBlock.astro';
             <li class="usecase-step">
               <span class="usecase-step-num">4</span>
               <div class="usecase-step-body">
-                <h5>Wire Intercom (or Zendesk) to POST new conversations</h5>
-                <p>In Intercom: <strong>Settings &rarr; Webhooks &rarr; New webhook</strong>, subscribe to "conversation.user.created", point at the routine URL with the bearer token. (Zendesk: <strong>Apps &amp; Integrations &rarr; Webhooks</strong>.) Then paste this routine prompt:</p>
+                <h5>Wire Intercom to POST new conversations</h5>
+                <p>In Intercom: <strong>Settings &rarr; Webhooks &rarr; New webhook</strong>, subscribe to "conversation.user.created", point at the routine URL with the bearer token. Then paste this routine prompt:</p>
                 <PromptBlock prompt={`A new support ticket arrived. The conversation body is
 in the incoming text field.
 
@@ -95,9 +95,59 @@ in the incoming text field.
           <div><dt>Features</dt><dd>Routines (cloud schedule), Intercom + PagerDuty connectors, conditional escalation</dd></div>
         </dl>
         <p>Twice on weekends, the routine sweeps Intercom. Routine tickets get auto-responses where the answer is in the knowledge base. The two or three that look real get summarized and paged to the on-call engineer with full context. The Sunday-night Slack thread no longer scrolls.</p>
-              <PromptBlock prompt={`Twice on weekends, at 9am and 6pm, sweep the support inbox (Intercom or Zendesk, whichever you use). For routine tickets where the answer is in the knowledge base, draft a response in our voice and post it. For the two or three that look real (production issue, customer at risk, escalation request), summarize with full context (account, history, what they tried) and page the on-call engineer via PagerDuty.
+              <div class="usecase-setup">
+
+                <h4 class="usecase-setup-title">How to set it up</h4>
+
+                <ol class="usecase-steps">
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">1</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Create the scheduled routine in Cowork</h5>
+
+                      <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong> &rarr; <strong>Schedule</strong>. Match the cadence described in the trigger above.</p>
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">2</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Paste this as the routine prompt</h5>
+
+                      <PromptBlock prompt={`Twice on weekends, at 9am and 6pm, sweep the Intercom inbox. For routine tickets where the answer is in the knowledge base, draft a response in our voice and post it. For the two or three that look real (production issue, customer at risk, escalation request), summarize with full context (account, history, what they tried) and page the on-call engineer via PagerDuty.
 
 Post a digest of what was handled vs. what was paged to #support-weekend.`} label="Weekend on-call prompt" />
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">3</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Click <strong>Run now</strong> to verify</h5>
+
+                      <p>Eyeball the first run for accuracy. Once it looks right, the routine fires on its trigger from then on. Assumes the plugin from the marquee above is already installed and connectors authorized.</p>
+
+                    </div>
+
+                  </li>
+
+                </ol>
+
+              </div>
       </article>
       <article class="usecase-card">
         <h3>Turn five resolved tickets into one KB article, every week</h3>
@@ -107,26 +157,126 @@ Post a digest of what was handled vs. what was paged to #support-weekend.`} labe
           <div><dt>Features</dt><dd>Routines (cloud schedule), Intercom + Notion connectors, sub-agent per theme</dd></div>
         </dl>
         <p>Reads the week's resolved tickets, clusters them by theme, and for each theme with three or more occurrences, drafts a knowledge-base article. Plan mode stages the drafts in Notion; you publish the ones worth publishing. The KB grows from real volume instead of someone deciding what should be there in the abstract.</p>
-              <PromptBlock prompt={`Every Friday at 4pm, read this week's resolved tickets. Cluster them by theme (what the customer was trying to do). For each theme with 3+ occurrences, draft a knowledge-base article: title, problem, solution, common gotchas, related links.
+              <div class="usecase-setup">
+
+                <h4 class="usecase-setup-title">How to set it up</h4>
+
+                <ol class="usecase-steps">
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">1</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Create the scheduled routine in Cowork</h5>
+
+                      <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong> &rarr; <strong>Schedule</strong>. Match the cadence described in the trigger above.</p>
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">2</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Paste this as the routine prompt</h5>
+
+                      <PromptBlock prompt={`Every Friday at 4pm, read this week's resolved tickets. Cluster them by theme (what the customer was trying to do). For each theme with 3+ occurrences, draft a knowledge-base article: title, problem, solution, common gotchas, related links.
 
 Stage the drafts in Notion under #support-kb-drafts. We'll publish the ones worth publishing in next week's KB review.`} label="KB roll-up prompt" />
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">3</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Click <strong>Run now</strong> to verify</h5>
+
+                      <p>Eyeball the first run for accuracy. Once it looks right, the routine fires on its trigger from then on. Assumes the plugin from the marquee above is already installed and connectors authorized.</p>
+
+                    </div>
+
+                  </li>
+
+                </ol>
+
+              </div>
       </article>
 
       <article class="usecase-card">
         <h3>Customer context on every escalation, before engineering picks it up</h3>
         <p>When support escalates a ticket to engineering, a routine assembles the customer context first: account size, recent activity, open tickets, deal stage if any, prior escalations and their outcomes. Engineering doesn't ask support "is this customer important?"; the answer is already in the escalation.</p>
         <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, Intercom/Zendesk webhook on ticket-escalated</dd></div>
+          <div><dt>Trigger</dt><dd>Routine, Intercom webhook on ticket-escalated</dd></div>
           <div><dt>Skills</dt><dd><code>customer-escalation</code>, <code>customer-context</code></dd></div>
           <div><dt>Features</dt><dd>Routines (webhook), HubSpot + Intercom + Slack connectors</dd></div>
         </dl>
-              <PromptBlock prompt={`When support escalates a ticket to engineering (tag = "esc-to-eng" added in Intercom), assemble the customer context before the engineer picks it up:
+              <div class="usecase-setup">
+
+                <h4 class="usecase-setup-title">How to set it up</h4>
+
+                <ol class="usecase-steps">
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">1</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Create the API-triggered routine</h5>
+
+                      <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong> &rarr; <strong>API</strong>. Save and copy the routine URL + bearer token; point the upstream webhook at it (e.g. calendar provider, Intercom webhook, PagerDuty webhook, depending on the trigger).</p>
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">2</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Paste this as the routine prompt</h5>
+
+                      <PromptBlock prompt={`When support escalates a ticket to engineering (tag = "esc-to-eng" added in Intercom), assemble the customer context before the engineer picks it up:
 
 - Account: size, tier, deal stage if any, contract value
 - Recent activity: open tickets, product-usage signals from the last 14 days
 - History: prior escalations, their outcomes, who handled them
 
 Append the context as a comment on the escalated ticket. Ping the engineering on-call in #escalations with a one-line summary.`} label="Escalation-context prompt" />
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">3</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Click <strong>Run now</strong> to verify</h5>
+
+                      <p>Eyeball the first run for accuracy. Once it looks right, the routine fires on its trigger from then on. Assumes the plugin from the marquee above is already installed and connectors authorized.</p>
+
+                    </div>
+
+                  </li>
+
+                </ol>
+
+              </div>
       </article>
     </div>
 

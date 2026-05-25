@@ -104,9 +104,59 @@ synthesis before saving.`} />
           <div><dt>Features</dt><dd>Routines (cloud schedule), Intercom + Linear connectors, multi-source aggregation</dd></div>
         </dl>
         <p>Pulls last week of Intercom tickets, sales-loss reasons from HubSpot, and Linear bugs tagged customer-impact. Synthesizes into themes (not transcripts). Adds the themes as comments under the relevant roadmap items in Linear, and posts the executive summary to #product.</p>
-              <PromptBlock prompt={`Every Friday at 3pm, pull the week's Intercom tickets, sales-loss reasons from HubSpot, and Linear bugs tagged customer-impact. Synthesize into themes, not transcripts: cluster by what the customer was trying to do, what got in the way, and what they did instead.
+              <div class="usecase-setup">
+
+                <h4 class="usecase-setup-title">How to set it up</h4>
+
+                <ol class="usecase-steps">
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">1</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Create the scheduled routine in Cowork</h5>
+
+                      <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong> &rarr; <strong>Schedule</strong>. Match the cadence described in the trigger above.</p>
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">2</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Paste this as the routine prompt</h5>
+
+                      <PromptBlock prompt={`Every Friday at 3pm, pull the week's Intercom tickets, sales-loss reasons from HubSpot, and Linear bugs tagged customer-impact. Synthesize into themes, not transcripts: cluster by what the customer was trying to do, what got in the way, and what they did instead.
 
 Add each theme as a comment under the relevant roadmap item in Linear. Post the executive summary to #product with five bullets max.`} label="Customer-feedback synthesis prompt" />
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">3</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Click <strong>Run now</strong> to verify</h5>
+
+                      <p>Eyeball the first run for accuracy. Once it looks right, the routine fires on its trigger from then on. Assumes the plugin from the marquee above is already installed and connectors authorized.</p>
+
+                    </div>
+
+                  </li>
+
+                </ol>
+
+              </div>
       </article>
 
       <article class="usecase-card">
@@ -117,9 +167,59 @@ Add each theme as a comment under the relevant roadmap item in Linear. Post the 
           <div><dt>Skills</dt><dd><code>spec</code>, <code>synthesize</code></dd></div>
           <div><dt>Features</dt><dd>Routines (Linear webhook), Linear + Slack connectors, plan mode</dd></div>
         </dl>
-              <PromptBlock prompt={`When stakeholders leave comments on a Linear spec, read each comment in context. For each one, write a candidate response in a thread under the original comment: accept-and-update, push-back-with-reasoning, or ask-for-clarification.
+              <div class="usecase-setup">
+
+                <h4 class="usecase-setup-title">How to set it up</h4>
+
+                <ol class="usecase-steps">
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">1</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Create the API-triggered routine</h5>
+
+                      <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong> &rarr; <strong>API</strong>. Save and copy the routine URL + bearer token; point the upstream webhook at it (e.g. calendar provider, Intercom webhook, PagerDuty webhook, depending on the trigger).</p>
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">2</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Paste this as the routine prompt</h5>
+
+                      <PromptBlock prompt={`When stakeholders leave comments on a Linear spec, read each comment in context. For each one, write a candidate response in a thread under the original comment: accept-and-update, push-back-with-reasoning, or ask-for-clarification.
 
 Mark the responses that need product-manager judgment in red; leave the obvious ones as drafts the PM can approve in a single pass.`} label="Spec-comment review prompt" />
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">3</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Click <strong>Run now</strong> to verify</h5>
+
+                      <p>Eyeball the first run for accuracy. Once it looks right, the routine fires on its trigger from then on. Assumes the plugin from the marquee above is already installed and connectors authorized.</p>
+
+                    </div>
+
+                  </li>
+
+                </ol>
+
+              </div>
       </article>
     </div>
 

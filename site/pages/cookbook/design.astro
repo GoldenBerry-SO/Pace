@@ -58,9 +58,59 @@ import PromptBlock from '../../components/PromptBlock.astro';
               <div><dt>Skills</dt><dd><code>brand-voice-enforcement</code>, <code>draft-content</code></dd></div>
               <div><dt>Features</dt><dd>Routines (GitHub trigger), inline PR comments, plan mode</dd></div>
             </dl>
-                  <PromptBlock prompt={`When a PR opens touching landing pages, blog templates, or email templates, run brand-voice-enforcement against the changed text. For each violation (off-tone, restricted term, structural deviation), post an inline comment with the concrete fix.
+                  <div class="usecase-setup">
+
+                    <h4 class="usecase-setup-title">How to set it up</h4>
+
+                    <ol class="usecase-steps">
+
+                      <li class="usecase-step">
+
+                        <span class="usecase-step-num">1</span>
+
+                        <div class="usecase-step-body">
+
+                          <h5>Create the scheduled routine in Cowork</h5>
+
+                          <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong> &rarr; <strong>Schedule</strong>. Match the cadence described in the trigger above.</p>
+
+                        </div>
+
+                      </li>
+
+                      <li class="usecase-step">
+
+                        <span class="usecase-step-num">2</span>
+
+                        <div class="usecase-step-body">
+
+                          <h5>Paste this as the routine prompt</h5>
+
+                          <PromptBlock prompt={`When a PR opens touching landing pages, blog templates, or email templates, run brand-voice-enforcement against the changed text. For each violation (off-tone, restricted term, structural deviation), post an inline comment with the concrete fix.
 
 Where a section needs a rewrite from scratch rather than a tweak, draft the replacement using draft-content from the marketing plugin. Park rewrites in plan mode.`} label="Brand-voice PR prompt" />
+
+                        </div>
+
+                      </li>
+
+                      <li class="usecase-step">
+
+                        <span class="usecase-step-num">3</span>
+
+                        <div class="usecase-step-body">
+
+                          <h5>Click <strong>Run now</strong> to verify</h5>
+
+                          <p>Eyeball the first run for accuracy. Once it looks right, the routine fires on its trigger from then on. Assumes the plugin from the marquee above is already installed and connectors authorized.</p>
+
+                        </div>
+
+                      </li>
+
+                    </ol>
+
+                  </div>
       </article>
 
           <article class="usecase-card">
@@ -108,7 +158,35 @@ Where a section needs a rewrite from scratch rather than a tweak, draft the repl
           <div><dt>Skills</dt><dd><code>accessibility-audit</code>, <code>/impeccable audit</code></dd></div>
           <div><dt>Features</dt><dd>Routines (GitHub trigger), GitHub Issues integration, axe-core via MCP</dd></div>
         </dl>
-              <PromptBlock prompt={`When a release branch is created, run an accessibility audit across the pages changed in the release:
+              <div class="usecase-setup">
+
+                <h4 class="usecase-setup-title">How to set it up</h4>
+
+                <ol class="usecase-steps">
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">1</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Create the GitHub-triggered routine</h5>
+
+                      <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong> &rarr; <strong>GitHub event</strong>. Pick the repo and event described in the trigger above. The Claude GitHub App is offered as part of setup; install it on the relevant repo.</p>
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">2</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Paste this as the routine prompt</h5>
+
+                      <PromptBlock prompt={`When a release branch is created, run an accessibility audit across the pages changed in the release:
 
 - WCAG 2.1 AA checks via axe-core.
 - Keyboard-navigation walk on every interactive surface.
@@ -116,6 +194,28 @@ Where a section needs a rewrite from scratch rather than a tweak, draft the repl
 - Screen-reader labeling and ARIA roles.
 
 Post a single triaged issue per release: P0 must-fix, P1 should-fix, P2 worth-noting. Block the release on P0 only.`} label="Release a11y audit prompt" />
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">3</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Click <strong>Run now</strong> to verify</h5>
+
+                      <p>Eyeball the first run for accuracy. Once it looks right, the routine fires on its trigger from then on. Assumes the plugin from the marquee above is already installed and connectors authorized.</p>
+
+                    </div>
+
+                  </li>
+
+                </ol>
+
+              </div>
       </article>
     </div>
 

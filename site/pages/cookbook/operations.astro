@@ -95,9 +95,59 @@ in Notion.`} />
           <div><dt>Features</dt><dd>Routines (cloud schedule), Notion + Slack connectors, conditional execution</dd></div>
         </dl>
         <p>Reads the vendor register, finds contracts renewing in the next 60 days, runs vendor-evaluation against current usage and alternatives, and posts a brief to the owner with a recommend / renegotiate / replace call. No-op on days with no upcoming renewals.</p>
-              <PromptBlock prompt={`Every weekday at 9am, scan the vendor register for contracts renewing in the next 60 days. For each one, run vendor-evaluation against current usage data and recent comparable alternatives. Produce a brief: current usage, contract value, renewal-or-renegotiate-or-replace recommendation, three specific reasons.
+              <div class="usecase-setup">
+
+                <h4 class="usecase-setup-title">How to set it up</h4>
+
+                <ol class="usecase-steps">
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">1</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Create the scheduled routine in Cowork</h5>
+
+                      <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong> &rarr; <strong>Schedule</strong>. Match the cadence described in the trigger above.</p>
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">2</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Paste this as the routine prompt</h5>
+
+                      <PromptBlock prompt={`Every weekday at 9am, scan the vendor register for contracts renewing in the next 60 days. For each one, run vendor-evaluation against current usage data and recent comparable alternatives. Produce a brief: current usage, contract value, renewal-or-renegotiate-or-replace recommendation, three specific reasons.
 
 Post to the contract owner. No-op on days with no upcoming renewals (don't ping the channel).`} label="Vendor renewal scan prompt" />
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">3</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Click <strong>Run now</strong> to verify</h5>
+
+                      <p>Eyeball the first run for accuracy. Once it looks right, the routine fires on its trigger from then on. Assumes the plugin from the marquee above is already installed and connectors authorized.</p>
+
+                    </div>
+
+                  </li>
+
+                </ol>
+
+              </div>
       </article>
       <article class="usecase-card">
         <h3>Document the recurring meeting that has no document</h3>
@@ -107,9 +157,59 @@ Post to the contract owner. No-op on days with no upcoming renewals (don't ping 
           <div><dt>Features</dt><dd>Cowork chat, sub-agents to gather context from Slack + Linear, plan mode for review</dd></div>
         </dl>
         <p>You walk Claude through how the recurring meeting actually runs (verbally or by pasting notes). It produces the runbook: agenda template, what to prep, who owns what, how decisions get logged. Drops it into Notion under the right team space. The next time someone new owns the meeting, they have a place to start.</p>
-              <PromptBlock prompt={`I want to document the [recurring meeting name] so the next person who owns it can run it solo. I'll paste the meeting notes and Slack threads; you walk me through what makes the meeting work, what the agenda template should be, what to prep, who owns what, how decisions get logged.
+              <div class="usecase-setup">
+
+                <h4 class="usecase-setup-title">How to set it up</h4>
+
+                <ol class="usecase-steps">
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">1</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Create the Cowork hook</h5>
+
+                      <p>In Cowork, open <strong>Hooks</strong> &rarr; <strong>New hook</strong>. Match the trigger described above (file upload, message, schedule).</p>
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">2</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Paste this as the routine prompt</h5>
+
+                      <PromptBlock prompt={`I want to document the [recurring meeting name] so the next person who owns it can run it solo. I'll paste the meeting notes and Slack threads; you walk me through what makes the meeting work, what the agenda template should be, what to prep, who owns what, how decisions get logged.
 
 Produce a runbook in Notion under the right team space. Plan mode parks it for my review.`} label="Document-process prompt" />
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">3</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Click <strong>Run now</strong> to verify</h5>
+
+                      <p>Eyeball the first run for accuracy. Once it looks right, the routine fires on its trigger from then on. Assumes the plugin from the marquee above is already installed and connectors authorized.</p>
+
+                    </div>
+
+                  </li>
+
+                </ol>
+
+              </div>
       </article>
 
       <article class="usecase-card">
@@ -120,11 +220,61 @@ Produce a runbook in Notion under the right team space. Plan mode parks it for m
           <div><dt>Skills</dt><dd><code>document-process</code>, <code>incident-postmortem</code></dd></div>
           <div><dt>Features</dt><dd>Routines (API trigger), PagerDuty + Slack + Notion connectors, plan mode</dd></div>
         </dl>
-              <PromptBlock prompt={`When a PagerDuty incident closes, pull the incident timeline, the resolution thread from #incident-XYZ, and any changes made to fix it. Read the relevant runbook for this service.
+              <div class="usecase-setup">
+
+                <h4 class="usecase-setup-title">How to set it up</h4>
+
+                <ol class="usecase-steps">
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">1</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Create the API-triggered routine</h5>
+
+                      <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong> &rarr; <strong>API</strong>. Save and copy the routine URL + bearer token; point the upstream webhook at it (e.g. calendar provider, Intercom webhook, PagerDuty webhook, depending on the trigger).</p>
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">2</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Paste this as the routine prompt</h5>
+
+                      <PromptBlock prompt={`When a PagerDuty incident closes, pull the incident timeline, the resolution thread from #incident-XYZ, and any changes made to fix it. Read the relevant runbook for this service.
 
 Draft an update: add the new failure mode + the resolution to the runbook. If no runbook exists for this failure mode, create one.
 
 Park the diff in plan mode for the on-call engineer to approve.`} label="Incident runbook update prompt" />
+
+                    </div>
+
+                  </li>
+
+                  <li class="usecase-step">
+
+                    <span class="usecase-step-num">3</span>
+
+                    <div class="usecase-step-body">
+
+                      <h5>Click <strong>Run now</strong> to verify</h5>
+
+                      <p>Eyeball the first run for accuracy. Once it looks right, the routine fires on its trigger from then on. Assumes the plugin from the marquee above is already installed and connectors authorized.</p>
+
+                    </div>
+
+                  </li>
+
+                </ol>
+
+              </div>
       </article>
     </div>
 
