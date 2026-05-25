@@ -273,6 +273,18 @@ body .teams-index-eyebrow {
 }
 
 /* ============================================
+   Cookbook setup-steps list: kill the browser's
+   default ordered-list marker because each step
+   already has a custom-styled .usecase-step-num
+   chip — without this, the page renders "1. 1".
+   ============================================ */
+
+body .usecase-steps {
+  list-style: none;
+  padding-left: 0;
+}
+
+/* ============================================
    SCROLL-REVEAL: opt-in fade-and-rise animation
    Sections marked data-reveal start invisible + 24px
    below their final position, and animate in once
