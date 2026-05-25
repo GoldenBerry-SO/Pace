@@ -17,21 +17,30 @@ import Base from '../../layouts/Base.astro';
       </p>
     </header>
 
-    <nav class="usecases-toc" aria-label="Jump to team">
-      <span class="usecases-toc-label">Jump to team</span>
-      <ul class="usecases-toc-list">
-        <li><a href="#sales">Sales</a></li>
-        <li><a href="#marketing">Marketing</a></li>
-        <li><a href="#engineering">Engineering</a></li>
-        <li><a href="#data">Data</a></li>
-        <li><a href="#product">Product</a></li>
-        <li><a href="#finance">Finance</a></li>
-        <li><a href="#legal">Legal</a></li>
-        <li><a href="#operations">Operations</a></li>
-        <li><a href="#people">People</a></li>
-        <li><a href="#customer-support">Customer Support</a></li>
-        <li><a href="#productivity">Productivity</a></li>
-        <li><a href="#design">Design</a></li>
+    <aside class="usecases-eng-callout">
+      <div class="usecases-eng-callout-text">
+        <span class="usecases-eng-callout-eyebrow">Engineering</span>
+        <h2>The engineering cookbook lives on its own page.</h2>
+        <p>Eighteen engineering skills, grouped into five workflows: the stacked-PR loop, plan + pressure-test, TDD + coverage, diagnose + secure, and prototype + ship. Each with trigger phrases, examples, and what to expect.</p>
+      </div>
+      <a class="usecases-eng-callout-cta" href="/cookbook/engineering">Open the engineering cookbook &nearr;</a>
+    </aside>
+
+    <nav class="usecases-toc" aria-label="Jump to a team">
+      <span class="usecases-toc-label">Jump to a team</span>
+      <ul class="usecases-toc-grid">
+        <li><a href="#sales"><span class="usecases-toc-name">Sales</span><span class="usecases-toc-count">3 recipes</span></a></li>
+        <li><a href="#marketing"><span class="usecases-toc-name">Marketing</span><span class="usecases-toc-count">3 recipes</span></a></li>
+        <li><a href="#engineering"><span class="usecases-toc-name">Engineering</span><span class="usecases-toc-count">8 recipes</span></a></li>
+        <li><a href="#data"><span class="usecases-toc-name">Data</span><span class="usecases-toc-count">3 recipes</span></a></li>
+        <li><a href="#product"><span class="usecases-toc-name">Product</span><span class="usecases-toc-count">3 recipes</span></a></li>
+        <li><a href="#finance"><span class="usecases-toc-name">Finance</span><span class="usecases-toc-count">3 recipes</span></a></li>
+        <li><a href="#legal"><span class="usecases-toc-name">Legal</span><span class="usecases-toc-count">3 recipes</span></a></li>
+        <li><a href="#operations"><span class="usecases-toc-name">Operations</span><span class="usecases-toc-count">3 recipes</span></a></li>
+        <li><a href="#people"><span class="usecases-toc-name">People</span><span class="usecases-toc-count">2 recipes</span></a></li>
+        <li><a href="#customer-support"><span class="usecases-toc-name">Customer Support</span><span class="usecases-toc-count">3 recipes</span></a></li>
+        <li><a href="#productivity"><span class="usecases-toc-name">Productivity</span><span class="usecases-toc-count">3 recipes</span></a></li>
+        <li><a href="#design"><span class="usecases-toc-name">Design</span><span class="usecases-toc-count">3 recipes</span></a></li>
       </ul>
     </nav>
 
@@ -204,6 +213,16 @@ look. Post to #marketing-weekly.</code></pre>
         </dl>
         <p>Any PR that touches landing pages, blog posts, or email templates auto-runs <code>brand-voice-enforcement</code> and posts inline comments with concrete fixes. Catches drift before it ships; pair with <code>draft-content</code> when a section needs a rewrite from scratch.</p>
       </article>
+      <article class="usecase-card">
+        <h3>Auto-build the launch comms kit when a Linear cycle ships</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, GitHub event when a release branch merges to main</dd></div>
+          <div><dt>Skills</dt><dd><code>draft-content</code>, <code>brand-voice-enforcement</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (GitHub event), Linear + Notion connectors, plan mode for review</dd></div>
+        </dl>
+        <p>When a release branch merges, the routine reads the cycle's shipped issues, drafts the announcement post, the changelog entry, and the customer-facing one-pager in one go. Brand-voice enforcement runs over each artifact. Everything lands in Notion under a single page for your review before anything goes out.</p>
+      </article>
+
     </section>
 
     <section class="usecases-team" id="engineering">
@@ -423,6 +442,16 @@ explanation. Post the digest to #data-weekly in Slack.</code></pre>
         </dl>
         <p>Anyone on the team can run <code><code>write-query</code> "revenue by region for Q3, excluding refunds"</code> and get a working query against the real schema, with the unit assumptions made explicit. Plan mode lets you sanity-check before running.</p>
       </article>
+      <article class="usecase-card">
+        <h3>Anomaly digest, every weekday morning</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, schedule, weekdays 07:00</dd></div>
+          <div><dt>Skills</dt><dd><code>write-query</code>, <code>interpret</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (cloud schedule), Snowflake + Slack connectors, sub-agent fan-out per metric</dd></div>
+        </dl>
+        <p>Runs the standard metrics (DAU, signups, conversion, NRR) against yesterday vs. trailing 28 days. Flags anything beyond 2 standard deviations. For each flagged metric, a sub-agent runs interpret to surface likely causes and the slice to investigate first. Posts the digest to #data-pulse with the boring ones collapsed.</p>
+      </article>
+
     </section>
 
     <section class="usecases-team" id="product">
@@ -508,6 +537,16 @@ synthesis before saving.</code></pre>
         </dl>
         <p>A scheduled run of <code>competitive-brief</code> watches the competitive set you care about, summarizes what shipped or changed, and posts a digest to <code>#product-watch</code>. No more "did anyone see the X launch?"</p>
       </article>
+      <article class="usecase-card">
+        <h3>Customer-feedback weekly: signal from noise</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, schedule, weekly Friday 15:00</dd></div>
+          <div><dt>Skills</dt><dd><code>synthesize</code>, <code>update</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (cloud schedule), Intercom + Linear connectors, multi-source aggregation</dd></div>
+        </dl>
+        <p>Pulls last week of Intercom tickets, sales-loss reasons from HubSpot, and Linear bugs tagged customer-impact. Synthesizes into themes (not transcripts). Adds the themes as comments under the relevant roadmap items in Linear, and posts the executive summary to #product.</p>
+      </article>
+
     </section>
 
     <section class="usecases-team" id="finance">
@@ -677,6 +716,25 @@ agreements.</code></pre>
           </ol>
         </div>
       </article>
+      <article class="usecase-card">
+        <h3>NDA fast-path: redline against your template, in under five minutes</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Cowork hook, when a counter-party uploads an NDA</dd></div>
+          <div><dt>Skills</dt><dd><code>nda-review</code></dd></div>
+          <div><dt>Features</dt><dd>Cowork hooks (file upload), Box connector for template lookup, plan mode for review</dd></div>
+        </dl>
+        <p>The hook diffs the inbound NDA against your standard template and produces a redlined version with explanations next to each change. Plan mode parks the redline for your sign-off; one click posts it back to the requester. Frees up the lawyer for the agreements that actually need them.</p>
+      </article>
+      <article class="usecase-card">
+        <h3>Quarterly compliance audit prep</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, schedule, last business day of each quarter</dd></div>
+          <div><dt>Skills</dt><dd><code>compliance-question</code>, <code>risk-assessment</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (cloud schedule), GitHub + Box connectors, multi-step audit walk</dd></div>
+        </dl>
+        <p>Walks the current state against your compliance framework (SOC 2, GDPR, HIPAA, whichever applies), produces the gap report, and stages evidence requests as Linear tickets routed to the right owners. The first run is the longest; subsequent quarters compare deltas.</p>
+      </article>
+
     </section>
 
     <section class="usecases-team" id="operations">
@@ -753,6 +811,25 @@ in Notion.</code></pre>
           </ol>
         </div>
       </article>
+      <article class="usecase-card">
+        <h3>Vendor renewal heads-up, 60 days out</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, schedule, daily 09:00 (acts on hits only)</dd></div>
+          <div><dt>Skills</dt><dd><code>vendor-evaluation</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (cloud schedule), Notion + Slack connectors, conditional execution</dd></div>
+        </dl>
+        <p>Reads the vendor register, finds contracts renewing in the next 60 days, runs vendor-evaluation against current usage and alternatives, and posts a brief to the owner with a recommend / renegotiate / replace call. No-op on days with no upcoming renewals.</p>
+      </article>
+      <article class="usecase-card">
+        <h3>Document the recurring meeting that has no document</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Cowork chat, on demand</dd></div>
+          <div><dt>Skills</dt><dd><code>document-process</code></dd></div>
+          <div><dt>Features</dt><dd>Cowork chat, sub-agents to gather context from Slack + Linear, plan mode for review</dd></div>
+        </dl>
+        <p>You walk Claude through how the recurring meeting actually runs (verbally or by pasting notes). It produces the runbook: agenda template, what to prep, who owns what, how decisions get logged. Drops it into Notion under the right team space. The next time someone new owns the meeting, they have a place to start.</p>
+      </article>
+
     </section>
 
     <section class="usecases-team" id="people">
@@ -912,6 +989,25 @@ in the incoming text field.
           </ol>
         </div>
       </article>
+      <article class="usecase-card">
+        <h3>Saturday on-call digest, no human babysitting</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, schedule, weekends 09:00 + 18:00</dd></div>
+          <div><dt>Skills</dt><dd><code>triage</code>, <code>escalate</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (cloud schedule), Intercom + PagerDuty connectors, conditional escalation</dd></div>
+        </dl>
+        <p>Twice on weekends, the routine sweeps Intercom. Routine tickets get auto-responses where the answer is in the knowledge base. The two or three that look real get summarized and paged to the on-call engineer with full context. The Sunday-night Slack thread no longer scrolls.</p>
+      </article>
+      <article class="usecase-card">
+        <h3>Turn five resolved tickets into one KB article, every week</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, schedule, weekly Friday 16:00</dd></div>
+          <div><dt>Skills</dt><dd><code>knowledge-base</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (cloud schedule), Intercom + Notion connectors, sub-agent per theme</dd></div>
+        </dl>
+        <p>Reads the week's resolved tickets, clusters them by theme, and for each theme with three or more occurrences, drafts a knowledge-base article. Plan mode stages the drafts in Notion; you publish the ones worth publishing. The KB grows from real volume instead of someone deciding what should be there in the abstract.</p>
+      </article>
+
     </section>
 
     <section class="usecases-team" id="productivity">
@@ -998,6 +1094,16 @@ before posting to #async-standup.</code></pre>
         </dl>
         <p><code>start</code> re-hydrates yesterday's context from <code>memory-management</code>: open threads, the decisions you made, the things you said you'd come back to. No more spending the first 20 minutes of every session reading old messages.</p>
       </article>
+      <article class="usecase-card">
+        <h3>End-of-week recap, written for you</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, schedule, weekly Friday 17:00</dd></div>
+          <div><dt>Skills</dt><dd><code>update</code>, <code>tasks</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (cloud schedule), Linear + GitHub + calendar connectors, multi-source pull</dd></div>
+        </dl>
+        <p>Pulls what you shipped, what you reviewed, what you started, and what slipped. Drafts the recap email or status update in your voice, ready to send (or skip) on Monday. Trains itself on your past updates after a few weeks so the tone matches.</p>
+      </article>
+
     </section>
 
     <section class="usecases-team" id="design">
@@ -1110,39 +1216,136 @@ before posting to #async-standup.</code></pre>
     color: var(--color-ink);
     font-weight: 600;
   }
+  /* Engineering callout above the TOC */
+  .usecases-eng-callout {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--spacing-lg);
+    align-items: center;
+    background: var(--color-forest);
+    color: var(--color-paper);
+    border-radius: 12px;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+  }
+  .usecases-eng-callout-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-paper);
+    opacity: 0.78;
+    margin-bottom: 6px;
+  }
+  .usecases-eng-callout-eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: currentColor;
+  }
+  .usecases-eng-callout-text h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+    line-height: 1.2;
+    color: var(--color-paper);
+    margin: 0 0 8px;
+    letter-spacing: -0.02em;
+  }
+  .usecases-eng-callout-text p {
+    font-size: var(--fs-sm);
+    line-height: 1.55;
+    color: var(--color-paper);
+    opacity: 0.85;
+    margin: 0;
+    max-width: 56ch;
+  }
+  .usecases-eng-callout-cta {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 20px;
+    background: var(--color-paper);
+    color: var(--color-forest);
+    border-radius: 2px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: transform var(--duration-base) var(--ease-out-quart);
+    white-space: nowrap;
+  }
+  .usecases-eng-callout-cta:hover {
+    transform: translateY(-1px);
+  }
+  @media (max-width: 720px) {
+    .usecases-eng-callout {
+      grid-template-columns: 1fr;
+      padding: var(--spacing-md);
+    }
+  }
+
+  /* TOC grid */
   .usecases-toc {
     background: var(--color-paper-elev);
     border: 1px solid var(--color-mist);
-    border-radius: 8px;
-    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: 12px;
+    padding: var(--spacing-md) var(--spacing-md) var(--spacing-md);
     margin-bottom: var(--spacing-2xl);
   }
   .usecases-toc-label {
     font-family: var(--font-mono);
-    font-size: var(--fs-xs);
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--color-ash);
     display: block;
-    margin-bottom: var(--spacing-sm);
+    margin: 0 6px var(--spacing-sm);
   }
-  .usecases-toc-list {
+  .usecases-toc-grid {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .usecases-toc-grid a {
     display: flex;
-    flex-wrap: wrap;
-    gap: 4px var(--spacing-md);
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 14px;
+    background: var(--color-paper);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+    color: var(--color-ink);
+    transition: border-color var(--duration-fast) var(--ease-out-quart),
+                background var(--duration-fast) var(--ease-out-quart),
+                transform var(--duration-fast) var(--ease-out-quart);
+  }
+  .usecases-toc-grid a:hover {
+    border-color: var(--color-forest);
+    background: var(--color-forest-dim);
+    transform: translateY(-1px);
+  }
+  .usecases-toc-name {
     font-size: var(--fs-sm);
+    font-weight: 500;
+    color: var(--color-ink);
   }
-  .usecases-toc-list a {
-    color: var(--color-charcoal);
-    border-bottom: 1px solid transparent;
-    transition: color var(--duration-fast) var(--ease-out-quart), border-color var(--duration-fast) var(--ease-out-quart);
+  .usecases-toc-count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-ash);
   }
-  .usecases-toc-list a:hover {
-    color: var(--color-forest);
-    border-color: var(--color-forest-soft);
+  @media (max-width: 820px) {
+    .usecases-toc-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
   .usecases-team {
     margin-bottom: var(--spacing-2xl);
