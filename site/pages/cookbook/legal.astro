@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PromptBlock from '../../components/PromptBlock.astro';
 ---
 
 <Base
@@ -61,7 +62,7 @@ import Base from '../../layouts/Base.astro';
               <div class="usecase-step-body">
                 <h5>Wire your inbox to POST inbound NDAs</h5>
                 <p>Set up a Gmail/Outlook forwarding rule (or Zapier) that POSTs new emails with subject containing "NDA" to your routine's <code>/fire</code> endpoint, with the email body in the <code>text</code> field of the JSON payload. Paste this as the routine prompt:</p>
-                <pre class="usecase-step-prompt"><code>An inbound NDA just arrived. The email body is in the
+                <PromptBlock prompt={`An inbound NDA just arrived. The email body is in the
 incoming text field. Run triage-nda to classify
 it (mutual / one-way, standard / non-standard, urgency).
 
@@ -72,7 +73,7 @@ version as a draft response with explanatory comments.
 If "non-standard": post a Slack message in #legal-queue
 flagging the specific clause(s) that need a human and
 the urgency level. Do NOT auto-redline non-standard
-agreements.</code></pre>
+agreements.`} />
               </div>
             </li>
             <li class="usecase-step">

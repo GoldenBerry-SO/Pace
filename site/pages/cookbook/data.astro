@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PromptBlock from '../../components/PromptBlock.astro';
 ---
 
 <Base
@@ -60,7 +61,7 @@ import Base from '../../layouts/Base.astro';
               <div class="usecase-step-body">
                 <h5>Paste this as the routine prompt</h5>
                 <p>Edit the KPI list to match your team's metrics + the channel name.</p>
-                <pre class="usecase-step-prompt"><code>Run statistical-analysis against last week's data
+                <PromptBlock prompt={`Run statistical-analysis against last week's data
 for these KPIs: signups, activations, weekly active users,
 revenue, gross retention. Use write-query as needed
 to pull the underlying numbers from the warehouse. Flag
@@ -68,7 +69,7 @@ any metric that moved more than ~2 standard deviations
 from the trailing 8-week baseline. For each anomaly,
 include: the slice (segment / cohort), the SQL that
 surfaced it, week-over-week delta, and one candidate
-explanation. Post the digest to #data-weekly in Slack.</code></pre>
+explanation. Post the digest to #data-weekly in Slack.`} />
               </div>
             </li>
             <li class="usecase-step">

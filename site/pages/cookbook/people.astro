@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PromptBlock from '../../components/PromptBlock.astro';
 ---
 
 <Base
@@ -59,18 +60,18 @@ import Base from '../../layouts/Base.astro';
               <span class="usecase-step-num">4</span>
               <div class="usecase-step-body">
                 <h5>Paste this as the routine prompt</h5>
-                <pre class="usecase-step-prompt"><code>Run recruiting-pipeline against the
+                <PromptBlock prompt={`Run recruiting-pipeline against the
 ATS. For each open requisition, surface:
 
   - Stage of every active candidate
-  - Time-in-stage (flag anyone &gt; 10 business days)
+  - Time-in-stage (flag anyone > 10 business days)
   - Interviews scheduled this week (panel + candidate names)
   - Offers extended / accepted / declined since last week
   - Reqs without any candidates in pipeline ("stuck")
 
 Format as a digest grouped by hiring manager. Post to
 #hiring-weekly in Slack. Tag each hiring manager next
-to their reqs so they get a heads-up DM.</code></pre>
+to their reqs so they get a heads-up DM.`} />
               </div>
             </li>
             <li class="usecase-step">

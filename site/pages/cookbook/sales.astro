@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PromptBlock from '../../components/PromptBlock.astro';
 ---
 
 <Base
@@ -61,13 +62,13 @@ import Base from '../../layouts/Base.astro';
               <div class="usecase-step-body">
                 <h5>Paste this as the routine prompt</h5>
                 <p>This is the actual prompt Claude runs each week. Edit the channel name and account count to match your team.</p>
-                <pre class="usecase-step-prompt"><code>Run pipeline-review against HubSpot. Slice the
+                <PromptBlock prompt={`Run pipeline-review against HubSpot. Slice the
 output by deal stage. For each of the top 10 accounts by
 deal size, spawn a sub-agent that runs account-research
 with that account's name. Roll up all sub-agent findings into
 a single Monday morning brief: pipeline summary at the top,
 per-account notes underneath. Post the brief to #sales-pipeline
-in Slack.</code></pre>
+in Slack.`} />
               </div>
             </li>
             <li class="usecase-step">

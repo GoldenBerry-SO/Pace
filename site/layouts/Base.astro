@@ -117,6 +117,26 @@ const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
       }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
       els.forEach((el) => obs.observe(el));
     })();
+
+    // PromptBlock copy: delegated click handler.
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest && e.target.closest('[data-prompt-copy]');
+      if (!btn) return;
+      const targetId = btn.getAttribute('data-prompt-copy');
+      const body = document.getElementById(targetId);
+      if (!body || !navigator.clipboard) return;
+      const text = body.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.setAttribute('data-copied', '');
+        const label = btn.querySelector('.prompt-block-copy-label');
+        const original = label ? label.textContent : null;
+        if (label) label.textContent = 'Copied';
+        setTimeout(() => {
+          btn.removeAttribute('data-copied');
+          if (label && original) label.textContent = original;
+        }, 1600);
+      }).catch(() => {});
+    });
   </script>
 </body>
 </html>

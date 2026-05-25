@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PromptBlock from '../../components/PromptBlock.astro';
 ---
 
 <Base
@@ -60,7 +61,7 @@ import Base from '../../layouts/Base.astro';
               <div class="usecase-step-body">
                 <h5>Paste this as the routine prompt</h5>
                 <p>Edit the team list to match your org structure.</p>
-                <pre class="usecase-step-prompt"><code>Run status-report. Spawn one sub-agent per
+                <PromptBlock prompt={`Run status-report. Spawn one sub-agent per
 team to pull progress signals from the last 7 days:
 
   - Engineering: closed Linear tickets, merged PRs, incidents
@@ -72,8 +73,8 @@ team to pull progress signals from the last 7 days:
 A coordinator sub-agent rolls them into one Friday digest:
 "what shipped" at the top, blockers + risks in the middle,
 next-week focus at the bottom. Post to #leadership-friday
-in Slack and mirror to docs.pace/status/&lt;YYYY-MM-DD&gt;
-in Notion.</code></pre>
+in Slack and mirror to docs.pace/status/<YYYY-MM-DD>
+in Notion.`} />
               </div>
             </li>
             <li class="usecase-step">

@@ -1,0 +1,106 @@
+---
+interface Props {
+  prompt: string;
+  label?: string;
+  note?: string;
+}
+const { prompt, label = 'Routine prompt', note } = Astro.props;
+const id = `prompt-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<div class="prompt-block">
+  <header class="prompt-block-head">
+    <span class="prompt-block-label">
+      <span class="prompt-block-label-bullet" aria-hidden="true"></span>
+      {label}
+    </span>
+    <button class="prompt-block-copy" data-prompt-copy={id} type="button" aria-label="Copy prompt to clipboard">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="13" height="13" rx="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+      <span class="prompt-block-copy-label">Copy</span>
+    </button>
+  </header>
+  {note && <p class="prompt-block-note">{note}</p>}
+  <pre class="prompt-block-body" id={id}>{prompt}</pre>
+</div>
+
+<style>
+  .prompt-block {
+    margin: 10px 0 0;
+    background: var(--color-paper);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .prompt-block-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: var(--color-paper-elev);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .prompt-block-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+  }
+  .prompt-block-label-bullet {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: currentColor;
+  }
+  .prompt-block-copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: var(--color-paper);
+    border: 1px solid var(--color-mist);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-charcoal);
+    cursor: pointer;
+    transition: border-color var(--duration-fast) var(--ease-out-quart),
+                color var(--duration-fast) var(--ease-out-quart),
+                background var(--duration-fast) var(--ease-out-quart);
+  }
+  .prompt-block-copy:hover {
+    border-color: var(--color-forest);
+    color: var(--color-forest);
+  }
+  .prompt-block-copy[data-copied] {
+    color: var(--color-paper);
+    background: var(--color-forest);
+    border-color: var(--color-forest);
+  }
+  .prompt-block-note {
+    padding: 12px 14px 0;
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    margin: 0;
+  }
+  .prompt-block-body {
+    margin: 0;
+    padding: 14px 16px;
+    background: oklch(15% 0.015 150);
+    color: oklch(94% 0.005 150);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>

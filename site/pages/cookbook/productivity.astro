@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PromptBlock from '../../components/PromptBlock.astro';
 ---
 
 <Base
@@ -60,7 +61,7 @@ import Base from '../../layouts/Base.astro';
               <div class="usecase-step-body">
                 <h5>Paste this as the routine prompt</h5>
                 <p>Edit the channel + role-focus line to match your team.</p>
-                <pre class="usecase-step-prompt"><code>End of day check-in. Run update to assemble
+                <PromptBlock prompt={`End of day check-in. Run update to assemble
 what I shipped today: commits merged, Linear tickets I
 moved, Slack threads I contributed substantively to, docs
 I edited in Notion.
@@ -73,7 +74,7 @@ Draft a 3-line async standup post in our voice:
 "Yesterday I... Today I will... Blockers: ..."
 
 Use plan mode : show me the draft for a quick edit
-before posting to #async-standup.</code></pre>
+before posting to #async-standup.`} />
               </div>
             </li>
             <li class="usecase-step">

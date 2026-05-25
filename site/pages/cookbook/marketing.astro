@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PromptBlock from '../../components/PromptBlock.astro';
 ---
 
 <Base
@@ -61,14 +62,14 @@ import Base from '../../layouts/Base.astro';
               <div class="usecase-step-body">
                 <h5>Paste this as the routine prompt</h5>
                 <p>Edit the channel name and the metrics list to match your team's KPIs.</p>
-                <pre class="usecase-step-prompt"><code>Run performance-report covering the past 7 days.
+                <PromptBlock prompt={`Run performance-report covering the past 7 days.
 Pull funnel metrics from Amplitude (signups, activations,
 free-to-paid conversion) and lead-source attribution from
 HubSpot. Use write-query if you need to grab anything
 the report skill doesn't have directly. Format as a Slack
 digest: headline numbers at the top, week-over-week deltas,
 top 3 campaigns by impact, anything anomalous worth a closer
-look. Post to #marketing-weekly.</code></pre>
+look. Post to #marketing-weekly.`} />
               </div>
             </li>
             <li class="usecase-step">

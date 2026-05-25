@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PromptBlock from '../../components/PromptBlock.astro';
 ---
 
 <Base
@@ -59,7 +60,7 @@ import Base from '../../layouts/Base.astro';
               <span class="usecase-step-num">4</span>
               <div class="usecase-step-body">
                 <h5>Paste this as the routine prompt</h5>
-                <pre class="usecase-step-prompt"><code>Run the month-end close in order:
+                <PromptBlock prompt={`Run the month-end close in order:
 
   1. close-management to orchestrate the checklist.
   2. reconciliation against the warehouse ledger
@@ -71,7 +72,7 @@ import Base from '../../layouts/Base.astro';
 Use plan mode for the journal entries : do NOT post
 anything to the GL automatically. The controller will
 review and approve each entry. Post a close-progress
-summary to #finance-close.</code></pre>
+summary to #finance-close.`} />
               </div>
             </li>
             <li class="usecase-step">

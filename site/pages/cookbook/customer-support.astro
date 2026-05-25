@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PromptBlock from '../../components/PromptBlock.astro';
 ---
 
 <Base
@@ -60,7 +61,7 @@ import Base from '../../layouts/Base.astro';
               <div class="usecase-step-body">
                 <h5>Wire Intercom (or Zendesk) to POST new conversations</h5>
                 <p>In Intercom: <strong>Settings &rarr; Webhooks &rarr; New webhook</strong>, subscribe to "conversation.user.created", point at the routine URL with the bearer token. (Zendesk: <strong>Apps &amp; Integrations &rarr; Webhooks</strong>.) Then paste this routine prompt:</p>
-                <pre class="usecase-step-prompt"><code>A new support ticket arrived. The conversation body is
+                <PromptBlock prompt={`A new support ticket arrived. The conversation body is
 in the incoming text field.
 
   1. Run ticket-triage to classify
@@ -73,7 +74,7 @@ in the incoming text field.
      for the human agent to review before sending.
   4. If P1 OR enterprise tier: run
      customer-escalation to ping the
-     on-call engineer in #support-escalations.</code></pre>
+     on-call engineer in #support-escalations.`} />
               </div>
             </li>
             <li class="usecase-step">
