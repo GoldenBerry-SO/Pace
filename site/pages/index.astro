@@ -8,7 +8,7 @@ const jsonLd = [
     name: 'Pace',
     url: 'https://pace.tools',
     logo: 'https://pace.tools/og-image.svg',
-    description: 'Curated Claude Code plugin marketplace. Role-specific AI plugins for sales, marketing, engineering, finance, product, ops.',
+    description: 'AI specialists for every role at your company. Sales preps calls, engineers ship PRs, finance closes the month, marketing ships campaigns. Open source, Apache 2.0.',
     sameAs: ['https://github.com/GoldenBerry-SO/Pace'],
   },
   {
@@ -17,7 +17,7 @@ const jsonLd = [
     name: 'Pace',
     applicationCategory: 'DeveloperApplication',
     operatingSystem: 'macOS, Linux, Windows',
-    description: 'A Claude Code plugin marketplace that ships role-specific AI plugins for every team at your company. 50+ plugins across sales, marketing, engineering, data, product, finance, legal, ops, HR, customer support, and more. Each plugin connects to your real tools via MCP (Slack, HubSpot, Snowflake, Notion, Linear, and dozens of others). Apache 2.0, open source.',
+    description: 'Pace gives every team at your company an AI specialist tuned to their work and connected to their real tools. 49 plugins across sales, marketing, engineering, data, product, finance, legal, ops, HR, customer support, and more. Connects through MCP to Slack, HubSpot, Snowflake, Notion, Linear, and dozens of others. Works with Cowork (desktop) and Claude Code (CLI). Apache 2.0, open source.',
     url: 'https://pace.tools',
     license: 'https://www.apache.org/licenses/LICENSE-2.0',
     offers: {
@@ -39,8 +39,8 @@ const jsonLd = [
 ---
 
 <Base
-  title="Pace: AI specialists for every team at your company"
-  description="Curated Claude Code plugin marketplace. Role-specific AI plugins for sales, marketing, engineering, data, product, finance, legal, ops, HR. Connects to your real tools (HubSpot, Slack, Snowflake, Notion) via MCP. Apache 2.0."
+  title="Pace: AI specialists for every role at your company"
+  description="Pace gives every team an AI specialist tuned to their work. Sales preps calls, engineers ship PRs, finance closes the month, marketing ships campaigns. Connects to your real tools (HubSpot, Slack, Snowflake, Notion, Linear) through MCP. Open source, Apache 2.0."
   activeNav="home"
   canonicalPath="/"
   jsonLd={jsonLd}
@@ -494,12 +494,12 @@ const jsonLd = [
       <div class="install-followup">
         <h3 class="install-step"><span class="step-num">3</span>Connect your tools</h3>
         <p class="install-desc">
-          This is what makes Pace useful. <code>/sales:*</code> talks to your HubSpot. <code>/data:*</code> queries your Snowflake. <code>/marketing:*</code> drafts in your Canva. Each plugin's <code>.mcp.json</code> declares which MCP servers it integrates with, and Claude prompts you to authorize the first time. A plugin without its connectors can still do web research and work from pasted context, but the connected version is the version that does real work on your real data.
+          This is what makes Pace useful. The sales plugin talks to your HubSpot. The data plugin queries your Snowflake. The marketing plugin drafts in your Canva. Each plugin's <code>.mcp.json</code> declares which MCP servers it integrates with, and Claude prompts you to authorize the first time. A plugin without its connectors can still do web research and work from pasted context, but the connected version is the version that does real work on your real data.
         </p>
 
-        <h3 class="install-step"><span class="step-num">4</span>Use the commands</h3>
+        <h3 class="install-step"><span class="step-num">4</span>Just say what you need</h3>
         <p class="install-desc">
-          Type <code>/pace &lt;cmd&gt;</code> for your team's commands. Type <code>/sales:call-prep</code>, <code>/data:write-query</code>, <code>/marketing:campaign-plan</code> for namespaced department commands. Skills also auto-trigger from natural language, so <em>"prep me for my call with Acme"</em> finds <code>/sales:call-prep</code> on its own.
+          Skills auto-trigger from natural language. Say <em>"prep me for my call with Acme"</em> and the sales call-prep skill fires. Say <em>"write a query for monthly active users by plan tier"</em> and data's query writer takes over. For your team's own commands, use the <code>/pace</code> router: <code>/pace teach</code>, <code>/pace standup</code>, whatever you've authored.
         </p>
       </div>
     </div>

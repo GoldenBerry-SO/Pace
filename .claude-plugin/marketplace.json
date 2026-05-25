@@ -2,7 +2,7 @@
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "pace",
   "metadata": {
-    "description": "Pace: AI specialists for every team at your company. Curated Claude Code plugin marketplace covering sales, marketing, engineering, finance, ops, product, legal, HR, and more. Connects to your real tools via MCP."
+    "description": "Pace: AI specialists for every role at your company. Sales preps calls, engineers ship PRs, finance closes the month, marketing ships campaigns. Each plugin is tuned to its team and connected to real tools (HubSpot, Slack, Snowflake, Notion, Linear) through MCP. Open source, Apache 2.0."
   },
   "owner": {
     "name": "Chris Jimenez",

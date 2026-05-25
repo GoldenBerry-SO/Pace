@@ -176,7 +176,12 @@ const cliInstallCmd = pluginSlugs.length > 0
               <li class="team-workflow">
                 <h3>{w.title}</h3>
                 <p>{w.description}</p>
-                {w.prompt && <code class="team-workflow-prompt">{w.prompt}</code>}
+                {w.prompt && (
+                  <blockquote class="team-workflow-prompt">
+                    <span class="team-workflow-prompt-label" aria-hidden="true">Try saying</span>
+                    <p>{w.prompt}</p>
+                  </blockquote>
+                )}
               </li>
             ))}
           </ul>
@@ -197,7 +202,7 @@ const cliInstallCmd = pluginSlugs.length > 0
                   </div>
                   <div class="team-trigger-arrow" aria-hidden="true">&rarr;</div>
                   <div class="team-trigger-runs">
-                    <span class="team-trigger-label">Claude runs</span>
+                    <span class="team-trigger-label">Claude triggers</span>
                     <code>{t.runs}</code>
                   </div>
                 </li>
@@ -412,14 +417,27 @@ const cliInstallCmd = pluginSlugs.length > 0
   }
   .team-workflow-prompt {
     display: block;
-    padding: 8px 12px;
-    background: oklch(18% 0.015 150);
-    color: oklch(92% 0.005 150);
-    border-radius: 4px;
-    border: 0;
+    margin: 0;
+    padding: 10px 14px 10px 18px;
+    background: var(--color-paper-elev);
+    border-left: 3px solid var(--color-forest);
+    border-radius: 0 6px 6px 0;
+  }
+  .team-workflow-prompt-label {
+    display: block;
     font-family: var(--font-mono);
-    font-size: var(--fs-xs);
-    overflow-x: auto;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+    margin-bottom: 4px;
+  }
+  .team-workflow-prompt p {
+    margin: 0;
+    font-size: var(--fs-sm);
+    line-height: 1.5;
+    color: var(--color-ink);
+    font-style: italic;
   }
 
   /* Tips */

@@ -46,10 +46,10 @@ import Base from '../../layouts/Base.astro';
         <h3>Monday morning pipeline brief, in your inbox by 7am</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, schedule, weekly Monday 06:30</dd></div>
-          <div><dt>Skills</dt><dd><code>/sales:pipeline-review</code>, <code>/sales:account-research</code></dd></div>
+          <div><dt>Skills</dt><dd><code>pipeline-review</code>, <code>account-research</code></dd></div>
           <div><dt>Features</dt><dd>Routines (cloud schedule), HubSpot + Slack connectors, sub-agent fan-out</dd></div>
         </dl>
-        <p>You walk in Monday with a pipeline brief already waiting in <code>#sales-pipeline</code>. The job runs while you sleep: <code>/sales:pipeline-review</code> against HubSpot, fan-out to one sub-agent per top-10 account for <code>/sales:account-research</code>, all rolled up into a single brief.</p>
+        <p>You walk in Monday with a pipeline brief already waiting in <code>#sales-pipeline</code>. The job runs while you sleep: <code>pipeline-review</code> against HubSpot, fan-out to one sub-agent per top-10 account for <code>account-research</code>, all rolled up into a single brief.</p>
 
         <div class="usecase-setup">
           <h4 class="usecase-setup-title">How to set it up</h4>
@@ -84,9 +84,9 @@ import Base from '../../layouts/Base.astro';
               <div class="usecase-step-body">
                 <h5>Paste this as the routine prompt</h5>
                 <p>This is the actual prompt Claude runs each week. Edit the channel name and account count to match your team.</p>
-                <pre class="usecase-step-prompt"><code>Run /sales:pipeline-review against HubSpot. Slice the
+                <pre class="usecase-step-prompt"><code>Run pipeline-review against HubSpot. Slice the
 output by deal stage. For each of the top 10 accounts by
-deal size, spawn a sub-agent that runs /sales:account-research
+deal size, spawn a sub-agent that runs account-research
 with that account's name. Roll up all sub-agent findings into
 a single Monday morning brief: pipeline summary at the top,
 per-account notes underneath. Post the brief to #sales-pipeline
@@ -108,20 +108,20 @@ in Slack.</code></pre>
         <h3>Auto-prep when a meeting lands on the calendar</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, API trigger fired by your calendar webhook</dd></div>
-          <div><dt>Skills</dt><dd><code>/sales:call-prep</code></dd></div>
+          <div><dt>Skills</dt><dd><code>call-prep</code></dd></div>
           <div><dt>Features</dt><dd>Routines (API trigger), HubSpot + Apollo connectors, MCP autofill</dd></div>
         </dl>
-        <p>The hook reads the attendee's email, runs <code>/sales:call-prep</code>, and drops the brief into the event description. By the time you open the meeting, the brief is already there: account history, recent activity, talking points, three questions to ask.</p>
+        <p>The hook reads the attendee's email, runs <code>call-prep</code>, and drops the brief into the event description. By the time you open the meeting, the brief is already there: account history, recent activity, talking points, three questions to ask.</p>
       </article>
 
       <article class="usecase-card">
         <h3>Draft follow-ups straight from the Zoom transcript</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, API trigger fired by Zoom recording-finalized webhook</dd></div>
-          <div><dt>Skills</dt><dd><code>/sales:call-summary</code>, <code>/sales:draft-outreach</code>, <code>/apollo:sequence-load</code></dd></div>
+          <div><dt>Skills</dt><dd><code>call-summary</code>, <code>draft-outreach</code>, <code>sequence-load</code></dd></div>
           <div><dt>Features</dt><dd>Routines (API trigger), Zoom + HubSpot connectors, plan mode for review</dd></div>
         </dl>
-        <p>The hook pulls the transcript, runs <code>/sales:call-summary</code> to extract decisions and action items, then <code>/sales:draft-outreach</code> to compose the follow-up. Plan mode parks the draft for your approval. One click sends; the reply gets logged back to HubSpot, and <code>/apollo:sequence-load</code> can enroll the contact into a multi-touch sequence if the deal warrants it.</p>
+        <p>The hook pulls the transcript, runs <code>call-summary</code> to extract decisions and action items, then <code>draft-outreach</code> to compose the follow-up. Plan mode parks the draft for your approval. One click sends; the reply gets logged back to HubSpot, and <code>sequence-load</code> can enroll the contact into a multi-touch sequence if the deal warrants it.</p>
       </article>
     </section>
 
@@ -136,7 +136,7 @@ in Slack.</code></pre>
         <h3>Weekly campaign performance digest, Fridays at 4pm</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, schedule, weekly Friday 16:00</dd></div>
-          <div><dt>Skills</dt><dd><code>/marketing:performance-report</code>, <code>/data:write-query</code></dd></div>
+          <div><dt>Skills</dt><dd><code>performance-report</code>, <code>write-query</code></dd></div>
           <div><dt>Features</dt><dd>Routines (cloud schedule), Amplitude + HubSpot connectors, cross-plugin chain</dd></div>
         </dl>
         <p>The team walks into Monday already aligned on what shipped last week and how it performed. The digest is in <code>#marketing-weekly</code> by Friday afternoon, pulled from Amplitude funnels and HubSpot lead sources without anyone touching a spreadsheet.</p>
@@ -174,10 +174,10 @@ in Slack.</code></pre>
               <div class="usecase-step-body">
                 <h5>Paste this as the routine prompt</h5>
                 <p>Edit the channel name and the metrics list to match your team's KPIs.</p>
-                <pre class="usecase-step-prompt"><code>Run /marketing:performance-report covering the past 7 days.
+                <pre class="usecase-step-prompt"><code>Run performance-report covering the past 7 days.
 Pull funnel metrics from Amplitude (signups, activations,
 free-to-paid conversion) and lead-source attribution from
-HubSpot. Use /data:write-query if you need to grab anything
+HubSpot. Use write-query if you need to grab anything
 the report skill doesn't have directly. Format as a Slack
 digest: headline numbers at the top, week-over-week deltas,
 top 3 campaigns by impact, anything anomalous worth a closer
@@ -199,10 +199,10 @@ look. Post to #marketing-weekly.</code></pre>
         <h3>Brand-voice gate on every external draft</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, GitHub trigger on <code>pull_request.opened</code> in the marketing repo</dd></div>
-          <div><dt>Skills</dt><dd><code>/brand-voice:brand-voice-enforcement</code>, <code>/marketing:draft-content</code></dd></div>
+          <div><dt>Skills</dt><dd><code>brand-voice-enforcement</code>, <code>draft-content</code></dd></div>
           <div><dt>Features</dt><dd>Routines (GitHub trigger), brand-voice plugin, inline PR comments</dd></div>
         </dl>
-        <p>Any PR that touches landing pages, blog posts, or email templates auto-runs <code>/brand-voice:brand-voice-enforcement</code> and posts inline comments with concrete fixes. Catches drift before it ships; pair with <code>/marketing:draft-content</code> when a section needs a rewrite from scratch.</p>
+        <p>Any PR that touches landing pages, blog posts, or email templates auto-runs <code>brand-voice-enforcement</code> and posts inline comments with concrete fixes. Catches drift before it ships; pair with <code>draft-content</code> when a section needs a rewrite from scratch.</p>
       </article>
     </section>
 
@@ -216,10 +216,10 @@ look. Post to #marketing-weekly.</code></pre>
         <h3>Spec a feature, ship it as stacked PRs</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Interactive, when starting a new feature</dd></div>
-          <div><dt>Skills</dt><dd><code>/engineering:spec</code> → <code>/engineering:implement</code> → <code>/engineering:review</code> → <code>/engineering:topr</code> → <code>/engineering:next</code></dd></div>
+          <div><dt>Skills</dt><dd><code>spec</code> → <code>implement</code> → <code>review</code> → <code>topr</code> → <code>next</code></dd></div>
           <div><dt>Features</dt><dd>Sub-agents per sub-issue, plan mode, GitHub connector, stacked git branches</dd></div>
         </dl>
-        <p><code>/engineering:spec</code> walks the feature into a parent epic with ordered sub-issues, one PR each. <code>/engineering:implement</code> builds them in stacked branches, opening one stacked PR per sub-issue. As reviews come in, <code>/engineering:review</code> handles the comment queue. When an upstream PR merges, <code>/engineering:topr</code> rebases the next one cleanly (correctly dropping commits that squash-merged). <code>/engineering:next</code> resets for the next task. The whole arc lives in one disciplined flow instead of being reinvented each time. <a href="/docs/skills/spec">Read the workflow &rarr;</a></p>
+        <p><code>spec</code> walks the feature into a parent epic with ordered sub-issues, one PR each. <code>implement</code> builds them in stacked branches, opening one stacked PR per sub-issue. As reviews come in, <code>review</code> handles the comment queue. When an upstream PR merges, <code>topr</code> rebases the next one cleanly (correctly dropping commits that squash-merged). <code>next</code> resets for the next task. The whole arc lives in one disciplined flow instead of being reinvented each time. <a href="/docs/skills/spec">Read the workflow &rarr;</a></p>
       </article>
 
       <article class="usecase-card usecase-card-marquee">
@@ -227,7 +227,7 @@ look. Post to #marketing-weekly.</code></pre>
         <h3>Self-review before the human gets paged</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, GitHub trigger on <code>pull_request.opened</code></dd></div>
-          <div><dt>Skills</dt><dd><code>/engineering:code-review</code>, <code>/engineering:testing-strategy</code></dd></div>
+          <div><dt>Skills</dt><dd><code>code-review</code>, <code>testing-strategy</code></dd></div>
           <div><dt>Features</dt><dd>Routines (GitHub trigger), plan mode, sub-agent per file</dd></div>
         </dl>
         <p>Every new PR runs an auto-review that catches naming, obvious bugs, missing tests, and convention drift. Findings post as draft comments the author can accept or dismiss before tagging a human reviewer. The human gets to focus on intent and architecture, not whitespace.</p>
@@ -239,7 +239,7 @@ look. Post to #marketing-weekly.</code></pre>
               <span class="usecase-step-num">1</span>
               <div class="usecase-step-body">
                 <h5>Install the engineering plugin</h5>
-                <p>Brings <code>/engineering:code-review</code> and 33 other skills.</p>
+                <p>Brings <code>code-review</code> and 33 other skills.</p>
                 <div class="usecase-step-actions">
                   <a class="usecase-step-btn" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=engineering" target="_blank" rel="noopener">Install in Cowork &nearr;</a>
                   <code class="usecase-step-cmd">claude plugin install engineering@pace</code>
@@ -264,7 +264,7 @@ look. Post to #marketing-weekly.</code></pre>
               <span class="usecase-step-num">4</span>
               <div class="usecase-step-body">
                 <h5>Paste this as the routine prompt</h5>
-                <pre class="usecase-step-prompt"><code>A new PR was just opened in this repo. Run /engineering:code-review
+                <pre class="usecase-step-prompt"><code>A new PR was just opened in this repo. Run code-review
 on the PR's diff. Spawn one sub-agent per changed file for parallel
 review. Focus on: bugs, naming, dead code, weak tests, convention
 drift from neighboring files. Post findings as DRAFT review comments
@@ -287,60 +287,60 @@ one before tagging a human reviewer. Skip whitespace nits.</code></pre>
         <h3>Careful-review pass before opening the PR</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Interactive, end of a coding session</dd></div>
-          <div><dt>Skills</dt><dd><code>/engineering:careful-review</code> → <code>/engineering:ship-pr</code></dd></div>
-          <div><dt>Features</dt><dd>Plan mode, plus optional <code>/engineering:codex-review</code> for a second-opinion pass against the base ref</dd></div>
+          <div><dt>Skills</dt><dd><code>careful-review</code> → <code>ship-pr</code></dd></div>
+          <div><dt>Features</dt><dd>Plan mode, plus optional <code>codex-review</code> for a second-opinion pass against the base ref</dd></div>
         </dl>
-        <p>Before opening a PR, <code>/engineering:careful-review</code> re-reads everything the session touched with fresh eyes (bugs, stale comments, dead code, weak tests) and fixes what it finds. Optionally, <code>/engineering:codex-review</code> runs an OpenAI Codex pass against <code>main</code> for an independent second opinion on P0/P1 issues. Then <code>/engineering:ship-pr</code> commits, pushes, and opens the PR with a proper summary and test plan. NEVER skips hooks.</p>
+        <p>Before opening a PR, <code>careful-review</code> re-reads everything the session touched with fresh eyes (bugs, stale comments, dead code, weak tests) and fixes what it finds. Optionally, <code>codex-review</code> runs an OpenAI Codex pass against <code>main</code> for an independent second opinion on P0/P1 issues. Then <code>ship-pr</code> commits, pushes, and opens the PR with a proper summary and test plan. NEVER skips hooks.</p>
       </article>
 
       <article class="usecase-card">
         <h3>Disciplined diagnosis for the bugs that hide</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Interactive, when "I tried a few things and can't reproduce it"</dd></div>
-          <div><dt>Skills</dt><dd><code>/engineering:diagnose</code></dd></div>
+          <div><dt>Skills</dt><dd><code>diagnose</code></dd></div>
           <div><dt>Features</dt><dd>Sub-agents for hypothesis testing, bisection harness, plan mode</dd></div>
         </dl>
-        <p>The bug that resists casual debugging needs a feedback loop, not more staring. <code>/engineering:diagnose</code> imposes the discipline: construct a fast deterministic pass/fail signal first (failing test, curl, replay, bisection harness), <em>then</em> bisect, hypothesise, instrument, fix, regression-test. The first phase is the entire skill; once the signal exists, the cause falls out. <a href="/docs/skills/diagnose">Read the discipline &rarr;</a></p>
+        <p>The bug that resists casual debugging needs a feedback loop, not more staring. <code>diagnose</code> imposes the discipline: construct a fast deterministic pass/fail signal first (failing test, curl, replay, bisection harness), <em>then</em> bisect, hypothesise, instrument, fix, regression-test. The first phase is the entire skill; once the signal exists, the cause falls out. <a href="/docs/skills/diagnose">Read the discipline &rarr;</a></p>
       </article>
 
       <article class="usecase-card">
         <h3>TDD that doesn't write crap tests</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Interactive, when building a new behavior or hardening a known bug</dd></div>
-          <div><dt>Skills</dt><dd><code>/engineering:tdd</code>, <code>/engineering:find-missing-tests</code></dd></div>
+          <div><dt>Skills</dt><dd><code>tdd</code>, <code>find-missing-tests</code></dd></div>
           <div><dt>Features</dt><dd>Vertical-slice tracer bullets, integration-style tests, plan mode for the red-green-refactor steps</dd></div>
         </dl>
-        <p><code>/engineering:tdd</code> insists on vertical slices: one test → one implementation → repeat. No writing all the tests upfront ("horizontal slicing"), because that produces tests that verify shape, not behavior. Tests go through public interfaces, not internals. The bundled <code>tdd/mocking.md</code>, <code>tests.md</code>, and <code>deep-modules.md</code> reference files travel with the skill. Pair with <code>/engineering:find-missing-tests</code> for a coverage-gap survey first.</p>
+        <p><code>tdd</code> insists on vertical slices: one test → one implementation → repeat. No writing all the tests upfront ("horizontal slicing"), because that produces tests that verify shape, not behavior. Tests go through public interfaces, not internals. The bundled <code>tdd/mocking.md</code>, <code>tests.md</code>, and <code>deep-modules.md</code> reference files travel with the skill. Pair with <code>find-missing-tests</code> for a coverage-gap survey first.</p>
       </article>
 
       <article class="usecase-card">
         <h3>Deploy checklist that actually blocks</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, API trigger fired by your CI pipeline before the prod step</dd></div>
-          <div><dt>Skills</dt><dd><code>/engineering:deploy-checklist</code></dd></div>
+          <div><dt>Skills</dt><dd><code>deploy-checklist</code></dd></div>
           <div><dt>Features</dt><dd>Routines (API trigger), Linear + Slack connectors, exit code gates the deploy</dd></div>
         </dl>
-        <p>Your CD pipeline POSTs to the routine's <code>/fire</code> endpoint before the prod step. The routine runs <code>/engineering:deploy-checklist</code>: migrations reviewed, tests green, feature flag set, runbook linked, on-call notified. Anything missing returns a non-zero result and the pipeline halts with a Slack message explaining what's left.</p>
+        <p>Your CD pipeline POSTs to the routine's <code>/fire</code> endpoint before the prod step. The routine runs <code>deploy-checklist</code>: migrations reviewed, tests green, feature flag set, runbook linked, on-call notified. Anything missing returns a non-zero result and the pipeline halts with a Slack message explaining what's left.</p>
       </article>
 
       <article class="usecase-card">
         <h3>Deploy checklist that actually blocks</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, API trigger fired by your CI pipeline before the prod step</dd></div>
-          <div><dt>Skills</dt><dd><code>/engineering:deploy-checklist</code></dd></div>
+          <div><dt>Skills</dt><dd><code>deploy-checklist</code></dd></div>
           <div><dt>Features</dt><dd>Routines (API trigger), Linear + Slack connectors, exit code gates the deploy</dd></div>
         </dl>
-        <p>Your CD pipeline POSTs to the routine's <code>/fire</code> endpoint before the prod step. The routine runs <code>/engineering:deploy-checklist</code>: migrations reviewed, tests green, feature flag set, runbook linked, on-call notified. Anything missing returns a non-zero result and the pipeline halts with a Slack message explaining what's left.</p>
+        <p>Your CD pipeline POSTs to the routine's <code>/fire</code> endpoint before the prod step. The routine runs <code>deploy-checklist</code>: migrations reviewed, tests green, feature flag set, runbook linked, on-call notified. Anything missing returns a non-zero result and the pipeline halts with a Slack message explaining what's left.</p>
       </article>
 
       <article class="usecase-card">
         <h3>Incident triage that pulls the right context first</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, API trigger fired by PagerDuty webhook (or manual <code>/incident-response</code>)</dd></div>
-          <div><dt>Skills</dt><dd><code>/engineering:incident-response</code>, <code>/data:write-query</code></dd></div>
+          <div><dt>Skills</dt><dd><code>incident-response</code>, <code>write-query</code></dd></div>
           <div><dt>Features</dt><dd>Routines (API trigger), Datadog + Grafana connectors, sub-agents for parallel investigation</dd></div>
         </dl>
-        <p>When you ack a page, run <code>/engineering:incident-response &lt;incident-id&gt;</code>. Three sub-agents fan out in parallel: recent deploys, error-rate spikes, related alerts. You get a unified timeline in 30 seconds instead of clicking through five tabs.</p>
+        <p>When you ack a page, run <code><code>incident-response</code> &lt;incident-id&gt;</code>. Three sub-agents fan out in parallel: recent deploys, error-rate spikes, related alerts. You get a unified timeline in 30 seconds instead of clicking through five tabs.</p>
       </article>
     </section>
 
@@ -355,7 +355,7 @@ one before tagging a human reviewer. Skip whitespace nits.</code></pre>
         <h3>Weekly metric anomaly digest, Mondays at 7am</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, schedule, weekly Monday 07:00</dd></div>
-          <div><dt>Skills</dt><dd><code>/data:statistical-analysis</code>, <code>/data:write-query</code></dd></div>
+          <div><dt>Skills</dt><dd><code>statistical-analysis</code>, <code>write-query</code></dd></div>
           <div><dt>Features</dt><dd>Routines (cloud schedule), Snowflake + BigQuery connectors, plan mode</dd></div>
         </dl>
         <p>Monday morning the data team walks in with a short list of metrics that moved unusually last week, the queries that surfaced them, and a candidate explanation for each. Stops anomalies from being noticed weeks late.</p>
@@ -392,9 +392,9 @@ one before tagging a human reviewer. Skip whitespace nits.</code></pre>
               <div class="usecase-step-body">
                 <h5>Paste this as the routine prompt</h5>
                 <p>Edit the KPI list to match your team's metrics + the channel name.</p>
-                <pre class="usecase-step-prompt"><code>Run /data:statistical-analysis against last week's data
+                <pre class="usecase-step-prompt"><code>Run statistical-analysis against last week's data
 for these KPIs: signups, activations, weekly active users,
-revenue, gross retention. Use /data:write-query as needed
+revenue, gross retention. Use write-query as needed
 to pull the underlying numbers from the warehouse. Flag
 any metric that moved more than ~2 standard deviations
 from the trailing 8-week baseline. For each anomaly,
@@ -418,10 +418,10 @@ explanation. Post the digest to #data-weekly in Slack.</code></pre>
         <h3>Self-serve queries that don't lie</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Interactive, slash command in Claude Code</dd></div>
-          <div><dt>Skills</dt><dd><code>/data:write-query</code></dd></div>
+          <div><dt>Skills</dt><dd><code>write-query</code></dd></div>
           <div><dt>Features</dt><dd>Snowflake connector, schema-aware autocomplete, plan mode</dd></div>
         </dl>
-        <p>Anyone on the team can run <code>/data:write-query "revenue by region for Q3, excluding refunds"</code> and get a working query against the real schema, with the unit assumptions made explicit. Plan mode lets you sanity-check before running.</p>
+        <p>Anyone on the team can run <code><code>write-query</code> "revenue by region for Q3, excluding refunds"</code> and get a working query against the real schema, with the unit assumptions made explicit. Plan mode lets you sanity-check before running.</p>
       </article>
     </section>
 
@@ -436,7 +436,7 @@ explanation. Post the digest to #data-weekly in Slack.</code></pre>
         <h3>User-interview synthesis at the end of every research sprint</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Interactive, after a batch of interviews</dd></div>
-          <div><dt>Skills</dt><dd><code>/product-management:synthesize-research</code></dd></div>
+          <div><dt>Skills</dt><dd><code>synthesize-research</code></dd></div>
           <div><dt>Features</dt><dd>Fireflies/Otter connector (transcripts), sub-agent per transcript, plan mode for review</dd></div>
         </dl>
         <p>The hardest part of user research is synthesizing 8-15 transcripts into themes without flattening the signal. Pace runs one sub-agent per transcript in parallel, then a coordinator rolls them up into a synthesis doc with quote evidence and frequency counts. A day's work becomes a 10-minute review.</p>
@@ -472,7 +472,7 @@ explanation. Post the digest to #data-weekly in Slack.</code></pre>
               <span class="usecase-step-num">4</span>
               <div class="usecase-step-body">
                 <h5>Paste this prompt with your sprint's transcript list</h5>
-                <pre class="usecase-step-prompt"><code>Run /product-management:synthesize-research against these
+                <pre class="usecase-step-prompt"><code>Run synthesize-research against these
 interviews from the past sprint:
 
   - &lt;Fireflies URL or meeting title 1&gt;
@@ -503,10 +503,10 @@ synthesis before saving.</code></pre>
         <h3>Weekly competitive scan, ready for the team channel</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, schedule, weekly Friday 15:00</dd></div>
-          <div><dt>Skills</dt><dd><code>/product-management:competitive-brief</code></dd></div>
+          <div><dt>Skills</dt><dd><code>competitive-brief</code></dd></div>
           <div><dt>Features</dt><dd>Routines (cloud schedule), web search, brand-voice plugin for the digest copy</dd></div>
         </dl>
-        <p>A scheduled run of <code>/product-management:competitive-brief</code> watches the competitive set you care about, summarizes what shipped or changed, and posts a digest to <code>#product-watch</code>. No more "did anyone see the X launch?"</p>
+        <p>A scheduled run of <code>competitive-brief</code> watches the competitive set you care about, summarizes what shipped or changed, and posts a digest to <code>#product-watch</code>. No more "did anyone see the X launch?"</p>
       </article>
     </section>
 
@@ -521,7 +521,7 @@ synthesis before saving.</code></pre>
         <h3>Month-end runbook, enforced</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, schedule, monthly on the last business day at 08:00</dd></div>
-          <div><dt>Skills</dt><dd><code>/finance:close-management</code>, <code>/finance:reconciliation</code>, <code>/finance:variance-analysis</code>, <code>/finance:journal-entry-prep</code></dd></div>
+          <div><dt>Skills</dt><dd><code>close-management</code>, <code>reconciliation</code>, <code>variance-analysis</code>, <code>journal-entry-prep</code></dd></div>
           <div><dt>Features</dt><dd>Routines (cloud schedule), warehouse + Microsoft 365 connectors, plan mode for the journal entries</dd></div>
         </dl>
         <p>The month-end runbook fires automatically on the last business day. By the time the controller sits down, the reconciliation has run, variance vs plan is drafted, and the journal entries are queued for approval in plan mode. Half a day saved every close.</p>
@@ -559,11 +559,11 @@ synthesis before saving.</code></pre>
                 <h5>Paste this as the routine prompt</h5>
                 <pre class="usecase-step-prompt"><code>Run the month-end close in order:
 
-  1. /finance:close-management to orchestrate the checklist.
-  2. /finance:reconciliation against the warehouse ledger
+  1. close-management to orchestrate the checklist.
+  2. reconciliation against the warehouse ledger
      (call out any unreconciled balance).
-  3. /finance:variance-analysis vs plan + prior month.
-  4. /finance:journal-entry-prep for any accruals or
+  3. variance-analysis vs plan + prior month.
+  4. journal-entry-prep for any accruals or
      reclasses the variance analysis surfaces.
 
 Use plan mode for the journal entries : do NOT post
@@ -587,7 +587,7 @@ summary to #finance-close.</code></pre>
         <h3>Variance you'll have to explain, surfaced before the CFO asks</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, schedule, daily 06:00 after nightly close</dd></div>
-          <div><dt>Skills</dt><dd><code>/finance:variance-analysis</code></dd></div>
+          <div><dt>Skills</dt><dd><code>variance-analysis</code></dd></div>
           <div><dt>Features</dt><dd>Routines (cloud schedule), warehouse connector, threshold alerting, Slack DM to the CFO's prep channel</dd></div>
         </dl>
         <p>Every nightly close, the variance skill compares actuals vs plan, flags anything > 5% deviation, drafts the why, and DMs the CFO's prep channel by 7am. The morning standup starts with answers, not surprises.</p>
@@ -597,10 +597,10 @@ summary to #finance-close.</code></pre>
         <h3>Vendor contract triage with your playbook in the loop</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, API trigger fired by Box / Egnyte webhook on new-file</dd></div>
-          <div><dt>Skills</dt><dd><code>/legal:review-contract</code>, <code>/legal:vendor-check</code>, <code>/operations:vendor-review</code></dd></div>
+          <div><dt>Skills</dt><dd><code>review-contract</code>, <code>vendor-check</code>, <code>vendor-review</code></dd></div>
           <div><dt>Features</dt><dd>Routines (API trigger), Box/Egnyte connector, in-house playbook context, plan mode</dd></div>
         </dl>
-        <p>Any new vendor contract dropped in the legal folder triggers a playbook-aware review: <code>/legal:review-contract</code> walks payment terms, auto-renewal language, liability caps, and data clauses; <code>/legal:vendor-check</code> and <code>/operations:vendor-review</code> add the procurement-side perspective. Findings post as a checklist. Legal + Finance both see what to fight for before the call.</p>
+        <p>Any new vendor contract dropped in the legal folder triggers a playbook-aware review: <code>review-contract</code> walks payment terms, auto-renewal language, liability caps, and data clauses; <code>vendor-check</code> and <code>vendor-review</code> add the procurement-side perspective. Findings post as a checklist. Legal + Finance both see what to fight for before the call.</p>
       </article>
     </section>
 
@@ -615,10 +615,10 @@ summary to #finance-close.</code></pre>
         <h3>NDA triage queue</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, API trigger fired by your email tool's inbound webhook</dd></div>
-          <div><dt>Skills</dt><dd><code>/legal:triage-nda</code>, <code>/legal:review-contract</code></dd></div>
+          <div><dt>Skills</dt><dd><code>triage-nda</code>, <code>review-contract</code></dd></div>
           <div><dt>Features</dt><dd>Routines (API trigger), Gmail/Outlook connector, playbook context, plan mode for the redline</dd></div>
         </dl>
-        <p>Inbound NDAs hit <code>/legal:triage-nda</code> first, which classifies the agreement. Standard ones get an auto-redline against your playbook; non-standard get flagged with the specific clause that needs human review. The legal queue drains 5x faster.</p>
+        <p>Inbound NDAs hit <code>triage-nda</code> first, which classifies the agreement. Standard ones get an auto-redline against your playbook; non-standard get flagged with the specific clause that needs human review. The legal queue drains 5x faster.</p>
 
         <div class="usecase-setup">
           <h4 class="usecase-setup-title">How to set it up</h4>
@@ -638,7 +638,7 @@ summary to #finance-close.</code></pre>
               <span class="usecase-step-num">2</span>
               <div class="usecase-step-body">
                 <h5>Set up the playbook in a docs folder</h5>
-                <p>Run <code>/engineering:setup-engineering-skills</code> once at your repo or workspace root. It scaffolds <code>docs/agents/legal-playbook.md</code> for you. Drop your team's standard positions on common clauses there. The legal skills read from this on every call.</p>
+                <p>Run <code>setup-engineering-skills</code> once at your repo or workspace root. It scaffolds <code>docs/agents/legal-playbook.md</code> for you. Drop your team's standard positions on common clauses there. The legal skills read from this on every call.</p>
               </div>
             </li>
             <li class="usecase-step">
@@ -654,10 +654,10 @@ summary to #finance-close.</code></pre>
                 <h5>Wire your inbox to POST inbound NDAs</h5>
                 <p>Set up a Gmail/Outlook forwarding rule (or Zapier) that POSTs new emails with subject containing "NDA" to your routine's <code>/fire</code> endpoint, with the email body in the <code>text</code> field of the JSON payload. Paste this as the routine prompt:</p>
                 <pre class="usecase-step-prompt"><code>An inbound NDA just arrived. The email body is in the
-incoming text field. Run /legal:triage-nda to classify
+incoming text field. Run triage-nda to classify
 it (mutual / one-way, standard / non-standard, urgency).
 
-If the triage says "standard": run /legal:review-contract
+If the triage says "standard": run review-contract
 with our playbook in the context. Produce a redlined
 version as a draft response with explanatory comments.
 
@@ -690,7 +690,7 @@ agreements.</code></pre>
         <h3>Weekly cross-team status digest</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, schedule, weekly Friday 14:00</dd></div>
-          <div><dt>Skills</dt><dd><code>/operations:status-report</code></dd></div>
+          <div><dt>Skills</dt><dd><code>status-report</code></dd></div>
           <div><dt>Features</dt><dd>Routines (cloud schedule), Linear/Jira + Slack + Notion connectors, sub-agents per team</dd></div>
         </dl>
         <p>One sub-agent per department fans out and pulls progress from Linear / Slack / Notion; the coordinator rolls everything up into a single cross-team status doc by Friday afternoon. Monday standup walks in with the picture already in everyone's head.</p>
@@ -727,7 +727,7 @@ agreements.</code></pre>
               <div class="usecase-step-body">
                 <h5>Paste this as the routine prompt</h5>
                 <p>Edit the team list to match your org structure.</p>
-                <pre class="usecase-step-prompt"><code>Run /operations:status-report. Spawn one sub-agent per
+                <pre class="usecase-step-prompt"><code>Run status-report. Spawn one sub-agent per
 team to pull progress signals from the last 7 days:
 
   - Engineering: closed Linear tickets, merged PRs, incidents
@@ -766,7 +766,7 @@ in Notion.</code></pre>
         <h3>Weekly recruiting pipeline digest</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, schedule, weekly Monday 08:00</dd></div>
-          <div><dt>Skills</dt><dd><code>/human-resources:recruiting-pipeline</code>, <code>/human-resources:people-report</code></dd></div>
+          <div><dt>Skills</dt><dd><code>recruiting-pipeline</code>, <code>people-report</code></dd></div>
           <div><dt>Features</dt><dd>Routines (cloud schedule), ATS connector, Slack delivery</dd></div>
         </dl>
         <p>Hiring managers walk into Monday standup already knowing where every open req stands : candidates aging in a stage, interviews scheduled for the week, offers extended, declines. No more "where are we with X" updates.</p>
@@ -802,7 +802,7 @@ in Notion.</code></pre>
               <span class="usecase-step-num">4</span>
               <div class="usecase-step-body">
                 <h5>Paste this as the routine prompt</h5>
-                <pre class="usecase-step-prompt"><code>Run /human-resources:recruiting-pipeline against the
+                <pre class="usecase-step-prompt"><code>Run recruiting-pipeline against the
 ATS. For each open requisition, surface:
 
   - Stage of every active candidate
@@ -831,10 +831,10 @@ to their reqs so they get a heads-up DM.</code></pre>
         <h3>Interview prep tailored to the role and the candidate</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, API trigger fired by your calendar webhook (filter on "interview")</dd></div>
-          <div><dt>Skills</dt><dd><code>/human-resources:interview-prep</code></dd></div>
+          <div><dt>Skills</dt><dd><code>interview-prep</code></dd></div>
           <div><dt>Features</dt><dd>Routines (API trigger), ATS + Apollo connectors, plan mode</dd></div>
         </dl>
-        <p>When an interview lands on the calendar, <code>/human-resources:interview-prep</code> pulls the JD, candidate resume, and prior round feedback. It drops a prep brief into the event description: focus areas, suggested probing questions, and what to avoid re-asking. Panel walks in calibrated.</p>
+        <p>When an interview lands on the calendar, <code>interview-prep</code> pulls the JD, candidate resume, and prior round feedback. It drops a prep brief into the event description: focus areas, suggested probing questions, and what to avoid re-asking. Panel walks in calibrated.</p>
       </article>
     </section>
 
@@ -849,7 +849,7 @@ to their reqs so they get a heads-up DM.</code></pre>
         <h3>Real-time ticket triage with macro suggestion</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, API trigger fired by Intercom / Zendesk new-conversation webhook</dd></div>
-          <div><dt>Skills</dt><dd><code>/customer-support:ticket-triage</code>, <code>/customer-support:draft-response</code>, <code>/customer-support:customer-escalation</code></dd></div>
+          <div><dt>Skills</dt><dd><code>ticket-triage</code>, <code>draft-response</code>, <code>customer-escalation</code></dd></div>
           <div><dt>Features</dt><dd>Routines (API trigger), Intercom/Zendesk + HubSpot connectors, plan mode for the draft, Slack escalation routing</dd></div>
         </dl>
         <p>Every new ticket arrives with a pre-classified urgency, account context from HubSpot, and a draft response in the right tone for the customer segment. The agent reads the draft, makes a tweak, sends. First-response time drops; quality stays high.</p>
@@ -889,16 +889,16 @@ to their reqs so they get a heads-up DM.</code></pre>
                 <pre class="usecase-step-prompt"><code>A new support ticket arrived. The conversation body is
 in the incoming text field.
 
-  1. Run /customer-support:ticket-triage to classify
+  1. Run ticket-triage to classify
      urgency (P1/P2/P3) and category.
   2. Pull the customer's account context from HubSpot
      (plan tier, recent activity, prior tickets).
-  3. Run /customer-support:draft-response : tone
+  3. Run draft-response : tone
      should match the segment (enterprise / SMB / free).
      Park the draft in the conversation as a private note
      for the human agent to review before sending.
   4. If P1 OR enterprise tier: run
-     /customer-support:customer-escalation to ping the
+     customer-escalation to ping the
      on-call engineer in #support-escalations.</code></pre>
               </div>
             </li>
@@ -925,7 +925,7 @@ in the incoming text field.
         <h3>Daily update that pulls itself together</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, schedule, weekdays 17:30</dd></div>
-          <div><dt>Skills</dt><dd><code>/productivity:update</code>, <code>/productivity:task-management</code></dd></div>
+          <div><dt>Skills</dt><dd><code>update</code>, <code>task-management</code></dd></div>
           <div><dt>Features</dt><dd>Routines (cloud schedule), Slack + Notion + Linear connectors, plan mode</dd></div>
         </dl>
         <p>End of the day, the routine assembles what you shipped (commits, tickets closed, Slack threads contributed to) and drafts a one-paragraph wrap; rolls open work into tomorrow's queue. Plan mode parks the draft for your edit before it posts to your team's standup channel. Async standups stop being a chore.</p>
@@ -962,12 +962,12 @@ in the incoming text field.
               <div class="usecase-step-body">
                 <h5>Paste this as the routine prompt</h5>
                 <p>Edit the channel + role-focus line to match your team.</p>
-                <pre class="usecase-step-prompt"><code>End of day check-in. Run /productivity:update to assemble
+                <pre class="usecase-step-prompt"><code>End of day check-in. Run update to assemble
 what I shipped today: commits merged, Linear tickets I
 moved, Slack threads I contributed substantively to, docs
 I edited in Notion.
 
-Then run /productivity:task-management to roll my open
+Then run task-management to roll my open
 items into tomorrow's queue (carry forward unchecked
 todos, surface things I said I'd do but haven't).
 
@@ -993,10 +993,10 @@ before posting to #async-standup.</code></pre>
         <h3>Project memory that follows you across sessions</h3>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Interactive, when starting work after a break</dd></div>
-          <div><dt>Skills</dt><dd><code>/productivity:memory-management</code>, <code>/productivity:start</code></dd></div>
+          <div><dt>Skills</dt><dd><code>memory-management</code>, <code>start</code></dd></div>
           <div><dt>Features</dt><dd>Auto memory (CLAUDE.md), cross-app context retrieval</dd></div>
         </dl>
-        <p><code>/productivity:start</code> re-hydrates yesterday's context from <code>/productivity:memory-management</code>: open threads, the decisions you made, the things you said you'd come back to. No more spending the first 20 minutes of every session reading old messages.</p>
+        <p><code>start</code> re-hydrates yesterday's context from <code>memory-management</code>: open threads, the decisions you made, the things you said you'd come back to. No more spending the first 20 minutes of every session reading old messages.</p>
       </article>
     </section>
 
@@ -1042,7 +1042,7 @@ before posting to #async-standup.</code></pre>
             <h3>Cross-tool design system sync</h3>
             <dl class="usecase-meta">
               <div><dt>Trigger</dt><dd>Interactive, when tokens or components change</dd></div>
-              <div><dt>Skills</dt><dd><code>/design:design-system</code> (Pace), <code>/impeccable colorize</code> + <code>/impeccable typeset</code> (impeccable)</dd></div>
+              <div><dt>Skills</dt><dd><code>design-system</code> (Pace), <code>/impeccable colorize</code> + <code>/impeccable typeset</code> (impeccable)</dd></div>
               <div><dt>Features</dt><dd>Cross-plugin chain, MCP connector to Figma</dd></div>
             </dl>
             <p>Pace's <code>/design</code> plugin manages the system at the spec level (Figma tokens, contribution model, dev handoff). Impeccable's <code>/colorize</code> and <code>/typeset</code> apply those tokens in code with full understanding of how they look on screen. Use both: the design plugin sets the rules, impeccable enforces them in the codebase.</p>

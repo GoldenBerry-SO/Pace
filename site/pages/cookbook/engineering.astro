@@ -1,0 +1,480 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const skillGroups = [
+  {
+    id: 'workflow',
+    label: 'Stacked-PR workflow',
+    blurb: "The opinionated five-skill loop. Plan a feature, ship it as a chain of small reviewable PRs, address review comments, rebase the next PR on top after each merge, then reset cleanly between tasks.",
+    skills: ['spec', 'implement', 'review', 'topr', 'next'],
+  },
+  {
+    id: 'thinking',
+    label: 'Plan + pressure-test',
+    blurb: "Skills for the part of the work before the code: sharpen the design, find the gaps in your reasoning, understand how a chunk of code fits into the larger system.",
+    skills: ['grill-me', 'grill-with-docs', 'zoom-out', 'careful-review', 'codex-review'],
+  },
+  {
+    id: 'tests',
+    label: 'TDD + coverage',
+    blurb: "Disciplined testing skills. Write the failing test first, find what's missing in an existing module, smoke-test the whole app before a release.",
+    skills: ['tdd', 'find-missing-tests', 'e2e-test'],
+  },
+  {
+    id: 'debug',
+    label: 'Diagnose + secure',
+    blurb: "When something is broken or risky. Disciplined diagnosis loops for tricky bugs and performance regressions. Security passes that find what a casual review misses.",
+    skills: ['diagnose', 'debug', 'security-review'],
+  },
+  {
+    id: 'ship',
+    label: 'Prototype + ship',
+    blurb: "Build something throwaway to learn from, then ship the real thing safely.",
+    skills: ['prototype', 'ship-pr'],
+  },
+];
+
+interface SkillEntry {
+  name: string;
+  triggers: string[];
+  example: string;
+  produces: string;
+}
+
+const skills: Record<string, SkillEntry> = {
+  spec: {
+    name: 'Refine a feature into a tracked epic. Each sub-issue maps to one PR.',
+    triggers: ['"Spec the new export feature."', '"Plan this out before we build it."', '"Break this initiative into issues."'],
+    example: '"Spec the bulk-CSV import feature. Should handle 50k rows, validate against the existing user schema, and produce a downloadable error report."',
+    produces: 'A parent epic issue + ordered child issues, each scoped to a single PR. No code yet; hand off to /implement when ready.',
+  },
+  implement: {
+    name: 'Execute a /spec-produced epic as a chain of stacked PRs, one per sub-issue.',
+    triggers: ['"Implement epic #142."', '"Build out the spec we wrote."', '"Start on issue #143."'],
+    example: '"Implement epic #142. Stop after PR #2 so I can review."',
+    produces: 'A branch per sub-issue stacked on the previous one, each with a focused PR. Stops cleanly so you can review before continuing.',
+  },
+  review: {
+    name: 'Address PR review comments interactively. Fix or decline with reasoning, post inline replies.',
+    triggers: ['"Address the PR comments on #156."', '"Go through the review queue."', '"Clear the comments on this PR."'],
+    example: '"Walk me through the review on PR #156. Fix the obvious ones, push back on the ones you disagree with."',
+    produces: 'Comments grouped by file, each triaged with an action: fix-and-reply, decline-with-rationale, or ask-for-clarification. Inline replies posted.',
+  },
+  topr: {
+    name: 'Rebase a stacked PR onto the latest origin/main after an earlier PR in the stack merged.',
+    triggers: ['"Rebase PR #157 on main."', '"Refresh this PR after #156 merged."', '"Top of stack, rebase."'],
+    example: '"PR #156 just merged via squash-and-merge. Rebase #157 on main."',
+    produces: 'A clean rebase that correctly drops the commits that came in via the squash-merge of the earlier PR. No duplicate commits, no manual conflict-resolution where the rebase tool gets it wrong.',
+  },
+  next: {
+    name: 'Reset between tasks. Checks out a clean throwaway branch on the latest main so the next task starts fresh.',
+    triggers: ['"Next."', '"Reset for the next thing."', '"Done with this, what\'s next?"'],
+    example: '"Next."',
+    produces: 'Switch to a clean dummy branch rebased on latest main. Old branch left intact in case you need to come back.',
+  },
+  'grill-me': {
+    name: 'Interview yourself relentlessly about a plan or design until every decision branch has an answer.',
+    triggers: ['"Grill me on this design."', '"Stress-test the plan."', '"Poke holes in this."'],
+    example: '"Grill me on the bulk-CSV import design. I think we should stream parse, you tell me what I\'m missing."',
+    produces: 'A back-and-forth Q+A where Claude pushes on the design: what about partial failures, what about huge files, what about concurrent uploads, what does the user see on error. Stops when every branch has a concrete answer.',
+  },
+  'grill-with-docs': {
+    name: 'Same as grill-me, but checks your plan against the existing CONTEXT.md, ADRs, and inline domain language.',
+    triggers: ['"Grill this against our docs."', '"Pressure-test using project context."'],
+    example: '"Grill me on the bulk-CSV import. Make sure I\'m using the same vocabulary we use in CONTEXT.md."',
+    produces: 'A grilling session that catches inconsistencies between your plan and what the project already documents. Updates docs inline as decisions firm up.',
+  },
+  'zoom-out': {
+    name: 'Ask Claude to step back and give the higher-level shape of the code you\'re looking at.',
+    triggers: ['"Zoom out, what is this doing at a system level?"', '"Give me the architecture view of this module."'],
+    example: '"I\'m in the payment-retry code and I don\'t see the larger flow. Zoom out."',
+    produces: 'A description of how the current code fits the larger system: who calls it, what state it depends on, what comes after, what failure modes exist at the boundary.',
+  },
+  'careful-review': {
+    name: 'Re-read what you just wrote with fresh eyes and look hard for bugs, dead code, or confusing patterns. Then fix them.',
+    triggers: ['"Careful review."', '"Look it over again."', '"Give it another pass before I commit."'],
+    example: '"I just rewrote the auth middleware. Careful review before I push."',
+    produces: 'A pass through the diff with concrete findings: edge case not handled, variable name that misleads, error that swallows instead of surfacing, test that doesn\'t actually assert anything. Fixes applied.',
+  },
+  'codex-review': {
+    name: 'Run an OpenAI Codex code review for a structured second opinion. Confirms P0/P1 findings against the code, fixes confirmed ones, commits.',
+    triggers: ['"Codex review."', '"Get a second opinion."', '"Run Codex on this branch."'],
+    example: '"Run Codex review against main on this branch before I open the PR."',
+    produces: 'A summary of Codex\'s findings, separated into "real bug, fixed" vs. "false positive, ignored" with the rationale per finding. Confirmed fixes committed.',
+  },
+  tdd: {
+    name: 'Test-driven development with red-green-refactor. Write the failing test first, then minimal code to make it pass, then refactor.',
+    triggers: ['"TDD this feature."', '"Red-green-refactor."', '"Test-first."'],
+    example: '"TDD the discount-rule engine. Write the failing tests for the percentage discount first, then make them pass."',
+    produces: 'A test file with red tests, then a minimal implementation that makes them green, then refactoring with the tests staying green throughout. Commits at each transition so you can see the loop.',
+  },
+  'find-missing-tests': {
+    name: 'Survey a module, file, or PR for missing coverage. Produces a specific test backlog. Optionally opens GitHub issues for each gap.',
+    triggers: ['"Find missing tests."', '"What\'s not tested in this module?"', '"Test backlog for src/billing."'],
+    example: '"Find missing tests in src/billing. Open issues for anything that should exist but doesn\'t."',
+    produces: 'A list of specific test cases that should exist, each detailed enough that another agent (or developer) can implement it. Not "test the validator" but "test that validator rejects negative amounts with a specific error code."',
+  },
+  'e2e-test': {
+    name: 'Run a full end-to-end test against real backend + frontend dev servers, with mocks disabled. Verifies a release before shipping.',
+    triggers: ['"E2E sweep."', '"Smoke test the app."', '"Test everything end to end before I deploy."'],
+    example: '"E2E sweep. Start the dev servers, drive the full signup → first-purchase flow, give me a PASS/FAIL summary."',
+    produces: 'A PASS or FAIL summary of the critical user flows, with logs and screenshots of any failure. No mocks, no stubs, real network.',
+  },
+  diagnose: {
+    name: 'Disciplined diagnosis loop for hard bugs and performance regressions. Reproduce, minimize, hypothesize, instrument, fix, write the regression test.',
+    triggers: ['"Diagnose this bug."', '"Debug this perf regression."', '"Something is broken in prod, walk through it methodically."'],
+    example: '"The /checkout endpoint is 10x slower than yesterday\'s build. Diagnose."',
+    produces: 'A reproducible minimal case, a hypothesis with evidence, the actual fix, and a regression test that would have caught it. The methodical version of a bug hunt.',
+  },
+  debug: {
+    name: 'Structured debugging session for a specific error message, stack trace, or "works locally, broken in prod" situation.',
+    triggers: ['"Debug this stack trace."', '"This works in staging but not prod."', '"Why is this throwing?"'],
+    example: '"Getting `TypeError: cannot read properties of undefined (reading \'tokenize\')` in the lexer. Debug."',
+    produces: 'A walkthrough: where the value should have been set, why it wasn\'t, what the fix is, what test would have caught it.',
+  },
+  'security-review': {
+    name: 'Security-focused review covering OWASP top-10 + language-specific footguns. Prioritized findings with concrete fixes.',
+    triggers: ['"Security review."', '"Is this safe to expose?"', '"Check for vulnerabilities before we ship."'],
+    example: '"Security review the new file-upload endpoint. It accepts user-controlled filenames."',
+    produces: 'A prioritized list of findings: P0 (must fix), P1 (should fix), P2 (worth noting), each with a concrete patch. Covers injection, auth bypass, IDOR, SSRF, secrets in code, unsafe deserialization, plus language-specific traps.',
+  },
+  prototype: {
+    name: 'Build a throwaway prototype to learn from before committing to a design. Runnable terminal app for logic questions, or several UI variants on one route for design questions.',
+    triggers: ['"Prototype this."', '"Let me play with the data model."', '"Try a few designs."'],
+    example: '"Prototype three different ways the empty state for the dashboard could look. Toggle between them with a query param."',
+    produces: 'A working throwaway you can run and feel: not pretty code, but something you can play with for an hour to learn whether the underlying design is right.',
+  },
+  'ship-pr': {
+    name: 'Commit all changes safely, push the branch, and open a pull request with a summary and test plan.',
+    triggers: ['"Ship it."', '"Open the PR."', '"Ship the PR."', '"Done, push it up."'],
+    example: '"Ship the PR. Title: feat: bulk-CSV import (rule engine)."',
+    produces: 'Staged commit (skipping .env / credentials / secrets), commit message matching the repo\'s style, pre-commit hooks passing, PR opened against the default branch with a description and a test-plan checklist.',
+  },
+};
+---
+
+<Base
+  title="Engineering cookbook · Pace"
+  description="Deep-dive engineering recipes: the stacked-PR workflow (spec → implement → review → topr → next), TDD, careful-review, diagnose, security-review, ship-pr, grill-me, and the rest of the engineering plugin's 34 skills."
+  activeNav="cookbook"
+  canonicalPath="/cookbook/engineering"
+>
+  <article class="usecases-page">
+    <header class="usecases-header">
+      <span class="usecases-eyebrow">Engineering cookbook</span>
+      <p class="usecases-back-link"><a href="/cookbook">&larr; Back to all cookbooks</a></p>
+      <h1>Engineering cookbook</h1>
+      <p class="usecases-lede">
+        The engineering plugin ships 34 skills. Most of them are auto-triggered by what you ask Claude. This page walks through the ones you'll reach for daily, grouped by the moment in the workflow when each one earns its keep.
+      </p>
+      <div class="eng-install-row">
+        <a class="usecase-step-btn" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=engineering" target="_blank" rel="noopener">Install engineering in Cowork &nearr;</a>
+        <code class="usecase-step-cmd">claude plugin install engineering@pace</code>
+      </div>
+    </header>
+
+    <nav class="eng-toc" aria-label="Jump to section">
+      <span class="eng-toc-label">Jump to</span>
+      <ul>
+        {skillGroups.map((g) => (
+          <li><a href={`#${g.id}`}>{g.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    {skillGroups.map((group) => (
+      <section class="eng-section" id={group.id}>
+        <header class="eng-section-head">
+          <h2>{group.label}</h2>
+          <p>{group.blurb}</p>
+        </header>
+        <div class="eng-skill-grid">
+          {group.skills.map((slug) => {
+            const s = skills[slug];
+            return s ? (
+              <article class="eng-skill" id={`skill-${slug}`}>
+                <header class="eng-skill-head">
+                  <code class="eng-skill-name">/{slug}</code>
+                  <p class="eng-skill-summary">{s.name}</p>
+                </header>
+                <dl class="eng-skill-meta">
+                  <div>
+                    <dt>When you say</dt>
+                    <dd>
+                      <ul>
+                        {s.triggers.map((t) => (
+                          <li>{t}</li>
+                        ))}
+                      </ul>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Try it like this</dt>
+                    <dd class="eng-skill-example">{s.example}</dd>
+                  </div>
+                  <div>
+                    <dt>What you get back</dt>
+                    <dd>{s.produces}</dd>
+                  </div>
+                </dl>
+                <p class="eng-skill-link"><a href={`/docs/skills/${slug}`}>Full skill reference &rarr;</a></p>
+              </article>
+            ) : null;
+          })}
+        </div>
+      </section>
+    ))}
+
+    <section class="eng-foot">
+      <h3>Want the full menu?</h3>
+      <p>
+        The <a href="/docs/skills">skill catalog</a> lists every one of the 34 engineering skills with the SKILL.md frontmatter, trigger phrases, and source files.
+      </p>
+      <p>
+        Not on engineering? The <a href="/cookbook">main cookbook</a> has the per-team marquee recipes, including the sales pipeline brief and the marketing Monday report.
+      </p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .usecases-page {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
+  }
+  .usecases-header {
+    margin-bottom: var(--spacing-2xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .usecases-back-link {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--color-ash);
+    margin: var(--spacing-sm) 0;
+  }
+  .usecases-back-link a {
+    color: var(--color-ash);
+  }
+  .usecases-back-link a:hover {
+    color: var(--color-forest);
+  }
+  .usecases-header h1 {
+    font-family: var(--font-display);
+    font-size: var(--fs-3xl);
+    letter-spacing: -0.035em;
+    margin: var(--spacing-md) 0 var(--spacing-md);
+  }
+  .usecases-lede {
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    color: var(--color-charcoal);
+    margin-bottom: var(--spacing-lg);
+    max-width: 64ch;
+  }
+  .eng-install-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+  .usecase-step-cmd {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    background: var(--color-code-bg);
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--color-code-border);
+    color: var(--color-ink);
+    user-select: all;
+  }
+
+  /* TOC */
+  .eng-toc {
+    margin: 0 0 var(--spacing-2xl);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 10px;
+  }
+  .eng-toc-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+    margin-bottom: 8px;
+  }
+  .eng-toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+  }
+  .eng-toc a {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--color-ink);
+    border-bottom: 1px solid var(--color-mist);
+    padding-bottom: 2px;
+    transition: color var(--duration-fast) var(--ease-out-quart),
+                border-color var(--duration-fast) var(--ease-out-quart);
+  }
+  .eng-toc a:hover {
+    color: var(--color-forest);
+    border-color: var(--color-forest);
+  }
+
+  /* Section */
+  .eng-section {
+    margin: var(--spacing-2xl) 0;
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-mist);
+  }
+  .eng-section-head {
+    margin-bottom: var(--spacing-xl);
+  }
+  .eng-section-head h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-2xl);
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    color: var(--color-ink);
+    margin-bottom: var(--spacing-sm);
+  }
+  .eng-section-head p {
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    color: var(--color-charcoal);
+    max-width: 64ch;
+  }
+
+  /* Skill cards */
+  .eng-skill-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+  .eng-skill {
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 12px;
+    padding: var(--spacing-lg);
+    transition: border-color var(--duration-fast) var(--ease-out-quart);
+  }
+  .eng-skill:hover {
+    border-color: var(--color-forest-soft);
+  }
+  .eng-skill-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .eng-skill-name {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-forest);
+    background: var(--color-forest-dim);
+    padding: 3px 10px;
+    border: 1px solid var(--color-forest-soft);
+    border-radius: 6px;
+  }
+  .eng-skill-summary {
+    font-size: var(--fs-md);
+    line-height: 1.45;
+    color: var(--color-ink);
+    flex: 1;
+    min-width: 240px;
+    font-weight: 500;
+  }
+  .eng-skill-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--spacing-md);
+    margin: 0;
+  }
+  .eng-skill-meta > div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .eng-skill-meta dt {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+    margin: 0;
+  }
+  .eng-skill-meta dd {
+    margin: 0;
+    font-size: var(--fs-sm);
+    line-height: 1.55;
+    color: var(--color-charcoal);
+  }
+  .eng-skill-meta ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .eng-skill-meta li {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-charcoal);
+  }
+  .eng-skill-example {
+    font-style: italic;
+    color: var(--color-charcoal);
+  }
+  .eng-skill-link {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-sm);
+    border-top: 1px dashed var(--color-mist);
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  .eng-skill-link a {
+    color: var(--color-forest);
+  }
+
+  /* Foot */
+  .eng-foot {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-mist);
+  }
+  .eng-foot h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: -0.02em;
+  }
+  .eng-foot p {
+    font-size: var(--fs-base);
+    line-height: 1.6;
+    color: var(--color-charcoal);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  @media (max-width: 720px) {
+    .eng-skill-meta {
+      grid-template-columns: 1fr;
+    }
+    .eng-skill-head {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+</style>
