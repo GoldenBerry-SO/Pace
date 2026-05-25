@@ -282,6 +282,93 @@ body .teams-index-eyebrow {
 body .usecase-steps {
   list-style: none;
   padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin: 0;
+}
+
+body .usecase-step {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: var(--spacing-sm);
+  align-items: start;
+}
+
+body .usecase-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--color-forest);
+  color: var(--color-paper);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+body .usecase-step-body {
+  min-width: 0;
+}
+
+body .usecase-step-body h5 {
+  font-family: var(--font-display);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  margin: 0 0 6px;
+}
+
+body .usecase-step-body p {
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--color-charcoal);
+  margin: 0 0 8px;
+}
+
+body .usecase-step-body p:last-child {
+  margin-bottom: 0;
+}
+
+body .usecase-step-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+body .usecase-step-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--color-paper-elev);
+  border: 1px solid var(--color-mist);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-forest);
+  text-decoration: none;
+  transition: border-color var(--duration-fast) var(--ease-out-quart);
+}
+
+body .usecase-step-btn:hover {
+  border-color: var(--color-forest);
+}
+
+body .usecase-step-cmd {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 4px 8px;
+  background: var(--color-code-bg);
+  border: 1px solid var(--color-code-border);
+  border-radius: 4px;
+  color: var(--color-ink);
 }
 
 /* ============================================
