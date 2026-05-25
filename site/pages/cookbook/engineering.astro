@@ -47,41 +47,35 @@ Stop after each step so I can review.`,
 
 Once the spec is approved, implement it as a stack of PRs. Stop after PR #2 so I can review.
 
-After review, address the comments, rebase the next PR on main, and reset for the following task.`,
+After each PR merges, run /impeccable audit on the changed frontend files to catch design regressions before addressing review comments. Then rebase the next PR on main and reset for the following task.`,
     when: 'Use when: the design decisions are made. You know what to build and just need it shipped methodically.',
   },
-];
+  {
+    id: 'frontend',
+    label: 'Frontend feature, design-aware',
+    title: 'Frontend feature, design-aware',
+    outcome: 'A UI feature ships with engineering discipline AND design craft, not one at the expense of the other.',
+    summary: "When the work is user-facing. Pace owns the engineering loop; impeccable owns the visual + interaction craft. They pair through a Cowork session where you route between them.",
+    chain: [
+      { skill: '/impeccable shape', label: 'Shape the UX', body: 'Plan the screens, states, copy, and edge cases before writing real code. Impeccable thinks in design; Pace will think in tests next.' },
+      { skill: 'prototype', label: 'Prototype', body: 'Build a runnable throwaway with several UI variants on one route. Toggle between them to feel which design holds up.' },
+      { skill: 'tdd', label: 'TDD the logic underneath', body: 'Write the failing tests for the behavior the design implies. Keep the prototype open so the tests reflect what you actually want.' },
+      { skill: 'implement', label: 'Implement', body: 'Promote the prototype + tests into real code. The tests stay green throughout; the design choices land as code.' },
+      { skill: '/impeccable polish', label: 'Polish', body: 'Typography, color, motion, accessibility, and spacing pass on the implemented feature. Catches what TDD cannot see.' },
+      { skill: 'ship-pr', label: 'Ship the PR', body: "Commit, push, open the PR. The PR description includes both the engineering test plan and the design rationale (impeccable's notes from the polish pass)." },
+    ],
+    kickoffLabel: 'Frontend feature kickoff',
+    kickoffPrompt: `We're building the new account-settings page. Routes between impeccable (for design) and the engineering plugin (for code) across the session:
 
-const skillGroups = [
-  {
-    id: 'workflow',
-    label: 'Stacked-PR workflow',
-    blurb: "The opinionated five-skill loop. Plan a feature, ship it as a chain of small reviewable PRs, address review comments, rebase the next PR on top after each merge, then reset cleanly between tasks.",
-    skills: ['spec', 'implement', 'review', 'topr', 'next'],
-  },
-  {
-    id: 'thinking',
-    label: 'Plan + pressure-test',
-    blurb: "Skills for the part of the work before the code: sharpen the design, find the gaps in your reasoning, understand how a chunk of code fits into the larger system.",
-    skills: ['grill-me', 'grill-with-docs', 'zoom-out', 'careful-review', 'codex-review'],
-  },
-  {
-    id: 'tests',
-    label: 'TDD + coverage',
-    blurb: "Disciplined testing skills. Write the failing test first, find what's missing in an existing module, smoke-test the whole app before a release.",
-    skills: ['tdd', 'find-missing-tests', 'e2e-test'],
-  },
-  {
-    id: 'debug',
-    label: 'Diagnose + secure',
-    blurb: "When something is broken or risky. Disciplined diagnosis loops for tricky bugs and performance regressions. Security passes that find what a casual review misses.",
-    skills: ['diagnose', 'debug', 'security-review'],
-  },
-  {
-    id: 'ship',
-    label: 'Prototype + ship',
-    blurb: "Build something throwaway to learn from, then ship the real thing safely.",
-    skills: ['prototype', 'ship-pr'],
+1. /impeccable shape the page: which states exist (loading, empty, error, multi-account), what the copy says, what the keyboard flow is.
+2. Prototype two layouts so I can pick: tabs on the left vs. cards in a grid.
+3. TDD the underlying logic (account switching, edit-then-save, optimistic UI rollback on error).
+4. Implement against the tests.
+5. /impeccable polish: typography hierarchy, color, motion on the save action, a11y on the form.
+6. Ship the PR with both the engineering test plan and the design rationale.
+
+Stop after step 2 so I can pick the layout.`,
+    when: "Use when: the work is user-facing. Don't skip the polish pass; that's where the design actually lands.",
   },
 ];
 
@@ -92,7 +86,9 @@ interface SkillEntry {
   produces: string;
 }
 
-const skills: Record<string, SkillEntry> = {
+// Skill reference kept for potential future use; not rendered on this page.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const _skills: Record<string, SkillEntry> = {
   spec: {
     name: 'Refine a feature into a tracked epic. Each sub-issue maps to one PR.',
     triggers: ['"Spec the new export feature."', '"Plan this out before we build it."', '"Break this initiative into issues."'],
@@ -216,7 +212,7 @@ const skills: Record<string, SkillEntry> = {
       <p class="usecases-back-link"><a href="/cookbook">&larr; Back to all cookbooks</a></p>
       <h1>Engineering cookbook</h1>
       <p class="usecases-lede">
-        Two flagship recipes (skill chains) cover most engineering work, followed by the full skill catalog as a reference. Recipes are how skills compose into a finished result; the catalog is what each individual skill does.
+        Three recipes (skill chains) cover most engineering work. Recipes are how skills compose into a finished result: one for fuzzy discovery, one for methodical shipping, and one for user-facing work that pairs Pace's engineering loop with <a href="https://impeccable.style">impeccable</a>'s design craft.
       </p>
       <div class="eng-install-row">
         <a class="usecase-step-btn" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=engineering" target="_blank" rel="noopener">Install engineering in Cowork &nearr;</a>
@@ -224,16 +220,11 @@ const skills: Record<string, SkillEntry> = {
       </div>
     </header>
 
-    <nav class="eng-toc" aria-label="Jump to section">
-      <span class="eng-toc-label">Jump to</span>
+    <nav class="eng-toc" aria-label="Jump to recipe">
+      <span class="eng-toc-label">Jump to a recipe</span>
       <ul>
-        <li><a href="#recipes"><strong>Recipes</strong></a></li>
         {recipes.map((r) => (
-          <li><a href={`#recipe-${r.id}`}>&nbsp;&nbsp;{r.label}</a></li>
-        ))}
-        <li><a href="#skill-reference"><strong>Skill reference</strong></a></li>
-        {skillGroups.map((g) => (
-          <li><a href={`#${g.id}`}>&nbsp;&nbsp;{g.label}</a></li>
+          <li><a href={`#recipe-${r.id}`}>{r.label}</a></li>
         ))}
       </ul>
     </nav>
@@ -277,58 +268,13 @@ const skills: Record<string, SkillEntry> = {
       ))}
     </section>
 
-    <section class="eng-reference-anchor" id="skill-reference" aria-hidden="true"></section>
-
-    {skillGroups.map((group) => (
-      <section class="eng-section" id={group.id}>
-        <header class="eng-section-head">
-          <h2>{group.label}</h2>
-          <p>{group.blurb}</p>
-        </header>
-        <div class="eng-skill-grid">
-          {group.skills.map((slug) => {
-            const s = skills[slug];
-            return s ? (
-              <article class="eng-skill" id={`skill-${slug}`}>
-                <header class="eng-skill-head">
-                  <code class="eng-skill-name">/{slug}</code>
-                  <p class="eng-skill-summary">{s.name}</p>
-                </header>
-                <dl class="eng-skill-meta">
-                  <div>
-                    <dt>When you say</dt>
-                    <dd>
-                      <ul>
-                        {s.triggers.map((t) => (
-                          <li>{t}</li>
-                        ))}
-                      </ul>
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>Try it like this</dt>
-                    <dd class="eng-skill-example">{s.example}</dd>
-                  </div>
-                  <div>
-                    <dt>What you get back</dt>
-                    <dd>{s.produces}</dd>
-                  </div>
-                </dl>
-                <p class="eng-skill-link"><a href={`/docs/skills/${slug}`}>Full skill reference &rarr;</a></p>
-              </article>
-            ) : null;
-          })}
-        </div>
-      </section>
-    ))}
-
     <section class="eng-foot">
-      <h3>Want the full menu?</h3>
+      <h3>Want every skill spelled out?</h3>
       <p>
-        The <a href="/docs/skills">skill catalog</a> lists every one of the 34 engineering skills with the SKILL.md frontmatter, trigger phrases, and source files.
+        The <a href="/docs/skills">skill catalog</a> lists every one of the 34 engineering skills with the SKILL.md frontmatter, trigger phrases, and source files. Use it as a reference; come back here for the recipes that compose them.
       </p>
       <p>
-        Not on engineering? The <a href="/cookbook">main cookbook</a> has the per-team marquee recipes, including the sales pipeline brief and the marketing Monday report.
+        Not on engineering? The <a href="/cookbook">main cookbook</a> has the per-team marquee recipes.
       </p>
     </section>
   </article>
@@ -565,131 +511,6 @@ const skills: Record<string, SkillEntry> = {
     padding-top: var(--spacing-sm);
     margin: 0;
   }
-  .eng-reference-anchor {
-    height: 0;
-    scroll-margin-top: 80px;
-  }
-
-  /* Section */
-  .eng-section {
-    margin: var(--spacing-2xl) 0;
-    padding-top: var(--spacing-xl);
-    border-top: 1px solid var(--color-mist);
-  }
-  .eng-section-head {
-    margin-bottom: var(--spacing-xl);
-  }
-  .eng-section-head h2 {
-    font-family: var(--font-display);
-    font-size: var(--fs-2xl);
-    letter-spacing: -0.025em;
-    line-height: 1.15;
-    color: var(--color-ink);
-    margin-bottom: var(--spacing-sm);
-  }
-  .eng-section-head p {
-    font-size: var(--fs-md);
-    line-height: 1.6;
-    color: var(--color-charcoal);
-    max-width: 64ch;
-  }
-
-  /* Skill cards */
-  .eng-skill-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
-  }
-  .eng-skill {
-    background: var(--color-paper-elev);
-    border: 1px solid var(--color-mist);
-    border-radius: 12px;
-    padding: var(--spacing-lg);
-    transition: border-color var(--duration-fast) var(--ease-out-quart);
-  }
-  .eng-skill:hover {
-    border-color: var(--color-forest-soft);
-  }
-  .eng-skill-head {
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-bottom: var(--spacing-md);
-    padding-bottom: var(--spacing-sm);
-    border-bottom: 1px solid var(--color-mist);
-  }
-  .eng-skill-name {
-    font-family: var(--font-mono);
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--color-forest);
-    background: var(--color-forest-dim);
-    padding: 3px 10px;
-    border: 1px solid var(--color-forest-soft);
-    border-radius: 6px;
-  }
-  .eng-skill-summary {
-    font-size: var(--fs-md);
-    line-height: 1.45;
-    color: var(--color-ink);
-    flex: 1;
-    min-width: 240px;
-    font-weight: 500;
-  }
-  .eng-skill-meta {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: var(--spacing-md);
-    margin: 0;
-  }
-  .eng-skill-meta > div {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .eng-skill-meta dt {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-ash);
-    margin: 0;
-  }
-  .eng-skill-meta dd {
-    margin: 0;
-    font-size: var(--fs-sm);
-    line-height: 1.55;
-    color: var(--color-charcoal);
-  }
-  .eng-skill-meta ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .eng-skill-meta li {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--color-charcoal);
-  }
-  .eng-skill-example {
-    font-style: italic;
-    color: var(--color-charcoal);
-  }
-  .eng-skill-link {
-    margin-top: var(--spacing-md);
-    padding-top: var(--spacing-sm);
-    border-top: 1px dashed var(--color-mist);
-    font-family: var(--font-mono);
-    font-size: 12px;
-  }
-  .eng-skill-link a {
-    color: var(--color-forest);
-  }
-
   /* Foot */
   .eng-foot {
     margin-top: var(--spacing-2xl);
@@ -709,13 +530,4 @@ const skills: Record<string, SkillEntry> = {
     margin-bottom: var(--spacing-sm);
   }
 
-  @media (max-width: 720px) {
-    .eng-skill-meta {
-      grid-template-columns: 1fr;
-    }
-    .eng-skill-head {
-      flex-direction: column;
-      gap: 8px;
-    }
-  }
 </style>
