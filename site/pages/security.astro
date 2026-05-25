@@ -1,0 +1,265 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Security · Pace"
+  description="Pace's security posture: data flow, token handling, OAuth scopes, sub-processors, vulnerability disclosure. Built for enterprise review."
+  canonicalPath="/security"
+>
+  <article class="security-page">
+    <header class="security-header">
+      <span class="security-eyebrow">Legal &middot; Security</span>
+      <h1>Security</h1>
+      <p class="security-lede">
+        Pace is open source software you install in your own AI harness. The most important security property is what we <em>don't</em> do: Pace's infrastructure is not in the data path. Skills run inside your Claude Code or Cowork install; MCP traffic goes directly between your harness and your vendors. This page documents the model so your security team can review it.
+      </p>
+    </header>
+
+    <section class="security-section">
+      <h2>Data flow at a glance</h2>
+      <pre class="security-diagram"><code>┌─────────────────────────┐                    ┌─────────────────────────┐
+│  Your machine           │                    │  Your vendors           │
+│  (Claude Code / Cowork) │  ◀─── MCP/HTTPS ──▶│  (Slack, HubSpot,       │
+│                         │      OAuth         │   Snowflake, Notion,    │
+│  Pace plugin files      │                    │   Linear, etc.)         │
+│  Stored locally         │                    │                         │
+└─────────────────────────┘                    └─────────────────────────┘
+              │
+              │ Optional: read marketplace catalog
+              │ (HTTPS GET, no body, no cookies)
+              ▼
+┌─────────────────────────┐
+│  pace.tools             │
+│  (Cloudflare Pages,     │
+│   static)               │
+└─────────────────────────┘</code></pre>
+      <p>
+        Pace's servers see read-only catalog requests from your machine. They do not see : and cannot see : the contents of your Slack messages, HubSpot deals, Snowflake queries, or any other authorized vendor data.
+      </p>
+    </section>
+
+    <section class="security-section">
+      <h2>Where things run</h2>
+
+      <h3>The website</h3>
+      <p>
+        Static files on <strong>Cloudflare Pages</strong>. No application server. No database. No user accounts.
+      </p>
+
+      <h3>The CLI (<code>npx pace-tools</code>)</h3>
+      <p>
+        Runs locally on your machine. Wraps <code>claude plugin</code> commands. The CLI never establishes outbound connections to a Pace-controlled server beyond reading the public catalog JSON.
+      </p>
+
+      <h3>Plugin skills</h3>
+      <p>
+        Live inside your Claude Code / Cowork install at <code>~/.claude/plugins/cache/pace/&lt;plugin&gt;/&lt;version&gt;/</code>. The skill text (a <code>SKILL.md</code> per skill) is loaded into your AI harness context when the skill triggers. Nothing in Pace's deploy hosts these executions.
+      </p>
+
+      <h3>Scheduled Routines</h3>
+      <p>
+        Routines (the cookbook's automation primitive) run on <strong>Anthropic's cloud infrastructure</strong>, not on Pace's. When a Routine fires, it spawns a Claude Code cloud session with your authorized connectors. Anthropic's privacy + security policies govern that execution.
+      </p>
+    </section>
+
+    <section class="security-section">
+      <h2>OAuth tokens + credentials</h2>
+      <p>
+        Pace plugins never store credentials. The flow:
+      </p>
+      <ol>
+        <li>You run a skill that needs a connector (e.g. HubSpot).</li>
+        <li>Claude Code opens an OAuth window pointed at the vendor's auth server.</li>
+        <li>You sign in to the vendor; the vendor issues a token scoped to whatever permissions you approved.</li>
+        <li>Claude Code stores the token in its own credential store on your machine (macOS Keychain on Mac; Windows Credential Manager on Windows; libsecret on Linux). Pace does not have access to it.</li>
+        <li>Subsequent MCP calls authenticate with the stored token. Tokens refresh per the vendor's lifecycle.</li>
+      </ol>
+      <p>
+        Revoke access at any time from the vendor's account settings. The token disappears; the next skill run prompts a new OAuth flow.
+      </p>
+    </section>
+
+    <section class="security-section">
+      <h2>Sub-processors and dependencies</h2>
+      <p>
+        Pace itself has no sub-processors because it has no customer data to process. The trust chain runs from your machine to:
+      </p>
+      <ul>
+        <li><strong>Anthropic</strong>: Claude Code, Cowork desktop app, Routines. <a href="https://www.anthropic.com/legal/privacy">Privacy policy</a> &middot; <a href="https://trust.anthropic.com">trust.anthropic.com</a></li>
+        <li><strong>Cloudflare</strong>: hosts the static pace.tools site. Logs are subject to <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare's policy</a>.</li>
+        <li><strong>GitHub</strong>: hosts the source repo + marketplace clone target. <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">Privacy statement</a>.</li>
+        <li><strong>npm</strong>: hosts the <code>pace-tools</code> package. Standard registry distribution.</li>
+        <li><strong>Each MCP vendor</strong>: Slack, HubSpot, Snowflake, Notion, etc. Their privacy + security policies govern data they hold.</li>
+      </ul>
+    </section>
+
+    <section class="security-section">
+      <h2>What Pace can and can't see</h2>
+      <p>
+        <strong>Pace can see:</strong> public HTTPS requests to pace.tools (Cloudflare access logs : standard IP, user-agent, path), GitHub stars / forks / issues (public).
+      </p>
+      <p>
+        <strong>Pace cannot see:</strong> your authorized vendor data, your tokens, your plugin executions, your Claude conversations, your Cowork sessions, your skill outputs.
+      </p>
+    </section>
+
+    <section class="security-section">
+      <h2>Self-hosting</h2>
+      <p>
+        Pace is Apache-2.0. To fully isolate from Pace's infrastructure:
+      </p>
+      <ol>
+        <li>Fork <a href="https://github.com/GoldenBerry-SO/Pace">github.com/GoldenBerry-SO/Pace</a> to your org.</li>
+        <li>Host your fork's <code>marketplace.json</code> on internal infrastructure (or use the GitHub raw URL).</li>
+        <li>Point <code>claude plugin marketplace add &lt;your-org&gt;/&lt;your-fork&gt;</code> at your fork.</li>
+      </ol>
+      <p>
+        No requests touch pace.tools or goldenberry.so. You inherit the whole posture; Anthropic + vendor relationships remain.
+      </p>
+    </section>
+
+    <section class="security-section">
+      <h2>GDPR, CCPA, and similar</h2>
+      <p>
+        Pace processes no personal data of website visitors beyond what Cloudflare's edge logs hold for security. The CLI processes no personal data on Pace-controlled infrastructure at all.
+      </p>
+      <p>
+        Plugin executions and connector data are processed by Anthropic + the vendor MCP servers, not by Pace. Refer to each vendor's GDPR posture for the regulatory frame on the data they hold.
+      </p>
+    </section>
+
+    <section class="security-section">
+      <h2>Vulnerability disclosure</h2>
+      <p>
+        Found a security issue? Email <a href="mailto:hello@goldenberry.so">hello@goldenberry.so</a> with the details. Use subject prefix <strong>[security]</strong>. We confirm receipt within 2 business days.
+      </p>
+      <p>
+        Pace is open source; once a fix lands and a release ships, we credit the reporter (with their permission) in the release notes. We do not run a bug bounty; volunteer reports are appreciated.
+      </p>
+      <p class="security-aside">
+        For acute issues in Anthropic infrastructure or a specific vendor's MCP server, contact that vendor directly : we can't fix what isn't ours.
+      </p>
+    </section>
+
+    <section class="security-section">
+      <h2>Audit + compliance posture</h2>
+      <p>
+        Pace itself is not SOC2 / ISO / FedRAMP certified, because Pace is software code that runs on your infrastructure, not a SaaS application that processes your data. The compliance question for adoption is about <em>Anthropic</em> (the Routines + Cowork host) and each <em>vendor</em> you connect.
+      </p>
+      <p>
+        If your security team needs Pace-specific attestations beyond what's documented here, email <a href="mailto:hello@goldenberry.so">hello@goldenberry.so</a> with what you need. We are a small team and respond honestly about what we can sign.
+      </p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .security-page {
+    max-width: var(--width-content);
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
+  }
+  .security-header {
+    margin-bottom: var(--spacing-2xl);
+    border-bottom: 1px solid var(--color-mist);
+    padding-bottom: var(--spacing-lg);
+  }
+  .security-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    margin-bottom: var(--spacing-sm);
+    display: inline-block;
+  }
+  .security-header h1 {
+    font-family: var(--font-display);
+    font-size: var(--fs-3xl);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-md);
+  }
+  .security-lede {
+    font-size: var(--fs-md);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    max-width: 64ch;
+  }
+  .security-section {
+    margin-bottom: var(--spacing-xl);
+  }
+  .security-section h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--spacing-md);
+  }
+  .security-section h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--color-ink);
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
+  }
+  .security-section p,
+  .security-section li {
+    font-size: var(--fs-base);
+    color: var(--color-charcoal);
+    line-height: 1.65;
+    margin-bottom: var(--spacing-sm);
+    max-width: 70ch;
+  }
+  .security-section ol,
+  .security-section ul {
+    padding-left: var(--spacing-md);
+  }
+  .security-section li {
+    margin-bottom: 4px;
+  }
+  .security-section strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .security-section a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .security-aside {
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+    font-style: italic;
+    border-left: 2px solid var(--color-mist);
+    padding-left: var(--spacing-md);
+    margin-left: 2px;
+  }
+  .security-diagram {
+    background: oklch(96% 0.008 140);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+    padding: var(--spacing-md);
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    line-height: 1.45;
+    color: var(--color-ink);
+    overflow-x: auto;
+    margin: var(--spacing-md) 0;
+  }
+  .security-diagram code {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: inherit;
+    white-space: pre;
+  }
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: var(--color-code-bg);
+    padding: 1px 7px;
+    border-radius: 4px;
+    border: 1px solid var(--color-code-border);
+    color: var(--color-ink);
+  }
+</style>

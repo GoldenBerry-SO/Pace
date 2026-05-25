@@ -1,0 +1,359 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Pricing · Pace"
+  description="Pace is free and Apache 2.0. The honest math on what costs money when you adopt it (vendor accounts, Claude plan) and what doesn't (Pace itself, the plugins, the cookbook)."
+  canonicalPath="/pricing"
+>
+  <article class="pricing-page">
+    <header class="pricing-header">
+      <span class="pricing-eyebrow">Pricing</span>
+      <h1>Pace is free.</h1>
+      <p class="pricing-lede">
+        Pace itself doesn't bill anyone. It's Apache 2.0 open source. You pay for the things you'd pay for anyway: your AI harness subscription and the vendor accounts your team uses.
+      </p>
+    </header>
+
+    <section class="pricing-grid">
+      <div class="pricing-tier pricing-tier-primary">
+        <span class="pricing-tier-label">Free forever</span>
+        <h2>Pace itself</h2>
+        <div class="pricing-tier-amount">
+          <span class="pricing-tier-currency">$</span>
+          <span class="pricing-tier-number">0</span>
+        </div>
+        <p class="pricing-tier-desc">No paywall. No license keys. No "Pro" tier. All 50 plugins. All 11 team guides. The full cookbook. The router.</p>
+        <ul class="pricing-tier-includes">
+          <li>50 plugins across every team</li>
+          <li>Every skill, every connector config</li>
+          <li>The <code>/pace</code> router for your company-specific commands</li>
+          <li>The cookbook with copy-pasteable recipes</li>
+          <li>Self-host or fork freely (Apache 2.0)</li>
+        </ul>
+        <a class="pricing-tier-cta" href="/docs/install">Install now &nearr;</a>
+      </div>
+
+      <div class="pricing-tier">
+        <span class="pricing-tier-label">Paid by you, not by Pace</span>
+        <h2>What costs money</h2>
+        <p class="pricing-tier-desc">
+          Things you'd be paying for whether Pace existed or not. Pace doesn't take a cut of any of them.
+        </p>
+        <dl class="pricing-tier-costs">
+          <div>
+            <dt>Claude subscription</dt>
+            <dd>Pro, Max, Team, or Enterprise. Required to run skills in Claude Code or Cowork. <a href="https://claude.com/pricing">Anthropic's pricing</a>.</dd>
+          </div>
+          <div>
+            <dt>Routines usage</dt>
+            <dd>Cloud-scheduled Routines count against your Claude plan's usage. Free tier exists; heavy automation pushes toward Max / Team.</dd>
+          </div>
+          <div>
+            <dt>Vendor accounts</dt>
+            <dd>HubSpot, Slack, Snowflake, Notion, Linear, etc. Pace's plugins talk to whatever you already have. We don't resell.</dd>
+          </div>
+          <div>
+            <dt>API costs at the vendor</dt>
+            <dd>Some vendors meter API usage (Apollo credits, Snowflake query compute, ZoomInfo lookups). That goes to them, not us.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="pricing-section">
+      <h2>Optional: GoldenBerry enablement</h2>
+      <p>
+        We're the small team that maintains Pace. Most companies don't need help : the install, cookbook, and team guides are designed to be self-serve. But if you want hands-on rollout for a 50+ person team (kickoff workshops, role-specific training, custom skill authoring on top of the <code>/pace</code> router, integration with your specific stack), we offer paid enablement.
+      </p>
+      <p>
+        Engagements are project-based, scoped to your team size and tool stack. Email <a href="mailto:hello@goldenberry.so">hello@goldenberry.so</a> to start a conversation. Mention "Pace enablement" in the subject so it routes to the right person.
+      </p>
+      <p class="pricing-aside">
+        We will tell you honestly if a paid engagement isn't a good fit for your situation. Half the conversations end with us pointing you at <a href="/docs/teams">the team guides</a> and saying "you don't need us, this is enough."
+      </p>
+    </section>
+
+    <section class="pricing-section">
+      <h2>FAQs</h2>
+
+      <details class="pricing-faq-item">
+        <summary>What if Pace becomes popular : will pricing change?</summary>
+        <p>
+          The router, the plugins, and the cookbook stay free + Apache 2.0. That's a firm commitment of the project. If a future paid surface ever exists (e.g. a hosted analytics layer on top of plugin executions), it would be a separate product, not a license change to what's here today.
+        </p>
+      </details>
+
+      <details class="pricing-faq-item">
+        <summary>Do I need a Claude subscription specifically?</summary>
+        <p>
+          To run plugins in Claude Code or Cowork, yes. Pace also installs into Cursor, Gemini CLI, Codex CLI, and 8 other harnesses; in those harnesses you use that harness's pricing. The MCP connector model is harness-agnostic, but Routines (cloud-scheduled execution) are Anthropic-specific.
+        </p>
+      </details>
+
+      <details class="pricing-faq-item">
+        <summary>What does it cost to install for my 30-person sales team?</summary>
+        <p>
+          Pace itself: $0. Sales reps need a Claude subscription (Pro starts at ~$20/month). HubSpot/Salesforce/etc. are unchanged from whatever you already pay. If you want Routines firing on a schedule (the Monday pipeline brief), check the <a href="https://claude.com/pricing">Claude plan tiers</a> : Team is usually the right starting point for org-wide automation.
+        </p>
+      </details>
+
+      <details class="pricing-faq-item">
+        <summary>Are partner plugins (Apollo, Slack, Zoom, etc.) paid?</summary>
+        <p>
+          The plugin code is free + open source. The vendor service is whatever you pay them today. Apollo charges per credit; Slack/Zoom have their own seat tiers. Pace doesn't change any of that.
+        </p>
+      </details>
+
+      <details class="pricing-faq-item">
+        <summary>Can I fork Pace and host everything internally?</summary>
+        <p>
+          Yes. Apache 2.0 license is permissive: fork, white-label, rename the router from <code>/pace</code> to your company name, ship to your own employees. We'd appreciate attribution; not legally required.
+        </p>
+      </details>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .pricing-page {
+    max-width: var(--width-content);
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
+  }
+  .pricing-header {
+    margin-bottom: var(--spacing-2xl);
+    border-bottom: 1px solid var(--color-mist);
+    padding-bottom: var(--spacing-lg);
+  }
+  .pricing-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    margin-bottom: var(--spacing-sm);
+    display: inline-block;
+  }
+  .pricing-header h1 {
+    font-family: var(--font-display);
+    font-size: var(--fs-3xl);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-md);
+  }
+  .pricing-lede {
+    font-size: var(--fs-md);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    max-width: 64ch;
+  }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+  }
+  @media (max-width: 880px) {
+    .pricing-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .pricing-tier {
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 12px;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  .pricing-tier-primary {
+    border-color: var(--color-forest);
+    background: color-mix(in oklch, var(--color-paper-elev) 88%, var(--color-forest-dim));
+  }
+  .pricing-tier-label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    align-self: flex-start;
+  }
+  .pricing-tier h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+    margin: 0;
+  }
+  .pricing-tier-amount {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin: var(--spacing-xs) 0;
+  }
+  .pricing-tier-currency {
+    font-family: var(--font-display);
+    font-size: var(--fs-lg);
+    color: var(--color-ash);
+  }
+  .pricing-tier-number {
+    font-family: var(--font-display);
+    font-size: var(--fs-3xl);
+    font-weight: 700;
+    color: var(--color-ink);
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .pricing-tier-desc {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.6;
+  }
+  .pricing-tier-includes {
+    list-style: none;
+    padding: 0;
+    margin: var(--spacing-xs) 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .pricing-tier-includes li {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.55;
+  }
+  .pricing-tier-includes li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-forest);
+    font-weight: 700;
+  }
+  .pricing-tier-includes code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: var(--color-code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--color-code-border);
+    color: var(--color-ink);
+  }
+  .pricing-tier-cta {
+    align-self: flex-start;
+    margin-top: var(--spacing-sm);
+    padding: 8px 18px;
+    background: var(--color-forest);
+    color: var(--color-paper);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background var(--duration-fast) var(--ease-out-quart);
+  }
+  .pricing-tier-cta:hover {
+    background: var(--color-forest-hover);
+  }
+  .pricing-tier-costs {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin: var(--spacing-xs) 0 0 0;
+  }
+  .pricing-tier-costs > div {
+    border-left: 2px solid var(--color-mist);
+    padding-left: var(--spacing-sm);
+  }
+  .pricing-tier-costs dt {
+    font-family: var(--font-display);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--color-ink);
+    margin-bottom: 2px;
+  }
+  .pricing-tier-costs dd {
+    margin: 0;
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+  }
+  .pricing-tier-costs a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .pricing-section {
+    margin-bottom: var(--spacing-xl);
+  }
+  .pricing-section h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+    margin-bottom: var(--spacing-md);
+  }
+  .pricing-section p {
+    font-size: var(--fs-base);
+    color: var(--color-charcoal);
+    line-height: 1.65;
+    margin-bottom: var(--spacing-sm);
+    max-width: 70ch;
+  }
+  .pricing-section a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .pricing-aside {
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+    font-style: italic;
+    border-left: 2px solid var(--color-mist);
+    padding-left: var(--spacing-md);
+    margin-left: 2px;
+  }
+  .pricing-faq-item {
+    border-bottom: 1px solid var(--color-mist);
+    padding: var(--spacing-sm) 0;
+  }
+  .pricing-faq-item summary {
+    font-family: var(--font-display);
+    font-size: var(--fs-base);
+    font-weight: 600;
+    color: var(--color-ink);
+    cursor: pointer;
+    padding: var(--spacing-xs) 0;
+    list-style: none;
+  }
+  .pricing-faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .pricing-faq-item summary::before {
+    content: '+';
+    font-family: var(--font-mono);
+    color: var(--color-forest);
+    margin-right: var(--spacing-sm);
+    transition: transform var(--duration-fast) var(--ease-out-quart);
+    display: inline-block;
+  }
+  .pricing-faq-item[open] summary::before {
+    content: '−';
+  }
+  .pricing-faq-item p {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.65;
+    padding: 0 0 var(--spacing-sm) 26px;
+    max-width: 70ch;
+  }
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: var(--color-code-bg);
+    padding: 1px 7px;
+    border-radius: 4px;
+    border: 1px solid var(--color-code-border);
+    color: var(--color-ink);
+  }
+</style>

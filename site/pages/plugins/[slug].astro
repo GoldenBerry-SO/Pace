@@ -137,9 +137,20 @@ for (const cat of PLUGIN_CATEGORY_ORDER) sidebarItems[cat] = [];
       <h1>{displayName}</h1>
       <p class="plugin-lede">{marketplaceDescription}</p>
 
-      <div class="plugin-install">
-        <span class="plugin-install-label">Install</span>
-        <code>claude plugin install {pluginName}@pace</code>
+      <div class="plugin-install-row">
+        <a
+          class="plugin-install-cta"
+          href={`https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=${pluginName}`}
+          target="_blank"
+          rel="noopener"
+        >
+          <span class="plugin-install-cta-icon" aria-hidden="true">↗</span>
+          <span>Install in Cowork</span>
+        </a>
+        <div class="plugin-install-terminal">
+          <span class="plugin-install-terminal-label">Or in terminal</span>
+          <code>claude plugin install {pluginName}@pace</code>
+        </div>
       </div>
     </header>
 
@@ -333,23 +344,53 @@ for (const cat of PLUGIN_CATEGORY_ORDER) sidebarItems[cat] = [];
     margin-bottom: var(--spacing-lg);
     max-width: 64ch;
   }
-  .plugin-install {
+  .plugin-install-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+    margin-top: var(--spacing-sm);
+  }
+  .plugin-install-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: var(--color-forest);
+    color: var(--color-paper);
+    font-family: var(--font-display);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background var(--duration-fast) var(--ease-out-quart),
+                transform var(--duration-fast) var(--ease-out-quart);
+  }
+  .plugin-install-cta:hover {
+    background: var(--color-forest-hover);
+    transform: translateY(-1px);
+  }
+  .plugin-install-cta-icon {
+    font-size: 0.9em;
+    opacity: 0.85;
+  }
+  .plugin-install-terminal {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-    padding: var(--spacing-sm) var(--spacing-md);
+    padding: 8px var(--spacing-md);
     background: var(--color-paper-elev);
     border: 1px solid var(--color-mist);
     border-radius: 8px;
   }
-  .plugin-install-label {
+  .plugin-install-terminal-label {
     font-family: var(--font-mono);
     font-size: var(--fs-xs);
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--color-ash);
   }
-  .plugin-install code {
+  .plugin-install-terminal code {
     font-family: var(--font-mono);
     font-size: var(--fs-sm);
     background: transparent;

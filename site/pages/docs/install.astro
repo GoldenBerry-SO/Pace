@@ -35,30 +35,83 @@ const currentPath = '/docs/install';
       <span class="installpage-eyebrow">Get started</span>
       <h1>Install Pace</h1>
       <p class="installpage-lede">
-        Pace is a Claude Code plugin marketplace. Register the marketplace once, then install the plugins your team uses. Two install paths: <strong>Claude Code CLI</strong> for engineers, and the <strong>Cowork desktop app</strong> for everyone else.
+        Pace is a Claude Code plugin marketplace. Two install paths, both first-class: <strong>Cowork</strong> (the Claude desktop app) for click-to-install, and the <strong>Claude Code CLI</strong> for terminal-driven flows. Same plugins, same end state, different surface.
       </p>
     </header>
+
+    <div class="installpage-paths">
+      <a class="installpage-path installpage-path-cowork" href="#cowork">
+        <span class="installpage-path-label">Click to install</span>
+        <h3>Cowork (desktop)</h3>
+        <p>One link per plugin. Cowork opens, asks you to confirm. No terminal, no commands. Right path if you don't write code for a living.</p>
+        <span class="installpage-path-cta">Show me &darr;</span>
+      </a>
+      <a class="installpage-path installpage-path-claude" href="#claude-code">
+        <span class="installpage-path-label">Run in terminal</span>
+        <h3>Claude Code (CLI)</h3>
+        <p>Three commands: register the marketplace, install the plugins your team uses, connect tools on first run. Right path if you live in the terminal.</p>
+        <span class="installpage-path-cta">Show me &darr;</span>
+      </a>
+    </div>
 
     <nav class="installpage-toc" aria-label="On this page">
       <span class="installpage-toc-label">On this page</span>
       <ol class="installpage-toc-list">
-        <li><a href="#claude-code">Claude Code (engineers)</a></li>
-        <li><a href="#cowork">Cowork (non-technical users)</a></li>
+        <li><a href="#cowork">Cowork (click-to-install)</a></li>
+        <li><a href="#claude-code">Claude Code (terminal)</a></li>
         <li><a href="#picking">Picking plugins</a></li>
-        <li><a href="#pace-cli">The <code>pace</code> CLI</a></li>
+        <li><a href="#pace-cli">The <code>pace-tools</code> CLI</a></li>
         <li><a href="#updating">Updating</a></li>
         <li><a href="#verifying">Verifying it worked</a></li>
       </ol>
     </nav>
 
-    <section class="installpage-section" id="claude-code">
-      <h2>Claude Code (engineers)</h2>
+    <section class="installpage-section" id="cowork">
+      <h2>Cowork (click-to-install)</h2>
       <p>
-        If you already run Claude Code in your terminal, this is the canonical flow. Three commands, no config files to edit, no API keys to manage.
+        Cowork is the Claude desktop app: a graphical interface to the same plugin ecosystem Claude Code uses in the terminal. Same plugins, same end state, different surface. In Cowork you click a link instead of typing a command.
+      </p>
+
+      <h3>1. Install Cowork</h3>
+      <p>Download from <a href="https://claude.com/product/cowork" target="_blank" rel="noopener">claude.com/product/cowork</a> and sign in with your Anthropic account.</p>
+
+      <h3>2. Click an install link per plugin</h3>
+      <p>
+        Each plugin has a deep link that opens Cowork and adds the Pace marketplace plus the plugin in a single step.
+      </p>
+      <pre class="installpage-pre"><code><span class="installpage-comment"># Pattern</span>
+https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&amp;plugin=&lt;name&gt;
+
+<span class="installpage-comment"># Examples</span>
+https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&amp;plugin=sales
+https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&amp;plugin=marketing
+https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&amp;plugin=engineering</code></pre>
+      <p>
+        Cowork prompts you to confirm the install. Want a curated set per role? The <a href="/docs/teams">team guides</a> have one-click install buttons for sales, marketing, engineering, finance, and the rest.
+      </p>
+
+      <div class="installpage-callout installpage-callout-warning">
+        <strong>Restart Cowork after the last install.</strong> The MCP servers (Slack, HubSpot, Notion, etc.) only register cleanly on a fresh app start. Quit the app completely (Cmd+Q on macOS), then reopen it. If your <code>/</code> menu doesn't show the new commands, this is almost always the fix.
+      </div>
+
+      <h3>3. Authorize connectors when prompted</h3>
+      <p>
+        The first time a skill needs an external tool (Slack, HubSpot, Notion, etc.), Cowork opens an OAuth window. Sign in once per service, approve the scope, and the connector stays authorized for every plugin that uses it.
+      </p>
+
+      <div class="installpage-callout">
+        <strong>Rolling Pace out to a non-technical team.</strong> Install Cowork on each user's machine and send them a shortlist of deep links for the plugins they need. Each person authorizes connectors against their own accounts, so HR sees only HR's HubSpot, sales sees only sales's HubSpot, and so on.
+      </div>
+    </section>
+
+    <section class="installpage-section" id="claude-code">
+      <h2>Claude Code (terminal)</h2>
+      <p>
+        If you live in the terminal, three commands get you the same end state Cowork does. No config files to edit, no API keys to manage.
       </p>
 
       <h3>1. Register the marketplace</h3>
-      <p>One-time per project. Tells Claude Code where to find Pace's catalog.</p>
+      <p>One-time per machine. Tells Claude Code where to find Pace's catalog.</p>
       <pre class="installpage-pre"><code>claude plugin marketplace add GoldenBerry-SO/Pace</code></pre>
       <p class="installpage-aside">
         Claude Code clones the GitHub repo and reads its <a href="https://github.com/GoldenBerry-SO/Pace/blob/main/.claude-plugin/marketplace.json">marketplace.json</a>. The marketplace registers as <code>pace</code>; you install plugins with the <code>@pace</code> suffix.
@@ -85,41 +138,6 @@ claude plugin install marketing@pace</code></pre>
       <p>
         For the full connector model (OAuth, self-hosted URLs, local stdio servers), see <a href="/docs/connectors">Connectors &amp; MCP</a>.
       </p>
-    </section>
-
-    <section class="installpage-section" id="cowork">
-      <h2>Cowork (non-technical users)</h2>
-      <p>
-        Cowork is the Claude desktop app, a graphical interface to the same plugin ecosystem Claude Code uses in the terminal. Pace plugins install in Cowork the same way they install anywhere else, with one important difference: in Cowork you click a link instead of running a command.
-      </p>
-
-      <h3>One-click install per plugin</h3>
-      <p>
-        Each plugin has a deep link that opens Cowork and adds the Pace marketplace plus the plugin in a single step. Open one of these in your browser (Cowork has to be installed first):
-      </p>
-      <pre class="installpage-pre"><code><span class="installpage-comment"># Pattern</span>
-https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&amp;plugin=&lt;name&gt;
-
-<span class="installpage-comment"># Examples</span>
-https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&amp;plugin=sales
-https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&amp;plugin=marketing
-https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&amp;plugin=engineering</code></pre>
-      <p>
-        Cowork prompts you to confirm the install. The pattern is the same the Anthropic-published partner plugins (Apollo, Slack, Zoom, etc.) use; see Cowork's own docs for the current UI specifics.
-      </p>
-
-      <div class="installpage-callout installpage-callout-warning">
-        <strong>Restart Cowork after the last install.</strong> The MCP servers (Slack, HubSpot, Notion, etc.) only register cleanly on a fresh app start. Quit the app completely (Cmd+Q on macOS), then reopen it. If your <code>/</code> menu doesn't show the new commands, this is almost always the fix.
-      </div>
-
-      <h3>Authorize connectors when prompted</h3>
-      <p>
-        The first time a skill needs an external tool (Slack, HubSpot, Notion, etc.), Cowork opens an OAuth window. Sign in once, approve the scope, and the connector stays authorized for every plugin that uses it.
-      </p>
-
-      <div class="installpage-callout">
-        <strong>One install, multiple users.</strong> If you're rolling Pace out to a team of non-technical users, install Cowork on each user's machine and send them a shortlist of deep links for the plugins they need. Each person authorizes connectors against their own accounts, so HR sees only HR's HubSpot, sales sees only sales's HubSpot, and so on.
-      </div>
     </section>
 
     <section class="installpage-section" id="picking">
@@ -238,6 +256,63 @@ claude plugin install &lt;name&gt;@pace      <span class="installpage-comment">#
   .installpage-lede a {
     color: var(--color-forest);
     border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .installpage-paths {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+  }
+  @media (max-width: 720px) {
+    .installpage-paths {
+      grid-template-columns: 1fr;
+    }
+  }
+  .installpage-path {
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 10px;
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color var(--duration-fast) var(--ease-out-quart),
+                transform var(--duration-fast) var(--ease-out-quart),
+                background var(--duration-fast) var(--ease-out-quart);
+  }
+  .installpage-path:hover {
+    border-color: var(--color-forest);
+    background: color-mix(in oklch, var(--color-paper-elev) 88%, var(--color-forest-dim));
+    transform: translateY(-2px);
+  }
+  .installpage-path-label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+  }
+  .installpage-path h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+    margin: 0;
+  }
+  .installpage-path p {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.6;
+  }
+  .installpage-path-cta {
+    margin-top: auto;
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    color: var(--color-forest);
+    font-weight: 600;
   }
   .installpage-toc {
     background: var(--color-paper-elev);

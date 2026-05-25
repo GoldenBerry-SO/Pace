@@ -86,19 +86,63 @@ const jsonLd = [
       </div>
 
       <aside class="hero-right" aria-label="Quick install">
-        <div class="hero-terminal">
-          <div class="terminal-bar">
-            <span class="terminal-dot" data-dot="r"></span>
-            <span class="terminal-dot" data-dot="y"></span>
-            <span class="terminal-dot" data-dot="g"></span>
-            <span class="terminal-label">install pace</span>
-          </div>
-          <pre class="terminal-body"><code><span class="prompt">$</span> claude plugin marketplace add GoldenBerry-SO/Pace
+        <div class="hero-install-paths">
+          <a class="hero-install-card hero-install-card-cowork" href="/docs/install#cowork">
+            <span class="hero-install-card-label">Click to install</span>
+            <h3>Cowork (desktop)</h3>
+            <p>For sales, marketing, finance, ops, HR, anyone whose terminal stays closed. One link per plugin.</p>
+            <span class="hero-install-card-cta">Show me how &rarr;</span>
+          </a>
+          <div class="hero-install-card hero-install-card-terminal">
+            <span class="hero-install-card-label">Run in terminal</span>
+            <h3>Claude Code (CLI)</h3>
+            <p>For engineers and ops who'd rather paste a command. Three lines and you're in.</p>
+            <div class="hero-terminal">
+              <pre class="terminal-body"><code><span class="prompt">$</span> claude plugin marketplace add GoldenBerry-SO/Pace
 <span class="muted">Registers 50 plugins.</span>
 <span class="prompt">$</span> claude plugin install sales@pace
 <span class="prompt">$</span> /sales:call-prep Acme Corp</code></pre>
+            </div>
+            <a class="hero-install-card-cta" href="/docs/install#claude-code">Full install docs &rarr;</a>
+          </div>
         </div>
       </aside>
+    </div>
+  </section>
+
+  <!-- ============================================
+       WHO'S IT FOR, persona shortcuts
+       ============================================ -->
+  <section class="section roles" id="roles" aria-labelledby="roles-title">
+    <div class="roles-inner">
+      <div class="roles-head">
+        <span class="roles-eyebrow">Who's it for</span>
+        <h2 class="roles-title" id="roles-title">Pick the team you're on.</h2>
+        <p class="roles-lede">
+          Every role gets a starter set of plugins, a sample week of workflows, and a one-click install in Cowork. Click your team to see what we've put together.
+        </p>
+      </div>
+
+      <ul class="roles-grid" role="list">
+        <li><a class="role-card" href="/docs/teams/sales"><span class="role-card-name">Sales</span><span class="role-card-blurb">Prep calls, run pipeline reviews, draft outreach.</span></a></li>
+        <li><a class="role-card" href="/docs/teams/marketing"><span class="role-card-name">Marketing</span><span class="role-card-blurb">Plan campaigns, draft content, enforce brand voice.</span></a></li>
+        <li><a class="role-card" href="/docs/teams/engineering"><span class="role-card-name">Engineering</span><span class="role-card-blurb">Stacked-PR shipping, code review, diagnosis, TDD.</span></a></li>
+        <li><a class="role-card" href="/docs/teams/data"><span class="role-card-name">Data</span><span class="role-card-blurb">SQL drafting, anomaly digests, dashboards.</span></a></li>
+        <li><a class="role-card" href="/docs/teams/product"><span class="role-card-name">Product</span><span class="role-card-blurb">User-research synthesis, specs, competitive briefs.</span></a></li>
+        <li><a class="role-card" href="/docs/teams/finance"><span class="role-card-name">Finance</span><span class="role-card-blurb">Month-end runbook, variance, journal entries.</span></a></li>
+        <li><a class="role-card" href="/docs/teams/legal"><span class="role-card-name">Legal</span><span class="role-card-blurb">NDA triage, contract review, compliance.</span></a></li>
+        <li><a class="role-card" href="/docs/teams/operations"><span class="role-card-name">Operations</span><span class="role-card-blurb">Cross-team digests, vendor review, runbooks.</span></a></li>
+        <li><a class="role-card" href="/docs/teams/people"><span class="role-card-name">People</span><span class="role-card-blurb">Recruiting pipeline, interview prep, offer letters.</span></a></li>
+        <li><a class="role-card" href="/docs/teams/customer-support"><span class="role-card-name">Customer Support</span><span class="role-card-blurb">Ticket triage, response drafts, escalation.</span></a></li>
+        <li><a class="role-card" href="/docs/teams/productivity"><span class="role-card-name">Productivity</span><span class="role-card-blurb">Task management, daily updates, project memory.</span></a></li>
+        <li><a class="role-card" href="/docs/teams/design"><span class="role-card-name">Design</span><span class="role-card-blurb">Defers to impeccable for frontend craft.</span></a></li>
+      </ul>
+
+      <div class="roles-footnote">
+        <p>
+          You're an engineer specifically? The full <a href="/docs/skills">skill catalog</a> ships 34 engineering skills with the disciplined stacked-PR workflow, plus careful-review, TDD, diagnose, and ship-pr. <a href="/docs/skills">See the skill catalog &rarr;</a>
+        </p>
+      </div>
     </div>
   </section>
 
@@ -737,9 +781,183 @@ claude plugin install sales@pace</code></pre>
     top: var(--spacing-lg);
   }
   .hero-terminal {
-    border-radius: 12px;
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 12px 40px -16px oklch(15% 0.012 150 / 0.18), 0 2px 4px -2px oklch(15% 0.012 150 / 0.1);
+    margin-top: var(--spacing-xs);
+  }
+  .hero-terminal .terminal-body {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: oklch(18% 0.015 150);
+    color: oklch(92% 0.005 150);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    line-height: 1.55;
+    overflow-x: auto;
+    margin: 0;
+  }
+  .hero-install-paths {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  .hero-install-card {
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 12px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color var(--duration-fast) var(--ease-out-quart),
+                background var(--duration-fast) var(--ease-out-quart),
+                transform var(--duration-fast) var(--ease-out-quart);
+  }
+  a.hero-install-card:hover {
+    border-color: var(--color-forest);
+    background: color-mix(in oklch, var(--color-paper-elev) 88%, var(--color-forest-dim));
+    transform: translateY(-2px);
+  }
+  .hero-install-card-cowork {
+    border-color: var(--color-forest);
+    background: color-mix(in oklch, var(--color-paper-elev) 88%, var(--color-forest-dim));
+  }
+  a.hero-install-card-cowork:hover {
+    background: color-mix(in oklch, var(--color-paper-elev) 78%, var(--color-forest-dim));
+  }
+  .hero-install-card-label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+  }
+  .hero-install-card h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--color-ink);
+    margin: 0;
+  }
+  .hero-install-card p {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+  }
+  .hero-install-card-cta {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--color-forest);
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: var(--spacing-xs);
+  }
+  a.hero-install-card-cta:hover {
+    text-decoration: underline;
+  }
+
+  /* ============================================
+     ROLES (Who's it for)
+     ============================================ */
+  .roles {
+    max-width: var(--width-max);
+    margin: 0 auto;
+    padding: var(--spacing-3xl) var(--spacing-lg) var(--spacing-xl);
+  }
+  .roles-inner {
+    max-width: var(--width-content);
+    margin: 0 auto;
+  }
+  .roles-head {
+    margin-bottom: var(--spacing-xl);
+    text-align: center;
+  }
+  .roles-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    margin-bottom: var(--spacing-sm);
+    display: inline-block;
+  }
+  .roles-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-2xl);
+    letter-spacing: -0.03em;
+    color: var(--color-ink);
+    margin-bottom: var(--spacing-md);
+  }
+  .roles-lede {
+    font-size: var(--fs-base);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    max-width: 56ch;
+    margin: 0 auto;
+  }
+  .roles-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--spacing-sm);
+  }
+  @media (max-width: 880px) {
+    .roles-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 540px) {
+    .roles-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .role-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color var(--duration-fast) var(--ease-out-quart),
+                background var(--duration-fast) var(--ease-out-quart),
+                transform var(--duration-fast) var(--ease-out-quart);
+  }
+  .role-card:hover {
+    border-color: var(--color-forest);
+    background: color-mix(in oklch, var(--color-paper-elev) 84%, var(--color-forest-dim));
+    transform: translateY(-1px);
+  }
+  .role-card-name {
+    font-family: var(--font-display);
+    font-size: var(--fs-base);
+    font-weight: 600;
+    color: var(--color-ink);
+    letter-spacing: -0.01em;
+  }
+  .role-card-blurb {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.45;
+  }
+  .roles-footnote {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-mist);
+    text-align: center;
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.6;
+  }
+  .roles-footnote a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
   }
 
   /* ============================================

@@ -3,44 +3,81 @@ import Base from '../layouts/Base.astro';
 ---
 
 <Base
-  title="Privacy · pace.tools"
-  description="Privacy notice for pace.tools."
+  title="Privacy · Pace"
+  description="How Pace handles data: what the site collects, what the CLI does, what flows through MCP connectors, what doesn't."
   canonicalPath="/privacy"
 >
   <article class="privacy-page">
     <header class="privacy-header">
       <span class="privacy-eyebrow">Legal</span>
       <h1>Privacy</h1>
+      <p class="privacy-lede">
+        Plain-English. The short version: Pace is software you install in your own AI harness; nothing about your work flows through pace.tools. The longer version is below.
+      </p>
     </header>
 
     <section class="privacy-section">
-      <h2>What pace.tools does</h2>
+      <h2>The website (pace.tools)</h2>
       <p>
-        Pace.tools is a static website. It does not collect personal data, set tracking cookies, or run analytics on visitors.
+        pace.tools is a static site hosted on Cloudflare Pages. It serves marketing pages, documentation, and the marketplace catalog (<code>/.claude-plugin/marketplace.json</code>). The site does not set tracking cookies, run analytics, or fingerprint visitors.
+      </p>
+      <p>
+        Cloudflare may collect standard web-request logs (IP, user agent, request path) for security and operational purposes. See <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare's privacy policy</a> for what they retain and for how long.
       </p>
     </section>
 
     <section class="privacy-section">
-      <h2>What the CLI does</h2>
+      <h2>The CLI (<code>pace-tools</code>)</h2>
       <p>
-        The <code>npx pace skills install</code> CLI runs entirely on your machine. It downloads skill bundles from GitHub through <code>npx skills add</code>. No identifying information is sent back to pace.tools.
+        The <code>npx pace-tools</code> CLI runs entirely on your machine. It wraps <code>claude plugin</code> commands; the actual plugin install happens between your machine and GitHub. <strong>No identifying information is sent back to pace.tools or any Pace-controlled server.</strong>
       </p>
       <p>
-        Network traffic goes to <a href="https://github.com">github.com</a> (to fetch the harness output dirs) and, if you accept the optional install, to <a href="https://impeccable.style">impeccable.style</a> through <code>npx impeccable skills install</code>. Each of those services has its own privacy posture.
+        Network traffic from the CLI:
+      </p>
+      <ul>
+        <li><strong>pace.tools/api/commands</strong>, read-only HTTPS GET for the plugin catalog. No request body, no cookies.</li>
+        <li><strong>github.com</strong>, when <code>claude plugin marketplace add GoldenBerry-SO/Pace</code> clones the marketplace repo.</li>
+        <li><strong>registry.npmjs.org</strong>, if <code>npx</code> downloads the package fresh.</li>
+      </ul>
+    </section>
+
+    <section class="privacy-section">
+      <h2>Plugins, skills, and MCP connectors</h2>
+      <p>
+        This is where most concerned privacy questions land. Pace plugins are normal Claude Code plugins; their data flow looks like this:
+      </p>
+      <ol>
+        <li>You install a plugin (locally or via Cowork). The plugin files live on your machine inside Claude Code or Cowork's plugin directory.</li>
+        <li>The plugin declares MCP connectors in its <code>.mcp.json</code> (Slack, HubSpot, Snowflake, etc.).</li>
+        <li>The first time a skill needs a connector, your AI harness (Claude Code / Cowork) opens an OAuth flow with the vendor (Slack, HubSpot, etc.). You sign in on the vendor's site; the vendor issues a token; your harness stores the token locally.</li>
+        <li>When a skill runs, MCP calls go directly from your harness to the vendor's MCP server. <strong>Pace's servers are not in this path.</strong> See <a href="/docs/connectors">how connectors work</a> for the full picture.</li>
+      </ol>
+      <p>
+        Anthropic Routines (cloud-scheduled jobs) run on Anthropic-managed infrastructure. When a Routine fires, it executes as a Claude Code session on Anthropic's cloud; MCP calls in that session route through Anthropic's network to the vendor's MCP server. Anthropic's privacy policy applies. See <a href="https://www.anthropic.com/legal/privacy">anthropic.com/legal/privacy</a> and <a href="https://code.claude.com/docs/en/routines">Routines documentation</a>.
       </p>
     </section>
 
     <section class="privacy-section">
-      <h2>Hosting</h2>
+      <h2>Cookbook example links</h2>
       <p>
-        Pace.tools is hosted on Cloudflare Pages. Cloudflare may collect standard web request logs for security and operations. See <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare's privacy policy</a> for details.
+        The Cookbook page links to <code>claude.ai/desktop/customize/plugins/new?...</code> deep links. Clicking these opens Cowork (the Claude desktop app). What Cowork does with that data is governed by Anthropic's privacy policy.
       </p>
     </section>
 
     <section class="privacy-section">
-      <h2>Questions</h2>
+      <h2>Forking + self-hosting</h2>
       <p>
-        <a href="https://github.com/GoldenBerry-SO/Pace/issues">Open an issue on GitHub</a>.
+        Pace is Apache-2.0. You can fork the repo, host the marketplace.json yourself, and run the entire surface inside your own infrastructure. In that case nothing touches goldenberry.so or pace.tools.
+      </p>
+    </section>
+
+    <section class="privacy-section">
+      <h2>Questions, requests, deletions</h2>
+      <p>
+        Pace does not maintain user records, so there is nothing to request deletion of. For everything else : clarifications, security disclosures, GDPR queries about the static site logs Cloudflare holds : email <a href="mailto:hello@goldenberry.so">hello@goldenberry.so</a> or open an issue at <a href="https://github.com/GoldenBerry-SO/Pace/issues">github.com/GoldenBerry-SO/Pace</a>.
+      </p>
+      <p class="privacy-section-meta">
+        See also: <a href="/security">Security</a> for our security posture and disclosure process.
       </p>
     </section>
   </article>
@@ -70,6 +107,13 @@ import Base from '../layouts/Base.astro';
     font-family: var(--font-display);
     font-size: var(--fs-3xl);
     letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-md);
+  }
+  .privacy-lede {
+    font-size: var(--fs-md);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    max-width: 64ch;
   }
   .privacy-section {
     margin-bottom: var(--spacing-xl);
@@ -80,11 +124,35 @@ import Base from '../layouts/Base.astro';
     letter-spacing: -0.02em;
     margin-bottom: var(--spacing-md);
   }
-  .privacy-section p {
+  .privacy-section p,
+  .privacy-section li {
     font-size: var(--fs-base);
     color: var(--color-charcoal);
     line-height: 1.65;
     margin-bottom: var(--spacing-sm);
+    max-width: 70ch;
+  }
+  .privacy-section ol,
+  .privacy-section ul {
+    padding-left: var(--spacing-md);
+  }
+  .privacy-section li {
+    margin-bottom: 4px;
+  }
+  .privacy-section strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .privacy-section a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .privacy-section-meta {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-sm);
+    border-top: 1px dashed var(--color-mist);
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
   }
   code {
     font-family: var(--font-mono);
