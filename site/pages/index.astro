@@ -58,13 +58,13 @@ const jsonLd = [
       </div>
       <h1 class="hero-title">Pace</h1>
       <p class="hero-supertitle">
-        Superpower your company with AI specialists for every role.
+        AI specialists for every role at your company.
       </p>
       <p class="hero-subtitle">
         Sales prep their calls. Engineers review their PRs. Finance closes the month. Marketing ships campaigns. Each role gets Claude with the right skills loaded, connected to the tools they actually use, tuned to how your team works.
       </p>
       <div class="hero-cta-row">
-        <a href="/docs/install" class="cta cta-primary">Get started for free</a>
+        <a href="/docs/install" class="cta cta-primary">Get started</a>
         <a href="mailto:hello@goldenberry.so" class="cta cta-secondary">Talk to us</a>
       </div>
     </div>
@@ -109,9 +109,9 @@ const jsonLd = [
         <p>Three lines and you're in. Replace <code>sales</code> with whichever team you're on.</p>
         <div class="install-terminal">
           <pre class="terminal-body"><code><span class="prompt">$</span> claude plugin marketplace add GoldenBerry-SO/Pace
-<span class="muted">Registers 50 plugins.</span>
+<span class="muted">Registers 49 plugins.</span>
 <span class="prompt">$</span> claude plugin install sales@pace
-<span class="prompt">$</span> /sales:call-prep Acme Corp</code></pre>
+<span class="prompt">&gt;</span> Prep me for the Acme call.</code></pre>
         </div>
         <a class="install-card-cta" href="/docs/install#claude-code">Full install docs &rarr;</a>
       </div>
@@ -127,7 +127,7 @@ const jsonLd = [
         <span class="roles-eyebrow">Who's it for</span>
         <h2 class="roles-title" id="roles-title">Pick the team you're on.</h2>
         <p class="roles-lede">
-          Every role gets a starter set of plugins, a sample week of workflows, and a one-click install in Cowork. Click your team to see what we've put together.
+          Every role gets a starter set: the plugins to install, the workflows that fit a typical week, and one-click install in Cowork. Click your team to see the brief.
         </p>
       </div>
 
@@ -146,11 +146,7 @@ const jsonLd = [
         <li><a class="role-card" href="/docs/teams/design"><span class="role-card-name">Design</span><span class="role-card-blurb">Defers to impeccable for frontend craft.</span></a></li>
       </ul>
 
-      <div class="roles-footnote">
-        <p>
-          You're an engineer specifically? The full <a href="/docs/skills">skill catalog</a> ships 34 engineering skills with the disciplined stacked-PR workflow, plus careful-review, TDD, diagnose, and ship-pr. <a href="/docs/skills">See the skill catalog &rarr;</a>
-        </p>
-      </div>
+
     </div>
   </section>
 
@@ -166,7 +162,7 @@ const jsonLd = [
           Engineers get 34 engineering skills covering the full week: a stacked-PR workflow that gives shipping a shape (<code>spec</code> &rarr; <code>implement</code> &rarr; <code>review</code> &rarr; <code>topr</code> &rarr; <code>next</code>), plus careful-review, TDD, diagnose, security-review, and the rest.
         </p>
         <div class="eng-band-row">
-          <a class="cta cta-primary" href="/for-engineering">See the way of working</a>
+          <a class="cta cta-primary" href="/for-engineering">Pace for engineering</a>
           <a class="cta cta-secondary" href="/cookbook/engineering">Engineering cookbook</a>
         </div>
       </div>
@@ -203,14 +199,14 @@ const jsonLd = [
     </div>
     <div class="section-body">
       <p class="section-lede">
-        Pace gives Claude the right toolkit for whatever you're working on. Pick the skills that match your role, connect the tools you already use, and Claude can do real work in your context.
+        Three layers stacked on Claude: a plugin per role, MCP connectors to the tools your team already uses, and the /pace router on top for the commands that match how your team actually works.
       </p>
 
       <div class="foundation-grid" data-reveal-stagger>
         <article class="foundation-card">
           <h3>Skills for every role</h3>
           <p>A plugin per department: sales, marketing, finance, legal, engineering, data, customer support, product, HR, ops, design. Install only what your team uses. Each plugin's skills auto-trigger when the work matches.</p>
-          <span class="foundation-card-status">50 plugins</span>
+          <span class="foundation-card-status">49 plugins</span>
         </article>
         <article class="foundation-card">
           <h3>Connected to your stack</h3>
@@ -242,7 +238,7 @@ const jsonLd = [
     </div>
     <div class="section-body">
       <p class="section-lede">
-        Pick the plugins your team actually uses. Each one installs independently, brings its own skills, and stays sized for a specific role. The <code>/pace</code> router on top is for your team's own commands.
+        Forty-nine plugins. Each one is scoped to a single role; install only what your team uses. The <code>/pace</code> router on top is for your team's own commands.
       </p>
 
       <div class="catalog-grid">
@@ -478,7 +474,7 @@ const jsonLd = [
       <div class="install-primary">
         <h3 class="install-step"><span class="step-num">1</span>Register the marketplace</h3>
         <p class="install-desc">
-          One command registers all 50 plugins with Claude. You only do this once per project.
+          One command registers all 49 plugins with Claude. You only do this once per project.
         </p>
 
         <div class="terminal">
@@ -556,22 +552,12 @@ const jsonLd = [
       <ul class="changelog-items" data-reveal-stagger>
         <li class="changelog-entry">
           <div class="changelog-meta">
-            <span class="changelog-version">v0.2.0</span>
-            <span class="changelog-date">May 2026</span>
-          </div>
-          <div class="changelog-content">
-            <h3>Marketplace pivot</h3>
-            <p>Pace becomes a curated Claude Code marketplace. Bundles first-party and partner-built plugins, references 27 external plugins by git URL, and keeps the <code>/pace</code> router as the company-specific layer on top. New <code>/plugins</code> page lists the full catalog with attribution per plugin.</p>
-          </div>
-        </li>
-        <li class="changelog-entry">
-          <div class="changelog-meta">
             <span class="changelog-version">v0.1.0</span>
             <span class="changelog-date">May 2026</span>
           </div>
           <div class="changelog-content">
-            <h3>Initial scaffold</h3>
-            <p>The Pace skill router lands as a lean fork of impeccable's install machinery: multi-harness build, Astro site shell, CLI installer with impeccable handoff. Router starts empty; commands ship as they're authored.</p>
+            <h3>Hello, Pace.</h3>
+            <p>First version out the door. A curated AI specialist for every role at your company, plus the <code>/pace</code> router for the commands that are specific to how your team actually works. Forty-nine plugins in the marketplace, multi-harness install (Claude Code, Cursor, Gemini, Codex, and 8 more), open source under Apache 2.0.</p>
           </div>
         </li>
       </ul>
