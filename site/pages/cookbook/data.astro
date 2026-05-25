@@ -101,6 +101,16 @@ explanation. Post the digest to #data-weekly in Slack.`} />
         </dl>
         <p>Runs the standard metrics (DAU, signups, conversion, NRR) against yesterday vs. trailing 28 days. Flags anything beyond 2 standard deviations. For each flagged metric, a sub-agent runs interpret to surface likely causes and the slice to investigate first. Posts the digest to #data-pulse with the boring ones collapsed.</p>
       </article>
+
+      <article class="usecase-card">
+        <h3>Pre-merge SQL review on every analytics PR</h3>
+        <p>When someone opens a PR that touches a <code>.sql</code> file or a dbt model, a hook runs <code>validate-analysis</code> against the changes: column-level reasoning, common pitfalls (cartesian joins, NULL handling, timezone drift), and a clear "is this query answering what it claims to answer?" check. Findings post as inline review comments before a human ever opens the diff.</p>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, GitHub trigger on <code>pull_request.opened</code> for repos with SQL/dbt</dd></div>
+          <div><dt>Skills</dt><dd><code>validate-analysis</code>, <code>write-query</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (GitHub trigger), inline PR comments, dbt + Snowflake context</dd></div>
+        </dl>
+      </article>
     </div>
 
     <footer class="usecases-footer">

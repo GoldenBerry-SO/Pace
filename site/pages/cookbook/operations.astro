@@ -105,6 +105,16 @@ in Notion.`} />
         </dl>
         <p>You walk Claude through how the recurring meeting actually runs (verbally or by pasting notes). It produces the runbook: agenda template, what to prep, who owns what, how decisions get logged. Drops it into Notion under the right team space. The next time someone new owns the meeting, they have a place to start.</p>
       </article>
+
+      <article class="usecase-card">
+        <h3>Runbook updated automatically after every incident</h3>
+        <p>When an incident closes in PagerDuty, a routine pulls the incident timeline, the resolution thread from Slack, and any changes made to fix it. Drafts an update to the relevant runbook (or creates a new one) with the new failure mode and the fix. Plan mode parks the diff for the on-call engineer's approval. Tribal knowledge stops dying with the on-call shift.</p>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, API trigger fired by PagerDuty incident-resolved webhook</dd></div>
+          <div><dt>Skills</dt><dd><code>document-process</code>, <code>incident-postmortem</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (API trigger), PagerDuty + Slack + Notion connectors, plan mode</dd></div>
+        </dl>
+      </article>
     </div>
 
     <footer class="usecases-footer">

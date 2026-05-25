@@ -105,6 +105,16 @@ synthesis before saving.`} />
         </dl>
         <p>Pulls last week of Intercom tickets, sales-loss reasons from HubSpot, and Linear bugs tagged customer-impact. Synthesizes into themes (not transcripts). Adds the themes as comments under the relevant roadmap items in Linear, and posts the executive summary to #product.</p>
       </article>
+
+      <article class="usecase-card">
+        <h3>Spec review queue: comments addressed before the PM opens Linear</h3>
+        <p>When stakeholders leave comments on a Linear spec, a routine reads each comment, drafts a response inline (accept / push back / clarify), and threads the drafts under the original. The PM walks into Linear with the busywork already done and the judgement calls highlighted in red. Roundtripping a spec shrinks from a week to two days.</p>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, Linear webhook on comment-added</dd></div>
+          <div><dt>Skills</dt><dd><code>spec</code>, <code>synthesize</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (Linear webhook), Linear + Slack connectors, plan mode</dd></div>
+        </dl>
+      </article>
     </div>
 
     <footer class="usecases-footer">

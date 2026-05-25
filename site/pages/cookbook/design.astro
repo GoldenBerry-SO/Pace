@@ -95,6 +95,16 @@ import Base from '../../layouts/Base.astro';
           <p>Most teams want both. Install impeccable alongside Pace; the Pace CLI (<code>npx pace skills install</code>) offers it during setup.</p>
         </details>
       </div>
+
+      <article class="usecase-card">
+        <h3>Accessibility audit before every release</h3>
+        <p>Before merging the release branch, a routine runs an accessibility sweep across the changed pages: WCAG 2.1 AA checks, keyboard-navigation flow, color contrast against the design tokens, screen-reader labeling. Findings post as a single triaged issue per release: P0 must-fix, P1 should-fix, P2 worth-noting.</p>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, GitHub trigger on release-branch creation</dd></div>
+          <div><dt>Skills</dt><dd><code>accessibility-audit</code>, <code>/impeccable audit</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (GitHub trigger), GitHub Issues integration, axe-core via MCP</dd></div>
+        </dl>
+      </article>
     </div>
 
     <footer class="usecases-footer">

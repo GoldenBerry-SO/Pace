@@ -105,6 +105,16 @@ in the incoming text field.
         </dl>
         <p>Reads the week's resolved tickets, clusters them by theme, and for each theme with three or more occurrences, drafts a knowledge-base article. Plan mode stages the drafts in Notion; you publish the ones worth publishing. The KB grows from real volume instead of someone deciding what should be there in the abstract.</p>
       </article>
+
+      <article class="usecase-card">
+        <h3>Customer context on every escalation, before engineering picks it up</h3>
+        <p>When support escalates a ticket to engineering, a routine assembles the customer context first: account size, recent activity, open tickets, deal stage if any, prior escalations and their outcomes. Engineering doesn't ask support "is this customer important?"; the answer is already in the escalation.</p>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, Intercom/Zendesk webhook on ticket-escalated</dd></div>
+          <div><dt>Skills</dt><dd><code>customer-escalation</code>, <code>customer-context</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (webhook), HubSpot + Intercom + Slack connectors</dd></div>
+        </dl>
+      </article>
     </div>
 
     <footer class="usecases-footer">

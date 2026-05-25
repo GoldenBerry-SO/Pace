@@ -105,6 +105,16 @@ summary to #finance-close.`} />
         </dl>
         <p>Any new vendor contract dropped in the legal folder triggers a playbook-aware review: <code>review-contract</code> walks payment terms, auto-renewal language, liability caps, and data clauses; <code>vendor-check</code> and <code>vendor-review</code> add the procurement-side perspective. Findings post as a checklist. Legal + Finance both see what to fight for before the call.</p>
       </article>
+
+      <article class="usecase-card">
+        <h3>AP batch processor: invoices into journal entries, on a Friday cadence</h3>
+        <p>Friday afternoon, the routine pulls the week's accounts-payable batch from your accounting system, generates the journal entries with the right GL coding, flags anything unusual (new vendor, unusual amount, missing PO), and stages everything for controller approval. Monday morning, the controller approves the batch in 15 minutes instead of an hour.</p>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, schedule, weekly Friday 17:00</dd></div>
+          <div><dt>Skills</dt><dd><code>journal-entry-prep</code>, <code>variance-analysis</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (cloud schedule), QuickBooks / NetSuite connectors, plan mode for controller approval</dd></div>
+        </dl>
+      </article>
     </div>
 
     <footer class="usecases-footer">

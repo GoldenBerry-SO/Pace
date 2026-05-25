@@ -94,6 +94,25 @@ to their reqs so they get a heads-up DM.`} />
         </dl>
         <p>When an interview lands on the calendar, <code>interview-prep</code> pulls the JD, candidate resume, and prior round feedback. It drops a prep brief into the event description: focus areas, suggested probing questions, and what to avoid re-asking. Panel walks in calibrated.</p>
       </article>
+
+      <article class="usecase-card">
+        <h3>1:1 prep brief, in the manager's inbox 30 minutes before the meeting</h3>
+        <p>Before every 1:1, a routine assembles a brief: what the direct has shipped (Linear, GitHub), what they've blocked on (Slack threads, open PRs), what came up in the last 1:1 notes. Manager walks into the meeting with the picture instead of asking "so what have you been up to?".</p>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, calendar webhook 30 min before any 1:1 event</dd></div>
+          <div><dt>Skills</dt><dd><code>onboarding-plan</code>, <code>review-feedback</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (calendar webhook), Linear + GitHub + Slack + Notion connectors</dd></div>
+        </dl>
+      </article>
+      <article class="usecase-card">
+        <h3>Offer letter drafted from the candidate record</h3>
+        <p>Hiring manager clicks "send offer" in the ATS. A routine pulls the candidate's role, level, band, and recruiter notes, then drafts the offer letter from your standard template with the right compensation, equity grant, and start-date language. People ops reviews and sends. 40 minutes per offer becomes 5.</p>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, API trigger fired by ATS stage-change to "offer"</dd></div>
+          <div><dt>Skills</dt><dd><code>job-description</code>, <code>comp-analysis</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (API trigger), Greenhouse / Ashby connectors, plan mode for people-ops review</dd></div>
+        </dl>
+      </article>
     </div>
 
     <footer class="usecases-footer">
