@@ -17,6 +17,12 @@ interface Props {
 
 const { team } = Astro.props as Props;
 const currentPath = `/docs/teams/${team.slug}`;
+
+const COWORK_DEEPLINK_BASE = 'https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace';
+const pluginSlugs = team.plugins.map((p) => p.slug);
+const cliInstallCmd = pluginSlugs.length > 0
+  ? `npx pace-tools install ${pluginSlugs.join(' ')}`
+  : '';
 ---
 
 <SubPage
@@ -95,6 +101,46 @@ const currentPath = `/docs/teams/${team.slug}`;
 
     {!team.redirect && (
       <>
+        <section class="team-section team-install-cta" id="install">
+          <h2>Install for {team.name}</h2>
+          <p class="team-section-lede">The full {team.name.toLowerCase()} starter set is <strong>{pluginSlugs.length} plugin{pluginSlugs.length === 1 ? '' : 's'}</strong>. Pick the install path that matches you.</p>
+
+          <div class="team-install-grid">
+            <div class="team-install-block">
+              <h3>Cowork (no terminal)</h3>
+              <p class="team-install-block-lede">Click each link below; Cowork opens and asks you to confirm. Restart Cowork after the last one so connectors register.</p>
+              <ol class="team-install-deeplinks">
+                {team.plugins.map((p, i) => (
+                  <li>
+                    <a
+                      class="team-install-deeplink"
+                      href={`${COWORK_DEEPLINK_BASE}&plugin=${p.slug}`}
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <span class="team-install-deeplink-num">{i + 1}</span>
+                      <span class="team-install-deeplink-name">Install <code>{p.slug}</code></span>
+                      <span class="team-install-deeplink-arrow" aria-hidden="true">&nearr;</span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+              <div class="team-install-callout">
+                <strong>After the last install, restart Cowork.</strong> The MCP servers (Slack, HubSpot, etc.) only register cleanly on a fresh app start. Quit the app fully, then reopen it.
+              </div>
+            </div>
+
+            <div class="team-install-block">
+              <h3>Terminal (one command)</h3>
+              <p class="team-install-block-lede">If you have <code>claude</code> on your PATH already, this installs the whole set in one go.</p>
+              <pre class="team-install-pre"><code>{cliInstallCmd}</code></pre>
+              <p class="team-install-aside">
+                <code>pace-tools</code> wraps <code>claude plugin install</code>; runs <code>claude plugin marketplace add GoldenBerry-SO/Pace</code> automatically if you haven't registered the marketplace yet.
+              </p>
+            </div>
+          </div>
+        </section>
+
         <section class="team-section" id="plugins">
           <h2>Plugins to install</h2>
           <p class="team-section-lede">Pick from this set for the role. Primary plugins are essential; companions multiply value.</p>
@@ -135,6 +181,30 @@ const currentPath = `/docs/teams/${team.slug}`;
             ))}
           </ul>
         </section>
+
+        {team.triggers && team.triggers.length > 0 && (
+          <section class="team-section" id="triggers">
+            <h2>Just say it</h2>
+            <p class="team-section-lede">
+              You don't have to memorize slash commands. After installing, type natural sentences into Claude and the right skill will fire. Each row is a real example.
+            </p>
+            <ul class="team-triggers">
+              {team.triggers.map((t) => (
+                <li class="team-trigger">
+                  <div class="team-trigger-say">
+                    <span class="team-trigger-label">You say</span>
+                    <p>{t.say}</p>
+                  </div>
+                  <div class="team-trigger-arrow" aria-hidden="true">&rarr;</div>
+                  <div class="team-trigger-runs">
+                    <span class="team-trigger-label">Claude runs</span>
+                    <code>{t.runs}</code>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <section class="team-section" id="tips">
           <h2>Tips &amp; tricks</h2>
@@ -360,6 +430,185 @@ const currentPath = `/docs/teams/${team.slug}`;
     display: grid;
     gap: var(--spacing-md);
   }
+  /* Install CTA */
+  .team-install-cta {
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 10px;
+    padding: var(--spacing-lg) var(--spacing-xl);
+  }
+  .team-install-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-md);
+  }
+  @media (max-width: 720px) {
+    .team-install-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .team-install-block h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--color-ink);
+    margin-bottom: var(--spacing-xs);
+  }
+  .team-install-block-lede {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    margin-bottom: var(--spacing-sm);
+  }
+  .team-install-deeplinks {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--spacing-sm) 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .team-install-deeplink {
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 8px 12px;
+    background: var(--color-paper);
+    border: 1px solid var(--color-mist);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--color-ink);
+    font-size: var(--fs-sm);
+    transition: border-color var(--duration-fast) var(--ease-out-quart), background var(--duration-fast) var(--ease-out-quart);
+  }
+  .team-install-deeplink:hover {
+    border-color: var(--color-forest);
+    background: var(--color-forest-dim);
+  }
+  .team-install-deeplink-num {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--color-forest);
+    font-weight: 600;
+    text-align: center;
+  }
+  .team-install-deeplink-name code {
+    font-family: var(--font-mono);
+    font-size: 0.95em;
+    color: var(--color-forest);
+    background: transparent;
+    padding: 0;
+    border: 0;
+    font-weight: 600;
+  }
+  .team-install-deeplink-arrow {
+    color: var(--color-ash);
+    font-size: var(--fs-base);
+  }
+  .team-install-callout {
+    background: var(--color-clay-dim);
+    border-left: 3px solid var(--color-clay);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+  }
+  .team-install-callout strong {
+    color: var(--color-clay-hover);
+  }
+  .team-install-pre {
+    background: oklch(18% 0.015 150);
+    color: oklch(92% 0.005 150);
+    padding: var(--spacing-md);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    overflow-x: auto;
+    margin: 0 0 var(--spacing-sm) 0;
+    line-height: 1.5;
+  }
+  .team-install-pre code {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: inherit;
+    word-break: break-all;
+  }
+  .team-install-aside {
+    font-size: var(--fs-xs);
+    color: var(--color-ash);
+    line-height: 1.55;
+  }
+  .team-install-aside code {
+    font-family: var(--font-mono);
+    background: var(--color-code-bg);
+    padding: 1px 5px;
+    border-radius: 3px;
+    border: 1px solid var(--color-code-border);
+    font-size: 0.95em;
+    color: var(--color-ink);
+  }
+
+  /* Triggers cheatsheet */
+  .team-triggers {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+  .team-trigger {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--spacing-md);
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+  }
+  @media (max-width: 720px) {
+    .team-trigger {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-xs);
+    }
+    .team-trigger-arrow {
+      display: none;
+    }
+  }
+  .team-trigger-label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-ash);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .team-trigger-say p {
+    font-size: var(--fs-sm);
+    color: var(--color-ink);
+    line-height: 1.5;
+    font-style: italic;
+  }
+  .team-trigger-arrow {
+    color: var(--color-forest);
+    font-size: var(--fs-lg);
+  }
+  .team-trigger-runs code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    color: var(--color-forest);
+    background: var(--color-forest-dim);
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--color-forest-soft);
+  }
+
   .team-tip {
     padding-left: var(--spacing-md);
     border-left: 2px solid var(--color-mist);

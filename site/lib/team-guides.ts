@@ -25,6 +25,13 @@ export interface TeamSeeAlso {
   why: string;
 }
 
+export interface TeamTrigger {
+  /** Plain-English thing the user would say or type. */
+  say: string;
+  /** The slash command Claude routes the prompt to. */
+  runs: string;
+}
+
 export interface TeamRedirect {
   /** External destination this team defers to (e.g. impeccable). */
   url: string;
@@ -44,6 +51,10 @@ export interface TeamGuide {
   workflows: TeamWorkflow[];
   tips: TeamTip[];
   seeAlso: TeamSeeAlso[];
+  /** Natural-language phrases the team would actually say, mapped to the
+   *  skill Claude auto-triggers. Teaches the auto-trigger pattern to
+   *  non-technical users. */
+  triggers?: TeamTrigger[];
   /** If set, the team page renders as a pointer to the external source
    *  instead of the standard plugin/workflow/tips layout. */
   redirect?: TeamRedirect;
@@ -98,6 +109,14 @@ export const TEAM_GUIDES: TeamGuide[] = [
       { title: 'Layer on Common Room or Apollo', body: 'For ABM, /common-room:* surfaces warm intros and /apollo:* enriches prospecting lists. Both are partner-built plugins.' },
       { title: 'Use account-research, not just call-prep', body: '/sales:account-research is research-only; /sales:call-prep also writes the talking points. Use the former for prospecting, the latter for booked meetings.' },
       { title: 'Trust the forecast', body: '/sales:forecast pulls from HubSpot stages and historical close rates. It will not flatter your numbers; that is the point.' },
+    ],
+    triggers: [
+      { say: 'Prep me for my call with Acme tomorrow', runs: '/sales:call-prep' },
+      { say: 'Research who at Acme makes buying decisions', runs: '/sales:account-research' },
+      { say: 'Draft a follow-up to the Acme CFO about pricing', runs: '/sales:draft-outreach' },
+      { say: 'Walk me through my pipeline this week', runs: '/sales:pipeline-review' },
+      { say: 'Summarize the call I just finished with Acme', runs: '/sales:call-summary' },
+      { say: 'Compare us to Salesforce for the Acme deal', runs: '/sales:competitive-intelligence' },
     ],
     seeAlso: [
       { slug: 'marketing', label: 'Marketing', why: 'Joint campaigns + ICP refinement live across the seam.' },
@@ -154,6 +173,14 @@ export const TEAM_GUIDES: TeamGuide[] = [
       { title: 'Treat the campaign plan as living', body: 'Run /marketing:campaign-plan once at kickoff, then reference it through the campaign. Re-running mid-flight to update the plan beats wing-it.' },
       { title: 'Stack draft + validate', body: 'Always: /marketing:draft-content → /brand-voice:validate → ship. The two-step is fast and the voice consistency compounds.' },
       { title: 'Use Canva connector for assets', body: 'Plugins can fetch existing Canva designs as references when drafting variants, saving the "what does our last social post look like?" lookup.' },
+    ],
+    triggers: [
+      { say: 'Plan a launch campaign for our new pricing tier', runs: '/marketing:campaign-plan' },
+      { say: 'Draft a LinkedIn post about our Q3 results', runs: '/marketing:draft-content' },
+      { say: 'Pull last week\'s campaign performance', runs: '/marketing:performance-report' },
+      { say: 'Check this blog draft against our brand voice', runs: '/brand-voice:brand-voice-enforcement' },
+      { say: 'What did Notion ship last week?', runs: '/marketing:competitive-brief' },
+      { say: 'Run an SEO audit on our pricing page', runs: '/marketing:seo-audit' },
     ],
     seeAlso: [
       { slug: 'sales', label: 'Sales', why: 'Outreach + ICP work overlaps; brand voice carries across.' },
@@ -215,6 +242,14 @@ export const TEAM_GUIDES: TeamGuide[] = [
       { title: 'Incident response > heroics', body: '/engineering:incident-response has saved hours at 3am. Beats inventing a playbook under pressure.' },
       { title: 'ADR convention sticks', body: "/engineering:architecture writes ADRs in a stable format. Adopt the format and don't fight it; consistency is the point of ADRs." },
     ],
+    triggers: [
+      { say: 'Review this PR before I tag the team', runs: '/engineering:code-review' },
+      { say: 'Catch anything I missed before I open the PR', runs: '/engineering:careful-review' },
+      { say: 'Diagnose this race condition in checkout', runs: '/engineering:diagnose' },
+      { say: 'Write tests for the new checkout flow using TDD', runs: '/engineering:tdd' },
+      { say: 'Spec the feature so we can ship it as stacked PRs', runs: '/engineering:spec' },
+      { say: 'Commit my changes and open a PR', runs: '/engineering:ship-pr' },
+    ],
     seeAlso: [
       { slug: 'data', label: 'Data', why: 'Engineering and data overlap on perf, schema, and query questions.' },
       { slug: 'product', label: 'Product', why: 'Spec ↔ tech scope conversations are easier when both sides have the same plugins.' },
@@ -275,6 +310,14 @@ export const TEAM_GUIDES: TeamGuide[] = [
       { title: 'Pair with engineering for perf', body: 'When the query is slow, hand off via /engineering:code-review of the EXPLAIN plan.' },
       { title: 'Statistical tests are not optional for A/B', body: '/data:statistical-test instead of eyeballing two means. It tells you whether the effect is real.' },
     ],
+    triggers: [
+      { say: 'Write a SQL query for revenue by region last quarter', runs: '/data:write-query' },
+      { say: 'Analyze churn over the past 90 days', runs: '/data:analyze' },
+      { say: 'Are there anomalies in our signup funnel?', runs: '/data:statistical-analysis' },
+      { say: 'Build a dashboard for product engagement', runs: '/data:build-dashboard' },
+      { say: 'Visualize this query result as a chart', runs: '/data:create-viz' },
+      { say: 'Sanity-check this dataset before I share it', runs: '/data:validate-data' },
+    ],
     seeAlso: [
       { slug: 'engineering', label: 'Engineering', why: 'Pipelines, schemas, query perf.' },
       { slug: 'finance', label: 'Finance', why: 'Heavy users of warehouse queries.' },
@@ -330,6 +373,14 @@ export const TEAM_GUIDES: TeamGuide[] = [
       { title: 'Use it for retros too', body: '/product-management:synthesize works on retro notes the same way it works on interviews. Pattern-find what teams keep saying.' },
       { title: 'Stakeholder cadence beats one-offs', body: 'Run /product-management:update on a fixed schedule (biweekly) rather than reactively. Trust compounds with consistency.' },
       { title: 'Competitive scans weekly', body: '/product-management:competitive once a week is enough; daily is noise.' },
+    ],
+    triggers: [
+      { say: 'Synthesize these 8 user interviews into themes', runs: '/product-management:synthesize-research' },
+      { say: 'Write a PRD for the new collaboration feature', runs: '/product-management:write-spec' },
+      { say: 'Update stakeholders on this sprint\'s progress', runs: '/product-management:stakeholder-update' },
+      { say: 'What did our competitors ship this week?', runs: '/product-management:competitive-brief' },
+      { say: 'Brainstorm 10 ways to improve onboarding', runs: '/product-management:product-brainstorming' },
+      { say: 'Plan next sprint based on this backlog', runs: '/product-management:sprint-planning' },
     ],
     seeAlso: [
       { slug: 'design', label: 'Design', why: 'Research synthesis and dev handoff cross over.' },
@@ -415,6 +466,14 @@ export const TEAM_GUIDES: TeamGuide[] = [
       { title: 'Audit prep is incremental', body: "Run /finance:audit-prep monthly, not annually. By year-end, the documentation is already there." },
       { title: 'Statements need a sanity check', body: '/finance:generate-statements is fast but always reconcile the output to your source-of-truth ledger before sharing externally.' },
     ],
+    triggers: [
+      { say: 'Run the month-end close checklist', runs: '/finance:close-management' },
+      { say: 'Explain the variance vs plan for Q3', runs: '/finance:variance-analysis' },
+      { say: 'Reconcile last month\'s bank statements', runs: '/finance:reconciliation' },
+      { say: 'Draft the journal entries for the new lease', runs: '/finance:journal-entry-prep' },
+      { say: 'Prepare audit support docs for SOX testing', runs: '/finance:audit-support' },
+      { say: 'Generate this quarter\'s financial statements', runs: '/finance:financial-statements' },
+    ],
     seeAlso: [
       { slug: 'operations', label: 'Operations', why: 'Vendor and procurement workflows.' },
       { slug: 'data', label: 'Data', why: 'Warehouse query muscle.' },
@@ -468,6 +527,14 @@ export const TEAM_GUIDES: TeamGuide[] = [
       { title: 'Build templated responses for repeats', body: 'After three similar inbound questions, write a /legal:templated-response. Saves the fourth, fifth, and sixth.' },
       { title: 'Wrap in /pace router', body: 'For your standard contract review playbook, build a /pace router command that wraps /legal:contract-review with your specific flags. Reuse beats re-prompting.' },
       { title: 'Document the why', body: 'When Pace flags a clause, document why it matters in your playbook. The next reviewer (human or Pace) benefits.' },
+    ],
+    triggers: [
+      { say: 'Triage this NDA from a new vendor', runs: '/legal:triage-nda' },
+      { say: 'Review this MSA against our playbook', runs: '/legal:review-contract' },
+      { say: 'Check if our terms comply with GDPR', runs: '/legal:compliance-check' },
+      { say: 'Brief me on the upcoming board meeting', runs: '/legal:meeting-briefing' },
+      { say: 'Assess legal risk for this new partnership', runs: '/legal:legal-risk-assessment' },
+      { say: 'Run a vendor check before we sign', runs: '/legal:vendor-check' },
     ],
     seeAlso: [
       { slug: 'finance', label: 'Finance', why: 'Contracts feed AP; close coordination on vendor onboarding.' },
@@ -526,6 +593,14 @@ export const TEAM_GUIDES: TeamGuide[] = [
       { title: 'Tie capacity to /data', body: 'For honest capacity planning, ground in actual utilization. Pair /operations:capacity with /data:* queries on time tracking or work logs.' },
       { title: 'Compliance is incremental', body: '/operations:compliance-tracker monthly cadence keeps audit prep from being a fire drill.' },
     ],
+    triggers: [
+      { say: 'Pull together this week\'s cross-team status', runs: '/operations:status-report' },
+      { say: 'Document the incident response runbook', runs: '/operations:runbook' },
+      { say: 'Review this new vendor before we sign', runs: '/operations:vendor-review' },
+      { say: 'Plan capacity for next quarter', runs: '/operations:capacity-plan' },
+      { say: 'Assess the risks of moving to this new provider', runs: '/operations:risk-assessment' },
+      { say: 'Optimize the way we ship hardware to new hires', runs: '/operations:process-optimization' },
+    ],
     seeAlso: [
       { slug: 'finance', label: 'Finance', why: 'AP, procurement, and vendor lifecycle.' },
       { slug: 'legal', label: 'Legal', why: 'Contracts and compliance feed ops.' },
@@ -580,6 +655,14 @@ export const TEAM_GUIDES: TeamGuide[] = [
       { title: 'Comp analysis isn\'t a decision', body: 'Treat the output as a starting point for the comp conversation, not the answer.' },
       { title: 'Pair with /enterprise-search', body: 'For "did we already write something about X?" questions, /enterprise-search:* is faster than scrolling Slack.' },
       { title: 'JDs as a template family', body: "After three JDs for similar roles, build a /pace router command that wraps /human-resources:job-description with your leveling defaults." },
+    ],
+    triggers: [
+      { say: 'Walk me through this week\'s recruiting funnel', runs: '/human-resources:recruiting-pipeline' },
+      { say: 'Prep me to interview Jane for the staff role', runs: '/human-resources:interview-prep' },
+      { say: 'Draft the offer letter for Jane at L5', runs: '/human-resources:draft-offer' },
+      { say: 'Help me write Maria\'s performance review', runs: '/human-resources:performance-review' },
+      { say: 'Plan headcount for the engineering org next quarter', runs: '/human-resources:org-planning' },
+      { say: 'Look up our PTO policy for new parents', runs: '/human-resources:policy-lookup' },
     ],
     seeAlso: [
       { slug: 'operations', label: 'Operations', why: 'Capacity planning + headcount tie together.' },
@@ -636,6 +719,13 @@ export const TEAM_GUIDES: TeamGuide[] = [
       { title: 'Build /pace router for escalation paths', body: 'Your escalation lanes are unique to your team. Wrap /customer-support:escalate in /pace router commands for each lane.' },
       { title: 'Run triage at the start of every shift', body: '/customer-support:triage gives you a sorted queue + visibility to P1s that need air cover.' },
     ],
+    triggers: [
+      { say: 'Triage the support inbox', runs: '/customer-support:ticket-triage' },
+      { say: 'Draft a response to this Intercom ticket', runs: '/customer-support:draft-response' },
+      { say: 'Should I escalate this customer issue?', runs: '/customer-support:customer-escalation' },
+      { say: 'Write a KB article for this common question', runs: '/customer-support:kb-article' },
+      { say: 'Research what this customer\'s account looks like', runs: '/customer-support:customer-research' },
+    ],
     seeAlso: [
       { slug: 'sales', label: 'Sales', why: 'Customer context flows from deal to account.' },
       { slug: 'product', label: 'Product', why: 'Support tickets feed product roadmap.' },
@@ -689,6 +779,12 @@ export const TEAM_GUIDES: TeamGuide[] = [
       { title: 'Connect Slack first', body: 'It unlocks the highest-volume tools. Authorize once; both /productivity:* and /enterprise-search:* benefit.' },
       { title: 'Combine with your role plugins', body: 'Sales people install /sales + /productivity. Engineers install /engineering + /productivity. The combos are where the leverage lives.' },
       { title: 'Async updates beat live standups', body: '/productivity:update for async standups frees the team from a daily live meeting.' },
+    ],
+    triggers: [
+      { say: 'What\'s on my plate this week?', runs: '/productivity:task-management' },
+      { say: 'Write my end-of-day update', runs: '/productivity:update' },
+      { say: 'Pick up where I left off yesterday', runs: '/productivity:start' },
+      { say: 'Remember that we decided X about Y', runs: '/productivity:memory-management' },
     ],
     seeAlso: [
       { slug: 'sales', label: 'Sales', why: 'Pace with /productivity:* + sales is the GTM stack.' },
