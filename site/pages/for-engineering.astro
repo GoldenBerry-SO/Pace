@@ -1,0 +1,479 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Pace for engineering · Claude tuned for shipping software"
+  description="Pace gives engineers Claude with the right toolkit for shipping software: a disciplined stacked-PR workflow, careful-review, TDD, diagnose, security-review, and 30 more skills auto-triggered from natural language."
+  activeNav="home"
+  canonicalPath="/for-engineering"
+>
+  <article class="fe-page">
+    <header class="fe-hero">
+      <span class="fe-eyebrow">Pace for engineering</span>
+      <h1 class="fe-title">
+        Claude tuned for shipping software.
+      </h1>
+      <p class="fe-lede">
+        Engineering teams spend half their week on the work between writing code: reviewing PRs, updating standups, diagnosing regressions, writing tests they keep skipping, fixing bugs that show up in prod. Pace gives Claude a disciplined toolkit for each of those moments, plus an opinionated way of working that has held up across enough shipped product to be worth adopting.
+      </p>
+      <div class="fe-hero-row">
+        <a class="cta cta-primary" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=engineering" target="_blank" rel="noopener">Install in Cowork</a>
+        <a class="cta cta-secondary" href="/cookbook/engineering">Read the cookbook</a>
+      </div>
+      <p class="fe-hero-quiet">
+        thirty-four engineering skills total. <a href="/docs/skills">See the full catalog &rarr;</a>
+      </p>
+    </header>
+
+    <section class="fe-section fe-section-workflow">
+      <span class="fe-section-eyebrow">The way of working</span>
+      <h2>Five skills, one feature, one stack of PRs.</h2>
+      <p class="fe-section-lede">
+        Most engineering work fits a shape: turn an idea into a plan, build the plan as a chain of small reviewable PRs, address review comments, rebase the next PR on top after each merge, reset cleanly between tasks. Pace ships this loop as five skills that compose.
+      </p>
+
+      <ol class="fe-flow">
+        <li class="fe-step">
+          <div class="fe-step-num">1</div>
+          <div class="fe-step-body">
+            <h3><code>spec</code></h3>
+            <p><strong>Refine a feature into a tracked epic.</strong> Walks the idea into a parent issue with ordered sub-issues, each scoped to a single PR. No code yet.</p>
+            <p class="fe-step-say">You say: <em>"Spec the bulk-CSV import. Should handle 50k rows, validate against the user schema, produce a downloadable error report."</em></p>
+          </div>
+        </li>
+        <li class="fe-step">
+          <div class="fe-step-num">2</div>
+          <div class="fe-step-body">
+            <h3><code>implement</code></h3>
+            <p><strong>Build the epic as a stack of PRs.</strong> One sub-issue per branch, each stacked on the previous one. Stops cleanly at PR boundaries so you can review before continuing.</p>
+            <p class="fe-step-say">You say: <em>"Implement epic #142. Stop after PR #2 so I can review."</em></p>
+          </div>
+        </li>
+        <li class="fe-step">
+          <div class="fe-step-num">3</div>
+          <div class="fe-step-body">
+            <h3><code>review</code></h3>
+            <p><strong>Address PR comments interactively.</strong> Group by file, triage each one as fix-and-reply, decline-with-rationale, or ask-for-clarification. Posts inline replies.</p>
+            <p class="fe-step-say">You say: <em>"Walk me through the review on PR #156. Fix the obvious ones, push back where you disagree."</em></p>
+          </div>
+        </li>
+        <li class="fe-step">
+          <div class="fe-step-num">4</div>
+          <div class="fe-step-body">
+            <h3><code>topr</code></h3>
+            <p><strong>Rebase the next PR after the previous one merged.</strong> Correctly drops the commits that came in via squash-and-merge. No duplicate commits, no fighting the rebase tool.</p>
+            <p class="fe-step-say">You say: <em>"PR #156 just merged. Rebase #157 on main."</em></p>
+          </div>
+        </li>
+        <li class="fe-step">
+          <div class="fe-step-num">5</div>
+          <div class="fe-step-body">
+            <h3><code>next</code></h3>
+            <p><strong>Reset between tasks.</strong> Clean throwaway branch on the latest main so the next task starts from a known state. Old branch left intact in case you need to come back.</p>
+            <p class="fe-step-say">You say: <em>"Next."</em></p>
+          </div>
+        </li>
+      </ol>
+
+      <p class="fe-section-foot">
+        The point is not the names; the point is that the loop is opinionated and continuous. Once your team adopts it, "what does shipping look like here?" stops being a fresh question every Monday.
+      </p>
+    </section>
+
+    <section class="fe-section">
+      <span class="fe-section-eyebrow">Beyond the workflow</span>
+      <h2>Skills for the rest of the week.</h2>
+      <p class="fe-section-lede">
+        The other 29 skills cluster around the standard engineering moments. None of them are commands you memorize; they auto-trigger from how you describe what you want.
+      </p>
+
+      <div class="fe-cluster-grid">
+        <article class="fe-cluster">
+          <h3>Pressure-test before you build</h3>
+          <ul>
+            <li><code>grill-me</code>: relentless Q&A until every decision branch has an answer.</li>
+            <li><code>grill-with-docs</code>: same, but anchors against your CONTEXT.md and ADRs.</li>
+            <li><code>zoom-out</code>: step back from the function you're staring at and see the system around it.</li>
+          </ul>
+        </article>
+        <article class="fe-cluster">
+          <h3>Tests + coverage</h3>
+          <ul>
+            <li><code>tdd</code>: red &rarr; green &rarr; refactor, with commits at each transition.</li>
+            <li><code>find-missing-tests</code>: survey a module, produce a specific test backlog.</li>
+            <li><code>e2e-test</code>: full sweep against real dev servers, mocks disabled.</li>
+          </ul>
+        </article>
+        <article class="fe-cluster">
+          <h3>Diagnose + debug</h3>
+          <ul>
+            <li><code>diagnose</code>: the disciplined loop for hard bugs and perf regressions.</li>
+            <li><code>debug</code>: structured session against a specific error or "works in staging" situation.</li>
+            <li><code>security-review</code>: OWASP top-10 + language-specific footguns, prioritized findings.</li>
+          </ul>
+        </article>
+        <article class="fe-cluster">
+          <h3>Polish + ship</h3>
+          <ul>
+            <li><code>careful-review</code>: re-read what you just wrote with fresh eyes, fix what you find.</li>
+            <li><code>codex-review</code>: structured second opinion via OpenAI Codex; confirmed fixes committed.</li>
+            <li><code>ship-pr</code>: commit safely, push, open the PR with a real description and test plan.</li>
+          </ul>
+        </article>
+      </div>
+
+      <p class="fe-section-foot">
+        Every one of these has a full reference page with trigger phrases, examples, and what to expect.
+        See the <a href="/cookbook/engineering">engineering cookbook</a> or the <a href="/docs/skills">skill catalog</a>.
+      </p>
+    </section>
+
+    <section class="fe-section fe-section-why">
+      <span class="fe-section-eyebrow">Why this and not just Cursor</span>
+      <h2>Pace is a way of working, not a tool.</h2>
+      <p class="fe-section-lede">
+        Claude can already write code. The question for a team is not "can the agent do it" but <em>"is the way we work with the agent disciplined enough that we'd hire someone we trained on it"</em>. The stacked-PR loop, the careful-review pass, the bug diagnosis discipline, the test-first habit, these are the moves that compound when a whole team adopts them.
+      </p>
+      <p class="fe-section-lede">
+        Pace ships those moves as installable skills so your team uses them the same way the same way each time, with the same vocabulary, against the same expectations. Fork the repo, replace the skills with the ones that match how you actually want your team to work, and you have a codified engineering practice you can onboard new hires (or new agents) into.
+      </p>
+    </section>
+
+    <section class="fe-section fe-section-cta" data-theme="dark">
+      <div class="fe-section-cta-glow" aria-hidden="true"></div>
+      <div class="fe-section-cta-inner">
+        <div class="fe-section-cta-mark" aria-hidden="true">
+          <svg viewBox="0 0 1249.789 812.549" xmlns="http://www.w3.org/2000/svg">
+            <g fill="currentColor"><path d="M843.185.544c-9.7 3.2-12.9 8.1-13 19.5 0 9.4 1.5 17.5 6.2 33.9 10.7 37.1 25.9 64.6 51.8 93.7 4.1 4.6 22.9 23.8 41.6 42.5 35 34.9 41 41.9 46.4 54.5 3.6 8.6 3.9 18.7.6 28-4.8 14-14.1 24.6-26.1 29.8-5.3 2.3-7.3 2.6-17 2.6-18.4 0-32.9-4.9-71-24.1-77.6-39-113.4-51.6-169.3-59.5l-15.7-2.3-273.5-.3c-253.6-.3-274-.2-279.8 1.4-8.1 2.1-14.7 7.3-18.7 14.5-2.6 4.8-3 6.3-3 13.9 0 7.5.4 9 2.8 13.2 3.1 5.2 8.8 10.7 13.9 13.5 3.1 1.7 11.6 1.8 168.8 2.3 147.1.4 165.5.7 165.8 2 .1.9-3.8 5.3-9.2 10.3-10.5 9.7-23.1 24.8-31.3 37.5-3.3 5.1-6.3 8.6-7.9 9.2-1.6.7-71.6 1-192.2 1-215.2 0-195.1-.9-204.7 8.5-14.3 13.9-10.4 37.4 7.7 46.4l6.1 3.1h180.1c99.1 0 181.1.3 182.3.6s2.4 1.3 2.7 2.1-.1 8.4-.9 17-1.5 20.5-1.5 26.4c0 8.4-.3 11.1-1.6 12.3-1.4 1.4-15.2 1.6-137.4 1.6-134.2 0-136 0-141.4 2-11.6 4.4-18.8 14.4-18.9 26.5-.1 12.5 4.6 20.7 15.3 26.5l6.5 3.5 143.4.3c127.2.2 143.7.4 145.2 1.8.9.8 2.5 3.6 3.4 6.2 4.3 11.3 14.1 28.5 23.7 41.2 2.7 3.6 4.7 7.2 4.6 8-.3 1.3-9.9 1.6-77.3 2l-77 .5-5.1 2.7c-21.8 11.5-21.5 42.1.5 53l4.6 2.3 121 .5 121 .5 8.5 3.3c13.6 5.4 31.1 10 59 15.7 30.9 6.2 42.2 8.9 55.9 13.5 30.4 10.2 48.5 24.1 64 49.3 2.4 4 8.2 15.1 12.8 24.7s8.9 18.5 9.6 19.8c.6 1.3 4.4 5.4 8.4 9.2 14.4 13.7 21.7 13.5 80.9-2.1 75.9-20 86.1-21.8 124.7-22.6 28.9-.6 41.3.1 66.2 3.7 26.9 3.9 45.2 7.1 65.5 11.5 11.7 2.6 26.2 2.2 34.8-.8 10.1-3.5 15.7-7.1 23.2-14.6 9.5-9.6 11.7-16.7 8.3-26.7-4.3-13-16.7-24.7-36.4-34.6-14-7-32.1-10.7-51.9-10.8-16.1 0-73.6 2.8-101.5 5-48.1 3.8-84.6 8.7-132.7 18-11.7 2.3-14.5 2-18-1.7-4.4-4.6-3.6-25.9 2.7-79.3 3.8-32 4.3-55.3 1.6-76.1-6.7-51.9-25-89.4-59.9-123.1-14.5-13.9-26.2-22.4-42-30.5-19.2-9.7-18.9-9.5-16.4-10.4 3.3-1.2 23.1 2.3 35.2 6.3 33.7 10.9 64.2 33.8 83.8 62.8 7.8 11.6 17.6 30.2 23.3 44 15.6 38.3 21.8 72.5 20.5 113.5-.4 11.5-.9 23.1-1.2 25.7-.5 3.9-.3 4.9 1.1 5.4 2.6 1.1 47.2-21.6 70.8-35.9 31.2-19 43.7-28.5 63.8-48.6 15.4-15.4 21.2-22.9 36.4-46.2 35.5-54.3 50.2-61.7 129.5-64.9 54.1-2.2 73.2-7 88.1-21.9 9.1-9.1 13.4-18.7 15.4-34.1.7-5.9-1.7-19.7-5.5-30.7-16.3-46.8-18.1-51.4-25.3-63.8-13.1-22.6-38.4-45.1-77.2-68.2-10-6-12.3-7.3-39.5-21.8-34.7-18.6-40.7-21.9-55.5-31.4-11.6-7.4-27.2-20.1-36.5-29.7-10.9-11.3-18.2-21.5-37.4-51.8-27.5-43.4-45.9-61.3-75.5-73.4-13.8-5.6-26-8.3-39.6-8.7-6.6-.3-13.1-.1-14.5.4"/><path d="M762.585 85.644c-14.6 5.2-25.1 16.1-27.3 28.6-1.9 10.3 1.9 24.7 10 38.6 10.6 18.1 18.8 27.4 32.9 36.7 10.3 6.9 33.9 18.7 49 24.6 23 9 72.8 24.1 102 31 3 .7 9.1 2.2 13.5 3.4 9.6 2.5 10.4 2.5 11.1.6 1.2-2.9-16.3-24.3-33.4-41-9-8.8-24.1-24.6-33.5-35-60.5-67.2-74.7-80.1-96.6-87.6-7.2-2.5-20.6-2.5-27.7.1m-108.9 637c-2.7 2.2-8.4 6-12.6 8.5-21.2 12.3-29.8 13.5-55.4 8-22.4-4.9-34.2-5.7-47.7-3.1-10 1.9-15.9 4.7-21.7 10.1-8.4 7.8-12 20.3-10.1 35 1.9 15.2 8.6 24.4 20.7 28.5 6.3 2 9.1 2.3 36.8 2.7 31.7.6 46.2-.3 63-3.7 21.6-4.5 41.9-14.6 60.4-30 9.1-7.5 9.1-7.5 3.3-18.4-9.9-18.8-26.4-41.6-30-41.6-1 0-3.9 1.8-6.7 4"/></g>
+          </svg>
+        </div>
+        <h2>Adopt this at your team.</h2>
+        <p>
+          GoldenBerry helps engineering teams roll Pace out: install + connector setup, command authoring tuned to your repo's conventions, training your team on the stacked-PR loop, and ongoing support as your playbook grows.
+        </p>
+        <div class="fe-section-cta-row">
+          <a class="cta cta-primary" href="mailto:hello@goldenberry.so?subject=Pace for engineering">Talk to GoldenBerry</a>
+          <a class="cta cta-secondary" href="/cookbook/engineering">Read the cookbook</a>
+        </div>
+      </div>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .fe-page {
+    max-width: var(--width-max);
+    margin: 0 auto;
+    padding: 0;
+  }
+  .fe-hero {
+    padding: var(--spacing-3xl) var(--spacing-lg) var(--spacing-2xl);
+    max-width: 820px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .fe-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+    padding: 5px 10px;
+    border: 1px solid var(--color-mist);
+    border-radius: 4px;
+    background: var(--color-paper-elev);
+    margin-bottom: var(--spacing-md);
+  }
+  .fe-eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: currentColor;
+  }
+  .fe-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5.4vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    color: var(--color-ink);
+    margin-bottom: var(--spacing-lg);
+    max-width: 20ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .fe-lede {
+    font-size: clamp(1rem, 1.4vw, 1.125rem);
+    line-height: 1.65;
+    color: var(--color-charcoal);
+    margin-bottom: var(--spacing-lg);
+    max-width: 64ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .fe-hero-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-md);
+  }
+  .fe-hero-quiet {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-ash);
+  }
+  .fe-hero-quiet a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+
+  .fe-section {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    border-top: 1px solid var(--color-mist);
+  }
+  .fe-section-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    padding: 5px 10px;
+    border: 1px solid var(--color-forest-soft);
+    border-radius: 4px;
+    background: var(--color-forest-dim);
+    margin-bottom: var(--spacing-md);
+  }
+  .fe-section-eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: currentColor;
+  }
+  .fe-section h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    color: var(--color-ink);
+    margin-bottom: var(--spacing-md);
+    max-width: 24ch;
+  }
+  .fe-section-lede {
+    font-size: var(--fs-md);
+    line-height: 1.65;
+    color: var(--color-charcoal);
+    max-width: 64ch;
+    margin-bottom: var(--spacing-md);
+  }
+  .fe-section-foot {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-md);
+    border-top: 1px dashed var(--color-mist);
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+    max-width: 64ch;
+  }
+  .fe-section-foot a {
+    color: var(--color-forest);
+  }
+
+  /* The flow */
+  .fe-flow {
+    list-style: none;
+    padding: 0;
+    margin: var(--spacing-xl) 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    counter-reset: step;
+  }
+  .fe-step {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 18px;
+    align-items: start;
+    padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) 0;
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 12px;
+    padding-left: 18px;
+  }
+  .fe-step-num {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-forest);
+    color: var(--color-paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .fe-step-body h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    margin: 0 0 6px;
+    line-height: 1.2;
+  }
+  .fe-step-body h3 code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    color: var(--color-forest);
+    background: transparent;
+    padding: 0;
+    border: 0;
+  }
+  .fe-step-body p {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    margin-bottom: 8px;
+  }
+  .fe-step-say {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: var(--color-paper);
+    border-left: 2px solid var(--color-forest);
+    border-radius: 0 4px 4px 0;
+  }
+  .fe-step-say em {
+    font-style: italic;
+    color: var(--color-ink);
+  }
+
+  /* Cluster grid */
+  .fe-cluster-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+  }
+  .fe-cluster {
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 12px;
+    padding: var(--spacing-md) var(--spacing-lg);
+  }
+  .fe-cluster h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    margin: 0 0 var(--spacing-sm);
+    color: var(--color-ink);
+  }
+  .fe-cluster ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .fe-cluster li {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.5;
+  }
+  .fe-cluster code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    color: var(--color-forest);
+    background: var(--color-forest-dim);
+    padding: 1px 6px;
+    border-radius: 3px;
+    border: 0;
+  }
+
+  /* CTA slab, dark */
+  .fe-section-cta {
+    position: relative;
+    margin: var(--spacing-2xl) auto 0;
+    padding: 0;
+    border-top: 0;
+    background: var(--color-paper);
+    border-radius: 20px;
+    overflow: hidden;
+    max-width: var(--width-max);
+  }
+  .fe-section-cta-glow {
+    position: absolute;
+    inset: -20% -10% auto -10%;
+    height: 80%;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(45% 35% at 75% 50%, oklch(48% 0.10 32 / 0.45) 0%, transparent 75%),
+      radial-gradient(40% 30% at 22% 55%, oklch(40% 0.08 145 / 0.5) 0%, transparent 78%);
+    filter: blur(60px);
+  }
+  .fe-section-cta-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 620px;
+    margin: 0 auto;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .fe-section-cta-mark {
+    width: 84px;
+    height: 56px;
+    color: var(--color-ink);
+  }
+  .fe-section-cta-mark svg {
+    width: 100%;
+    height: 100%;
+  }
+  .fe-section-cta h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: var(--color-ink);
+    max-width: 18ch;
+    margin: 0;
+  }
+  .fe-section-cta p {
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    color: var(--color-charcoal);
+    max-width: 50ch;
+    margin: 0;
+  }
+  .fe-section-cta-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  @media (max-width: 720px) {
+    .fe-step {
+      grid-template-columns: 1fr;
+      padding-left: var(--spacing-md);
+    }
+    .fe-cluster-grid {
+      grid-template-columns: 1fr;
+    }
+    .fe-section-cta {
+      border-radius: 0;
+    }
+  }
+</style>
