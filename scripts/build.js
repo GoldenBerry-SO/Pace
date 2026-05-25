@@ -559,11 +559,17 @@ function generateCFConfig(buildDir) {
   fs.writeFileSync(path.join(buildDir, '_headers'), headers);
 
   // _redirects: rewrite JSON API routes to static files (200 = rewrite,
-  // not redirect). Pace ships no legacy URLs yet; add lines here when the
-  // site adds them.
+  // not redirect). Plus legacy URL redirects for renamed sections.
   const redirects = `/api/skills /_data/api/skills.json 200
 /api/commands /_data/api/commands.json 200
 /api/command-source/:id /_data/api/command-source/:id.json 200
+
+# Legacy URL redirects (renamed sections)
+/tutorials /cookbook 301
+/tutorials/ /cookbook 301
+/tutorials/* /cookbook 301
+/use-cases /cookbook 301
+/use-cases/* /cookbook 301
 `;
   fs.writeFileSync(path.join(buildDir, '_redirects'), redirects);
 
