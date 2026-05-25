@@ -113,8 +113,8 @@ pace.tools/
 ## Bring Pace to your company
 
 Pace is open source, fork it, rename the router, write commands
-specific to your operation. GoldenBerry also helps companies adopt
-Pace end-to-end: install + connector setup, command authoring tuned to
+specific to your operation. We also help companies adopt Pace
+end-to-end: install + connector setup, command authoring tuned to
 your team's workflows, training, and ongoing enablement.
 
 [Talk to GoldenBerry](mailto:hello@goldenberry.so) &middot;
