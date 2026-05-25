@@ -90,6 +90,7 @@ in Slack.`} />
           <div><dt>Features</dt><dd>Routines (API trigger), HubSpot + Apollo connectors, MCP autofill</dd></div>
         </dl>
         <p>The hook reads the attendee's email, runs <code>call-prep</code>, and drops the brief into the event description. By the time you open the meeting, the brief is already there: account history, recent activity, talking points, three questions to ask.</p>
+              <PromptBlock prompt={`When a calendar event lands with an external attendee, read the attendee email. Pull the account from HubSpot, recent activity, news, and any prior calls. Draft a brief into the event description: account history, recent activity, three talking points, three discovery questions.`} label="Calendar hook prompt" />
       </article>
 
       <article class="usecase-card">
@@ -100,6 +101,7 @@ in Slack.`} />
           <div><dt>Features</dt><dd>Routines (API trigger), Zoom + HubSpot connectors, plan mode for review</dd></div>
         </dl>
         <p>The hook pulls the transcript, runs <code>call-summary</code> to extract decisions and action items, then <code>draft-outreach</code> to compose the follow-up. Plan mode parks the draft for your approval. One click sends; the reply gets logged back to HubSpot, and <code>sequence-load</code> can enroll the contact into a multi-touch sequence if the deal warrants it.</p>
+              <PromptBlock prompt={`When a Zoom recording is finalized, pull the transcript. Extract decisions and action items with call-summary. Compose a follow-up email with draft-outreach in the rep's voice. Park the draft in plan mode for review; log the email back to HubSpot after sending. If the deal is at proposal stage or later, enroll the contact in the multi-touch sequence using sequence-load.`} label="Zoom recording-finalized prompt" />
       </article>
 
       <article class="usecase-card">
@@ -110,6 +112,9 @@ in Slack.`} />
           <div><dt>Skills</dt><dd><code>pipeline-review</code>, <code>draft-outreach</code></dd></div>
           <div><dt>Features</dt><dd>Routines (cloud schedule), HubSpot connector, conditional flagging logic</dd></div>
         </dl>
+              <PromptBlock prompt={`Every Tuesday and Friday at 9am, scan every open opportunity over $50k in HubSpot. Flag any deal that hasn't moved stages in 14 days, has had no inbound or outbound contact in 7 days, or is within 21 days of its close-date with no meeting on the calendar.
+
+For each flagged deal, post a thread to #sales-flagged with: the deal, the symptom, and three concrete next moves the rep could make this week.`} label="Deal-health scan prompt" />
       </article>
     </div>
 

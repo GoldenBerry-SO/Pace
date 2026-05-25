@@ -100,6 +100,9 @@ explanation. Post the digest to #data-weekly in Slack.`} />
           <div><dt>Features</dt><dd>Routines (cloud schedule), Snowflake + Slack connectors, sub-agent fan-out per metric</dd></div>
         </dl>
         <p>Runs the standard metrics (DAU, signups, conversion, NRR) against yesterday vs. trailing 28 days. Flags anything beyond 2 standard deviations. For each flagged metric, a sub-agent runs interpret to surface likely causes and the slice to investigate first. Posts the digest to #data-pulse with the boring ones collapsed.</p>
+              <PromptBlock prompt={`Every weekday at 7am, run our standard metrics (DAU, signups, conversion, NRR) against yesterday versus the trailing 28-day baseline. Flag anything more than 2 standard deviations off.
+
+For each flagged metric, spawn a sub-agent that runs interpret against it: candidate cause, which slice to investigate first (cohort / channel / region / plan tier). Post the digest to #data-pulse with the boring metrics collapsed; flagged metrics expanded with the analyst notes.`} label="Weekday anomaly prompt" />
       </article>
 
       <article class="usecase-card">
@@ -110,6 +113,9 @@ explanation. Post the digest to #data-weekly in Slack.`} />
           <div><dt>Skills</dt><dd><code>validate-analysis</code>, <code>write-query</code></dd></div>
           <div><dt>Features</dt><dd>Routines (GitHub trigger), inline PR comments, dbt + Snowflake context</dd></div>
         </dl>
+              <PromptBlock prompt={`When a PR opens that touches a .sql file or a dbt model, run validate-analysis against the changed queries. Check column-level reasoning, common pitfalls (cartesian joins, NULL handling, timezone drift), and the higher-level question: is this query answering what its name claims it answers?
+
+Post findings as inline review comments on the PR before a human ever opens the diff.`} label="PR validate-analysis prompt" />
       </article>
     </div>
 

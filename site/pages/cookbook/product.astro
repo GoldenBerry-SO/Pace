@@ -104,6 +104,9 @@ synthesis before saving.`} />
           <div><dt>Features</dt><dd>Routines (cloud schedule), Intercom + Linear connectors, multi-source aggregation</dd></div>
         </dl>
         <p>Pulls last week of Intercom tickets, sales-loss reasons from HubSpot, and Linear bugs tagged customer-impact. Synthesizes into themes (not transcripts). Adds the themes as comments under the relevant roadmap items in Linear, and posts the executive summary to #product.</p>
+              <PromptBlock prompt={`Every Friday at 3pm, pull the week's Intercom tickets, sales-loss reasons from HubSpot, and Linear bugs tagged customer-impact. Synthesize into themes, not transcripts: cluster by what the customer was trying to do, what got in the way, and what they did instead.
+
+Add each theme as a comment under the relevant roadmap item in Linear. Post the executive summary to #product with five bullets max.`} label="Customer-feedback synthesis prompt" />
       </article>
 
       <article class="usecase-card">
@@ -114,6 +117,9 @@ synthesis before saving.`} />
           <div><dt>Skills</dt><dd><code>spec</code>, <code>synthesize</code></dd></div>
           <div><dt>Features</dt><dd>Routines (Linear webhook), Linear + Slack connectors, plan mode</dd></div>
         </dl>
+              <PromptBlock prompt={`When stakeholders leave comments on a Linear spec, read each comment in context. For each one, write a candidate response in a thread under the original comment: accept-and-update, push-back-with-reasoning, or ask-for-clarification.
+
+Mark the responses that need product-manager judgment in red; leave the obvious ones as drafts the PM can approve in a single pass.`} label="Spec-comment review prompt" />
       </article>
     </div>
 

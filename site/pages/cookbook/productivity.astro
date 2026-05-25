@@ -96,6 +96,9 @@ before posting to #async-standup.`} />
           <div><dt>Features</dt><dd>Auto memory (CLAUDE.md), cross-app context retrieval</dd></div>
         </dl>
         <p><code>start</code> re-hydrates yesterday's context from <code>memory-management</code>: open threads, the decisions you made, the things you said you'd come back to. No more spending the first 20 minutes of every session reading old messages.</p>
+              <PromptBlock prompt={`I need to find: [what we decided about pricing in the Q3 launch retro].
+
+Search across Slack channel histories (#product, #pricing, #leadership), Notion docs, Linear comments, and GitHub PR discussion. Surface the actual decision (not just the discussion), with the date it was made and a link back to the source.`} label="Project memory prompt" />
       </article>
       <article class="usecase-card">
         <h3>End-of-week recap, written for you</h3>
@@ -105,6 +108,11 @@ before posting to #async-standup.`} />
           <div><dt>Features</dt><dd>Routines (cloud schedule), Linear + GitHub + calendar connectors, multi-source pull</dd></div>
         </dl>
         <p>Pulls what you shipped, what you reviewed, what you started, and what slipped. Drafts the recap email or status update in your voice, ready to send (or skip) on Monday. Trains itself on your past updates after a few weeks so the tone matches.</p>
+              <PromptBlock prompt={`Every Friday at 5pm, pull what I shipped this week (Linear closed, GitHub merged), what I reviewed (PRs I commented on), what I started (branches created), and what slipped (carryover from last week's plan).
+
+Draft my recap email in my voice, ready to send Monday morning. Match the tone of recent recaps I've sent (read the last three from my sent folder).
+
+Park the draft in Notion under /personal/recaps so I can edit before sending.`} label="Weekly recap prompt" />
       </article>
 
       <article class="usecase-card">
@@ -115,6 +123,9 @@ before posting to #async-standup.`} />
           <div><dt>Skills</dt><dd><code>memory-search</code>, <code>synthesize</code></dd></div>
           <div><dt>Features</dt><dd>Cowork chat, multi-source connectors (Slack + Notion + Linear + GitHub), enterprise-search pairing</dd></div>
         </dl>
+              <PromptBlock prompt={`I need to find: [what we decided about pricing in the Q3 launch retro].
+
+Search across Slack channel histories (#product, #pricing, #leadership), Notion docs, Linear comments, and GitHub PR discussion. Surface the actual decision (not just the discussion), with the date it was made and a link back to the source.`} label="Project memory prompt" />
       </article>
     </div>
 

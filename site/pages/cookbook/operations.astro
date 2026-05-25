@@ -95,6 +95,9 @@ in Notion.`} />
           <div><dt>Features</dt><dd>Routines (cloud schedule), Notion + Slack connectors, conditional execution</dd></div>
         </dl>
         <p>Reads the vendor register, finds contracts renewing in the next 60 days, runs vendor-evaluation against current usage and alternatives, and posts a brief to the owner with a recommend / renegotiate / replace call. No-op on days with no upcoming renewals.</p>
+              <PromptBlock prompt={`Every weekday at 9am, scan the vendor register for contracts renewing in the next 60 days. For each one, run vendor-evaluation against current usage data and recent comparable alternatives. Produce a brief: current usage, contract value, renewal-or-renegotiate-or-replace recommendation, three specific reasons.
+
+Post to the contract owner. No-op on days with no upcoming renewals (don't ping the channel).`} label="Vendor renewal scan prompt" />
       </article>
       <article class="usecase-card">
         <h3>Document the recurring meeting that has no document</h3>
@@ -104,6 +107,9 @@ in Notion.`} />
           <div><dt>Features</dt><dd>Cowork chat, sub-agents to gather context from Slack + Linear, plan mode for review</dd></div>
         </dl>
         <p>You walk Claude through how the recurring meeting actually runs (verbally or by pasting notes). It produces the runbook: agenda template, what to prep, who owns what, how decisions get logged. Drops it into Notion under the right team space. The next time someone new owns the meeting, they have a place to start.</p>
+              <PromptBlock prompt={`I want to document the [recurring meeting name] so the next person who owns it can run it solo. I'll paste the meeting notes and Slack threads; you walk me through what makes the meeting work, what the agenda template should be, what to prep, who owns what, how decisions get logged.
+
+Produce a runbook in Notion under the right team space. Plan mode parks it for my review.`} label="Document-process prompt" />
       </article>
 
       <article class="usecase-card">
@@ -114,6 +120,11 @@ in Notion.`} />
           <div><dt>Skills</dt><dd><code>document-process</code>, <code>incident-postmortem</code></dd></div>
           <div><dt>Features</dt><dd>Routines (API trigger), PagerDuty + Slack + Notion connectors, plan mode</dd></div>
         </dl>
+              <PromptBlock prompt={`When a PagerDuty incident closes, pull the incident timeline, the resolution thread from #incident-XYZ, and any changes made to fix it. Read the relevant runbook for this service.
+
+Draft an update: add the new failure mode + the resolution to the runbook. If no runbook exists for this failure mode, create one.
+
+Park the diff in plan mode for the on-call engineer to approve.`} label="Incident runbook update prompt" />
       </article>
     </div>
 

@@ -100,6 +100,13 @@ look. Post to #marketing-weekly.`} />
           <div><dt>Features</dt><dd>Routines (GitHub event), Linear + Notion connectors, plan mode for review</dd></div>
         </dl>
         <p>When a release branch merges, the routine reads the cycle's shipped issues, drafts the announcement post, the changelog entry, and the customer-facing one-pager in one go. Brand-voice enforcement runs over each artifact. Everything lands in Notion under a single page for your review before anything goes out.</p>
+              <PromptBlock prompt={`When a release branch merges to main, read the shipped issues from Linear in that cycle. Draft the launch comms kit in Notion under a single page:
+
+1. A blog announcement post (in our brand voice).
+2. The changelog entry for the public release notes.
+3. A customer-facing one-pager.
+
+Run brand-voice-enforcement over each artifact. Park everything in plan mode for the marketing lead's review before anything goes out.`} label="Launch comms prompt" />
       </article>
 
       <article class="usecase-card">
@@ -110,6 +117,9 @@ look. Post to #marketing-weekly.`} />
           <div><dt>Skills</dt><dd><code>campaign-plan</code>, <code>draft-content</code></dd></div>
           <div><dt>Features</dt><dd>Routines (cloud schedule), Notion + Linear connectors, plan mode for review</dd></div>
         </dl>
+              <PromptBlock prompt={`Every Wednesday at 1pm, pull the quarterly themes from the strategy doc in Notion, upcoming product launches from Linear, and any event tie-ins from the calendar. Draft a week of planned posts: one blog topic, three social posts (LinkedIn + X + threads versions), one email to the newsletter list.
+
+Park the calendar in Notion plan mode for the marketing lead to review, then post the approved version to #content for the week.`} label="Content-calendar prompt" />
       </article>
     </div>
 

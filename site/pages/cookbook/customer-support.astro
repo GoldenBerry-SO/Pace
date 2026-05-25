@@ -95,6 +95,9 @@ in the incoming text field.
           <div><dt>Features</dt><dd>Routines (cloud schedule), Intercom + PagerDuty connectors, conditional escalation</dd></div>
         </dl>
         <p>Twice on weekends, the routine sweeps Intercom. Routine tickets get auto-responses where the answer is in the knowledge base. The two or three that look real get summarized and paged to the on-call engineer with full context. The Sunday-night Slack thread no longer scrolls.</p>
+              <PromptBlock prompt={`Twice on weekends, at 9am and 6pm, sweep the support inbox (Intercom or Zendesk, whichever you use). For routine tickets where the answer is in the knowledge base, draft a response in our voice and post it. For the two or three that look real (production issue, customer at risk, escalation request), summarize with full context (account, history, what they tried) and page the on-call engineer via PagerDuty.
+
+Post a digest of what was handled vs. what was paged to #support-weekend.`} label="Weekend on-call prompt" />
       </article>
       <article class="usecase-card">
         <h3>Turn five resolved tickets into one KB article, every week</h3>
@@ -104,6 +107,9 @@ in the incoming text field.
           <div><dt>Features</dt><dd>Routines (cloud schedule), Intercom + Notion connectors, sub-agent per theme</dd></div>
         </dl>
         <p>Reads the week's resolved tickets, clusters them by theme, and for each theme with three or more occurrences, drafts a knowledge-base article. Plan mode stages the drafts in Notion; you publish the ones worth publishing. The KB grows from real volume instead of someone deciding what should be there in the abstract.</p>
+              <PromptBlock prompt={`Every Friday at 4pm, read this week's resolved tickets. Cluster them by theme (what the customer was trying to do). For each theme with 3+ occurrences, draft a knowledge-base article: title, problem, solution, common gotchas, related links.
+
+Stage the drafts in Notion under #support-kb-drafts. We'll publish the ones worth publishing in next week's KB review.`} label="KB roll-up prompt" />
       </article>
 
       <article class="usecase-card">
@@ -114,6 +120,13 @@ in the incoming text field.
           <div><dt>Skills</dt><dd><code>customer-escalation</code>, <code>customer-context</code></dd></div>
           <div><dt>Features</dt><dd>Routines (webhook), HubSpot + Intercom + Slack connectors</dd></div>
         </dl>
+              <PromptBlock prompt={`When support escalates a ticket to engineering (tag = "esc-to-eng" added in Intercom), assemble the customer context before the engineer picks it up:
+
+- Account: size, tier, deal stage if any, contract value
+- Recent activity: open tickets, product-usage signals from the last 14 days
+- History: prior escalations, their outcomes, who handled them
+
+Append the context as a comment on the escalated ticket. Ping the engineering on-call in #escalations with a one-line summary.`} label="Escalation-context prompt" />
       </article>
     </div>
 

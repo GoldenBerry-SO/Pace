@@ -103,6 +103,13 @@ to their reqs so they get a heads-up DM.`} />
           <div><dt>Skills</dt><dd><code>onboarding-plan</code>, <code>review-feedback</code></dd></div>
           <div><dt>Features</dt><dd>Routines (calendar webhook), Linear + GitHub + Slack + Notion connectors</dd></div>
         </dl>
+              <PromptBlock prompt={`30 minutes before any 1:1 on my calendar, assemble a brief on the direct I'm meeting with:
+
+- What they shipped this week (Linear closed, GitHub merged).
+- What they're stuck on (open PRs over 3 days old, Slack threads where they pinged me, blocked Linear tickets).
+- What came up in our last 1:1 notes in Notion.
+
+Drop the brief into the calendar event description so I see it when I open the meeting.`} label="1:1 prep prompt" />
       </article>
       <article class="usecase-card">
         <h3>Offer letter drafted from the candidate record</h3>
@@ -112,6 +119,9 @@ to their reqs so they get a heads-up DM.`} />
           <div><dt>Skills</dt><dd><code>job-description</code>, <code>comp-analysis</code></dd></div>
           <div><dt>Features</dt><dd>Routines (API trigger), Greenhouse / Ashby connectors, plan mode for people-ops review</dd></div>
         </dl>
+              <PromptBlock prompt={`When a candidate hits the "offer" stage in our ATS, pull their record: role, level, band, recruiter notes, start date. Draft the offer letter from our standard template with the right comp (base + variable), equity grant per the band, and start-date language.
+
+Park the draft in plan mode for people-ops to review. Once approved, the recruiter sends from the ATS.`} label="Offer letter prompt" />
       </article>
     </div>
 

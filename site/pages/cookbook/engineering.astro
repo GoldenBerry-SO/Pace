@@ -1,5 +1,56 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PromptBlock from '../../components/PromptBlock.astro';
+
+const recipes = [
+  {
+    id: 'discovery',
+    label: 'Discovery to first PR',
+    title: 'From idea to first PR, with the thinking captured',
+    outcome: 'Half a day of unstructured exploration becomes a tracked epic with one PR in the queue, ready to review.',
+    summary: "When you're starting from something fuzzier than a spec. You'll prototype to learn, grill yourself on what you learned, write the PRD that captures the decision, split it into issues, and TDD the first one.",
+    chain: [
+      { skill: 'prototype', label: 'Prototype', body: 'Build a throwaway version to feel the shape of the design. State, edges, UI variants, whichever is fuzzy.' },
+      { skill: 'grill-me', label: 'Grill yourself', body: "Force the questions you've been avoiding. Failure modes, partial state, concurrency, scale, telemetry, rollback. Every branch gets an answer." },
+      { skill: 'to-prd', label: 'Write the PRD', body: 'Turn the prototype and the grilling answers into a PRD: problem, constraints, decisions, non-goals. Saved to your project tracker.' },
+      { skill: 'to-issues', label: 'Split into issues', body: 'Break the PRD into tracer-bullet vertical slices, one per issue. Each issue is sized to land as one PR.' },
+      { skill: 'tdd', label: 'TDD the first slice', body: 'Red-green-refactor on the first issue. Commits at every transition so the loop is visible in the diff.' },
+    ],
+    kickoffLabel: 'Discovery kickoff',
+    kickoffPrompt: `I want to build the bulk-CSV import feature. We need to handle 50k rows, validate against the existing user schema, and produce a downloadable error report.
+
+Let's go through the discovery chain:
+1. Prototype both the streaming-parse approach and the chunked-batch approach so I can feel the difference.
+2. Grill me on the design: failure modes, partial uploads, concurrent users, what error reporting actually looks like.
+3. Write the PRD from what we landed on, save it to Linear.
+4. Split into issues sized for one PR each.
+5. TDD the first issue.
+
+Stop after each step so I can review.`,
+    when: "Use when: you have an ask, not a spec. You don't yet know the right design.",
+  },
+  {
+    id: 'shipping',
+    label: 'Stacked-PR shipping',
+    title: 'Stacked-PR shipping, end to end',
+    outcome: 'A planned feature lands as a chain of small reviewable PRs, each rebased cleanly after the previous one merges.',
+    summary: "When the spec already exists. You'll plan it as an epic, build it as a stack of PRs, address review comments, rebase the next one when the previous merges, and reset cleanly between tasks.",
+    chain: [
+      { skill: 'spec', label: 'Spec the feature', body: 'Refine the ask into a parent epic with ordered sub-issues. Each sub-issue is scoped to a single PR. No code yet.' },
+      { skill: 'implement', label: 'Implement the stack', body: 'Build the epic as stacked branches, one PR per sub-issue. Stops at PR boundaries so you can review before continuing.' },
+      { skill: 'review', label: 'Address reviews', body: 'Walk PR comments grouped by file. Each one gets a fix-and-reply, a decline-with-rationale, or an ask-for-clarification.' },
+      { skill: 'topr', label: 'Rebase the next PR', body: 'After PR n merges via squash, rebase PR n+1 cleanly. The skill correctly drops the squash-merged commits.' },
+      { skill: 'next', label: 'Reset', body: "Clean throwaway branch on the latest main. The next task starts from a known good state; the old branch stays in case you need it." },
+    ],
+    kickoffLabel: 'Shipping kickoff',
+    kickoffPrompt: `Spec the bulk-CSV import feature into a tracked epic with ordered sub-issues. Each sub-issue should be scoped to a single PR.
+
+Once the spec is approved, implement it as a stack of PRs. Stop after PR #2 so I can review.
+
+After review, address the comments, rebase the next PR on main, and reset for the following task.`,
+    when: 'Use when: the design decisions are made. You know what to build and just need it shipped methodically.',
+  },
+];
 
 const skillGroups = [
   {
@@ -165,7 +216,7 @@ const skills: Record<string, SkillEntry> = {
       <p class="usecases-back-link"><a href="/cookbook">&larr; Back to all cookbooks</a></p>
       <h1>Engineering cookbook</h1>
       <p class="usecases-lede">
-        The engineering plugin ships 34 skills. Most of them are auto-triggered by what you ask Claude. This page walks through the ones you'll reach for daily, grouped by the moment in the workflow when each one earns its keep.
+        Two flagship recipes (skill chains) cover most engineering work, followed by the full skill catalog as a reference. Recipes are how skills compose into a finished result; the catalog is what each individual skill does.
       </p>
       <div class="eng-install-row">
         <a class="usecase-step-btn" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=engineering" target="_blank" rel="noopener">Install engineering in Cowork &nearr;</a>
@@ -176,11 +227,57 @@ const skills: Record<string, SkillEntry> = {
     <nav class="eng-toc" aria-label="Jump to section">
       <span class="eng-toc-label">Jump to</span>
       <ul>
+        <li><a href="#recipes"><strong>Recipes</strong></a></li>
+        {recipes.map((r) => (
+          <li><a href={`#recipe-${r.id}`}>&nbsp;&nbsp;{r.label}</a></li>
+        ))}
+        <li><a href="#skill-reference"><strong>Skill reference</strong></a></li>
         {skillGroups.map((g) => (
-          <li><a href={`#${g.id}`}>{g.label}</a></li>
+          <li><a href={`#${g.id}`}>&nbsp;&nbsp;{g.label}</a></li>
         ))}
       </ul>
     </nav>
+
+    <section class="eng-recipes" id="recipes">
+      <header class="eng-section-head">
+        <h2>Recipes</h2>
+        <p>Skills compose. A real engineering task usually runs three to five skills in order, with the output of one feeding the next. Two recipe shapes cover most work.</p>
+      </header>
+
+      {recipes.map((r) => (
+        <article class="eng-recipe" id={`recipe-${r.id}`}>
+          <header class="eng-recipe-head">
+            <span class="eng-recipe-badge">Recipe</span>
+            <h3>{r.title}</h3>
+            <p class="eng-recipe-outcome">{r.outcome}</p>
+            <p class="eng-recipe-summary">{r.summary}</p>
+          </header>
+
+          <ol class="eng-recipe-chain">
+            {r.chain.map((step, i) => (
+              <li class="eng-recipe-step">
+                <div class="eng-recipe-step-num">{i + 1}</div>
+                <div class="eng-recipe-step-body">
+                  <div class="eng-recipe-step-head">
+                    <code class="eng-recipe-step-skill">{step.skill}</code>
+                    <h4>{step.label}</h4>
+                  </div>
+                  <p set:html={step.body}></p>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <div class="eng-recipe-kickoff">
+            <PromptBlock prompt={r.kickoffPrompt} label={r.kickoffLabel} />
+          </div>
+
+          <p class="eng-recipe-when">{r.when}</p>
+        </article>
+      ))}
+    </section>
+
+    <section class="eng-reference-anchor" id="skill-reference" aria-hidden="true"></section>
 
     {skillGroups.map((group) => (
       <section class="eng-section" id={group.id}>
@@ -327,6 +424,150 @@ const skills: Record<string, SkillEntry> = {
   .eng-toc a:hover {
     color: var(--color-forest);
     border-color: var(--color-forest);
+  }
+
+  /* Recipes */
+  .eng-recipes {
+    margin: var(--spacing-2xl) 0;
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-mist);
+  }
+  .eng-recipe {
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 12px;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+  }
+  .eng-recipe-head {
+    border-bottom: 1px solid var(--color-mist);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+  }
+  .eng-recipe-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    background: transparent;
+    border: 1px solid var(--color-forest-soft);
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin-bottom: var(--spacing-sm);
+  }
+  .eng-recipe-badge::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: currentColor;
+  }
+  .eng-recipe-head h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    line-height: 1.2;
+    letter-spacing: -0.022em;
+    font-weight: 600;
+    color: var(--color-ink);
+    margin: 0 0 var(--spacing-sm);
+  }
+  .eng-recipe-outcome {
+    font-family: var(--font-display);
+    font-size: var(--fs-lg);
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--color-forest);
+    margin: 0 0 var(--spacing-sm);
+    padding: 12px 16px;
+    background: var(--color-forest-dim);
+    border-left: 3px solid var(--color-forest);
+    border-radius: 0 6px 6px 0;
+    letter-spacing: -0.01em;
+  }
+  .eng-recipe-summary {
+    font-size: var(--fs-md);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    margin: 0;
+  }
+  .eng-recipe-chain {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .eng-recipe-step {
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    gap: 14px;
+    padding: 12px 14px;
+    background: var(--color-paper);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+  }
+  .eng-recipe-step-num {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--color-forest);
+    color: var(--color-paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .eng-recipe-step-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+  }
+  .eng-recipe-step-skill {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--color-forest);
+    background: var(--color-forest-dim);
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 0;
+  }
+  .eng-recipe-step-body h4 {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--color-ink);
+    margin: 0;
+    line-height: 1.3;
+  }
+  .eng-recipe-step-body p {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    margin: 0;
+  }
+  .eng-recipe-kickoff {
+    margin: var(--spacing-lg) 0 var(--spacing-md);
+  }
+  .eng-recipe-when {
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+    font-style: italic;
+    border-top: 1px dashed var(--color-mist);
+    padding-top: var(--spacing-sm);
+    margin: 0;
+  }
+  .eng-reference-anchor {
+    height: 0;
+    scroll-margin-top: 80px;
   }
 
   /* Section */

@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PromptBlock from '../../components/PromptBlock.astro';
 ---
 
 <Base
@@ -57,7 +58,10 @@ import Base from '../../layouts/Base.astro';
               <div><dt>Skills</dt><dd><code>brand-voice-enforcement</code>, <code>draft-content</code></dd></div>
               <div><dt>Features</dt><dd>Routines (GitHub trigger), inline PR comments, plan mode</dd></div>
             </dl>
-          </article>
+                  <PromptBlock prompt={`When a PR opens touching landing pages, blog templates, or email templates, run brand-voice-enforcement against the changed text. For each violation (off-tone, restricted term, structural deviation), post an inline comment with the concrete fix.
+
+Where a section needs a rewrite from scratch rather than a tweak, draft the replacement using draft-content from the marketing plugin. Park rewrites in plan mode.`} label="Brand-voice PR prompt" />
+      </article>
 
           <article class="usecase-card">
             <h3>Polish pass on a feature branch</h3>
@@ -104,6 +108,14 @@ import Base from '../../layouts/Base.astro';
           <div><dt>Skills</dt><dd><code>accessibility-audit</code>, <code>/impeccable audit</code></dd></div>
           <div><dt>Features</dt><dd>Routines (GitHub trigger), GitHub Issues integration, axe-core via MCP</dd></div>
         </dl>
+              <PromptBlock prompt={`When a release branch is created, run an accessibility audit across the pages changed in the release:
+
+- WCAG 2.1 AA checks via axe-core.
+- Keyboard-navigation walk on every interactive surface.
+- Color contrast verified against design tokens.
+- Screen-reader labeling and ARIA roles.
+
+Post a single triaged issue per release: P0 must-fix, P1 should-fix, P2 worth-noting. Block the release on P0 only.`} label="Release a11y audit prompt" />
       </article>
     </div>
 

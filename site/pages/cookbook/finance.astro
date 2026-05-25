@@ -94,6 +94,11 @@ summary to #finance-close.`} />
           <div><dt>Features</dt><dd>Routines (cloud schedule), warehouse connector, threshold alerting, Slack DM to the CFO's prep channel</dd></div>
         </dl>
         <p>Every nightly close, the variance skill compares actuals vs plan, flags anything > 5% deviation, drafts the why, and DMs the CFO's prep channel by 7am. The morning standup starts with answers, not surprises.</p>
+              <PromptBlock prompt={`Every weekday at 6am after the nightly close, pull yesterday's actuals from the warehouse and compare against plan. Flag any P&L line item more than 5% off plan.
+
+For each flagged variance, draft the explanation: the underlying driver (what category of activity changed), supporting data (which slice moved), and one sentence the CFO can repeat in the morning meeting.
+
+DM the digest to the CFO's prep channel by 7am.`} label="Variance prep prompt" />
       </article>
 
       <article class="usecase-card">
@@ -104,6 +109,9 @@ summary to #finance-close.`} />
           <div><dt>Features</dt><dd>Routines (API trigger), Box/Egnyte connector, in-house playbook context, plan mode</dd></div>
         </dl>
         <p>Any new vendor contract dropped in the legal folder triggers a playbook-aware review: <code>review-contract</code> walks payment terms, auto-renewal language, liability caps, and data clauses; <code>vendor-check</code> and <code>vendor-review</code> add the procurement-side perspective. Findings post as a checklist. Legal + Finance both see what to fight for before the call.</p>
+              <PromptBlock prompt={`When a vendor MSA hits the procurement intake, run contract-review against our playbook (standard payment terms, liability caps, IP assignment, termination, MFN, data processing addendum if PII is involved). Produce a redlined version with explanations next to each change.
+
+Park the redline in plan mode for legal sign-off. Once approved, post a one-paragraph summary to #procurement for the requesting team.`} label="Vendor MSA review prompt" />
       </article>
 
       <article class="usecase-card">
@@ -114,6 +122,9 @@ summary to #finance-close.`} />
           <div><dt>Skills</dt><dd><code>journal-entry-prep</code>, <code>variance-analysis</code></dd></div>
           <div><dt>Features</dt><dd>Routines (cloud schedule), QuickBooks / NetSuite connectors, plan mode for controller approval</dd></div>
         </dl>
+              <PromptBlock prompt={`Every Friday at 5pm, pull this week's accounts-payable batch from QuickBooks. Generate journal entries with the right GL coding. Flag anything unusual: new vendor (no prior payments), amount more than 2x the trailing-3-month average for that vendor, missing PO reference.
+
+Stage everything in plan mode for the controller to approve Monday morning. Post a one-line summary to #finance-close.`} label="AP batch journal-entry prompt" />
       </article>
     </div>
 
