@@ -628,6 +628,15 @@ const jsonLd = [
             <pre><code>claude plugin marketplace add GoldenBerry-SO/Pace
 claude plugin install sales@pace</code></pre>
             <p>Plugins install independently. Pick what you need; skip what you don't.</p>
+            <p>Want it done for you? <a href="mailto:hello@goldenberry.so" class="text-link">We handle end-to-end setup</a> for companies: install, connector authorization across your stack, role-specific configuration, and team enablement.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>How long does setup take?</summary>
+          <div class="faq-answer">
+            <p>Solo: 10 minutes to install plugins, then 5-15 minutes per connector for OAuth (HubSpot, Slack, Snowflake, etc.). Most teams are productive the same day.</p>
+            <p>For a whole company: planning + authorization + connector mapping + training is closer to a week if you do it yourself. <a href="mailto:hello@goldenberry.so" class="text-link">We roll this out as a service</a> in 2-4 days, including command authoring tuned to your team's workflows and a training session.</p>
           </div>
         </details>
 
@@ -636,6 +645,7 @@ claude plugin install sales@pace</code></pre>
           <div class="faq-answer">
             <p>No, but you should. Every plugin works standalone: it falls back to web search and whatever context you paste in. With connectors, Claude reads your real data directly: HubSpot accounts, Snowflake tables, Notion docs, Slack threads.</p>
             <p>Authorization happens on first use, per tool, via OAuth in your browser. You don't manage API keys. See <a href="/docs/connectors" class="text-link">how connectors work</a> for the full flow.</p>
+            <p>If your stack spans 10+ tools across the company, the authorization sprawl gets old fast. <a href="mailto:hello@goldenberry.so" class="text-link">GoldenBerry handles connector setup</a> as part of rolling Pace out across a team.</p>
           </div>
         </details>
 
@@ -662,15 +672,32 @@ claude plugin install sales@pace</code></pre>
             <p>Yes. Two paths, depending on scope:</p>
             <ul>
               <li><strong>Light:</strong> swap a connector for one that matches your stack (e.g. Salesforce instead of HubSpot). Skills resolve to whatever you authorize.</li>
-              <li><strong>Deep:</strong> fork the Pace repo for your company, edit the plugins, rename the router from <code>/pace</code> to <code>/yourco</code>, and write commands specific to your team's process. We offer training and enablement for this; see the "Use Pace at your company" section below.</li>
+              <li><strong>Deep:</strong> fork the Pace repo for your company, edit the plugins, rename the router from <code>/pace</code> to <code>/yourco</code>, and write commands specific to your team's process.</li>
             </ul>
+            <p>Most companies don't write their own commands from scratch. <a href="mailto:hello@goldenberry.so" class="text-link">We do this as a service</a>: interview your team, codify how you actually work into <code>/yourco</code> commands, and hand back a fork that fits your operation. Train + enable, then maintain as your playbook evolves.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can someone do this for us?</summary>
+          <div class="faq-answer">
+            <p>Yes. <a href="mailto:hello@goldenberry.so" class="text-link">GoldenBerry</a>, the company behind Pace, offers end-to-end adoption for companies that want Pace working across their team without spending engineering time on rollout. A typical engagement covers:</p>
+            <ul>
+              <li>Install + connector authorization across your stack (HubSpot, Slack, Snowflake, Notion, your ATS, your CRM, whatever else)</li>
+              <li>Per-role configuration: which plugins each team installs, which workflows fire automatically, which routines fit your calendar</li>
+              <li>Command authoring: <code>/yourco</code> router commands tuned to how your team actually ships, sells, closes, hires</li>
+              <li>Team training: a session per role plus a written playbook</li>
+              <li>Ongoing support: monthly check-in, new commands as your playbook evolves, fixes when something breaks</li>
+            </ul>
+            <p><a href="mailto:hello@goldenberry.so?subject=Pace%20adoption" class="text-link">Email hello@goldenberry.so</a> for a scoping conversation.</p>
           </div>
         </details>
 
         <details class="faq-item">
           <summary>What does it cost?</summary>
           <div class="faq-answer">
-            <p>Pace is free and open source (Apache 2.0). The plugins are free too. Some connectors require paid accounts on the vendor side (Snowflake, HubSpot, etc.), but Pace itself never charges and never paywalls plugins.</p>
+            <p>Pace itself is free and open source (Apache 2.0). The plugins are free too. Some connectors require paid accounts on the vendor side (Snowflake, HubSpot, etc.), but Pace never charges and never paywalls plugins.</p>
+            <p>If you want <a href="mailto:hello@goldenberry.so" class="text-link">GoldenBerry to roll Pace out for you</a> (install, authorize, configure, author custom commands, train your team), that's a paid engagement, scoped to your team size and stack. Reach out for pricing.</p>
           </div>
         </details>
 
