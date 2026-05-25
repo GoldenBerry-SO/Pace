@@ -23,7 +23,7 @@ Pace is a curated bundle of AI agents you install into [Cowork](https://claude.c
 (the CLI). One agent per role, each one fluent in that role's vocabulary
 and connected to the SaaS tools the team already uses.
 
-- **49 plugins** spanning sales, marketing, engineering, data, product,
+- **50 plugins** spanning sales, marketing, engineering, data, product,
   finance, legal, ops, HR, customer support, design, and productivity.
 - **MCP connectors** wire each plugin to your real tools. Authorize once,
   the agent works on your real data after that.
@@ -98,13 +98,13 @@ for the deep-dive.
 ```
 pace.tools/
 ├── skill/                          ← the /pace router (your team's commands)
-├── plugins/                        ← the 49-plugin catalog
+├── plugins/                        ← the 50-plugin catalog
 │   ├── sales/                      ← Anthropic-authored, imported verbatim
 │   ├── engineering/                ← Anthropic + PiXeL16/skills + authored
 │   ├── ...
 │   └── partner-built/              ← Apollo, Common Room, Slack, etc.
 ├── .claude-plugin/
-│   └── marketplace.json            ← registers all 49 plugins
+│   └── marketplace.json            ← registers all 50 plugins
 ├── site/                           ← pace.tools (Astro)
 ├── cli/                            ← npx pace-tools CLI
 └── NOTICE.md                       ← full attribution

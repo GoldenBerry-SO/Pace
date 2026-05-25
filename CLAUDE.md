@@ -9,7 +9,16 @@ Pace is **two things in one repo**:
 1. **A company router** — one installable skill (`/pace`) that fans out to company-specific sub-commands. Lives in `skill/`. Starts empty; we add commands as we author them.
 2. **A Claude Code marketplace** — a curated catalog of plugins under `plugins/`, primarily a verbatim import of [Anthropic's knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins). Sales, marketing, finance, legal, engineering, data, customer-support, product, HR, ops, design, and more (~150 skills).
 
-The marketplace is registered via `.claude-plugin/marketplace.json` (49 plugin entries: pace + 17 first-party Anthropic + 5 partner-built + 27 external by git URL).
+The marketplace is registered via `.claude-plugin/marketplace.json` (50 plugin entries: pace + 17 first-party Anthropic + 5 partner-built + 27 external by git URL).
+
+## Changelog: do not edit without permission
+
+The "What's New" / changelog section of `site/pages/index.astro` (the `<section class="section changelog" id="changelog">` block) is a tracked artifact tied to releases. **Do not modify it as part of broader copy work, redesigns, clarify passes, or any task that didn't explicitly request a changelog edit.** Touch it only when:
+
+- Chris explicitly asks for a changelog entry by name, or
+- A release is being tagged (via `bun run release:*` or similar).
+
+If a sweep otherwise wants to touch the changelog (e.g. a global plugin-count update), surface the intended edit to Chris and wait for the call before applying it inside that block.
 
 **Pace does not duplicate impeccable.** For code-level frontend design, pace defers to impeccable. The `npx pace skills install` CLI offers impeccable alongside.
 
