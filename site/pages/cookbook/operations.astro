@@ -1,0 +1,557 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base
+  title="Operations cookbook · Pace"
+  description="Operations recipes for the Pace marketplace. Weekly ops review automated. Runbook adherence enforced. Cross-team status that's never stale."
+  activeNav="cookbook"
+  canonicalPath="/cookbook/operations"
+>
+  <article class="usecases-page">
+    <header class="usecases-team-page-head">
+      <a class="usecases-back-link" href="/cookbook">&larr; All cookbooks</a>
+      <span class="usecases-eyebrow">Operations cookbook</span>
+      <h1>Operations</h1>
+      <p class="usecases-team-page-tagline">Weekly ops review automated. Runbook adherence enforced. Cross-team status that's never stale.</p>
+    </header>
+
+    <div class="usecases-team-page-body">
+<article class="usecase-card usecase-card-marquee">
+        <span class="usecase-card-badge">Marquee recipe</span>
+        <h3>Weekly cross-team status digest</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, schedule, weekly Friday 14:00</dd></div>
+          <div><dt>Skills</dt><dd><code>status-report</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (cloud schedule), Linear/Jira + Slack + Notion connectors, sub-agents per team</dd></div>
+        </dl>
+        <p>One sub-agent per department fans out and pulls progress from Linear / Slack / Notion; the coordinator rolls everything up into a single cross-team status doc by Friday afternoon. Monday standup walks in with the picture already in everyone's head.</p>
+
+        <div class="usecase-setup">
+          <h4 class="usecase-setup-title">How to set it up</h4>
+          <ol class="usecase-steps">
+            <li class="usecase-step">
+              <span class="usecase-step-num">1</span>
+              <div class="usecase-step-body">
+                <h5>Install the operations plugin</h5>
+                <div class="usecase-step-actions">
+                  <a class="usecase-step-btn" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=operations" target="_blank" rel="noopener">Install in Cowork &nearr;</a>
+                  <code class="usecase-step-cmd">claude plugin install operations@pace</code>
+                </div>
+              </div>
+            </li>
+            <li class="usecase-step">
+              <span class="usecase-step-num">2</span>
+              <div class="usecase-step-body">
+                <h5>Authorize Linear (or Jira), Slack, Notion</h5>
+                <p>Whichever ones your teams actually use. OAuth opens for each on first use.</p>
+              </div>
+            </li>
+            <li class="usecase-step">
+              <span class="usecase-step-num">3</span>
+              <div class="usecase-step-body">
+                <h5>Create the scheduled routine</h5>
+                <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong> &rarr; <strong>Schedule</strong> &middot; <strong>Weekly</strong> &middot; <strong>Friday</strong> &middot; <strong>14:00</strong>.</p>
+              </div>
+            </li>
+            <li class="usecase-step">
+              <span class="usecase-step-num">4</span>
+              <div class="usecase-step-body">
+                <h5>Paste this as the routine prompt</h5>
+                <p>Edit the team list to match your org structure.</p>
+                <pre class="usecase-step-prompt"><code>Run status-report. Spawn one sub-agent per
+team to pull progress signals from the last 7 days:
+
+  - Engineering: closed Linear tickets, merged PRs, incidents
+  - Product: spec updates, sprint progress
+  - Sales: closed-won, pipeline movement (top-line)
+  - Marketing: shipped campaigns, performance
+  - Customer Support: ticket volume, escalations
+
+A coordinator sub-agent rolls them into one Friday digest:
+"what shipped" at the top, blockers + risks in the middle,
+next-week focus at the bottom. Post to #leadership-friday
+in Slack and mirror to docs.pace/status/&lt;YYYY-MM-DD&gt;
+in Notion.</code></pre>
+              </div>
+            </li>
+            <li class="usecase-step">
+              <span class="usecase-step-num">5</span>
+              <div class="usecase-step-body">
+                <h5>Click <strong>Run now</strong> to verify</h5>
+                <p>Read the first digest carefully : adjust the per-team scope until the rollup matches how your org actually thinks about "progress". Once it's right, Fridays at 14:00 are hands-off.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </article>
+      <article class="usecase-card">
+        <h3>Vendor renewal heads-up, 60 days out</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, schedule, daily 09:00 (acts on hits only)</dd></div>
+          <div><dt>Skills</dt><dd><code>vendor-evaluation</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (cloud schedule), Notion + Slack connectors, conditional execution</dd></div>
+        </dl>
+        <p>Reads the vendor register, finds contracts renewing in the next 60 days, runs vendor-evaluation against current usage and alternatives, and posts a brief to the owner with a recommend / renegotiate / replace call. No-op on days with no upcoming renewals.</p>
+      </article>
+      <article class="usecase-card">
+        <h3>Document the recurring meeting that has no document</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Cowork chat, on demand</dd></div>
+          <div><dt>Skills</dt><dd><code>document-process</code></dd></div>
+          <div><dt>Features</dt><dd>Cowork chat, sub-agents to gather context from Slack + Linear, plan mode for review</dd></div>
+        </dl>
+        <p>You walk Claude through how the recurring meeting actually runs (verbally or by pasting notes). It produces the runbook: agenda template, what to prep, who owns what, how decisions get logged. Drops it into Notion under the right team space. The next time someone new owns the meeting, they have a place to start.</p>
+      </article>
+    </div>
+
+    <footer class="usecases-footer">
+      <p>
+        Have a operations workflow that should live here? <a href="https://github.com/GoldenBerry-SO/Pace/issues/new">Open an issue</a> with the trigger, skills, and Claude features it uses; we'll fold it into the cookbook.
+      </p>
+    </footer>
+  </article>
+</Base>
+
+<style>
+  .usecases-page {
+    max-width: var(--width-content);
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
+  }
+  .usecases-header {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .usecases-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    margin-bottom: var(--spacing-sm);
+    display: inline-block;
+  }
+  .usecases-header h1 {
+    font-family: var(--font-display);
+    font-size: var(--fs-3xl);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-md);
+  }
+  .usecases-lede {
+    font-size: var(--fs-md);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    max-width: 68ch;
+  }
+  .usecases-lede strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  /* Engineering callout above the TOC */
+  .usecases-eng-callout {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--spacing-lg);
+    align-items: center;
+    background: var(--color-forest);
+    color: var(--color-paper);
+    border-radius: 12px;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+  }
+  .usecases-eng-callout-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-paper);
+    opacity: 0.78;
+    margin-bottom: 6px;
+  }
+  .usecases-eng-callout-eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: currentColor;
+  }
+  .usecases-eng-callout-text h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+    line-height: 1.2;
+    color: var(--color-paper);
+    margin: 0 0 8px;
+    letter-spacing: -0.02em;
+  }
+  .usecases-eng-callout-text p {
+    font-size: var(--fs-sm);
+    line-height: 1.55;
+    color: var(--color-paper);
+    opacity: 0.85;
+    margin: 0;
+    max-width: 56ch;
+  }
+  .usecases-eng-callout-cta {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 20px;
+    background: var(--color-paper);
+    color: var(--color-forest);
+    border-radius: 2px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: transform var(--duration-base) var(--ease-out-quart);
+    white-space: nowrap;
+  }
+  .usecases-eng-callout-cta:hover {
+    transform: translateY(-1px);
+  }
+  @media (max-width: 720px) {
+    .usecases-eng-callout {
+      grid-template-columns: 1fr;
+      padding: var(--spacing-md);
+    }
+  }
+
+  /* TOC grid */
+  .usecases-toc {
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 12px;
+    padding: var(--spacing-md) var(--spacing-md) var(--spacing-md);
+    margin-bottom: var(--spacing-2xl);
+  }
+  .usecases-toc-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+    display: block;
+    margin: 0 6px var(--spacing-sm);
+  }
+  .usecases-toc-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .usecases-toc-grid a {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 14px;
+    background: var(--color-paper);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+    color: var(--color-ink);
+    transition: border-color var(--duration-fast) var(--ease-out-quart),
+                background var(--duration-fast) var(--ease-out-quart),
+                transform var(--duration-fast) var(--ease-out-quart);
+  }
+  .usecases-toc-grid a:hover {
+    border-color: var(--color-forest);
+    background: var(--color-forest-dim);
+    transform: translateY(-1px);
+  }
+  .usecases-toc-name {
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+  .usecases-toc-count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-ash);
+  }
+  @media (max-width: 820px) {
+    .usecases-toc-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .usecases-team {
+    margin-bottom: var(--spacing-2xl);
+    scroll-margin-top: 96px;
+  }
+  .usecases-team-head {
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .usecases-team-head h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+    margin-bottom: var(--spacing-xs);
+  }
+  .usecases-team-tagline {
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+    line-height: 1.55;
+    max-width: 70ch;
+  }
+  .usecase-card {
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-mist);
+    border-radius: 12px;
+    background: var(--color-paper-elev);
+    margin-bottom: var(--spacing-md);
+  }
+  .usecase-card-marquee {
+    border-color: var(--color-forest);
+    background: color-mix(in oklch, var(--color-paper-elev) 92%, var(--color-forest-dim));
+  }
+  .usecase-card-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    background: transparent;
+    border: 1px solid var(--color-forest-soft);
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin-bottom: var(--spacing-sm);
+  }
+  .usecase-card-badge::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: currentColor;
+  }
+  .usecase-card h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    line-height: 1.2;
+    letter-spacing: -0.022em;
+    color: var(--color-ink);
+    margin: 0 0 var(--spacing-md);
+    font-weight: 600;
+  }
+  .usecase-card > p {
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    color: var(--color-charcoal);
+    margin: 0 0 var(--spacing-md);
+  }
+  /* Meta: small chip row at the bottom (was a big dl block at top) */
+  .usecase-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+    margin: var(--spacing-md) 0 0;
+    padding-top: var(--spacing-md);
+    border-top: 1px dashed var(--color-mist);
+  }
+  .usecase-meta > div {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: var(--color-paper);
+    border: 1px solid var(--color-mist);
+    border-radius: 999px;
+    font-size: 11px;
+    font-family: var(--font-mono);
+  }
+  .usecase-meta dt {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+    margin: 0;
+    font-weight: 500;
+  }
+  .usecase-meta dt::after {
+    content: ":";
+    margin-left: 1px;
+    color: var(--color-mist);
+  }
+  .usecase-meta dd {
+    margin: 0;
+    color: var(--color-charcoal);
+    font-size: 11px;
+  }
+  .usecase-meta dd code {
+    font-family: var(--font-mono);
+    font-size: 0.95em;
+    color: var(--color-forest);
+    background: transparent;
+    padding: 0;
+    border: 0;
+  }
+  .usecase-card p {
+    font-size: var(--fs-base);
+    color: var(--color-charcoal);
+    line-height: 1.65;
+    max-width: 70ch;
+  }
+  .usecase-card p code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: var(--color-code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--color-code-border);
+    color: var(--color-ink);
+  }
+  .usecases-footer {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-mist);
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+    line-height: 1.6;
+  }
+  .usecases-footer a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .usecases-impeccable {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+  .usecases-impeccable-pitch h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-ink);
+  }
+  .usecases-impeccable-pitch p {
+    font-size: var(--fs-base);
+    color: var(--color-charcoal);
+    line-height: 1.65;
+    max-width: 70ch;
+    margin-bottom: var(--spacing-sm);
+  }
+  .usecases-impeccable-pitch a,
+  .usecases-impeccable-when a,
+  .usecases-team-tagline a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .usecases-impeccable-pitch code,
+  .usecases-impeccable-when code,
+  .usecases-team-tagline code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--color-code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--color-code-border);
+    color: var(--color-ink);
+  }
+  .usecases-impeccable-cta {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+  }
+  .usecases-impeccable-cta .cta {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    transition: background var(--duration-fast) var(--ease-out-quart), color var(--duration-fast) var(--ease-out-quart);
+  }
+  .cta-primary {
+    background: var(--color-forest);
+    color: var(--color-paper);
+  }
+  .cta-primary:hover {
+    background: var(--color-forest-hover);
+  }
+  .cta-secondary {
+    background: transparent;
+    color: var(--color-forest);
+    border: 1px solid var(--color-forest-soft);
+  }
+  .cta-secondary:hover {
+    background: var(--color-forest-dim);
+  }
+  .usecases-impeccable-when {
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+    padding: var(--spacing-md) var(--spacing-lg);
+  }
+  .usecases-impeccable-when summary {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--color-ink);
+    cursor: pointer;
+    list-style: none;
+  }
+  .usecases-impeccable-when summary::-webkit-details-marker {
+    display: none;
+  }
+  .usecases-impeccable-when summary::before {
+    content: '+';
+    font-family: var(--font-mono);
+    color: var(--color-forest);
+    margin-right: var(--spacing-sm);
+    transition: transform var(--duration-fast) var(--ease-out-quart);
+    display: inline-block;
+  }
+  .usecases-impeccable-when[open] summary::before {
+    content: '−';
+  }
+  .usecases-impeccable-when p,
+  .usecases-impeccable-when ul {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.65;
+    margin-top: var(--spacing-sm);
+    max-width: 70ch;
+  }
+  .usecases-impeccable-when ul {
+    padding-left: var(--spacing-md);
+  }
+  .usecases-impeccable-when li {
+    margin-bottom: var(--spacing-xs);
+  }
+  .usecases-impeccable-when strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  @media (max-width: 720px) {
+    .usecase-meta > div {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+  }
+
+  /* Recipe card outcome-first ordering: prose before pills */
+  .usecase-card {
+    display: flex;
+    flex-direction: column;
+  }
+  .usecase-card h3 { order: 1; }
+  .usecase-card-badge { order: 0; }
+  .usecase-card > p { order: 2; }
+  .usecase-card .usecase-meta { order: 3; margin-top: var(--spacing-md); }
+  .usecase-card > .usecase-setup,
+  .usecase-card > .usecase-step-prompt,
+  .usecase-card-marquee .usecase-setup { order: 4; }
+</style>

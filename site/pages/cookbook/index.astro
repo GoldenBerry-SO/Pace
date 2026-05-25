@@ -1,1178 +1,135 @@
 ---
 import Base from '../../layouts/Base.astro';
+
+interface TeamCard {
+  slug: string;
+  name: string;
+  hook: string;
+  recipeCount: number;
+  marquee: string;
+}
+
+const teams: TeamCard[] = [
+  {
+    slug: 'sales',
+    name: 'Sales',
+    hook: 'Pipeline brief on Monday. Account-prep when a meeting hits the calendar. Follow-ups drafted from the call transcript.',
+    recipeCount: 3,
+    marquee: 'Monday morning pipeline brief, in your inbox by 7am',
+  },
+  {
+    slug: 'marketing',
+    name: 'Marketing',
+    hook: "Weekly campaign brief. Content drafting that knows your brand voice. Performance reports you don't have to assemble.",
+    recipeCount: 3,
+    marquee: 'Weekly campaign performance digest, Fridays at 4pm',
+  },
+  {
+    slug: 'engineering',
+    name: 'Engineering',
+    hook: 'A disciplined stacked-PR workflow plus careful-review, TDD, diagnose, security-review, and the rest of the 34-skill toolkit.',
+    recipeCount: 8,
+    marquee: 'The stacked-PR way of working',
+  },
+  {
+    slug: 'data',
+    name: 'Data',
+    hook: 'Weekday anomaly digest. Query writing against your warehouse. Dashboards that explain themselves.',
+    recipeCount: 3,
+    marquee: 'Anomaly digest, every weekday morning',
+  },
+  {
+    slug: 'product',
+    name: 'Product',
+    hook: 'Customer feedback synthesis. Roadmap planning from your Linear backlog. Specs that hand off cleanly to engineering.',
+    recipeCount: 3,
+    marquee: 'Customer-feedback weekly: signal from noise',
+  },
+  {
+    slug: 'finance',
+    name: 'Finance',
+    hook: 'Month-end runbook. Variance analysis the CFO wants before they ask. Audit prep that runs itself.',
+    recipeCount: 3,
+    marquee: 'Month-end close on rails',
+  },
+  {
+    slug: 'legal',
+    name: 'Legal',
+    hook: 'NDA redlines in five minutes. Contract review with the unusual clauses flagged. Compliance audit prep on schedule.',
+    recipeCount: 3,
+    marquee: 'NDA fast-path: redline against your template',
+  },
+  {
+    slug: 'operations',
+    name: 'Operations',
+    hook: 'Vendor renewal heads-up 60 days out. Recurring-meeting documentation. Capacity planning grounded in real usage.',
+    recipeCount: 3,
+    marquee: 'Vendor renewal heads-up, 60 days out',
+  },
+  {
+    slug: 'people',
+    name: 'People',
+    hook: 'Job descriptions in your voice. Onboarding plans for new hires. 360 reviews consolidated into something coherent.',
+    recipeCount: 2,
+    marquee: '30-day onboarding plan for each new hire',
+  },
+  {
+    slug: 'customer-support',
+    name: 'Customer Support',
+    hook: 'Weekend on-call digest. Knowledge-base articles from real resolved tickets. Ticket triage that catches the urgent ones.',
+    recipeCount: 3,
+    marquee: 'Saturday on-call digest, no human babysitting',
+  },
+  {
+    slug: 'productivity',
+    name: 'Productivity',
+    hook: 'Morning brief from your calendar + Slack + Linear. End-of-week recap. Project memory that does not forget what you decided.',
+    recipeCount: 3,
+    marquee: 'End-of-week recap, written for you',
+  },
+  {
+    slug: 'design',
+    name: 'Design',
+    hook: 'Brand-voice enforcement on landing pages. Visual checks before deploy. Defers to impeccable for frontend code-level craft.',
+    recipeCount: 3,
+    marquee: 'Brand-voice enforcement on every PR',
+  },
+];
 ---
 
 <Base
   title="Cookbook · Pace"
-  description="Concrete recipes for every team: install, authorize, paste the routine prompt, verify. One marquee workflow per team (sales pipeline brief, engineering self-review, finance month-end, and more). Copy and ship."
+  description="Concrete recipes for every team. Sales prep on Monday morning. Marketing reports on Friday afternoon. Engineering's stacked-PR workflow. Pick the team you're on."
   activeNav="cookbook"
   canonicalPath="/cookbook"
 >
-  <article class="usecases-page">
-    <header class="usecases-header">
-      <span class="usecases-eyebrow">Cookbook</span>
-      <h1>The Pace cookbook</h1>
-      <p class="usecases-lede">
-        Recipes, not theory. Each card combines Pace skills with Claude Code's broader features (<a href="https://code.claude.com/docs/en/routines">Routines</a>, <a href="https://code.claude.com/docs/en/hooks">hooks</a>, <a href="https://code.claude.com/docs/en/sub-agents">sub-agents</a>, plan mode, <a href="https://code.claude.com/docs/en/mcp">MCP connectors</a>) and walks you through setup: install the plugins, authorize the connectors, paste the prompt, verify. One marquee recipe per team, plus shorter overview cards for adjacent workflows.
+  <article class="ck-page">
+    <header class="ck-header">
+      <span class="ck-eyebrow">Cookbook</span>
+      <h1 class="ck-title">Recipes, not theory.</h1>
+      <p class="ck-lede">
+        Each recipe combines Pace skills with Claude Code features (<a href="https://code.claude.com/docs/en/routines">Routines</a>, <a href="https://code.claude.com/docs/en/hooks">hooks</a>, <a href="https://code.claude.com/docs/en/sub-agents">sub-agents</a>, plan mode, <a href="https://code.claude.com/docs/en/mcp">MCP connectors</a>) and walks you through setup. Pick the team you're on.
       </p>
     </header>
 
-    <aside class="usecases-eng-callout">
-      <div class="usecases-eng-callout-text">
-        <span class="usecases-eng-callout-eyebrow">Engineering</span>
-        <h2>The engineering cookbook lives on its own page.</h2>
-        <p>Eighteen engineering skills, grouped into five workflows: the stacked-PR loop, plan + pressure-test, TDD + coverage, diagnose + secure, and prototype + ship. Each with trigger phrases, examples, and what to expect.</p>
-      </div>
-      <a class="usecases-eng-callout-cta" href="/cookbook/engineering">Open the engineering cookbook &nearr;</a>
-    </aside>
-
-    <nav class="usecases-toc" aria-label="Jump to a team">
-      <span class="usecases-toc-label">Jump to a team</span>
-      <ul class="usecases-toc-grid">
-        <li><a href="#sales"><span class="usecases-toc-name">Sales</span><span class="usecases-toc-count">3 recipes</span></a></li>
-        <li><a href="#marketing"><span class="usecases-toc-name">Marketing</span><span class="usecases-toc-count">3 recipes</span></a></li>
-        <li><a href="#engineering"><span class="usecases-toc-name">Engineering</span><span class="usecases-toc-count">8 recipes</span></a></li>
-        <li><a href="#data"><span class="usecases-toc-name">Data</span><span class="usecases-toc-count">3 recipes</span></a></li>
-        <li><a href="#product"><span class="usecases-toc-name">Product</span><span class="usecases-toc-count">3 recipes</span></a></li>
-        <li><a href="#finance"><span class="usecases-toc-name">Finance</span><span class="usecases-toc-count">3 recipes</span></a></li>
-        <li><a href="#legal"><span class="usecases-toc-name">Legal</span><span class="usecases-toc-count">3 recipes</span></a></li>
-        <li><a href="#operations"><span class="usecases-toc-name">Operations</span><span class="usecases-toc-count">3 recipes</span></a></li>
-        <li><a href="#people"><span class="usecases-toc-name">People</span><span class="usecases-toc-count">2 recipes</span></a></li>
-        <li><a href="#customer-support"><span class="usecases-toc-name">Customer Support</span><span class="usecases-toc-count">3 recipes</span></a></li>
-        <li><a href="#productivity"><span class="usecases-toc-name">Productivity</span><span class="usecases-toc-count">3 recipes</span></a></li>
-        <li><a href="#design"><span class="usecases-toc-name">Design</span><span class="usecases-toc-count">3 recipes</span></a></li>
-      </ul>
-    </nav>
-
-    <section class="usecases-team" id="sales">
-      <header class="usecases-team-head">
-        <h2>Sales</h2>
-        <p class="usecases-team-tagline">Pipeline brief on Monday. Account-prep when a meeting hits the calendar. Follow-ups drafted from the call transcript.</p>
-      </header>
-
-      <article class="usecase-card usecase-card-marquee">
-        <span class="usecase-card-badge">Marquee recipe</span>
-        <h3>Monday morning pipeline brief, in your inbox by 7am</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, schedule, weekly Monday 06:30</dd></div>
-          <div><dt>Skills</dt><dd><code>pipeline-review</code>, <code>account-research</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (cloud schedule), HubSpot + Slack connectors, sub-agent fan-out</dd></div>
-        </dl>
-        <p>You walk in Monday with a pipeline brief already waiting in <code>#sales-pipeline</code>. The job runs while you sleep: <code>pipeline-review</code> against HubSpot, fan-out to one sub-agent per top-10 account for <code>account-research</code>, all rolled up into a single brief.</p>
-
-        <div class="usecase-setup">
-          <h4 class="usecase-setup-title">How to set it up</h4>
-          <ol class="usecase-steps">
-            <li class="usecase-step">
-              <span class="usecase-step-num">1</span>
-              <div class="usecase-step-body">
-                <h5>Install the sales plugin</h5>
-                <p>Pick one path; both end up with the same plugin installed.</p>
-                <div class="usecase-step-actions">
-                  <a class="usecase-step-btn" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=sales" target="_blank" rel="noopener">Install in Cowork &nearr;</a>
-                  <code class="usecase-step-cmd">claude plugin install sales@pace</code>
-                </div>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">2</span>
-              <div class="usecase-step-body">
-                <h5>Authorize HubSpot and Slack</h5>
-                <p>The first time you run any sales skill, Claude opens an OAuth window. Sign into HubSpot, then Slack. Once per service.</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">3</span>
-              <div class="usecase-step-body">
-                <h5>Create the scheduled routine</h5>
-                <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong>. Pick <strong>Schedule</strong> trigger, set it to <strong>Weekly &middot; Monday &middot; 06:30</strong> in your timezone.</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">4</span>
-              <div class="usecase-step-body">
-                <h5>Paste this as the routine prompt</h5>
-                <p>This is the actual prompt Claude runs each week. Edit the channel name and account count to match your team.</p>
-                <pre class="usecase-step-prompt"><code>Run pipeline-review against HubSpot. Slice the
-output by deal stage. For each of the top 10 accounts by
-deal size, spawn a sub-agent that runs account-research
-with that account's name. Roll up all sub-agent findings into
-a single Monday morning brief: pipeline summary at the top,
-per-account notes underneath. Post the brief to #sales-pipeline
-in Slack.</code></pre>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">5</span>
-              <div class="usecase-step-body">
-                <h5>Click <strong>Run now</strong> to verify</h5>
-                <p>The first run takes 2-3 minutes. The brief lands in <code>#sales-pipeline</code>. Once you've seen it work, the routine fires every Monday at 06:30 automatically. No further action needed.</p>
-              </div>
-            </li>
-          </ol>
-        </div>
-      </article>
-
-      <article class="usecase-card">
-        <h3>Auto-prep when a meeting lands on the calendar</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, API trigger fired by your calendar webhook</dd></div>
-          <div><dt>Skills</dt><dd><code>call-prep</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (API trigger), HubSpot + Apollo connectors, MCP autofill</dd></div>
-        </dl>
-        <p>The hook reads the attendee's email, runs <code>call-prep</code>, and drops the brief into the event description. By the time you open the meeting, the brief is already there: account history, recent activity, talking points, three questions to ask.</p>
-      </article>
-
-      <article class="usecase-card">
-        <h3>Draft follow-ups straight from the Zoom transcript</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, API trigger fired by Zoom recording-finalized webhook</dd></div>
-          <div><dt>Skills</dt><dd><code>call-summary</code>, <code>draft-outreach</code>, <code>sequence-load</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (API trigger), Zoom + HubSpot connectors, plan mode for review</dd></div>
-        </dl>
-        <p>The hook pulls the transcript, runs <code>call-summary</code> to extract decisions and action items, then <code>draft-outreach</code> to compose the follow-up. Plan mode parks the draft for your approval. One click sends; the reply gets logged back to HubSpot, and <code>sequence-load</code> can enroll the contact into a multi-touch sequence if the deal warrants it.</p>
-      </article>
+    <section class="ck-grid">
+      {teams.map((t) => (
+        <a class="ck-card" href={`/cookbook/${t.slug}`}>
+          <div class="ck-card-head">
+            <span class="ck-card-name">{t.name}</span>
+            <span class="ck-card-count">{t.recipeCount} {t.recipeCount === 1 ? 'recipe' : 'recipes'}</span>
+          </div>
+          <p class="ck-card-hook">{t.hook}</p>
+          <div class="ck-card-marquee">
+            <span class="ck-card-marquee-label">Marquee recipe</span>
+            <p>{t.marquee}</p>
+          </div>
+          <span class="ck-card-cta">Open the {t.name.toLowerCase()} cookbook &nearr;</span>
+        </a>
+      ))}
     </section>
 
-    <section class="usecases-team" id="marketing">
-      <header class="usecases-team-head">
-        <h2>Marketing</h2>
-        <p class="usecases-team-tagline">Weekly campaign brief. Content drafting that knows your brand voice. Performance reports you don't have to assemble.</p>
-      </header>
-
-      <article class="usecase-card usecase-card-marquee">
-        <span class="usecase-card-badge">Marquee recipe</span>
-        <h3>Weekly campaign performance digest, Fridays at 4pm</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, schedule, weekly Friday 16:00</dd></div>
-          <div><dt>Skills</dt><dd><code>performance-report</code>, <code>write-query</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (cloud schedule), Amplitude + HubSpot connectors, cross-plugin chain</dd></div>
-        </dl>
-        <p>The team walks into Monday already aligned on what shipped last week and how it performed. The digest is in <code>#marketing-weekly</code> by Friday afternoon, pulled from Amplitude funnels and HubSpot lead sources without anyone touching a spreadsheet.</p>
-
-        <div class="usecase-setup">
-          <h4 class="usecase-setup-title">How to set it up</h4>
-          <ol class="usecase-steps">
-            <li class="usecase-step">
-              <span class="usecase-step-num">1</span>
-              <div class="usecase-step-body">
-                <h5>Install marketing + data plugins</h5>
-                <p>Marketing has the report skill; data has the SQL skill it leans on.</p>
-                <div class="usecase-step-actions">
-                  <a class="usecase-step-btn" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=marketing" target="_blank" rel="noopener">Install in Cowork &nearr;</a>
-                  <code class="usecase-step-cmd">npx pace-tools install marketing data</code>
-                </div>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">2</span>
-              <div class="usecase-step-body">
-                <h5>Authorize Amplitude, HubSpot, and Slack</h5>
-                <p>The first time you run any marketing or data skill, OAuth windows open one by one. Sign into each once. Amplitude is the analytics source; HubSpot is the CRM; Slack is where the digest lands.</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">3</span>
-              <div class="usecase-step-body">
-                <h5>Create the scheduled routine</h5>
-                <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong>. Pick <strong>Schedule</strong>, set to <strong>Weekly &middot; Friday &middot; 16:00</strong>.</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">4</span>
-              <div class="usecase-step-body">
-                <h5>Paste this as the routine prompt</h5>
-                <p>Edit the channel name and the metrics list to match your team's KPIs.</p>
-                <pre class="usecase-step-prompt"><code>Run performance-report covering the past 7 days.
-Pull funnel metrics from Amplitude (signups, activations,
-free-to-paid conversion) and lead-source attribution from
-HubSpot. Use write-query if you need to grab anything
-the report skill doesn't have directly. Format as a Slack
-digest: headline numbers at the top, week-over-week deltas,
-top 3 campaigns by impact, anything anomalous worth a closer
-look. Post to #marketing-weekly.</code></pre>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">5</span>
-              <div class="usecase-step-body">
-                <h5>Click <strong>Run now</strong> to verify</h5>
-                <p>First run takes a few minutes (it has to authenticate Amplitude on the cloud side too). The digest lands in <code>#marketing-weekly</code>. Future Fridays at 16:00 are automatic.</p>
-              </div>
-            </li>
-          </ol>
-        </div>
-      </article>
-
-      <article class="usecase-card">
-        <h3>Brand-voice gate on every external draft</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, GitHub trigger on <code>pull_request.opened</code> in the marketing repo</dd></div>
-          <div><dt>Skills</dt><dd><code>brand-voice-enforcement</code>, <code>draft-content</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (GitHub trigger), brand-voice plugin, inline PR comments</dd></div>
-        </dl>
-        <p>Any PR that touches landing pages, blog posts, or email templates auto-runs <code>brand-voice-enforcement</code> and posts inline comments with concrete fixes. Catches drift before it ships; pair with <code>draft-content</code> when a section needs a rewrite from scratch.</p>
-      </article>
-      <article class="usecase-card">
-        <h3>Auto-build the launch comms kit when a Linear cycle ships</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, GitHub event when a release branch merges to main</dd></div>
-          <div><dt>Skills</dt><dd><code>draft-content</code>, <code>brand-voice-enforcement</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (GitHub event), Linear + Notion connectors, plan mode for review</dd></div>
-        </dl>
-        <p>When a release branch merges, the routine reads the cycle's shipped issues, drafts the announcement post, the changelog entry, and the customer-facing one-pager in one go. Brand-voice enforcement runs over each artifact. Everything lands in Notion under a single page for your review before anything goes out.</p>
-      </article>
-
-    </section>
-
-    <section class="usecases-team" id="engineering">
-      <header class="usecases-team-head">
-        <h2>Engineering</h2>
-        <p class="usecases-team-tagline">Spec → stacked PRs → review → ship, with disciplined diagnosis for hard bugs and a careful-review pass before merge. The engineering plugin's 34 skills cover the whole arc.</p>
-      </header>
-
-      <article class="usecase-card">
-        <h3>Spec a feature, ship it as stacked PRs</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Interactive, when starting a new feature</dd></div>
-          <div><dt>Skills</dt><dd><code>spec</code> → <code>implement</code> → <code>review</code> → <code>topr</code> → <code>next</code></dd></div>
-          <div><dt>Features</dt><dd>Sub-agents per sub-issue, plan mode, GitHub connector, stacked git branches</dd></div>
-        </dl>
-        <p><code>spec</code> walks the feature into a parent epic with ordered sub-issues, one PR each. <code>implement</code> builds them in stacked branches, opening one stacked PR per sub-issue. As reviews come in, <code>review</code> handles the comment queue. When an upstream PR merges, <code>topr</code> rebases the next one cleanly (correctly dropping commits that squash-merged). <code>next</code> resets for the next task. The whole arc lives in one disciplined flow instead of being reinvented each time. <a href="/docs/skills/spec">Read the workflow &rarr;</a></p>
-      </article>
-
-      <article class="usecase-card usecase-card-marquee">
-        <span class="usecase-card-badge">Marquee recipe</span>
-        <h3>Self-review before the human gets paged</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, GitHub trigger on <code>pull_request.opened</code></dd></div>
-          <div><dt>Skills</dt><dd><code>code-review</code>, <code>testing-strategy</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (GitHub trigger), plan mode, sub-agent per file</dd></div>
-        </dl>
-        <p>Every new PR runs an auto-review that catches naming, obvious bugs, missing tests, and convention drift. Findings post as draft comments the author can accept or dismiss before tagging a human reviewer. The human gets to focus on intent and architecture, not whitespace.</p>
-
-        <div class="usecase-setup">
-          <h4 class="usecase-setup-title">How to set it up</h4>
-          <ol class="usecase-steps">
-            <li class="usecase-step">
-              <span class="usecase-step-num">1</span>
-              <div class="usecase-step-body">
-                <h5>Install the engineering plugin</h5>
-                <p>Brings <code>code-review</code> and 33 other skills.</p>
-                <div class="usecase-step-actions">
-                  <a class="usecase-step-btn" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=engineering" target="_blank" rel="noopener">Install in Cowork &nearr;</a>
-                  <code class="usecase-step-cmd">claude plugin install engineering@pace</code>
-                </div>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">2</span>
-              <div class="usecase-step-body">
-                <h5>Install the Claude GitHub App on your repo</h5>
-                <p>GitHub event triggers need the Claude GitHub App. The routine setup at Cowork &rarr; Routines prompts you to install it on the relevant repo if you haven't yet.</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">3</span>
-              <div class="usecase-step-body">
-                <h5>Create the GitHub-triggered routine</h5>
-                <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong>. Pick <strong>GitHub event</strong>, choose your repo, event <strong>pull_request.opened</strong>. Optional filter: <strong>is draft = false</strong> so it only fires on ready-for-review PRs.</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">4</span>
-              <div class="usecase-step-body">
-                <h5>Paste this as the routine prompt</h5>
-                <pre class="usecase-step-prompt"><code>A new PR was just opened in this repo. Run code-review
-on the PR's diff. Spawn one sub-agent per changed file for parallel
-review. Focus on: bugs, naming, dead code, weak tests, convention
-drift from neighboring files. Post findings as DRAFT review comments
-on the PR (not approvals) so the author can accept or dismiss each
-one before tagging a human reviewer. Skip whitespace nits.</code></pre>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">5</span>
-              <div class="usecase-step-body">
-                <h5>Open a test PR to verify</h5>
-                <p>Make a tiny change on a branch and open a PR. Within a minute or two the routine fires and draft review comments appear on the PR. From here on, every new PR gets the same treatment.</p>
-              </div>
-            </li>
-          </ol>
-        </div>
-      </article>
-
-      <article class="usecase-card">
-        <h3>Careful-review pass before opening the PR</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Interactive, end of a coding session</dd></div>
-          <div><dt>Skills</dt><dd><code>careful-review</code> → <code>ship-pr</code></dd></div>
-          <div><dt>Features</dt><dd>Plan mode, plus optional <code>codex-review</code> for a second-opinion pass against the base ref</dd></div>
-        </dl>
-        <p>Before opening a PR, <code>careful-review</code> re-reads everything the session touched with fresh eyes (bugs, stale comments, dead code, weak tests) and fixes what it finds. Optionally, <code>codex-review</code> runs an OpenAI Codex pass against <code>main</code> for an independent second opinion on P0/P1 issues. Then <code>ship-pr</code> commits, pushes, and opens the PR with a proper summary and test plan. NEVER skips hooks.</p>
-      </article>
-
-      <article class="usecase-card">
-        <h3>Disciplined diagnosis for the bugs that hide</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Interactive, when "I tried a few things and can't reproduce it"</dd></div>
-          <div><dt>Skills</dt><dd><code>diagnose</code></dd></div>
-          <div><dt>Features</dt><dd>Sub-agents for hypothesis testing, bisection harness, plan mode</dd></div>
-        </dl>
-        <p>The bug that resists casual debugging needs a feedback loop, not more staring. <code>diagnose</code> imposes the discipline: construct a fast deterministic pass/fail signal first (failing test, curl, replay, bisection harness), <em>then</em> bisect, hypothesise, instrument, fix, regression-test. The first phase is the entire skill; once the signal exists, the cause falls out. <a href="/docs/skills/diagnose">Read the discipline &rarr;</a></p>
-      </article>
-
-      <article class="usecase-card">
-        <h3>TDD that doesn't write crap tests</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Interactive, when building a new behavior or hardening a known bug</dd></div>
-          <div><dt>Skills</dt><dd><code>tdd</code>, <code>find-missing-tests</code></dd></div>
-          <div><dt>Features</dt><dd>Vertical-slice tracer bullets, integration-style tests, plan mode for the red-green-refactor steps</dd></div>
-        </dl>
-        <p><code>tdd</code> insists on vertical slices: one test → one implementation → repeat. No writing all the tests upfront ("horizontal slicing"), because that produces tests that verify shape, not behavior. Tests go through public interfaces, not internals. The bundled <code>tdd/mocking.md</code>, <code>tests.md</code>, and <code>deep-modules.md</code> reference files travel with the skill. Pair with <code>find-missing-tests</code> for a coverage-gap survey first.</p>
-      </article>
-
-      <article class="usecase-card">
-        <h3>Deploy checklist that actually blocks</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, API trigger fired by your CI pipeline before the prod step</dd></div>
-          <div><dt>Skills</dt><dd><code>deploy-checklist</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (API trigger), Linear + Slack connectors, exit code gates the deploy</dd></div>
-        </dl>
-        <p>Your CD pipeline POSTs to the routine's <code>/fire</code> endpoint before the prod step. The routine runs <code>deploy-checklist</code>: migrations reviewed, tests green, feature flag set, runbook linked, on-call notified. Anything missing returns a non-zero result and the pipeline halts with a Slack message explaining what's left.</p>
-      </article>
-
-      <article class="usecase-card">
-        <h3>Deploy checklist that actually blocks</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, API trigger fired by your CI pipeline before the prod step</dd></div>
-          <div><dt>Skills</dt><dd><code>deploy-checklist</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (API trigger), Linear + Slack connectors, exit code gates the deploy</dd></div>
-        </dl>
-        <p>Your CD pipeline POSTs to the routine's <code>/fire</code> endpoint before the prod step. The routine runs <code>deploy-checklist</code>: migrations reviewed, tests green, feature flag set, runbook linked, on-call notified. Anything missing returns a non-zero result and the pipeline halts with a Slack message explaining what's left.</p>
-      </article>
-
-      <article class="usecase-card">
-        <h3>Incident triage that pulls the right context first</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, API trigger fired by PagerDuty webhook (or manual <code>/incident-response</code>)</dd></div>
-          <div><dt>Skills</dt><dd><code>incident-response</code>, <code>write-query</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (API trigger), Datadog + Grafana connectors, sub-agents for parallel investigation</dd></div>
-        </dl>
-        <p>When you ack a page, run <code><code>incident-response</code> &lt;incident-id&gt;</code>. Three sub-agents fan out in parallel: recent deploys, error-rate spikes, related alerts. You get a unified timeline in 30 seconds instead of clicking through five tabs.</p>
-      </article>
-    </section>
-
-    <section class="usecases-team" id="data">
-      <header class="usecases-team-head">
-        <h2>Data</h2>
-        <p class="usecases-team-tagline">Validated SQL against your real warehouse. Stakeholder-ready charts. Weekly metric anomalies surfaced for you.</p>
-      </header>
-
-      <article class="usecase-card usecase-card-marquee">
-        <span class="usecase-card-badge">Marquee recipe</span>
-        <h3>Weekly metric anomaly digest, Mondays at 7am</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, schedule, weekly Monday 07:00</dd></div>
-          <div><dt>Skills</dt><dd><code>statistical-analysis</code>, <code>write-query</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (cloud schedule), Snowflake + BigQuery connectors, plan mode</dd></div>
-        </dl>
-        <p>Monday morning the data team walks in with a short list of metrics that moved unusually last week, the queries that surfaced them, and a candidate explanation for each. Stops anomalies from being noticed weeks late.</p>
-
-        <div class="usecase-setup">
-          <h4 class="usecase-setup-title">How to set it up</h4>
-          <ol class="usecase-steps">
-            <li class="usecase-step">
-              <span class="usecase-step-num">1</span>
-              <div class="usecase-step-body">
-                <h5>Install the data plugin</h5>
-                <div class="usecase-step-actions">
-                  <a class="usecase-step-btn" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=data" target="_blank" rel="noopener">Install in Cowork &nearr;</a>
-                  <code class="usecase-step-cmd">claude plugin install data@pace</code>
-                </div>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">2</span>
-              <div class="usecase-step-body">
-                <h5>Authorize your warehouse + Slack</h5>
-                <p>Snowflake / Databricks / BigQuery use Custom URL authorization : provide your account's MCP endpoint the first time Claude asks. Slack is OAuth.</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">3</span>
-              <div class="usecase-step-body">
-                <h5>Create the scheduled routine</h5>
-                <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong> &rarr; <strong>Schedule</strong> &middot; <strong>Weekly</strong> &middot; <strong>Monday</strong> &middot; <strong>07:00</strong>.</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">4</span>
-              <div class="usecase-step-body">
-                <h5>Paste this as the routine prompt</h5>
-                <p>Edit the KPI list to match your team's metrics + the channel name.</p>
-                <pre class="usecase-step-prompt"><code>Run statistical-analysis against last week's data
-for these KPIs: signups, activations, weekly active users,
-revenue, gross retention. Use write-query as needed
-to pull the underlying numbers from the warehouse. Flag
-any metric that moved more than ~2 standard deviations
-from the trailing 8-week baseline. For each anomaly,
-include: the slice (segment / cohort), the SQL that
-surfaced it, week-over-week delta, and one candidate
-explanation. Post the digest to #data-weekly in Slack.</code></pre>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">5</span>
-              <div class="usecase-step-body">
-                <h5>Click <strong>Run now</strong> to verify</h5>
-                <p>The first run may take 5+ minutes if your warehouse queries are heavy. Verify the digest format, then trust the Monday 07:00 cadence going forward.</p>
-              </div>
-            </li>
-          </ol>
-        </div>
-      </article>
-
-      <article class="usecase-card">
-        <h3>Self-serve queries that don't lie</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Interactive, slash command in Claude Code</dd></div>
-          <div><dt>Skills</dt><dd><code>write-query</code></dd></div>
-          <div><dt>Features</dt><dd>Snowflake connector, schema-aware autocomplete, plan mode</dd></div>
-        </dl>
-        <p>Anyone on the team can run <code><code>write-query</code> "revenue by region for Q3, excluding refunds"</code> and get a working query against the real schema, with the unit assumptions made explicit. Plan mode lets you sanity-check before running.</p>
-      </article>
-      <article class="usecase-card">
-        <h3>Anomaly digest, every weekday morning</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, schedule, weekdays 07:00</dd></div>
-          <div><dt>Skills</dt><dd><code>write-query</code>, <code>interpret</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (cloud schedule), Snowflake + Slack connectors, sub-agent fan-out per metric</dd></div>
-        </dl>
-        <p>Runs the standard metrics (DAU, signups, conversion, NRR) against yesterday vs. trailing 28 days. Flags anything beyond 2 standard deviations. For each flagged metric, a sub-agent runs interpret to surface likely causes and the slice to investigate first. Posts the digest to #data-pulse with the boring ones collapsed.</p>
-      </article>
-
-    </section>
-
-    <section class="usecases-team" id="product">
-      <header class="usecases-team-head">
-        <h2>Product</h2>
-        <p class="usecases-team-tagline">Interview transcripts synthesized in one pass. Competitive scans on a cadence. Spec drafts that match house style.</p>
-      </header>
-
-      <article class="usecase-card usecase-card-marquee">
-        <span class="usecase-card-badge">Marquee recipe</span>
-        <h3>User-interview synthesis at the end of every research sprint</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Interactive, after a batch of interviews</dd></div>
-          <div><dt>Skills</dt><dd><code>synthesize-research</code></dd></div>
-          <div><dt>Features</dt><dd>Fireflies/Otter connector (transcripts), sub-agent per transcript, plan mode for review</dd></div>
-        </dl>
-        <p>The hardest part of user research is synthesizing 8-15 transcripts into themes without flattening the signal. Pace runs one sub-agent per transcript in parallel, then a coordinator rolls them up into a synthesis doc with quote evidence and frequency counts. A day's work becomes a 10-minute review.</p>
-
-        <div class="usecase-setup">
-          <h4 class="usecase-setup-title">How to set it up</h4>
-          <ol class="usecase-steps">
-            <li class="usecase-step">
-              <span class="usecase-step-num">1</span>
-              <div class="usecase-step-body">
-                <h5>Install the product-management plugin</h5>
-                <div class="usecase-step-actions">
-                  <a class="usecase-step-btn" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=product-management" target="_blank" rel="noopener">Install in Cowork &nearr;</a>
-                  <code class="usecase-step-cmd">claude plugin install product-management@pace</code>
-                </div>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">2</span>
-              <div class="usecase-step-body">
-                <h5>Authorize Fireflies or Otter</h5>
-                <p>Whichever transcript service you use. First time you ask Claude to read a transcript, OAuth opens. Optional: Notion or Linear if you want the synthesis doc saved there.</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">3</span>
-              <div class="usecase-step-body">
-                <h5>Open a Claude session with your interview list</h5>
-                <p>No routine needed : this one is interactive (you only run it at the end of each sprint). In Claude Code or Cowork, start a new chat.</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">4</span>
-              <div class="usecase-step-body">
-                <h5>Paste this prompt with your sprint's transcript list</h5>
-                <pre class="usecase-step-prompt"><code>Run synthesize-research against these
-interviews from the past sprint:
-
-  - &lt;Fireflies URL or meeting title 1&gt;
-  - &lt;Fireflies URL or meeting title 2&gt;
-  - &lt;...&gt;
-
-Spawn one sub-agent per transcript to extract themes,
-direct-quote evidence, and friction points. A coordinator
-sub-agent should roll them up into a single synthesis doc:
-top 5 themes by frequency, supporting quotes per theme,
-disagreements between participants, and 3 candidate
-product implications. Use plan mode : show me the
-synthesis before saving.</code></pre>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">5</span>
-              <div class="usecase-step-body">
-                <h5>Review and save</h5>
-                <p>Plan mode parks the draft for your review. Edit themes, push back where the AI over-synthesized, then save to wherever your team keeps research docs (Notion, Linear, Confluence).</p>
-              </div>
-            </li>
-          </ol>
-        </div>
-      </article>
-
-      <article class="usecase-card">
-        <h3>Weekly competitive scan, ready for the team channel</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, schedule, weekly Friday 15:00</dd></div>
-          <div><dt>Skills</dt><dd><code>competitive-brief</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (cloud schedule), web search, brand-voice plugin for the digest copy</dd></div>
-        </dl>
-        <p>A scheduled run of <code>competitive-brief</code> watches the competitive set you care about, summarizes what shipped or changed, and posts a digest to <code>#product-watch</code>. No more "did anyone see the X launch?"</p>
-      </article>
-      <article class="usecase-card">
-        <h3>Customer-feedback weekly: signal from noise</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, schedule, weekly Friday 15:00</dd></div>
-          <div><dt>Skills</dt><dd><code>synthesize</code>, <code>update</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (cloud schedule), Intercom + Linear connectors, multi-source aggregation</dd></div>
-        </dl>
-        <p>Pulls last week of Intercom tickets, sales-loss reasons from HubSpot, and Linear bugs tagged customer-impact. Synthesizes into themes (not transcripts). Adds the themes as comments under the relevant roadmap items in Linear, and posts the executive summary to #product.</p>
-      </article>
-
-    </section>
-
-    <section class="usecases-team" id="finance">
-      <header class="usecases-team-head">
-        <h2>Finance</h2>
-        <p class="usecases-team-tagline">Month-end as a workflow. Variance you have to explain, surfaced before the CFO asks. Vendor contract triage that respects the playbook.</p>
-      </header>
-
-      <article class="usecase-card usecase-card-marquee">
-        <span class="usecase-card-badge">Marquee recipe</span>
-        <h3>Month-end runbook, enforced</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, schedule, monthly on the last business day at 08:00</dd></div>
-          <div><dt>Skills</dt><dd><code>close-management</code>, <code>reconciliation</code>, <code>variance-analysis</code>, <code>journal-entry-prep</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (cloud schedule), warehouse + Microsoft 365 connectors, plan mode for the journal entries</dd></div>
-        </dl>
-        <p>The month-end runbook fires automatically on the last business day. By the time the controller sits down, the reconciliation has run, variance vs plan is drafted, and the journal entries are queued for approval in plan mode. Half a day saved every close.</p>
-
-        <div class="usecase-setup">
-          <h4 class="usecase-setup-title">How to set it up</h4>
-          <ol class="usecase-steps">
-            <li class="usecase-step">
-              <span class="usecase-step-num">1</span>
-              <div class="usecase-step-body">
-                <h5>Install the finance plugin</h5>
-                <div class="usecase-step-actions">
-                  <a class="usecase-step-btn" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=finance" target="_blank" rel="noopener">Install in Cowork &nearr;</a>
-                  <code class="usecase-step-cmd">claude plugin install finance@pace</code>
-                </div>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">2</span>
-              <div class="usecase-step-body">
-                <h5>Authorize your warehouse + Microsoft 365</h5>
-                <p>Snowflake / Databricks / BigQuery for the ledger pull; Microsoft 365 for Excel writeback. Custom URL prompts on first run.</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">3</span>
-              <div class="usecase-step-body">
-                <h5>Create the monthly routine</h5>
-                <p>In Cowork, open <strong>Routines</strong>, preset schedules don't include "last business day of the month." Create the routine with the closest preset, then run <code>/schedule update</code> in the CLI to set a cron expression like <code>0 8 28-31 * 1-5</code> (8am, last few weekdays of the month).</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">4</span>
-              <div class="usecase-step-body">
-                <h5>Paste this as the routine prompt</h5>
-                <pre class="usecase-step-prompt"><code>Run the month-end close in order:
-
-  1. close-management to orchestrate the checklist.
-  2. reconciliation against the warehouse ledger
-     (call out any unreconciled balance).
-  3. variance-analysis vs plan + prior month.
-  4. journal-entry-prep for any accruals or
-     reclasses the variance analysis surfaces.
-
-Use plan mode for the journal entries : do NOT post
-anything to the GL automatically. The controller will
-review and approve each entry. Post a close-progress
-summary to #finance-close.</code></pre>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">5</span>
-              <div class="usecase-step-body">
-                <h5>Manually run for this month's close to verify</h5>
-                <p>Click <strong>Run now</strong> at the end of this month. Walk through the journal entries in plan mode; approve, edit, or reject each. Once you trust the output, the routine fires on the last business day automatically.</p>
-              </div>
-            </li>
-          </ol>
-        </div>
-      </article>
-
-      <article class="usecase-card">
-        <h3>Variance you'll have to explain, surfaced before the CFO asks</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, schedule, daily 06:00 after nightly close</dd></div>
-          <div><dt>Skills</dt><dd><code>variance-analysis</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (cloud schedule), warehouse connector, threshold alerting, Slack DM to the CFO's prep channel</dd></div>
-        </dl>
-        <p>Every nightly close, the variance skill compares actuals vs plan, flags anything > 5% deviation, drafts the why, and DMs the CFO's prep channel by 7am. The morning standup starts with answers, not surprises.</p>
-      </article>
-
-      <article class="usecase-card">
-        <h3>Vendor contract triage with your playbook in the loop</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, API trigger fired by Box / Egnyte webhook on new-file</dd></div>
-          <div><dt>Skills</dt><dd><code>review-contract</code>, <code>vendor-check</code>, <code>vendor-review</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (API trigger), Box/Egnyte connector, in-house playbook context, plan mode</dd></div>
-        </dl>
-        <p>Any new vendor contract dropped in the legal folder triggers a playbook-aware review: <code>review-contract</code> walks payment terms, auto-renewal language, liability caps, and data clauses; <code>vendor-check</code> and <code>vendor-review</code> add the procurement-side perspective. Findings post as a checklist. Legal + Finance both see what to fight for before the call.</p>
-      </article>
-    </section>
-
-    <section class="usecases-team" id="legal">
-      <header class="usecases-team-head">
-        <h2>Legal</h2>
-        <p class="usecases-team-tagline">NDA triage in minutes. Clause-by-clause playbook checks. Drafting that matches your standard language.</p>
-      </header>
-
-      <article class="usecase-card usecase-card-marquee">
-        <span class="usecase-card-badge">Marquee recipe</span>
-        <h3>NDA triage queue</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, API trigger fired by your email tool's inbound webhook</dd></div>
-          <div><dt>Skills</dt><dd><code>triage-nda</code>, <code>review-contract</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (API trigger), Gmail/Outlook connector, playbook context, plan mode for the redline</dd></div>
-        </dl>
-        <p>Inbound NDAs hit <code>triage-nda</code> first, which classifies the agreement. Standard ones get an auto-redline against your playbook; non-standard get flagged with the specific clause that needs human review. The legal queue drains 5x faster.</p>
-
-        <div class="usecase-setup">
-          <h4 class="usecase-setup-title">How to set it up</h4>
-          <ol class="usecase-steps">
-            <li class="usecase-step">
-              <span class="usecase-step-num">1</span>
-              <div class="usecase-step-body">
-                <h5>Install the legal plugin + write your playbook</h5>
-                <p>The plugin ships with skills; the playbook is your team's standard positions on common clauses (e.g. mutual NDA, IP assignment, liability caps).</p>
-                <div class="usecase-step-actions">
-                  <a class="usecase-step-btn" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=legal" target="_blank" rel="noopener">Install in Cowork &nearr;</a>
-                  <code class="usecase-step-cmd">claude plugin install legal@pace</code>
-                </div>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">2</span>
-              <div class="usecase-step-body">
-                <h5>Set up the playbook in a docs folder</h5>
-                <p>Run <code>setup-engineering-skills</code> once at your repo or workspace root. It scaffolds <code>docs/agents/legal-playbook.md</code> for you. Drop your team's standard positions on common clauses there. The legal skills read from this on every call.</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">3</span>
-              <div class="usecase-step-body">
-                <h5>Create an API-triggered routine</h5>
-                <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong> &rarr; <strong>API</strong> trigger. After saving, click <strong>Generate token</strong> and copy both the URL and the bearer token (shown once).</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">4</span>
-              <div class="usecase-step-body">
-                <h5>Wire your inbox to POST inbound NDAs</h5>
-                <p>Set up a Gmail/Outlook forwarding rule (or Zapier) that POSTs new emails with subject containing "NDA" to your routine's <code>/fire</code> endpoint, with the email body in the <code>text</code> field of the JSON payload. Paste this as the routine prompt:</p>
-                <pre class="usecase-step-prompt"><code>An inbound NDA just arrived. The email body is in the
-incoming text field. Run triage-nda to classify
-it (mutual / one-way, standard / non-standard, urgency).
-
-If the triage says "standard": run review-contract
-with our playbook in the context. Produce a redlined
-version as a draft response with explanatory comments.
-
-If "non-standard": post a Slack message in #legal-queue
-flagging the specific clause(s) that need a human and
-the urgency level. Do NOT auto-redline non-standard
-agreements.</code></pre>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">5</span>
-              <div class="usecase-step-body">
-                <h5>Test with a real (sample) NDA</h5>
-                <p>Forward a sample NDA to the configured address. Within a couple minutes you'll either see a redlined draft (standard) or a flag in <code>#legal-queue</code> (non-standard). Once you trust the triage classifier, the queue stays drained automatically.</p>
-              </div>
-            </li>
-          </ol>
-        </div>
-      </article>
-      <article class="usecase-card">
-        <h3>NDA fast-path: redline against your template, in under five minutes</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Cowork hook, when a counter-party uploads an NDA</dd></div>
-          <div><dt>Skills</dt><dd><code>nda-review</code></dd></div>
-          <div><dt>Features</dt><dd>Cowork hooks (file upload), Box connector for template lookup, plan mode for review</dd></div>
-        </dl>
-        <p>The hook diffs the inbound NDA against your standard template and produces a redlined version with explanations next to each change. Plan mode parks the redline for your sign-off; one click posts it back to the requester. Frees up the lawyer for the agreements that actually need them.</p>
-      </article>
-      <article class="usecase-card">
-        <h3>Quarterly compliance audit prep</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, schedule, last business day of each quarter</dd></div>
-          <div><dt>Skills</dt><dd><code>compliance-question</code>, <code>risk-assessment</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (cloud schedule), GitHub + Box connectors, multi-step audit walk</dd></div>
-        </dl>
-        <p>Walks the current state against your compliance framework (SOC 2, GDPR, HIPAA, whichever applies), produces the gap report, and stages evidence requests as Linear tickets routed to the right owners. The first run is the longest; subsequent quarters compare deltas.</p>
-      </article>
-
-    </section>
-
-    <section class="usecases-team" id="operations">
-      <header class="usecases-team-head">
-        <h2>Operations</h2>
-        <p class="usecases-team-tagline">Weekly ops review automated. Runbook adherence enforced. Cross-team status that's never stale.</p>
-      </header>
-
-      <article class="usecase-card usecase-card-marquee">
-        <span class="usecase-card-badge">Marquee recipe</span>
-        <h3>Weekly cross-team status digest</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, schedule, weekly Friday 14:00</dd></div>
-          <div><dt>Skills</dt><dd><code>status-report</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (cloud schedule), Linear/Jira + Slack + Notion connectors, sub-agents per team</dd></div>
-        </dl>
-        <p>One sub-agent per department fans out and pulls progress from Linear / Slack / Notion; the coordinator rolls everything up into a single cross-team status doc by Friday afternoon. Monday standup walks in with the picture already in everyone's head.</p>
-
-        <div class="usecase-setup">
-          <h4 class="usecase-setup-title">How to set it up</h4>
-          <ol class="usecase-steps">
-            <li class="usecase-step">
-              <span class="usecase-step-num">1</span>
-              <div class="usecase-step-body">
-                <h5>Install the operations plugin</h5>
-                <div class="usecase-step-actions">
-                  <a class="usecase-step-btn" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=operations" target="_blank" rel="noopener">Install in Cowork &nearr;</a>
-                  <code class="usecase-step-cmd">claude plugin install operations@pace</code>
-                </div>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">2</span>
-              <div class="usecase-step-body">
-                <h5>Authorize Linear (or Jira), Slack, Notion</h5>
-                <p>Whichever ones your teams actually use. OAuth opens for each on first use.</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">3</span>
-              <div class="usecase-step-body">
-                <h5>Create the scheduled routine</h5>
-                <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong> &rarr; <strong>Schedule</strong> &middot; <strong>Weekly</strong> &middot; <strong>Friday</strong> &middot; <strong>14:00</strong>.</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">4</span>
-              <div class="usecase-step-body">
-                <h5>Paste this as the routine prompt</h5>
-                <p>Edit the team list to match your org structure.</p>
-                <pre class="usecase-step-prompt"><code>Run status-report. Spawn one sub-agent per
-team to pull progress signals from the last 7 days:
-
-  - Engineering: closed Linear tickets, merged PRs, incidents
-  - Product: spec updates, sprint progress
-  - Sales: closed-won, pipeline movement (top-line)
-  - Marketing: shipped campaigns, performance
-  - Customer Support: ticket volume, escalations
-
-A coordinator sub-agent rolls them into one Friday digest:
-"what shipped" at the top, blockers + risks in the middle,
-next-week focus at the bottom. Post to #leadership-friday
-in Slack and mirror to docs.pace/status/&lt;YYYY-MM-DD&gt;
-in Notion.</code></pre>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">5</span>
-              <div class="usecase-step-body">
-                <h5>Click <strong>Run now</strong> to verify</h5>
-                <p>Read the first digest carefully : adjust the per-team scope until the rollup matches how your org actually thinks about "progress". Once it's right, Fridays at 14:00 are hands-off.</p>
-              </div>
-            </li>
-          </ol>
-        </div>
-      </article>
-      <article class="usecase-card">
-        <h3>Vendor renewal heads-up, 60 days out</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, schedule, daily 09:00 (acts on hits only)</dd></div>
-          <div><dt>Skills</dt><dd><code>vendor-evaluation</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (cloud schedule), Notion + Slack connectors, conditional execution</dd></div>
-        </dl>
-        <p>Reads the vendor register, finds contracts renewing in the next 60 days, runs vendor-evaluation against current usage and alternatives, and posts a brief to the owner with a recommend / renegotiate / replace call. No-op on days with no upcoming renewals.</p>
-      </article>
-      <article class="usecase-card">
-        <h3>Document the recurring meeting that has no document</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Cowork chat, on demand</dd></div>
-          <div><dt>Skills</dt><dd><code>document-process</code></dd></div>
-          <div><dt>Features</dt><dd>Cowork chat, sub-agents to gather context from Slack + Linear, plan mode for review</dd></div>
-        </dl>
-        <p>You walk Claude through how the recurring meeting actually runs (verbally or by pasting notes). It produces the runbook: agenda template, what to prep, who owns what, how decisions get logged. Drops it into Notion under the right team space. The next time someone new owns the meeting, they have a place to start.</p>
-      </article>
-
-    </section>
-
-    <section class="usecases-team" id="people">
-      <header class="usecases-team-head">
-        <h2>People</h2>
-        <p class="usecases-team-tagline">Recruiting pipeline status. Interview prep that matches the role. Onboarding day-one without the checklist scramble.</p>
-      </header>
-
-      <article class="usecase-card usecase-card-marquee">
-        <span class="usecase-card-badge">Marquee recipe</span>
-        <h3>Weekly recruiting pipeline digest</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, schedule, weekly Monday 08:00</dd></div>
-          <div><dt>Skills</dt><dd><code>recruiting-pipeline</code>, <code>people-report</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (cloud schedule), ATS connector, Slack delivery</dd></div>
-        </dl>
-        <p>Hiring managers walk into Monday standup already knowing where every open req stands : candidates aging in a stage, interviews scheduled for the week, offers extended, declines. No more "where are we with X" updates.</p>
-
-        <div class="usecase-setup">
-          <h4 class="usecase-setup-title">How to set it up</h4>
-          <ol class="usecase-steps">
-            <li class="usecase-step">
-              <span class="usecase-step-num">1</span>
-              <div class="usecase-step-body">
-                <h5>Install the human-resources plugin</h5>
-                <div class="usecase-step-actions">
-                  <a class="usecase-step-btn" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=human-resources" target="_blank" rel="noopener">Install in Cowork &nearr;</a>
-                  <code class="usecase-step-cmd">claude plugin install human-resources@pace</code>
-                </div>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">2</span>
-              <div class="usecase-step-body">
-                <h5>Authorize your ATS + Slack</h5>
-                <p>Whichever ATS your team uses (Ashby, Greenhouse, Lever, etc.). If your ATS doesn't have a first-party MCP server yet, see the <a href="/docs/connectors">connector docs</a> for the Custom URL pattern. Slack is OAuth.</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">3</span>
-              <div class="usecase-step-body">
-                <h5>Create the scheduled routine</h5>
-                <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong> &rarr; <strong>Schedule</strong> &middot; <strong>Weekly</strong> &middot; <strong>Monday</strong> &middot; <strong>08:00</strong>.</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">4</span>
-              <div class="usecase-step-body">
-                <h5>Paste this as the routine prompt</h5>
-                <pre class="usecase-step-prompt"><code>Run recruiting-pipeline against the
-ATS. For each open requisition, surface:
-
-  - Stage of every active candidate
-  - Time-in-stage (flag anyone &gt; 10 business days)
-  - Interviews scheduled this week (panel + candidate names)
-  - Offers extended / accepted / declined since last week
-  - Reqs without any candidates in pipeline ("stuck")
-
-Format as a digest grouped by hiring manager. Post to
-#hiring-weekly in Slack. Tag each hiring manager next
-to their reqs so they get a heads-up DM.</code></pre>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">5</span>
-              <div class="usecase-step-body">
-                <h5>Click <strong>Run now</strong> to verify</h5>
-                <p>Eyeball the first digest for accuracy (does aging match what you see in the ATS?). Once you trust it, Mondays at 08:00 are automatic.</p>
-              </div>
-            </li>
-          </ol>
-        </div>
-      </article>
-
-      <article class="usecase-card">
-        <h3>Interview prep tailored to the role and the candidate</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, API trigger fired by your calendar webhook (filter on "interview")</dd></div>
-          <div><dt>Skills</dt><dd><code>interview-prep</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (API trigger), ATS + Apollo connectors, plan mode</dd></div>
-        </dl>
-        <p>When an interview lands on the calendar, <code>interview-prep</code> pulls the JD, candidate resume, and prior round feedback. It drops a prep brief into the event description: focus areas, suggested probing questions, and what to avoid re-asking. Panel walks in calibrated.</p>
-      </article>
-    </section>
-
-    <section class="usecases-team" id="customer-support">
-      <header class="usecases-team-head">
-        <h2>Customer Support</h2>
-        <p class="usecases-team-tagline">Ticket triage in real time. Macro suggestions that match your voice. Escalation routing that respects who's on-call.</p>
-      </header>
-
-      <article class="usecase-card usecase-card-marquee">
-        <span class="usecase-card-badge">Marquee recipe</span>
-        <h3>Real-time ticket triage with macro suggestion</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, API trigger fired by Intercom / Zendesk new-conversation webhook</dd></div>
-          <div><dt>Skills</dt><dd><code>ticket-triage</code>, <code>draft-response</code>, <code>customer-escalation</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (API trigger), Intercom/Zendesk + HubSpot connectors, plan mode for the draft, Slack escalation routing</dd></div>
-        </dl>
-        <p>Every new ticket arrives with a pre-classified urgency, account context from HubSpot, and a draft response in the right tone for the customer segment. The agent reads the draft, makes a tweak, sends. First-response time drops; quality stays high.</p>
-
-        <div class="usecase-setup">
-          <h4 class="usecase-setup-title">How to set it up</h4>
-          <ol class="usecase-steps">
-            <li class="usecase-step">
-              <span class="usecase-step-num">1</span>
-              <div class="usecase-step-body">
-                <h5>Install the customer-support plugin</h5>
-                <div class="usecase-step-actions">
-                  <a class="usecase-step-btn" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=customer-support" target="_blank" rel="noopener">Install in Cowork &nearr;</a>
-                  <code class="usecase-step-cmd">claude plugin install customer-support@pace</code>
-                </div>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">2</span>
-              <div class="usecase-step-body">
-                <h5>Authorize Intercom (or Zendesk), HubSpot, Slack</h5>
-                <p>Intercom / Zendesk for the ticket queue; HubSpot for account context; Slack for escalations.</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">3</span>
-              <div class="usecase-step-body">
-                <h5>Create an API-triggered routine</h5>
-                <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong> &rarr; <strong>API</strong> trigger. Copy the URL + bearer token after save.</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">4</span>
-              <div class="usecase-step-body">
-                <h5>Wire Intercom (or Zendesk) to POST new conversations</h5>
-                <p>In Intercom: <strong>Settings &rarr; Webhooks &rarr; New webhook</strong>, subscribe to "conversation.user.created", point at the routine URL with the bearer token. (Zendesk: <strong>Apps &amp; Integrations &rarr; Webhooks</strong>.) Then paste this routine prompt:</p>
-                <pre class="usecase-step-prompt"><code>A new support ticket arrived. The conversation body is
-in the incoming text field.
-
-  1. Run ticket-triage to classify
-     urgency (P1/P2/P3) and category.
-  2. Pull the customer's account context from HubSpot
-     (plan tier, recent activity, prior tickets).
-  3. Run draft-response : tone
-     should match the segment (enterprise / SMB / free).
-     Park the draft in the conversation as a private note
-     for the human agent to review before sending.
-  4. If P1 OR enterprise tier: run
-     customer-escalation to ping the
-     on-call engineer in #support-escalations.</code></pre>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">5</span>
-              <div class="usecase-step-body">
-                <h5>Send a test ticket to verify</h5>
-                <p>Open a test conversation in Intercom from a sandbox account. Within ~30 seconds you should see a private note with the draft response. Once the format is right, every new ticket gets the same treatment.</p>
-              </div>
-            </li>
-          </ol>
-        </div>
-      </article>
-      <article class="usecase-card">
-        <h3>Saturday on-call digest, no human babysitting</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, schedule, weekends 09:00 + 18:00</dd></div>
-          <div><dt>Skills</dt><dd><code>triage</code>, <code>escalate</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (cloud schedule), Intercom + PagerDuty connectors, conditional escalation</dd></div>
-        </dl>
-        <p>Twice on weekends, the routine sweeps Intercom. Routine tickets get auto-responses where the answer is in the knowledge base. The two or three that look real get summarized and paged to the on-call engineer with full context. The Sunday-night Slack thread no longer scrolls.</p>
-      </article>
-      <article class="usecase-card">
-        <h3>Turn five resolved tickets into one KB article, every week</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, schedule, weekly Friday 16:00</dd></div>
-          <div><dt>Skills</dt><dd><code>knowledge-base</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (cloud schedule), Intercom + Notion connectors, sub-agent per theme</dd></div>
-        </dl>
-        <p>Reads the week's resolved tickets, clusters them by theme, and for each theme with three or more occurrences, drafts a knowledge-base article. Plan mode stages the drafts in Notion; you publish the ones worth publishing. The KB grows from real volume instead of someone deciding what should be there in the abstract.</p>
-      </article>
-
-    </section>
-
-    <section class="usecases-team" id="productivity">
-      <header class="usecases-team-head">
-        <h2>Productivity</h2>
-        <p class="usecases-team-tagline">Cross-app task management. End-of-day update that pulls from everywhere. Project memory that survives context switches.</p>
-      </header>
-
-      <article class="usecase-card usecase-card-marquee">
-        <span class="usecase-card-badge">Marquee recipe</span>
-        <h3>Daily update that pulls itself together</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, schedule, weekdays 17:30</dd></div>
-          <div><dt>Skills</dt><dd><code>update</code>, <code>task-management</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (cloud schedule), Slack + Notion + Linear connectors, plan mode</dd></div>
-        </dl>
-        <p>End of the day, the routine assembles what you shipped (commits, tickets closed, Slack threads contributed to) and drafts a one-paragraph wrap; rolls open work into tomorrow's queue. Plan mode parks the draft for your edit before it posts to your team's standup channel. Async standups stop being a chore.</p>
-
-        <div class="usecase-setup">
-          <h4 class="usecase-setup-title">How to set it up</h4>
-          <ol class="usecase-steps">
-            <li class="usecase-step">
-              <span class="usecase-step-num">1</span>
-              <div class="usecase-step-body">
-                <h5>Install the productivity plugin</h5>
-                <div class="usecase-step-actions">
-                  <a class="usecase-step-btn" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=productivity" target="_blank" rel="noopener">Install in Cowork &nearr;</a>
-                  <code class="usecase-step-cmd">claude plugin install productivity@pace</code>
-                </div>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">2</span>
-              <div class="usecase-step-body">
-                <h5>Authorize Slack, Linear, Notion, and GitHub</h5>
-                <p>Whatever subset you use. The skill pulls signals from each, so the more sources connected the richer the wrap.</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">3</span>
-              <div class="usecase-step-body">
-                <h5>Create the scheduled routine</h5>
-                <p>In Cowork, open <strong>Routines</strong> &rarr; <strong>New routine</strong> &rarr; <strong>Schedule</strong> &middot; <strong>Weekdays</strong> &middot; <strong>17:30</strong>.</p>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">4</span>
-              <div class="usecase-step-body">
-                <h5>Paste this as the routine prompt</h5>
-                <p>Edit the channel + role-focus line to match your team.</p>
-                <pre class="usecase-step-prompt"><code>End of day check-in. Run update to assemble
-what I shipped today: commits merged, Linear tickets I
-moved, Slack threads I contributed substantively to, docs
-I edited in Notion.
-
-Then run task-management to roll my open
-items into tomorrow's queue (carry forward unchecked
-todos, surface things I said I'd do but haven't).
-
-Draft a 3-line async standup post in our voice:
-"Yesterday I... Today I will... Blockers: ..."
-
-Use plan mode : show me the draft for a quick edit
-before posting to #async-standup.</code></pre>
-              </div>
-            </li>
-            <li class="usecase-step">
-              <span class="usecase-step-num">5</span>
-              <div class="usecase-step-body">
-                <h5>Click <strong>Run now</strong> to verify</h5>
-                <p>The first run today shows you the draft format. Plan mode means you approve before it posts. Tomorrow at 17:30 it runs again automatically : you'll get a notification in the Claude app when the draft is ready for your edit.</p>
-              </div>
-            </li>
-          </ol>
-        </div>
-      </article>
-
-      <article class="usecase-card">
-        <h3>Project memory that follows you across sessions</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Interactive, when starting work after a break</dd></div>
-          <div><dt>Skills</dt><dd><code>memory-management</code>, <code>start</code></dd></div>
-          <div><dt>Features</dt><dd>Auto memory (CLAUDE.md), cross-app context retrieval</dd></div>
-        </dl>
-        <p><code>start</code> re-hydrates yesterday's context from <code>memory-management</code>: open threads, the decisions you made, the things you said you'd come back to. No more spending the first 20 minutes of every session reading old messages.</p>
-      </article>
-      <article class="usecase-card">
-        <h3>End-of-week recap, written for you</h3>
-        <dl class="usecase-meta">
-          <div><dt>Trigger</dt><dd>Routine, schedule, weekly Friday 17:00</dd></div>
-          <div><dt>Skills</dt><dd><code>update</code>, <code>tasks</code></dd></div>
-          <div><dt>Features</dt><dd>Routines (cloud schedule), Linear + GitHub + calendar connectors, multi-source pull</dd></div>
-        </dl>
-        <p>Pulls what you shipped, what you reviewed, what you started, and what slipped. Drafts the recap email or status update in your voice, ready to send (or skip) on Monday. Trains itself on your past updates after a few weeks so the tone matches.</p>
-      </article>
-
-    </section>
-
-    <section class="usecases-team" id="design">
-      <header class="usecases-team-head">
-        <h2>Design</h2>
-        <p class="usecases-team-tagline">For frontend code design, Pace defers to <a href="https://impeccable.style">impeccable</a>. Use Pace's <code>/design</code> plugin for the UX-research / design-system layer; reach for impeccable when you're writing the UI code itself.</p>
-      </header>
-
-      <div class="usecases-impeccable">
-        <div class="usecases-impeccable-pitch">
-          <h3>What impeccable is</h3>
-          <p>
-            <a href="https://impeccable.style">Impeccable</a> is a separate Apache 2.0 skill kit focused entirely on frontend craft for AI coding agents. One router (<code>/impeccable</code>) with 23 sub-commands across typography, color, layout, motion, accessibility, UX writing, design systems, and dev handoff. It runs in every harness Pace runs in (Claude Code, Cursor, Gemini CLI, Codex CLI, and 8 more).
-          </p>
-          <p>
-            Pace's site, build pipeline, and multi-harness install machinery were forked from impeccable; the two projects share a maintainer ethos but ship independently.
-          </p>
-        </div>
-
-        <div class="usecases-impeccable-grid">
-          <article class="usecase-card">
-            <h3>Per-PR design audit before review</h3>
-            <dl class="usecase-meta">
-              <div><dt>Trigger</dt><dd>Routine, GitHub trigger on <code>pull_request.opened</code> against frontend repos</dd></div>
-              <div><dt>Skills</dt><dd><code>/impeccable audit</code>, <code>/impeccable critique</code></dd></div>
-              <div><dt>Features</dt><dd>Routines (GitHub trigger), inline PR comments, plan mode for fixes</dd></div>
-            </dl>
-            <p>Every PR touching CSS / JSX / Vue templates runs <code>/impeccable audit</code> against the changed files. Findings (contrast issues, anti-pattern hits from impeccable's 50+ detection rules, layout regressions) post as inline comments. Reviewers see the design diff alongside the code diff.</p>
-          </article>
-
-          <article class="usecase-card">
-            <h3>Polish pass on a feature branch</h3>
-            <dl class="usecase-meta">
-              <div><dt>Trigger</dt><dd>Interactive, before merging a feature</dd></div>
-              <div><dt>Skills</dt><dd><code>/impeccable polish</code>, <code>/impeccable typeset</code>, <code>/impeccable layout</code></dd></div>
-              <div><dt>Features</dt><dd>Multi-skill chain, plan mode</dd></div>
-            </dl>
-            <p>Before merging, run <code>/impeccable polish</code> on the branch. The router orchestrates typography, color, layout, and motion sub-commands; plan mode shows the diff before anything ships. The polish pass is what turns a working feature into one that feels intentional.</p>
-          </article>
-
-          <article class="usecase-card">
-            <h3>Cross-tool design system sync</h3>
-            <dl class="usecase-meta">
-              <div><dt>Trigger</dt><dd>Interactive, when tokens or components change</dd></div>
-              <div><dt>Skills</dt><dd><code>design-system</code> (Pace), <code>/impeccable colorize</code> + <code>/impeccable typeset</code> (impeccable)</dd></div>
-              <div><dt>Features</dt><dd>Cross-plugin chain, MCP connector to Figma</dd></div>
-            </dl>
-            <p>Pace's <code>/design</code> plugin manages the system at the spec level (Figma tokens, contribution model, dev handoff). Impeccable's <code>/colorize</code> and <code>/typeset</code> apply those tokens in code with full understanding of how they look on screen. Use both: the design plugin sets the rules, impeccable enforces them in the codebase.</p>
-          </article>
-        </div>
-
-        <div class="usecases-impeccable-cta">
-          <a href="https://impeccable.style" class="cta cta-primary">Visit impeccable.style</a>
-          <a href="https://impeccable.style/docs" class="cta cta-secondary">Read the impeccable docs</a>
-        </div>
-
-        <details class="usecases-impeccable-when">
-          <summary>When to use Pace's <code>/design</code> plugin vs impeccable</summary>
-          <p>Different layers of the same craft:</p>
-          <ul>
-            <li><strong>Pace <code>/design</code></strong> covers UX research, design system management, accessibility audits at the policy level, dev handoff, and research synthesis. Use it for the work a design <em>team</em> does.</li>
-            <li><strong>Impeccable</strong> covers the visual + interaction craft of writing the UI code itself: typography choices, color tokens, spatial rhythm, motion design, responsive layout. Use it for the work a designer would obsess over when looking at the rendered pixels.</li>
-          </ul>
-          <p>Most teams want both. Install impeccable alongside Pace; the Pace CLI (<code>npx pace skills install</code>) offers it during setup.</p>
-        </details>
-      </div>
-    </section>
-
-    <footer class="usecases-footer">
+    <footer class="ck-footer">
       <p>
         Have a workflow that should live here? <a href="https://github.com/GoldenBerry-SO/Pace/issues/new">Open an issue</a> with the trigger, skills, and Claude features it uses; we'll fold it into the cookbook.
       </p>
@@ -1180,55 +137,19 @@ before posting to #async-standup.</code></pre>
   </article>
 </Base>
 
-<style>
-  .usecases-page {
-    max-width: var(--width-content);
+<style is:global>
+  .ck-page {
+    max-width: 1100px;
     margin: 0 auto;
     padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
   }
-  .usecases-header {
-    margin-bottom: var(--spacing-xl);
+  .ck-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
     padding-bottom: var(--spacing-lg);
     border-bottom: 1px solid var(--color-mist);
   }
-  .usecases-eyebrow {
-    font-family: var(--font-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-forest);
-    margin-bottom: var(--spacing-sm);
-    display: inline-block;
-  }
-  .usecases-header h1 {
-    font-family: var(--font-display);
-    font-size: var(--fs-3xl);
-    letter-spacing: -0.03em;
-    margin-bottom: var(--spacing-md);
-  }
-  .usecases-lede {
-    font-size: var(--fs-md);
-    color: var(--color-charcoal);
-    line-height: 1.55;
-    max-width: 68ch;
-  }
-  .usecases-lede strong {
-    color: var(--color-ink);
-    font-weight: 600;
-  }
-  /* Engineering callout above the TOC */
-  .usecases-eng-callout {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: var(--spacing-lg);
-    align-items: center;
-    background: var(--color-forest);
-    color: var(--color-paper);
-    border-radius: 12px;
-    padding: var(--spacing-lg) var(--spacing-xl);
-    margin-bottom: var(--spacing-lg);
-  }
-  .usecases-eng-callout-eyebrow {
+  .ck-eyebrow {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -1236,486 +157,142 @@ before posting to #async-standup.</code></pre>
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--color-paper);
-    opacity: 0.78;
-    margin-bottom: 6px;
+    color: var(--color-ash);
+    padding: 5px 10px;
+    border: 1px solid var(--color-mist);
+    border-radius: 4px;
+    background: var(--color-paper-elev);
+    margin-bottom: var(--spacing-md);
   }
-  .usecases-eng-callout-eyebrow::before {
+  .ck-eyebrow::before {
     content: "";
     display: inline-block;
     width: 6px;
     height: 6px;
     background: currentColor;
   }
-  .usecases-eng-callout-text h2 {
+  .ck-title {
     font-family: var(--font-display);
-    font-size: clamp(1.3rem, 2.4vw, 1.7rem);
-    line-height: 1.2;
-    color: var(--color-paper);
-    margin: 0 0 8px;
-    letter-spacing: -0.02em;
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--color-ink);
+    margin-bottom: var(--spacing-md);
   }
-  .usecases-eng-callout-text p {
-    font-size: var(--fs-sm);
-    line-height: 1.55;
-    color: var(--color-paper);
-    opacity: 0.85;
-    margin: 0;
-    max-width: 56ch;
-  }
-  .usecases-eng-callout-cta {
-    display: inline-flex;
-    align-items: center;
-    padding: 12px 20px;
-    background: var(--color-paper);
-    color: var(--color-forest);
-    border-radius: 2px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    text-decoration: none;
-    transition: transform var(--duration-base) var(--ease-out-quart);
-    white-space: nowrap;
-  }
-  .usecases-eng-callout-cta:hover {
-    transform: translateY(-1px);
-  }
-  @media (max-width: 720px) {
-    .usecases-eng-callout {
-      grid-template-columns: 1fr;
-      padding: var(--spacing-md);
-    }
+  .ck-lede {
+    font-size: var(--fs-md);
+    line-height: 1.65;
+    color: var(--color-charcoal);
+    max-width: 70ch;
+    margin: 0 auto;
   }
 
-  /* TOC grid */
-  .usecases-toc {
+  /* Team grid */
+  .ck-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-2xl);
+  }
+  .ck-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: var(--spacing-lg);
     background: var(--color-paper-elev);
     border: 1px solid var(--color-mist);
     border-radius: 12px;
-    padding: var(--spacing-md) var(--spacing-md) var(--spacing-md);
-    margin-bottom: var(--spacing-2xl);
-  }
-  .usecases-toc-label {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-ash);
-    display: block;
-    margin: 0 6px var(--spacing-sm);
-  }
-  .usecases-toc-grid {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 8px;
-  }
-  .usecases-toc-grid a {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    padding: 10px 14px;
-    background: var(--color-paper);
-    border: 1px solid var(--color-mist);
-    border-radius: 8px;
-    color: var(--color-ink);
+    text-decoration: none;
+    color: inherit;
     transition: border-color var(--duration-fast) var(--ease-out-quart),
                 background var(--duration-fast) var(--ease-out-quart),
                 transform var(--duration-fast) var(--ease-out-quart);
   }
-  .usecases-toc-grid a:hover {
+  .ck-card:hover {
     border-color: var(--color-forest);
-    background: var(--color-forest-dim);
-    transform: translateY(-1px);
+    background: color-mix(in oklch, var(--color-paper-elev) 92%, var(--color-forest-dim));
+    transform: translateY(-2px);
   }
-  .usecases-toc-name {
-    font-size: var(--fs-sm);
-    font-weight: 500;
-    color: var(--color-ink);
+  .ck-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
   }
-  .usecases-toc-count {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--color-ash);
-  }
-  @media (max-width: 820px) {
-    .usecases-toc-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-  .usecases-team {
-    margin-bottom: var(--spacing-2xl);
-    scroll-margin-top: 96px;
-  }
-  .usecases-team-head {
-    margin-bottom: var(--spacing-lg);
-    padding-bottom: var(--spacing-sm);
-    border-bottom: 1px solid var(--color-mist);
-  }
-  .usecases-team-head h2 {
+  .ck-card-name {
     font-family: var(--font-display);
-    font-size: var(--fs-xl);
+    font-size: var(--fs-lg);
+    font-weight: 600;
     letter-spacing: -0.02em;
     color: var(--color-ink);
-    margin-bottom: var(--spacing-xs);
   }
-  .usecases-team-tagline {
-    font-size: var(--fs-sm);
-    color: var(--color-ash);
-    line-height: 1.55;
-    max-width: 70ch;
-  }
-  .usecase-card {
-    background: var(--color-paper-elev);
-    border: 1px solid var(--color-mist);
-    border-radius: 10px;
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-md);
-    position: relative;
-  }
-  .usecase-card-marquee {
-    border-left: 4px solid var(--color-forest);
-    background: color-mix(in oklch, var(--color-paper-elev) 88%, var(--color-forest-dim));
-  }
-  .usecase-card-badge {
-    display: inline-block;
+  .ck-card-count {
     font-family: var(--font-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-forest);
-    background: var(--color-paper);
-    padding: 3px 10px;
-    border-radius: 999px;
-    border: 1px solid var(--color-forest-soft);
-    margin-bottom: var(--spacing-sm);
-  }
-  .usecase-setup {
-    margin-top: var(--spacing-lg);
-    padding-top: var(--spacing-lg);
-    border-top: 1px solid var(--color-mist);
-  }
-  .usecase-setup-title {
-    font-family: var(--font-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-ash);
-    margin-bottom: var(--spacing-md);
-  }
-  .usecase-steps {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-  }
-  .usecase-step {
-    display: grid;
-    grid-template-columns: 32px 1fr;
-    gap: var(--spacing-md);
-    align-items: start;
-  }
-  .usecase-step-num {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: var(--color-forest);
-    color: var(--color-paper);
-    font-family: var(--font-mono);
-    font-size: var(--fs-sm);
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  .usecase-step-body h5 {
-    font-family: var(--font-display);
-    font-size: var(--fs-base);
-    font-weight: 600;
-    color: var(--color-ink);
-    margin-bottom: 4px;
-    line-height: 1.3;
-  }
-  .usecase-step-body h5 strong {
-    color: var(--color-forest);
-    font-weight: 600;
-  }
-  .usecase-step-body p {
-    font-size: var(--fs-sm);
-    color: var(--color-charcoal);
-    line-height: 1.6;
-    margin-bottom: var(--spacing-xs);
-    max-width: 64ch;
-  }
-  .usecase-step-body p code {
-    font-family: var(--font-mono);
-    font-size: 0.92em;
-    background: var(--color-code-bg);
-    padding: 1px 6px;
-    border-radius: 4px;
-    border: 1px solid var(--color-code-border);
-    color: var(--color-ink);
-  }
-  .usecase-step-body p a {
-    color: var(--color-forest);
-    border-bottom: 1px solid var(--color-forest-soft);
-  }
-  .usecase-step-body p strong {
-    color: var(--color-ink);
-    font-weight: 600;
-  }
-  .usecase-step-actions {
-    display: flex;
-    gap: var(--spacing-sm);
-    flex-wrap: wrap;
-    align-items: center;
-    margin-top: var(--spacing-xs);
-  }
-  .usecase-step-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 9px 16px;
-    background: var(--color-forest);
-    color: oklch(96% 0.008 140);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    border-radius: 2px;
-    text-decoration: none;
-    border: 1px solid var(--color-forest);
-    transition: background var(--duration-base) var(--ease-out-quart),
-                border-color var(--duration-base) var(--ease-out-quart);
-  }
-  .usecase-step-btn:hover {
-    background: var(--color-forest-hover);
-    border-color: var(--color-forest-hover);
-    color: oklch(96% 0.008 140);
-  }
-  .usecase-step-cmd {
-    font-family: var(--font-mono);
-    font-size: var(--fs-sm);
-    background: var(--color-code-bg);
-    padding: 6px 12px;
-    border-radius: 6px;
-    border: 1px solid var(--color-code-border);
-    color: var(--color-ink);
-    user-select: all;
-  }
-  .usecase-step-prompt {
-    background: oklch(18% 0.015 150);
-    color: oklch(92% 0.005 150);
-    padding: var(--spacing-md);
-    border-radius: 8px;
-    font-family: var(--font-mono);
-    font-size: 0.82rem;
-    line-height: 1.55;
-    overflow-x: auto;
-    margin: var(--spacing-xs) 0 0 0;
-    white-space: pre-wrap;
-    user-select: all;
-  }
-  .usecase-step-prompt code {
-    background: transparent;
-    border: 0;
-    padding: 0;
-    color: inherit;
-  }
-  .usecase-card h3 {
-    font-family: var(--font-display);
-    font-size: var(--fs-md);
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    color: var(--color-ink);
-    margin-bottom: var(--spacing-sm);
-  }
-  .usecase-meta {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 4px var(--spacing-md);
-    margin-bottom: var(--spacing-sm);
-    padding-bottom: var(--spacing-sm);
-    border-bottom: 1px dashed var(--color-mist);
-  }
-  .usecase-meta > div {
-    display: grid;
-    grid-template-columns: 90px 1fr;
-    gap: var(--spacing-sm);
-    align-items: baseline;
-  }
-  .usecase-meta dt {
-    font-family: var(--font-mono);
-    font-size: var(--fs-xs);
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--color-ash);
   }
-  .usecase-meta dd {
+  .ck-card-hook {
+    font-size: var(--fs-sm);
+    line-height: 1.55;
+    color: var(--color-charcoal);
+    margin: 0;
+  }
+  .ck-card-marquee {
+    background: var(--color-paper);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 4px;
+  }
+  .ck-card-marquee-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    margin-bottom: 4px;
+  }
+  .ck-card-marquee p {
     margin: 0;
     font-size: var(--fs-sm);
-    color: var(--color-charcoal);
-    line-height: 1.55;
-  }
-  .usecase-meta dd code {
-    font-family: var(--font-mono);
-    font-size: 0.92em;
-    background: var(--color-code-bg);
-    padding: 1px 6px;
-    border-radius: 4px;
-    border: 1px solid var(--color-code-border);
+    line-height: 1.45;
     color: var(--color-ink);
+    font-weight: 500;
   }
-  .usecase-card p {
-    font-size: var(--fs-base);
-    color: var(--color-charcoal);
-    line-height: 1.65;
-    max-width: 70ch;
-  }
-  .usecase-card p code {
+  .ck-card-cta {
     font-family: var(--font-mono);
-    font-size: 0.92em;
-    background: var(--color-code-bg);
-    padding: 1px 6px;
-    border-radius: 4px;
-    border: 1px solid var(--color-code-border);
-    color: var(--color-ink);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-forest);
+    font-weight: 600;
+    margin-top: auto;
+    padding-top: 8px;
+    border-top: 1px dashed var(--color-mist);
   }
-  .usecases-footer {
+
+  .ck-footer {
+    text-align: center;
     margin-top: var(--spacing-2xl);
-    padding-top: var(--spacing-lg);
+    padding-top: var(--spacing-xl);
     border-top: 1px solid var(--color-mist);
+  }
+  .ck-footer p {
     font-size: var(--fs-sm);
     color: var(--color-ash);
     line-height: 1.6;
   }
-  .usecases-footer a {
+  .ck-footer a {
     color: var(--color-forest);
     border-bottom: 1px solid var(--color-forest-soft);
   }
-  .usecases-impeccable {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-lg);
-  }
-  .usecases-impeccable-pitch h3 {
-    font-family: var(--font-display);
-    font-size: var(--fs-md);
-    font-weight: 600;
-    margin-bottom: var(--spacing-sm);
-    color: var(--color-ink);
-  }
-  .usecases-impeccable-pitch p {
-    font-size: var(--fs-base);
-    color: var(--color-charcoal);
-    line-height: 1.65;
-    max-width: 70ch;
-    margin-bottom: var(--spacing-sm);
-  }
-  .usecases-impeccable-pitch a,
-  .usecases-impeccable-when a,
-  .usecases-team-tagline a {
-    color: var(--color-forest);
-    border-bottom: 1px solid var(--color-forest-soft);
-  }
-  .usecases-impeccable-pitch code,
-  .usecases-impeccable-when code,
-  .usecases-team-tagline code {
-    font-family: var(--font-mono);
-    font-size: 0.9em;
-    background: var(--color-code-bg);
-    padding: 1px 6px;
-    border-radius: 4px;
-    border: 1px solid var(--color-code-border);
-    color: var(--color-ink);
-  }
-  .usecases-impeccable-cta {
-    display: flex;
-    gap: var(--spacing-sm);
-    flex-wrap: wrap;
-  }
-  .usecases-impeccable-cta .cta {
-    display: inline-flex;
-    align-items: center;
-    padding: 10px 18px;
-    border-radius: 6px;
-    font-size: var(--fs-sm);
-    font-weight: 600;
-    transition: background var(--duration-fast) var(--ease-out-quart), color var(--duration-fast) var(--ease-out-quart);
-  }
-  .cta-primary {
-    background: var(--color-forest);
-    color: var(--color-paper);
-  }
-  .cta-primary:hover {
-    background: var(--color-forest-hover);
-  }
-  .cta-secondary {
-    background: transparent;
-    color: var(--color-forest);
-    border: 1px solid var(--color-forest-soft);
-  }
-  .cta-secondary:hover {
-    background: var(--color-forest-dim);
-  }
-  .usecases-impeccable-when {
-    background: var(--color-paper-elev);
-    border: 1px solid var(--color-mist);
-    border-radius: 8px;
-    padding: var(--spacing-md) var(--spacing-lg);
-  }
-  .usecases-impeccable-when summary {
-    font-family: var(--font-display);
-    font-size: var(--fs-md);
-    font-weight: 600;
-    color: var(--color-ink);
-    cursor: pointer;
-    list-style: none;
-  }
-  .usecases-impeccable-when summary::-webkit-details-marker {
-    display: none;
-  }
-  .usecases-impeccable-when summary::before {
-    content: '+';
-    font-family: var(--font-mono);
-    color: var(--color-forest);
-    margin-right: var(--spacing-sm);
-    transition: transform var(--duration-fast) var(--ease-out-quart);
-    display: inline-block;
-  }
-  .usecases-impeccable-when[open] summary::before {
-    content: '−';
-  }
-  .usecases-impeccable-when p,
-  .usecases-impeccable-when ul {
-    font-size: var(--fs-sm);
-    color: var(--color-charcoal);
-    line-height: 1.65;
-    margin-top: var(--spacing-sm);
-    max-width: 70ch;
-  }
-  .usecases-impeccable-when ul {
-    padding-left: var(--spacing-md);
-  }
-  .usecases-impeccable-when li {
-    margin-bottom: var(--spacing-xs);
-  }
-  .usecases-impeccable-when strong {
-    color: var(--color-ink);
-    font-weight: 600;
-  }
+
   @media (max-width: 720px) {
-    .usecase-meta > div {
+    .ck-grid {
       grid-template-columns: 1fr;
-      gap: 2px;
     }
   }
 </style>

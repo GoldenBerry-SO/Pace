@@ -1,0 +1,557 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base
+  title="Finance cookbook · Pace"
+  description="Finance recipes for the Pace marketplace. Month-end as a workflow. Variance you have to explain, surfaced before the CFO asks. Vendor contract triage that respects the playbook."
+  activeNav="cookbook"
+  canonicalPath="/cookbook/finance"
+>
+  <article class="usecases-page">
+    <header class="usecases-team-page-head">
+      <a class="usecases-back-link" href="/cookbook">&larr; All cookbooks</a>
+      <span class="usecases-eyebrow">Finance cookbook</span>
+      <h1>Finance</h1>
+      <p class="usecases-team-page-tagline">Month-end as a workflow. Variance you have to explain, surfaced before the CFO asks. Vendor contract triage that respects the playbook.</p>
+    </header>
+
+    <div class="usecases-team-page-body">
+<article class="usecase-card usecase-card-marquee">
+        <span class="usecase-card-badge">Marquee recipe</span>
+        <h3>Month-end runbook, enforced</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, schedule, monthly on the last business day at 08:00</dd></div>
+          <div><dt>Skills</dt><dd><code>close-management</code>, <code>reconciliation</code>, <code>variance-analysis</code>, <code>journal-entry-prep</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (cloud schedule), warehouse + Microsoft 365 connectors, plan mode for the journal entries</dd></div>
+        </dl>
+        <p>The month-end runbook fires automatically on the last business day. By the time the controller sits down, the reconciliation has run, variance vs plan is drafted, and the journal entries are queued for approval in plan mode. Half a day saved every close.</p>
+
+        <div class="usecase-setup">
+          <h4 class="usecase-setup-title">How to set it up</h4>
+          <ol class="usecase-steps">
+            <li class="usecase-step">
+              <span class="usecase-step-num">1</span>
+              <div class="usecase-step-body">
+                <h5>Install the finance plugin</h5>
+                <div class="usecase-step-actions">
+                  <a class="usecase-step-btn" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=finance" target="_blank" rel="noopener">Install in Cowork &nearr;</a>
+                  <code class="usecase-step-cmd">claude plugin install finance@pace</code>
+                </div>
+              </div>
+            </li>
+            <li class="usecase-step">
+              <span class="usecase-step-num">2</span>
+              <div class="usecase-step-body">
+                <h5>Authorize your warehouse + Microsoft 365</h5>
+                <p>Snowflake / Databricks / BigQuery for the ledger pull; Microsoft 365 for Excel writeback. Custom URL prompts on first run.</p>
+              </div>
+            </li>
+            <li class="usecase-step">
+              <span class="usecase-step-num">3</span>
+              <div class="usecase-step-body">
+                <h5>Create the monthly routine</h5>
+                <p>In Cowork, open <strong>Routines</strong>, preset schedules don't include "last business day of the month." Create the routine with the closest preset, then run <code>/schedule update</code> in the CLI to set a cron expression like <code>0 8 28-31 * 1-5</code> (8am, last few weekdays of the month).</p>
+              </div>
+            </li>
+            <li class="usecase-step">
+              <span class="usecase-step-num">4</span>
+              <div class="usecase-step-body">
+                <h5>Paste this as the routine prompt</h5>
+                <pre class="usecase-step-prompt"><code>Run the month-end close in order:
+
+  1. close-management to orchestrate the checklist.
+  2. reconciliation against the warehouse ledger
+     (call out any unreconciled balance).
+  3. variance-analysis vs plan + prior month.
+  4. journal-entry-prep for any accruals or
+     reclasses the variance analysis surfaces.
+
+Use plan mode for the journal entries : do NOT post
+anything to the GL automatically. The controller will
+review and approve each entry. Post a close-progress
+summary to #finance-close.</code></pre>
+              </div>
+            </li>
+            <li class="usecase-step">
+              <span class="usecase-step-num">5</span>
+              <div class="usecase-step-body">
+                <h5>Manually run for this month's close to verify</h5>
+                <p>Click <strong>Run now</strong> at the end of this month. Walk through the journal entries in plan mode; approve, edit, or reject each. Once you trust the output, the routine fires on the last business day automatically.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="usecase-card">
+        <h3>Variance you'll have to explain, surfaced before the CFO asks</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, schedule, daily 06:00 after nightly close</dd></div>
+          <div><dt>Skills</dt><dd><code>variance-analysis</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (cloud schedule), warehouse connector, threshold alerting, Slack DM to the CFO's prep channel</dd></div>
+        </dl>
+        <p>Every nightly close, the variance skill compares actuals vs plan, flags anything > 5% deviation, drafts the why, and DMs the CFO's prep channel by 7am. The morning standup starts with answers, not surprises.</p>
+      </article>
+
+      <article class="usecase-card">
+        <h3>Vendor contract triage with your playbook in the loop</h3>
+        <dl class="usecase-meta">
+          <div><dt>Trigger</dt><dd>Routine, API trigger fired by Box / Egnyte webhook on new-file</dd></div>
+          <div><dt>Skills</dt><dd><code>review-contract</code>, <code>vendor-check</code>, <code>vendor-review</code></dd></div>
+          <div><dt>Features</dt><dd>Routines (API trigger), Box/Egnyte connector, in-house playbook context, plan mode</dd></div>
+        </dl>
+        <p>Any new vendor contract dropped in the legal folder triggers a playbook-aware review: <code>review-contract</code> walks payment terms, auto-renewal language, liability caps, and data clauses; <code>vendor-check</code> and <code>vendor-review</code> add the procurement-side perspective. Findings post as a checklist. Legal + Finance both see what to fight for before the call.</p>
+      </article>
+    </div>
+
+    <footer class="usecases-footer">
+      <p>
+        Have a finance workflow that should live here? <a href="https://github.com/GoldenBerry-SO/Pace/issues/new">Open an issue</a> with the trigger, skills, and Claude features it uses; we'll fold it into the cookbook.
+      </p>
+    </footer>
+  </article>
+</Base>
+
+<style>
+  .usecases-page {
+    max-width: var(--width-content);
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
+  }
+  .usecases-header {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .usecases-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    margin-bottom: var(--spacing-sm);
+    display: inline-block;
+  }
+  .usecases-header h1 {
+    font-family: var(--font-display);
+    font-size: var(--fs-3xl);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-md);
+  }
+  .usecases-lede {
+    font-size: var(--fs-md);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    max-width: 68ch;
+  }
+  .usecases-lede strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  /* Engineering callout above the TOC */
+  .usecases-eng-callout {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--spacing-lg);
+    align-items: center;
+    background: var(--color-forest);
+    color: var(--color-paper);
+    border-radius: 12px;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+  }
+  .usecases-eng-callout-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-paper);
+    opacity: 0.78;
+    margin-bottom: 6px;
+  }
+  .usecases-eng-callout-eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: currentColor;
+  }
+  .usecases-eng-callout-text h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+    line-height: 1.2;
+    color: var(--color-paper);
+    margin: 0 0 8px;
+    letter-spacing: -0.02em;
+  }
+  .usecases-eng-callout-text p {
+    font-size: var(--fs-sm);
+    line-height: 1.55;
+    color: var(--color-paper);
+    opacity: 0.85;
+    margin: 0;
+    max-width: 56ch;
+  }
+  .usecases-eng-callout-cta {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 20px;
+    background: var(--color-paper);
+    color: var(--color-forest);
+    border-radius: 2px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: transform var(--duration-base) var(--ease-out-quart);
+    white-space: nowrap;
+  }
+  .usecases-eng-callout-cta:hover {
+    transform: translateY(-1px);
+  }
+  @media (max-width: 720px) {
+    .usecases-eng-callout {
+      grid-template-columns: 1fr;
+      padding: var(--spacing-md);
+    }
+  }
+
+  /* TOC grid */
+  .usecases-toc {
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 12px;
+    padding: var(--spacing-md) var(--spacing-md) var(--spacing-md);
+    margin-bottom: var(--spacing-2xl);
+  }
+  .usecases-toc-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+    display: block;
+    margin: 0 6px var(--spacing-sm);
+  }
+  .usecases-toc-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .usecases-toc-grid a {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 14px;
+    background: var(--color-paper);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+    color: var(--color-ink);
+    transition: border-color var(--duration-fast) var(--ease-out-quart),
+                background var(--duration-fast) var(--ease-out-quart),
+                transform var(--duration-fast) var(--ease-out-quart);
+  }
+  .usecases-toc-grid a:hover {
+    border-color: var(--color-forest);
+    background: var(--color-forest-dim);
+    transform: translateY(-1px);
+  }
+  .usecases-toc-name {
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+  .usecases-toc-count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-ash);
+  }
+  @media (max-width: 820px) {
+    .usecases-toc-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .usecases-team {
+    margin-bottom: var(--spacing-2xl);
+    scroll-margin-top: 96px;
+  }
+  .usecases-team-head {
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .usecases-team-head h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+    margin-bottom: var(--spacing-xs);
+  }
+  .usecases-team-tagline {
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+    line-height: 1.55;
+    max-width: 70ch;
+  }
+  .usecase-card {
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-mist);
+    border-radius: 12px;
+    background: var(--color-paper-elev);
+    margin-bottom: var(--spacing-md);
+  }
+  .usecase-card-marquee {
+    border-color: var(--color-forest);
+    background: color-mix(in oklch, var(--color-paper-elev) 92%, var(--color-forest-dim));
+  }
+  .usecase-card-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    background: transparent;
+    border: 1px solid var(--color-forest-soft);
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin-bottom: var(--spacing-sm);
+  }
+  .usecase-card-badge::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: currentColor;
+  }
+  .usecase-card h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    line-height: 1.2;
+    letter-spacing: -0.022em;
+    color: var(--color-ink);
+    margin: 0 0 var(--spacing-md);
+    font-weight: 600;
+  }
+  .usecase-card > p {
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    color: var(--color-charcoal);
+    margin: 0 0 var(--spacing-md);
+  }
+  /* Meta: small chip row at the bottom (was a big dl block at top) */
+  .usecase-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+    margin: var(--spacing-md) 0 0;
+    padding-top: var(--spacing-md);
+    border-top: 1px dashed var(--color-mist);
+  }
+  .usecase-meta > div {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: var(--color-paper);
+    border: 1px solid var(--color-mist);
+    border-radius: 999px;
+    font-size: 11px;
+    font-family: var(--font-mono);
+  }
+  .usecase-meta dt {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+    margin: 0;
+    font-weight: 500;
+  }
+  .usecase-meta dt::after {
+    content: ":";
+    margin-left: 1px;
+    color: var(--color-mist);
+  }
+  .usecase-meta dd {
+    margin: 0;
+    color: var(--color-charcoal);
+    font-size: 11px;
+  }
+  .usecase-meta dd code {
+    font-family: var(--font-mono);
+    font-size: 0.95em;
+    color: var(--color-forest);
+    background: transparent;
+    padding: 0;
+    border: 0;
+  }
+  .usecase-card p {
+    font-size: var(--fs-base);
+    color: var(--color-charcoal);
+    line-height: 1.65;
+    max-width: 70ch;
+  }
+  .usecase-card p code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: var(--color-code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--color-code-border);
+    color: var(--color-ink);
+  }
+  .usecases-footer {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-mist);
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+    line-height: 1.6;
+  }
+  .usecases-footer a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .usecases-impeccable {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+  .usecases-impeccable-pitch h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-ink);
+  }
+  .usecases-impeccable-pitch p {
+    font-size: var(--fs-base);
+    color: var(--color-charcoal);
+    line-height: 1.65;
+    max-width: 70ch;
+    margin-bottom: var(--spacing-sm);
+  }
+  .usecases-impeccable-pitch a,
+  .usecases-impeccable-when a,
+  .usecases-team-tagline a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .usecases-impeccable-pitch code,
+  .usecases-impeccable-when code,
+  .usecases-team-tagline code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--color-code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--color-code-border);
+    color: var(--color-ink);
+  }
+  .usecases-impeccable-cta {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+  }
+  .usecases-impeccable-cta .cta {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    transition: background var(--duration-fast) var(--ease-out-quart), color var(--duration-fast) var(--ease-out-quart);
+  }
+  .cta-primary {
+    background: var(--color-forest);
+    color: var(--color-paper);
+  }
+  .cta-primary:hover {
+    background: var(--color-forest-hover);
+  }
+  .cta-secondary {
+    background: transparent;
+    color: var(--color-forest);
+    border: 1px solid var(--color-forest-soft);
+  }
+  .cta-secondary:hover {
+    background: var(--color-forest-dim);
+  }
+  .usecases-impeccable-when {
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+    padding: var(--spacing-md) var(--spacing-lg);
+  }
+  .usecases-impeccable-when summary {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--color-ink);
+    cursor: pointer;
+    list-style: none;
+  }
+  .usecases-impeccable-when summary::-webkit-details-marker {
+    display: none;
+  }
+  .usecases-impeccable-when summary::before {
+    content: '+';
+    font-family: var(--font-mono);
+    color: var(--color-forest);
+    margin-right: var(--spacing-sm);
+    transition: transform var(--duration-fast) var(--ease-out-quart);
+    display: inline-block;
+  }
+  .usecases-impeccable-when[open] summary::before {
+    content: '−';
+  }
+  .usecases-impeccable-when p,
+  .usecases-impeccable-when ul {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.65;
+    margin-top: var(--spacing-sm);
+    max-width: 70ch;
+  }
+  .usecases-impeccable-when ul {
+    padding-left: var(--spacing-md);
+  }
+  .usecases-impeccable-when li {
+    margin-bottom: var(--spacing-xs);
+  }
+  .usecases-impeccable-when strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  @media (max-width: 720px) {
+    .usecase-meta > div {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+  }
+
+  /* Recipe card outcome-first ordering: prose before pills */
+  .usecase-card {
+    display: flex;
+    flex-direction: column;
+  }
+  .usecase-card h3 { order: 1; }
+  .usecase-card-badge { order: 0; }
+  .usecase-card > p { order: 2; }
+  .usecase-card .usecase-meta { order: 3; margin-top: var(--spacing-md); }
+  .usecase-card > .usecase-setup,
+  .usecase-card > .usecase-step-prompt,
+  .usecase-card-marquee .usecase-setup { order: 4; }
+</style>
