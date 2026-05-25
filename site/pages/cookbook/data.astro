@@ -20,6 +20,7 @@ import Base from '../../layouts/Base.astro';
 <article class="usecase-card usecase-card-marquee">
         <span class="usecase-card-badge">Marquee recipe</span>
         <h3>Weekly metric anomaly digest, Mondays at 7am</h3>
+        <p class="usecase-outcome">Anomalies caught the morning they happen, not three sprints late.</p>
         <dl class="usecase-meta">
           <div><dt>Trigger</dt><dd>Routine, schedule, weekly Monday 07:00</dd></div>
           <div><dt>Skills</dt><dd><code>statistical-analysis</code>, <code>write-query</code></dd></div>
@@ -548,6 +549,22 @@ explanation. Post the digest to #data-weekly in Slack.</code></pre>
   .usecase-card > p { order: 2; }
   .usecase-card .usecase-meta { order: 3; margin-top: var(--spacing-md); }
 
+
+  /* Outcome line at the top of every marquee card. Big bold one-liner
+     that tells the visitor what they actually get before the prose. */
+  .usecase-outcome {
+    font-family: var(--font-display);
+    font-size: var(--fs-lg);
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--color-forest);
+    margin: 0 0 var(--spacing-md);
+    letter-spacing: -0.01em;
+    padding: 12px 16px;
+    background: var(--color-forest-dim);
+    border-left: 3px solid var(--color-forest);
+    border-radius: 0 6px 6px 0;
+  }
   .usecase-setup-title {
     display: inline-block;
     margin-top: var(--spacing-md);
