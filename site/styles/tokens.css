@@ -15,9 +15,29 @@
   margin: 0;
 }
 
+html, body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
 img, picture, video, canvas, svg {
   display: block;
   max-width: 100%;
+}
+
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+code {
+  word-break: break-word;
+}
+
+pre code {
+  word-break: normal;
+  white-space: pre;
 }
 
 button, input, textarea, select {
