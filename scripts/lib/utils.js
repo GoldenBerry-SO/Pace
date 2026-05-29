@@ -639,7 +639,7 @@ const EXCLUDED_FROM_SUGGESTIONS = new Set([
 // Sub-commands of /pace that should appear in {{available_commands}}.
 // These are the commands that audit/critique/etc. reference when suggesting next steps.
 const PACE_SUB_COMMANDS = [
-  'adapt', 'animate', 'audit', 'bolder', 'clarify', 'colorize',
+  'adapt', 'animate', 'audit', 'bolder', 'clarify', 'cleanup', 'colorize',
   'critique', 'delight', 'distill', 'document', 'harden', 'layout',
   'onboard', 'optimize', 'overdrive', 'polish', 'quieter', 'shape', 'typeset',
 ];

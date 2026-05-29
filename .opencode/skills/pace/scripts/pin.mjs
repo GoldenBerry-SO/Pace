@@ -28,7 +28,7 @@ const HARNESS_DIRS = [
 // Valid sub-command names. Must mirror the Commands table in
 // skill/SKILL.md and PACE_SUB_COMMANDS in scripts/lib/utils.js. Empty
 // until pace ships its first command.
-const VALID_COMMANDS = [];
+const VALID_COMMANDS = ['cleanup'];
 
 // Marker to identify pinned skills (so unpin doesn't delete user skills)
 const PIN_MARKER = '<!-- pace-pinned-skill -->';
