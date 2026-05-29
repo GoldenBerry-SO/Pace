@@ -1,1 +1,6 @@
-{}
+{
+  "cleanup": {
+    "description": "Engineering housekeeping: safely sweep stale dev docs/artifacts, merged branches, and closeable issues/tickets left over from old development.",
+    "argumentHint": "[scope]"
+  }
+}

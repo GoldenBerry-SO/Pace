@@ -31,7 +31,7 @@ Sub-commands live in `reference/<command>.md`. The router below is the source of
 
 | Command | When to use |
 | --- | --- |
-| _(none yet)_ | Pace is in scaffold. Commands ship as they're authored. |
+| `cleanup` | Engineering housekeeping: safely sweep stale dev docs/artifacts, merged branches, and closeable issues/tickets left over from old development. |
 
 When the user types `/pace <command>` and the command isn't in the table above, respond: *"Pace doesn't have a `<command>` command yet. Want to author one? Drop a reference file at `skill/reference/<command>.md` and add a row here."*
 
