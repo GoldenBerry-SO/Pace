@@ -10,11 +10,36 @@ const recipes = [
     outcome: 'Half a day of unstructured exploration becomes a tracked epic with one PR in the queue, ready to review.',
     summary: "When you're starting from something fuzzier than a spec. You'll prototype to learn, grill yourself on what you learned, write the PRD that captures the decision, split it into issues, and TDD the first one.",
     chain: [
-      { skill: 'prototype', label: 'Prototype', body: 'Build a throwaway version to feel the shape of the design. State, edges, UI variants, whichever is fuzzy.' },
-      { skill: 'grill-me', label: 'Grill yourself', body: "Force the questions you've been avoiding. Failure modes, partial state, concurrency, scale, telemetry, rollback. Every branch gets an answer." },
-      { skill: 'to-prd', label: 'Write the PRD', body: 'Turn the prototype and the grilling answers into a PRD: problem, constraints, decisions, non-goals. Saved to your project tracker.' },
-      { skill: 'to-issues', label: 'Split into issues', body: 'Break the PRD into tracer-bullet vertical slices, one per issue. Each issue is sized to land as one PR.' },
-      { skill: 'tdd', label: 'TDD the first slice', body: 'Red-green-refactor on the first issue. Commits at every transition so the loop is visible in the diff.' },
+      {
+        skill: '/prototype',
+        label: 'Prototype',
+        body: 'Build a throwaway version to feel the shape of the design. State, edges, UI variants, whichever is fuzzy.',
+        why: "You don't actually know what you want until you can play with it. A throwaway prototype turns vague intuitions into concrete reactions (\"the modal flow is too many clicks\"), and those reactions become real requirements. Skipping this step means specifying something you don't yet understand, and paying for the misunderstanding in PR-review churn.",
+      },
+      {
+        skill: '/grill-me',
+        label: 'Grill yourself',
+        body: "Force the questions you've been avoiding. Failure modes, partial state, concurrency, scale, telemetry, rollback. Every branch gets an answer.",
+        why: "Every plan has questions you've quietly skipped. Answering them now is a one-hour conversation; discovering them in production is an incident. The grilling is also context for the PRD: by the end you have explicit rationale for every decision, not just the decisions themselves.",
+      },
+      {
+        skill: '/to-prd',
+        label: 'Write the PRD',
+        body: 'Turn the prototype and the grilling answers into a PRD: problem, constraints, decisions, non-goals. Saved to your project tracker.',
+        why: "Context dies fast. The prototype lives in a branch; the grilling lives in your chat transcript; both vanish the moment you /next or close the tab. Persisting the thinking to your tracker (Linear, GitHub, Notion) makes it durable, so the next agent, your teammate, or future-you can read it without rebuilding the mental model from scratch. The PRD is what survives the session.",
+      },
+      {
+        skill: '/to-issues',
+        label: 'Split into issues',
+        body: 'Break the PRD into tracer-bullet vertical slices, one per issue. Each issue is sized to land as one PR.',
+        why: "One giant PR is unreviewable, unrevertable, and impossible to schedule around. Tracer-bullet slices (each end-to-end, each shippable) let you land value incrementally, catch design problems on slice one instead of slice five, and roll back surgically when a slice misbehaves in prod. Splitting also forces honesty about scope: anything that won't fit in a slice is a non-goal.",
+      },
+      {
+        skill: '/tdd',
+        label: 'TDD the first slice',
+        body: 'Red-green-refactor on the first issue. Commits at every transition so the loop is visible in the diff.',
+        why: "Tests written first capture intent before implementation contaminates it; the red-green-refactor loop forces small, observable steps. Commits at each transition leave a navigable diff a reviewer can read like a story: \"here's the failing test, here's the minimum code to pass it, here's the cleanup.\" Tests written after the fact almost always test what the code does, not what you wanted it to do.",
+      },
     ],
     kickoffLabel: 'Discovery kickoff',
     kickoffPrompt: `I want to build the bulk-CSV import feature. We need to handle 50k rows, validate against the existing user schema, and produce a downloadable error report.
@@ -36,11 +61,36 @@ Stop after each step so I can review.`,
     outcome: 'A planned feature lands as a chain of small reviewable PRs, each rebased cleanly after the previous one merges.',
     summary: "When the spec already exists. You'll plan it as an epic, build it as a stack of PRs, address review comments, rebase the next one when the previous merges, and reset cleanly between tasks.",
     chain: [
-      { skill: 'spec', label: 'Spec the feature', body: 'Refine the ask into a parent epic with ordered sub-issues. Each sub-issue is scoped to a single PR. No code yet.' },
-      { skill: 'implement', label: 'Implement the stack', body: 'Build the epic as stacked branches, one PR per sub-issue. Stops at PR boundaries so you can review before continuing.' },
-      { skill: 'review', label: 'Address reviews', body: 'Walk PR comments grouped by file. Each one gets a fix-and-reply, a decline-with-rationale, or an ask-for-clarification.' },
-      { skill: 'topr', label: 'Rebase the next PR', body: 'After PR n merges via squash, rebase PR n+1 cleanly. The skill correctly drops the squash-merged commits.' },
-      { skill: 'next', label: 'Reset', body: "Clean throwaway branch on the latest main. The next task starts from a known good state; the old branch stays in case you need it." },
+      {
+        skill: '/spec',
+        label: 'Spec the feature',
+        body: 'Refine the ask into a parent epic with ordered sub-issues. Each sub-issue is scoped to a single PR. No code yet.',
+        why: "Planning before coding is cheaper than planning during coding. The spec turns a verbal ask into shared artifacts (a parent epic plus ordered sub-issues), so the dependency order is explicit and reviewers get a roadmap before the first PR shows up. No code yet is the point: design decisions are easier to change in an issue body than in a 600-line diff.",
+      },
+      {
+        skill: '/implement',
+        label: 'Implement the stack',
+        body: 'Build the epic as stacked branches, one PR per sub-issue. Stops at PR boundaries so you can review before continuing.',
+        why: "Stacked PRs keep each diff small enough to review in one sitting. Stopping at PR boundaries is the safety net: you look at PR n before PR n+1 builds on top of any mistakes. The stack also surfaces design problems early: if slice two is suddenly hard, the slicing was wrong, and that's much cheaper to fix at slice two than at slice five.",
+      },
+      {
+        skill: '/review',
+        label: 'Address reviews',
+        body: 'Walk PR comments grouped by file. Each one gets a fix-and-reply, a decline-with-rationale, or an ask-for-clarification.',
+        why: "Review comments rot if you batch them. Walking them one at a time forces an explicit decision per comment (fixed, declined with reason, or asking for more info), instead of a wall of unanswered threads. The reviewer sees their feedback being engaged with in real time, which makes the next review faster.",
+      },
+      {
+        skill: '/topr',
+        label: 'Rebase the next PR',
+        body: 'After PR n merges via squash, rebase PR n+1 cleanly. The skill correctly drops the squash-merged commits.',
+        why: "After a squash-merge, the next PR's branch contains commits that no longer exist on main. A naive rebase produces duplicate commits or false conflicts where git can't tell what came from where. /topr knows the squash pattern and rebases cleanly, so the next PR's diff actually reflects only that PR's changes.",
+      },
+      {
+        skill: '/next',
+        label: 'Reset',
+        body: "Clean throwaway branch on the latest main. The next task starts from a known good state; the old branch stays in case you need it.",
+        why: "Starting the next task from a stale branch is a footgun: you inherit half-merged state, weird remote pointers, or accidentally commit unrelated changes from the previous task. /next gives you a known-clean starting point so what you build next is built on actual main, not on a snapshot of main from when you started two days ago.",
+      },
     ],
     kickoffLabel: 'Shipping kickoff',
     kickoffPrompt: `Spec the bulk-CSV import feature into a tracked epic with ordered sub-issues. Each sub-issue should be scoped to a single PR.
@@ -57,12 +107,42 @@ After each PR merges, run /impeccable audit on the changed frontend files to cat
     outcome: 'A UI feature ships with engineering discipline AND design craft, not one at the expense of the other.',
     summary: "When the work is user-facing. Pace owns the engineering loop; impeccable owns the visual + interaction craft. They pair through a Cowork session where you route between them.",
     chain: [
-      { skill: '/impeccable shape', label: 'Shape the UX', body: 'Plan the screens, states, copy, and edge cases before writing real code. Impeccable thinks in design; Pace will think in tests next.' },
-      { skill: 'prototype', label: 'Prototype', body: 'Build a runnable throwaway with several UI variants on one route. Toggle between them to feel which design holds up.' },
-      { skill: 'tdd', label: 'TDD the logic underneath', body: 'Write the failing tests for the behavior the design implies. Keep the prototype open so the tests reflect what you actually want.' },
-      { skill: 'implement', label: 'Implement', body: 'Promote the prototype + tests into real code. The tests stay green throughout; the design choices land as code.' },
-      { skill: '/impeccable polish', label: 'Polish', body: 'Typography, color, motion, accessibility, and spacing pass on the implemented feature. Catches what TDD cannot see.' },
-      { skill: 'ship-pr', label: 'Ship the PR', body: "Commit, push, open the PR. The PR description includes both the engineering test plan and the design rationale (impeccable's notes from the polish pass)." },
+      {
+        skill: '/impeccable shape',
+        label: 'Shape the UX',
+        body: 'Plan the screens, states, copy, and edge cases before writing real code. Impeccable thinks in design; Pace will think in tests next.',
+        why: "If you start with code, you start with whichever screen happened to be easiest to scaffold, and the empty/loading/error states get bolted on later, badly. Shaping forces you to enumerate every state up front so the engineering work knows what it has to satisfy. Design decisions made here become test cases in the next step.",
+      },
+      {
+        skill: '/prototype',
+        label: 'Prototype',
+        body: 'Build a runnable throwaway with several UI variants on one route. Toggle between them to feel which design holds up.',
+        why: "Designs in Figma look better than designs in the browser. A runnable prototype with two or three variants on the same route lets you click between them and feel which one survives contact with real data, real keyboard flow, and real width breakpoints. Cheaper to throw away a variant now than to argue about it in code review.",
+      },
+      {
+        skill: '/tdd',
+        label: 'TDD the logic underneath',
+        body: 'Write the failing tests for the behavior the design implies. Keep the prototype open so the tests reflect what you actually want.',
+        why: "The design implies behavior: \"saving optimistically rolls back on error,\" \"hitting Escape closes the modal without losing form state.\" Capture each of those as a failing test before the real implementation exists. The prototype stays open as a reference so the tests describe the behavior you actually picked, not the behavior the implementation happens to ship with.",
+      },
+      {
+        skill: '/implement',
+        label: 'Implement',
+        body: 'Promote the prototype + tests into real code. The tests stay green throughout; the design choices land as code.',
+        why: "With both a prototype and a green test suite in hand, the real implementation is mostly transcription. The tests act as guardrails so the design choices made in step 1 actually survive the rewrite. Refactors that drift away from the spec turn red immediately.",
+      },
+      {
+        skill: '/impeccable polish',
+        label: 'Polish',
+        body: 'Typography, color, motion, accessibility, and spacing pass on the implemented feature. Catches what TDD cannot see.',
+        why: "Tests prove behavior; they don't prove a save button is the right size or that focus order is sane. The polish pass catches what assertions can't: typography hierarchy, motion that feels right, color contrast, keyboard a11y, spacing rhythm. Skipping it ships a feature that works and looks half-built.",
+      },
+      {
+        skill: '/ship-pr',
+        label: 'Ship the PR',
+        body: "Commit, push, open the PR. The PR description includes both the engineering test plan and the design rationale (impeccable's notes from the polish pass).",
+        why: "A PR description is documentation forever. Bundling the engineering test plan with the design rationale from the polish pass means a future reader (or auditor) can answer \"why does this look the way it does?\" without spelunking chat history.",
+      },
     ],
     kickoffLabel: 'Frontend feature kickoff',
     kickoffPrompt: `We're building the new account-settings page. Routes between impeccable (for design) and the engineering plugin (for code) across the session:
@@ -76,6 +156,99 @@ After each PR merges, run /impeccable audit on the changed frontend files to cat
 
 Stop after step 2 so I can pick the layout.`,
     when: "Use when: the work is user-facing. Don't skip the polish pass; that's where the design actually lands.",
+  },
+  {
+    id: 'quality-gate',
+    label: 'Pre-ship quality gate',
+    title: 'Pre-ship quality gate, before you ask for human review',
+    outcome: "A PR that looks 'done' goes through a structured second-opinion pass (your own re-read, a Codex sweep, a security check, and a real e2e), so the human reviewer is reading polished work, not first-pass work.",
+    summary: 'When the feature is functionally complete and tests pass, but you have not yet asked anyone to review it. This recipe is the gate you run yourself first. It tacks onto the end of any other recipe.',
+    chain: [
+      {
+        skill: '/careful-review',
+        label: 'Re-read with fresh eyes',
+        body: 'Walk the whole diff slowly and look hard for dead code, misleading variable names, errors that swallow instead of surface, and tests that do not actually assert anything. Fix what you find.',
+        why: "You wrote it; you've blown past the same patterns dozens of times by the time it's complete. A deliberate re-read after you think you're done catches the embarrassing things: a stub left over from debugging, a try/catch that hides a real error, a test that asserts on a value that's always true. Better to find them now than have a reviewer find them.",
+      },
+      {
+        skill: '/codex-review',
+        label: 'Get a second opinion from Codex',
+        body: 'Run an OpenAI Codex review on the branch diff against main. Triage P0/P1 findings against the actual code: confirmed bugs get fixed and committed, false positives get explicitly ignored with rationale.',
+        why: "A different model trained differently catches different things. Codex is good at spotting concrete correctness issues (off-by-ones, missing null checks, race conditions, leaks) that a single-author pass tends to miss. The triage step matters: not every finding is real, and 'ignored with rationale' is a better artifact than 'ignored silently' for the next person who reads the PR.",
+      },
+      {
+        skill: '/security-review',
+        label: 'Security pass',
+        body: 'OWASP top-10 + language-specific footguns on anything touching user input, auth, secrets, or external boundaries. Findings come prioritized P0/P1/P2 with concrete patches.',
+        why: 'Most security bugs are boring (input validation, IDOR, secrets in code, unsafe deserialization) and a focused security pass catches them cheaply. Run it on any PR that touches a boundary; skip it on pure refactors that move existing code around without changing what reaches the outside world.',
+      },
+      {
+        skill: '/e2e-test',
+        label: 'Real end-to-end sweep',
+        body: 'Boot the actual backend and frontend dev servers and drive the critical user flow with no mocks. Get a PASS/FAIL summary with logs and screenshots on any failure.',
+        why: "Unit tests prove the parts work; e2e proves they work together. A full sweep before merge is cheap insurance against the regressions that only show up under real network: auth tokens that don't round-trip, race conditions between two services, an API change that the mock didn't model.",
+      },
+      {
+        skill: '/ship-pr',
+        label: 'Open the PR with everything baked in',
+        body: 'Commit any final fixes, push, and open the PR. The description includes the test plan, the e2e PASS summary, and a one-line note on what the quality gate caught and corrected.',
+        why: "The PR description is the artifact reviewers and future-you actually read. Bake in what the gate caught so the reviewer doesn't re-litigate work that's already been pressure-tested, and so the next person debugging a regression knows what was checked before merge.",
+      },
+    ],
+    kickoffLabel: 'Quality gate kickoff',
+    kickoffPrompt: `I'm done with the bulk-CSV import branch and tests pass locally. Before I push and request review, run the pre-ship quality gate:
+
+1. /careful-review the diff. Fix obvious issues you find.
+2. /codex-review against main. Triage findings: fix the real ones, ignore the false positives with one-line rationale.
+3. /security-review the upload endpoint specifically, since it accepts user-controlled filenames and parses untrusted content.
+4. /e2e-test the upload → validation → error-report-download flow with real dev servers, no mocks.
+5. /ship-pr with a description that includes the test plan, the e2e summary, and what the gate caught.
+
+Stop after step 2 so I can look at the Codex findings before we proceed.`,
+    when: "Use when: the PR is functionally done and you want it pre-vetted before a human spends time on it. Stacks onto the end of any other recipe; don't skip the triage step in /codex-review.",
+  },
+  {
+    id: 'bug-hunt',
+    label: 'Bug hunt',
+    title: 'Hard bug hunt, with the diagnosis captured',
+    outcome: "A reproducible repro, a real root-cause writeup, a regression test that would have caught it, and a PR description that explains why earlier tests missed the bug.",
+    summary: "When something is broken and you don't yet know why. The recipe forces a reproduction before guessing at fixes, locks in a regression test before declaring victory, and ships the diagnosis as part of the PR so the next person hitting it has a signpost.",
+    chain: [
+      {
+        skill: '/diagnose',
+        label: 'Reproduce → minimize → hypothesize',
+        body: 'Run the disciplined diagnosis loop: reliable reproduction first, then a minimal failing case, then an evidence-backed hypothesis. No fix attempts until reproduction is reliable.',
+        why: "Ad-hoc debugging burns hours on the wrong hypothesis. Forcing reproduction first means you'll know whether your fix actually fixed anything. Without a repro, 'I think it's fixed' is the same as 'I have no idea.' Minimizing the case also makes the bug easier to write a regression test for in step three.",
+      },
+      {
+        skill: '/debug',
+        label: 'Walk the stack',
+        body: "Once you can reproduce, walk the specific stack trace or 'works locally, broken in prod' gap. Find the line where state diverges from what you assumed.",
+        why: "Reproduction tells you the bug is real; debug tells you which line is lying. The output is a writeup: where the value should have been set, why it wasn't, what the actual fix is. That writeup is half the value of fixing a hard bug, and it's what you'll paste into the PR.",
+      },
+      {
+        skill: '/tdd',
+        label: 'Write the regression test first',
+        body: 'Write a failing test that reproduces the bug in the test suite, watch it fail for the right reason, then apply the fix and watch it pass. Commit the failing test and the fix separately so the diff tells the story.',
+        why: "Fixing first and 'adding a test after' almost always means the test is worthless: it'll pass with or without the fix because you wrote it knowing what the fix already did. Writing the test first proves you actually understand the bug, and locks in that this specific failure can't come back without somebody noticing.",
+      },
+      {
+        skill: '/ship-pr',
+        label: 'Ship with the diagnosis included',
+        body: 'Open the PR. The description includes the reproduction steps, the root cause, why the existing tests missed it, and any guardrails added so a similar bug surfaces faster next time.',
+        why: 'The diagnosis is the part that survives. Future-you, or a teammate, will hit something that looks similar a year from now, and a PR description that names the failure mode and the guardrails is the difference between five minutes of grep and five hours of repeated detective work.',
+      },
+    ],
+    kickoffLabel: 'Bug hunt kickoff',
+    kickoffPrompt: `The /checkout endpoint is intermittently 10x slower in prod than it was two days ago. Run the bug-hunt recipe:
+
+1. /diagnose: get a reliable reproduction (try synthetic load against staging), minimize it, and produce an evidence-backed hypothesis. Don't fix anything yet.
+2. /debug the specific code path the hypothesis points at. Tell me where state diverges from what we assumed.
+3. /tdd a regression test that reproduces the slowness as a failing test, then apply the fix.
+4. /ship-pr with the reproduction, root cause, why our existing perf tests missed it, and what guardrail we're adding.
+
+Stop after step 1 so I can sanity-check the hypothesis before you touch code.`,
+    when: "Use when: production or staging is misbehaving and you don't yet know why. Don't shortcut into 'I'll just try a fix.' The loop is the value.",
   },
 ];
 
@@ -212,13 +385,63 @@ const _skills: Record<string, SkillEntry> = {
       <p class="usecases-back-link"><a href="/cookbook">&larr; Back to all cookbooks</a></p>
       <h1>Engineering cookbook</h1>
       <p class="usecases-lede">
-        Three recipes (skill chains) cover most engineering work. Recipes are how skills compose into a finished result: one for fuzzy discovery, one for methodical shipping, and one for user-facing work that pairs Pace's engineering loop with <a href="https://impeccable.style">impeccable</a>'s design craft.
+        Five recipes (skill chains) cover most engineering work. Recipes are how skills compose into a finished result: fuzzy discovery, methodical shipping, design-aware frontend work that pairs Pace with <a href="https://impeccable.style">impeccable</a>, a pre-ship quality gate, and a disciplined bug hunt. Each step has a one-line description and a <strong>Why it matters</strong> note so you can tell when to skip it and when not to.
       </p>
-      <div class="eng-install-row">
-        <a class="usecase-step-btn" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=engineering" target="_blank" rel="noopener">Install engineering in Cowork &nearr;</a>
-        <code class="usecase-step-cmd">claude plugin install engineering@pace</code>
-      </div>
     </header>
+
+    <section class="eng-install" aria-labelledby="eng-install-title">
+      <h2 id="eng-install-title" class="eng-section-h">Install the engineering plugin</h2>
+      <p class="eng-section-sub">Pick the surface you actually work in. You can install in both; the plugin and your settings are the same either way.</p>
+      <div class="eng-install-cards">
+        <a class="eng-install-card" href="https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&plugin=engineering" target="_blank" rel="noopener">
+          <span class="eng-install-card-tag">In Cowork (claude.ai)</span>
+          <h3>One-click install in the browser</h3>
+          <p>Best if you mostly work in the claude.ai chat interface. Opens Cowork's plugin installer with the pace marketplace and the engineering plugin pre-selected.</p>
+          <span class="eng-install-card-action">Open Cowork installer &nearr;</span>
+        </a>
+        <div class="eng-install-card eng-install-card-cli">
+          <span class="eng-install-card-tag">In Claude Code (terminal)</span>
+          <h3>For agents that touch your repo</h3>
+          <p>For real coding work where the agent reads and writes files. Requires the <code>claude</code> CLI on PATH; the pace marketplace registers automatically the first time you install a plugin from it.</p>
+          <code class="eng-install-card-cmd">claude plugin install engineering@pace</code>
+        </div>
+      </div>
+    </section>
+
+    <section class="eng-howto" aria-labelledby="eng-howto-title">
+      <h2 id="eng-howto-title" class="eng-section-h">How to run a recipe</h2>
+      <p class="eng-section-sub">The recipes below are skill chains. Each one ships with a kickoff prompt you can paste straight into a session.</p>
+      <ol class="eng-howto-steps">
+        <li>
+          <span class="eng-howto-step-num">1</span>
+          <div>
+            <h3>Open a session where the plugin is installed.</h3>
+            <p>Cowork (claude.ai) or Claude Code in your terminal. The agent needs the engineering plugin loaded; if it isn't, the slash commands the recipe uses won't resolve.</p>
+          </div>
+        </li>
+        <li>
+          <span class="eng-howto-step-num">2</span>
+          <div>
+            <h3>Copy the kickoff prompt from the recipe and paste it.</h3>
+            <p>You don't type <code>/prototype</code> or <code>/spec</code> yourself. The natural-language kickoff prompt routes to the right skills; the slash-command chips in the chain are showing you what the agent will invoke under the hood.</p>
+          </div>
+        </li>
+        <li>
+          <span class="eng-howto-step-num">3</span>
+          <div>
+            <h3>Swap the example task for your real one.</h3>
+            <p>Every kickoff prompt uses a placeholder task (e.g. <em>bulk-CSV import</em>). Replace it with whatever you're actually building before you send. Constraints, file paths, and acceptance criteria help the agent pick the right slice.</p>
+          </div>
+        </li>
+        <li>
+          <span class="eng-howto-step-num">4</span>
+          <div>
+            <h3>"Stop after step N" means the agent pauses and waits.</h3>
+            <p>When the kickoff prompt says "stop after step 2 so I can review," the agent will run through step 2 and then wait for your reply. Type <code>continue</code> to proceed, redirect with a new instruction, or course-correct on the previous step's output.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
 
     <nav class="eng-toc" aria-label="Jump to recipe">
       <span class="eng-toc-label">Jump to a recipe</span>
@@ -232,7 +455,7 @@ const _skills: Record<string, SkillEntry> = {
     <section class="eng-recipes" id="recipes">
       <header class="eng-section-head">
         <h2>Recipes</h2>
-        <p>Skills compose. A real engineering task usually runs three to five skills in order, with the output of one feeding the next. Two recipe shapes cover most work.</p>
+        <p>Skills compose. A real engineering task usually runs three to six skills in order, with the output of one feeding the next. The first three recipes cover the main shapes of engineering work; the last two tack onto the end of any of them: a quality gate before you ask a human to review, and a disciplined loop for hard bugs.</p>
       </header>
 
       {recipes.map((r) => (
@@ -253,7 +476,13 @@ const _skills: Record<string, SkillEntry> = {
                     <code class="eng-recipe-step-skill">{step.skill}</code>
                     <h4>{step.label}</h4>
                   </div>
-                  <p set:html={step.body}></p>
+                  <p class="eng-recipe-step-what" set:html={step.body}></p>
+                  {step.why && (
+                    <div class="eng-recipe-step-why">
+                      <span class="eng-recipe-step-why-label">Why it matters</span>
+                      <p set:html={step.why}></p>
+                    </div>
+                  )}
                 </div>
               </li>
             ))}
@@ -316,21 +545,160 @@ const _skills: Record<string, SkillEntry> = {
     margin-bottom: var(--spacing-lg);
     max-width: 64ch;
   }
-  .eng-install-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px;
+  /* Shared section heading style for install + how-to */
+  .eng-section-h {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    color: var(--color-ink);
+    margin: 0 0 6px;
   }
-  .usecase-step-cmd {
+  .eng-section-sub {
+    font-size: var(--fs-base);
+    line-height: 1.55;
+    color: var(--color-charcoal);
+    margin: 0 0 var(--spacing-md);
+    max-width: 64ch;
+  }
+
+  /* Install: two-card row */
+  .eng-install {
+    margin: 0 0 var(--spacing-2xl);
+  }
+  .eng-install-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  @media (max-width: 720px) {
+    .eng-install-cards { grid-template-columns: 1fr; }
+  }
+  .eng-install-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 10px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color var(--duration-fast) var(--ease-out-quart),
+                background var(--duration-fast) var(--ease-out-quart);
+  }
+  a.eng-install-card:hover {
+    border-color: var(--color-forest);
+    background: var(--color-forest-dim);
+  }
+  .eng-install-card-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+  }
+  .eng-install-card h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--color-ink);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .eng-install-card p {
+    font-size: var(--fs-sm);
+    line-height: 1.55;
+    color: var(--color-charcoal);
+    margin: 0;
+  }
+  .eng-install-card p code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--color-code-bg);
+    padding: 1px 5px;
+    border-radius: 3px;
+    border: 1px solid var(--color-code-border);
+  }
+  .eng-install-card-action {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-forest);
+    margin-top: auto;
+    padding-top: 6px;
+  }
+  .eng-install-card-cmd {
     font-family: var(--font-mono);
     font-size: var(--fs-sm);
     background: var(--color-code-bg);
-    padding: 8px 14px;
+    padding: 8px 12px;
     border-radius: 6px;
     border: 1px solid var(--color-code-border);
     color: var(--color-ink);
     user-select: all;
+    margin-top: auto;
+    align-self: flex-start;
+  }
+
+  /* How to run a recipe */
+  .eng-howto {
+    margin: 0 0 var(--spacing-2xl);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 12px;
+  }
+  .eng-howto-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    counter-reset: none;
+  }
+  .eng-howto-steps li {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+  .eng-howto-step-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--color-forest);
+    color: var(--color-paper);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 1px;
+  }
+  .eng-howto-steps h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--color-ink);
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+  .eng-howto-steps p {
+    font-size: var(--fs-sm);
+    line-height: 1.55;
+    color: var(--color-charcoal);
+    margin: 0;
+  }
+  .eng-howto-steps code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--color-code-bg);
+    padding: 1px 5px;
+    border-radius: 3px;
+    border: 1px solid var(--color-code-border);
   }
 
   /* TOC */
@@ -497,6 +865,31 @@ const _skills: Record<string, SkillEntry> = {
   .eng-recipe-step-body p {
     font-size: var(--fs-sm);
     color: var(--color-charcoal);
+    line-height: 1.55;
+    margin: 0;
+  }
+  .eng-recipe-step-what {
+    margin-bottom: 10px;
+  }
+  .eng-recipe-step-why {
+    margin-top: 10px;
+    padding: 10px 12px 10px 14px;
+    background: var(--color-paper-elev);
+    border-left: 2px solid var(--color-forest-soft);
+    border-radius: 0 6px 6px 0;
+  }
+  .eng-recipe-step-why-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    margin-bottom: 4px;
+  }
+  .eng-recipe-step-why p {
+    font-size: var(--fs-sm);
+    color: var(--color-ink);
     line-height: 1.55;
     margin: 0;
   }
