@@ -50,3 +50,4 @@ site/public/js/generated/
 !.codex/agents/**
 .astro/
 site/public/.claude-plugin/
+site/public/.well-known/

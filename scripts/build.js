@@ -511,6 +511,22 @@ function generateCFConfig(buildDir) {
   X-Content-Type-Options: nosniff
   X-Frame-Options: SAMEORIGIN
 
+# Agent discovery: advertise machine-readable entry points via Link headers (RFC 8288).
+# Points crawlers/agents at the agent-skills index, api-catalog, marketplace, and docs.
+/
+  Link: </.well-known/agent-skills/index.json>; rel="https://schemas.agentskills.io/discovery/0.2.0/rel"; type="application/json"
+  Link: </.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"
+  Link: </.claude-plugin/marketplace.json>; rel="service-desc"; type="application/json"
+  Link: </docs>; rel="service-doc"; type="text/html"
+
+# RFC 9727 api-catalog file has no extension; force the correct content type.
+/.well-known/api-catalog
+  Content-Type: application/linkset+json
+
+# Agent skills index served as plain JSON.
+/.well-known/agent-skills/index.json
+  Content-Type: application/json
+
 # HTML pages: browser always revalidates, CDN caches 1h
 /*.html
   Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=600
