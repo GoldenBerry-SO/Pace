@@ -31,12 +31,24 @@ Slices may be 'HITL' or 'AFK'. HITL slices require human interaction, such as an
 - Prefer many thin slices over few thick ones
 </vertical-slice-rules>
 
+For each slice, also pick a **recommended model** — the cheapest model that can complete the slice reliably:
+
+<model-selection-rules>
+- **haiku** — mechanical work with an existing pattern to copy: renames, config changes, copy/text updates, adding a field to an established CRUD path
+- **sonnet** — standard well-specified feature work: clear acceptance criteria, established patterns in the codebase, low ambiguity (the default for most AFK slices)
+- **opus** — complex slices: cross-cutting changes spanning several modules, tricky concurrency/state, debugging-heavy work, or requirements that need interpretation
+- **fable** — the hardest slices: novel architecture, security-sensitive changes, deep algorithmic work, or slices where a wrong design decision is expensive to undo (most HITL slices land here or on opus)
+</model-selection-rules>
+
+When in doubt between two tiers, pick the higher one for AFK slices (no human is watching to catch a flailing agent) and note the cheaper alternative in the issue.
+
 ### 4. Quiz the user
 
 Present the proposed breakdown as a numbered list. For each slice, show:
 
 - **Title**: short descriptive name
 - **Type**: HITL / AFK
+- **Model**: recommended model (haiku / sonnet / opus / fable) with a one-line reason
 - **Blocked by**: which other slices (if any) must complete first
 - **User stories covered**: which user stories this addresses (if the source material has them)
 
@@ -46,6 +58,7 @@ Ask the user:
 - Are the dependency relationships correct?
 - Should any slices be merged or split further?
 - Are the correct slices marked as HITL and AFK?
+- Do the model recommendations look right? (any slice that should be bumped up or down a tier)
 
 Iterate until the user approves the breakdown.
 
@@ -71,6 +84,10 @@ Avoid specific file paths or code snippets — they go stale fast. Exception: if
 - [ ] Criterion 1
 - [ ] Criterion 2
 - [ ] Criterion 3
+
+## Recommended model
+
+`<haiku | sonnet | opus | fable>` — one-line reason for the pick. Agents executing this issue should run on this model (e.g. launch the implementing agent with this model override, or switch via `/model` / `claude --model` before starting).
 
 ## Blocked by
 

@@ -24,20 +24,25 @@ When the user runs `/implement <epic-issue-number>`, follow this workflow:
 
 For each sub-issue, in order:
 
-1. **Create the branch** — stacked on the previous (first branch is from `main`):
+1. **Check the sub-issue for a "Recommended model" section.** If present, the implementation MUST run on that model:
+   - If you are already running as that model, proceed directly.
+   - Otherwise, delegate the implementation of this sub-issue to a subagent launched with that model override (the Agent tool's `model` parameter: `haiku`, `sonnet`, `opus`, or `fable`), passing it the full sub-issue context and the steps below.
+   - If the section is absent, proceed on the current model.
+
+2. **Create the branch** — stacked on the previous (first branch is from `main`):
    ```bash
    git checkout -b <branch-name>
    ```
    Branch naming: mirror the sub-issue title slug, e.g. `refactor/proto-rename-action-type-think`, `feat/llm-inference-interface`.
 
-2. **Implement the code changes** for this sub-issue only. Do not include changes belonging to later sub-issues.
+3. **Implement the code changes** for this sub-issue only. Do not include changes belonging to later sub-issues.
 
-3. **Build and test** before committing:
+4. **Build and test** before committing:
    ```bash
    go build ./... && make test
    ```
 
-4. **Commit** with Conventional Commits + issue reference:
+5. **Commit** with Conventional Commits + issue reference:
    ```
    type(scope): description
 
@@ -46,7 +51,7 @@ For each sub-issue, in order:
    Closes #<sub-issue>
    ```
 
-5. **Push** the branch:
+6. **Push** the branch:
    ```bash
    git push origin <branch-name>
    ```
