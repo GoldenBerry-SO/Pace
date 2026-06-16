@@ -37,7 +37,7 @@ Once the spec is complete:
 ### Phase 3: Review & Create
 
 1. Present the **full parent issue** and **all sub-issues** for final review
-2. Only after the user explicitly approves, create them using `gh issue create`
+2. Only after the user explicitly approves, create them using the per-repo issue tracker (see `docs/agents/issue-tracker.md`) — typically `gh issue create`, `glab issue create`, or `bd create`. For Beads, record sub-issue ordering with `bd dep add <next> <prev>` so the dependency edges drive `bd ready`.
 3. Create the parent issue first, then create each sub-issue referencing the parent
 4. After creating all sub-issues, edit the parent body to replace placeholder checklist items with the actual issue numbers
 

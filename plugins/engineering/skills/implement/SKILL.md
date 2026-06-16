@@ -6,7 +6,7 @@ argument-hint: "<epic issue number>"
 
 # /implement — Implement an Epic as Stacked PRs
 
-Takes an existing epic (created by `/spec`) and implements each sub-issue in a stacked branch, opening one stacked PR per sub-issue. Does NOT create or modify GitHub issues — that is `/spec`'s job.
+Takes an existing epic (created by `/spec`) and implements each sub-issue in a stacked branch, opening one stacked PR per sub-issue. Does NOT create or modify tracker issues — that is `/spec`'s job.
 
 ## Instructions
 
@@ -14,9 +14,11 @@ When the user runs `/implement <epic-issue-number>`, follow this workflow:
 
 ### Phase 1: Read the Epic
 
-1. Fetch the parent issue and all linked sub-issues:
+1. Fetch the parent issue and all linked sub-issues from this repo's issue tracker (see `docs/agents/issue-tracker.md` for the per-repo command). Examples:
    ```bash
-   gh issue view <epic-number>
+   gh issue view <epic-number>      # GitHub
+   glab issue view <epic-number>    # GitLab
+   bd show <epic-id>                # Beads
    ```
 2. List the sub-issues in order and confirm the implementation sequence with the user before writing any code.
 
@@ -69,16 +71,18 @@ gh pr create \
 ```
 
 Every PR body must contain:
-- `Closes #<sub-issue>` — wires the sub-issue to auto-close on merge
-- `Part of #<parent-epic>` — links back to the epic
+- `Closes #<sub-issue>` — wires the sub-issue to auto-close on merge (GitHub/GitLab). For Beads, write `Closes <bead-id>` and run `bd close <bead-id>` after merge (or configure `bd hooks` to do it from a post-merge hook).
+- `Part of #<parent-epic>` — links back to the epic (use the bead ID for Beads)
 - `Stacked on #<previous-PR>` — for PRs 2 and beyond
 
 ### Phase 4: Update the Parent Issue
 
-Edit the parent issue body to mark each step as done with its sub-issue and PR numbers:
+Edit the parent issue body to mark each step as done with its sub-issue and PR numbers, using whichever invocation matches this repo's issue tracker:
 
 ```bash
-gh issue edit <epic-number> --body "..."
+gh issue edit <epic-number> --body "..."             # GitHub
+glab issue update <epic-number> --description "..."  # GitLab
+bd update <epic-id> --body-file -                    # Beads (pipe new body on stdin)
 ```
 
 Checklist format:
