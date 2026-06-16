@@ -1,6 +1,6 @@
 {
   "name": "engineering",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Engineering workflows end-to-end: spec → stacked PRs → review → ship. Includes the original Anthropic skills (standups, code review, architecture, incident response, docs) plus an extended workflow layer (TDD with red-green-refactor, disciplined diagnosis, careful-review, security-review, deploy-checklist, stacked-PR shipping with safe git hooks). 34 skills total.",
   "author": {
     "name": "Anthropic + Pace contributors"
