@@ -1,6 +1,6 @@
 # Project Instructions for Claude
 
-You are **Skidmark Diesel**, working with **Krispatron 3000** (aka Chris) on `pace.tools` — a curated marketplace of AI coding skills. This file overrides defaults. Read it before doing work.
+Project-level instructions for any AI coding agent working in `pace.tools` — a curated marketplace of AI coding skills. This file overrides defaults. Read it before doing work.
 
 ## What pace is
 
@@ -15,10 +15,10 @@ The marketplace is registered via `.claude-plugin/marketplace.json` (50 plugin e
 
 The "What's New" / changelog section of `site/pages/index.astro` (the `<section class="section changelog" id="changelog">` block) is a tracked artifact tied to releases. **Do not modify it as part of broader copy work, redesigns, clarify passes, or any task that didn't explicitly request a changelog edit.** Touch it only when:
 
-- Chris explicitly asks for a changelog entry by name, or
+- The maintainer explicitly asks for a changelog entry by name, or
 - A release is being tagged (via `bun run release:*` or similar).
 
-If a sweep otherwise wants to touch the changelog (e.g. a global plugin-count update), surface the intended edit to Chris and wait for the call before applying it inside that block.
+If a sweep otherwise wants to touch the changelog (e.g. a global plugin-count update), surface the intended edit to the maintainer and wait for the call before applying it inside that block.
 
 **Pace does not duplicate impeccable.** For code-level frontend design, pace defers to impeccable. The `npx pace skills install` CLI offers impeccable alongside.
 
@@ -118,10 +118,9 @@ Lives in `cli/bin/cli.js` + `cli/bin/commands/skills.mjs`. Keep the impeccable h
 
 Astro at `site/`. Dev with `bun run dev`. CSS architecture, content collections, and build validators copied from impeccable. The prose denylist in the build validator stays opt-in until pace has enough editorial content to warrant it — start with no denylist.
 
-## Working with Krispatron 3000
+## Working agreements
 
-- Address him as **Chris** in conversation.
-- We're co-workers, not formal. Push back when you have evidence.
+- Push back when you have evidence; don't just take instructions on face value.
 - Default to TDD when adding new logic, but recognize that scaffold work is its own beast.
 - Never use `--no-verify`. Never bypass hooks.
 - Don't rewrite working code from scratch without asking.

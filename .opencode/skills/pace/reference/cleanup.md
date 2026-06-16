@@ -56,11 +56,11 @@ For Linear, invoke the `linear` skill to list Done and Canceled tickets. For loc
 
 Present a categorized manifest. For every candidate give: the item, the **reason** it looks removable, the **proposed action**, and a **confidence** (high, or needs-a-look). Group by the four sources. Nothing is removed in this step.
 
-Flag anything from the **Never touch** list separately as "surfaced, not actioned" so Chris decides.
+Flag anything from the **Never touch** list separately as "surfaced, not actioned" so the user decides.
 
 ### 3. Confirm
 
-Ask STOP and call the `question` tool to clarify. which categories or individual items to proceed with. Default to per-category confirmation; drop to per-item when confidence is mixed. No blanket "delete everything"; if Chris wants that, he says so explicitly.
+Ask STOP and call the `question` tool to clarify. which categories or individual items to proceed with. Default to per-category confirmation; drop to per-item when confidence is mixed. No blanket "delete everything"; if the user wants that, they say so explicitly.
 
 ### 4. Execute (confirmed items only, reversibly)
 
@@ -76,7 +76,7 @@ Never use `--no-verify` or bypass hooks. If a commit is needed for `git rm`, fol
 
 ### 5. Report
 
-Summarize: what was removed (and how to recover it), what was kept and why, and what was surfaced for Chris to decide. Leave the tree and trackers in a state where every remaining item maps to live work.
+Summarize: what was removed (and how to recover it), what was kept and why, and what was surfaced for the user to decide. Leave the tree and trackers in a state where every remaining item maps to live work.
 
 ## Guardrails
 
