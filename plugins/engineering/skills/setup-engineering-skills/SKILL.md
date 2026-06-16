@@ -38,7 +38,16 @@ Assume the user does not know what these terms mean. Each section starts with a 
 
 > Explainer: The "issue tracker" is where issues live for this repo. Skills like `to-issues`, `triage`, `to-prd`, and `qa` read from and write to it — they need to know whether to call `gh issue create`, `bd create`, write a markdown file under `.scratch/`, or follow some other workflow you describe. Pick the place you actually track work for this repo.
 
-Default posture: these skills were designed for GitHub. If `.beads/` exists at the repo root, propose Beads — the repo has clearly opted into local issue tracking and reaching for GitHub Issues would split the source of truth. Otherwise, if a `git remote` points at GitHub, propose that; if a `git remote` points at GitLab (`gitlab.com` or a self-hosted host), propose GitLab. Otherwise (or if the user prefers), offer:
+Default posture: these skills were designed for GitHub. Pick the proposal by signal strength:
+
+1. If a `git remote` points at GitHub, propose GitHub.
+2. Else if a `git remote` points at GitLab (`gitlab.com` or a self-hosted host), propose GitLab.
+3. Else if `.beads/` exists at the repo root, propose Beads (no remote means the repo has nowhere else to put issues, and Beads being local-first fills that gap).
+4. Else, propose Local markdown.
+
+When signals conflict — most commonly `.beads/` exists alongside a GitHub or GitLab remote — do not silently pick. Surface both candidates and ask which is the canonical tracker for this repo. The presence of `.beads/` can mean "we committed to this" or "someone experimented once"; only the user can disambiguate, and getting it wrong splits the source of truth.
+
+Regardless of which option the heuristic proposed, always offer the full menu so the user can override:
 
 - **GitHub** — issues live in the repo's GitHub Issues (uses the `gh` CLI)
 - **GitLab** — issues live in the repo's GitLab Issues (uses the [`glab`](https://gitlab.com/gitlab-org/cli) CLI)

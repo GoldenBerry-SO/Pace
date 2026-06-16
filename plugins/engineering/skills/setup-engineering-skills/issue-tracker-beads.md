@@ -2,6 +2,16 @@
 
 Issues for this repo live in a [beads](https://github.com/gastownhall/beads) database under `.beads/` (a Dolt-backed SQLite alongside a JSONL export). Use the `bd` CLI for all operations.
 
+## Verify the CLI surface
+
+The invocations below were authored against `bd` v1.0.x. Before relying on them for automated work, run `bd --help` against your installed version and confirm:
+
+- `bd human` exists as a label-backed queue (`bd human list`, `bd human respond`, `bd human dismiss`). If your version transitions a state instead, the `ready-for-human` role in `triage-labels.md` will not behave as written.
+- `bd defer <id> --until=<date>` and `bd undefer <id>` exist. These back the snooze / defer role.
+- `--json` works as a global flag (`bd --json list`, `bd --json show <id>`, etc.) rather than only on specific subcommands.
+
+If any of those is missing or renamed in your installed `bd`, prefer adapting the invocations in `triage-labels.md` and this doc to match `bd --help` over forcing the skill to call non-existent commands. The upstream README at https://github.com/gastownhall/beads does not document `bd human` or `bd defer` as of this writing, so do not treat their absence from the README as proof they are missing — `bd --help` on your local install is the source of truth.
+
 ## Conventions
 
 - **Create an issue**: `bd create "<title>" -d "<description>" -t task -p 2`. Types are `task|bug|feature|epic|chore|decision`; priority is `0-4` (0 = highest). Use `--body-file -` or `--stdin` for multi-line descriptions; `--silent` prints only the new ID.
