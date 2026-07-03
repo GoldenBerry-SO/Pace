@@ -545,6 +545,23 @@
         "sha": "6f41866ea66c63eb80c42e6f652efdac5870e540"
       },
       "homepage": "https://kensho.com"
+    },
+    {
+      "name": "codex",
+      "displayName": "Codex",
+      "description": "Use Codex from Claude Code to review code or delegate tasks. Adds /codex:review, /codex:adversarial-review (steerable, challenge-focused), /codex:rescue (delegate to a background Codex job), /codex:transfer (turn the current session into a persistent Codex thread), and /codex:status | /codex:result | /codex:cancel for background-job management.",
+      "category": "development",
+      "author": {
+        "name": "OpenAI"
+      },
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/openai/codex-plugin-cc.git",
+        "path": "plugins/codex",
+        "ref": "main",
+        "sha": "80c31f99570876c3ef40327838b0a2ca1ae2cd9c"
+      },
+      "homepage": "https://github.com/openai/codex-plugin-cc"
     }
   ]
 }

@@ -9,7 +9,7 @@ Pace is **two things in one repo**:
 1. **A company router** — one installable skill (`/pace`) that fans out to company-specific sub-commands. Lives in `skill/`. Starts empty; we add commands as we author them.
 2. **A Claude Code marketplace** — a curated catalog of plugins under `plugins/`, primarily a verbatim import of [Anthropic's knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins). Sales, marketing, finance, legal, engineering, data, customer-support, product, HR, ops, design, and more (~150 skills).
 
-The marketplace is registered via `.claude-plugin/marketplace.json` (50 plugin entries: pace + 17 first-party Anthropic + 5 partner-built + 27 external by git URL).
+The marketplace is registered via `.claude-plugin/marketplace.json` (50 plugin entries: pace + 16 first-party Anthropic + 5 partner-built + 28 external by git URL).
 
 ## Changelog: do not edit without permission
 
