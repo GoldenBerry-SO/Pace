@@ -10,7 +10,7 @@ The `/pace` router and the marketplace infrastructure are authored by Chris Jime
 
 The pace skill scaffold, build system, multi-harness transformer pipeline, Astro site shell, and CLI installer flow were forked from [impeccable](https://github.com/pbakaus/impeccable) (https://impeccable.style) by Paul Bakaus, used under Apache License 2.0.
 
-Pace does NOT include impeccable's anti-pattern detector, Chrome extension, or live-mode browser tooling. For frontend design work, pace defers to impeccable; the `npx pace skills install` flow offers to install impeccable alongside.
+Pace ships the router, the marketplace, the CLI, and the site. Impeccable keeps its anti-pattern detector, Chrome extension, and live-mode browser tooling. For frontend design work, pace defers to impeccable, which is installed separately through its own installer.
 
 ## Imported plugins: Anthropic knowledge-work-plugins
 

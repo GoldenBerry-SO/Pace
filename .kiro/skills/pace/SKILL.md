@@ -34,6 +34,6 @@ When the user types `/pace <command>` and the command isn't in the table above, 
 
 ## Pin / Unpin
 
-Users can promote any pace command to a standalone top-level slash command with `node .kiro/skills/pace/scripts/pin.mjs <command>`. This creates a thin redirect so `/audit` (for example) delegates to `/pace audit`. `pin.mjs --unpin <command>` removes the shim.
+Users can promote any pace command to a standalone top-level slash command with `node .kiro/skills/pace/scripts/pin.mjs pin <command>`. This creates a thin redirect so `/cleanup` (for example) delegates to `/pace cleanup`. `node .kiro/skills/pace/scripts/pin.mjs unpin <command>` removes the shim.
 
 The pin allowlist lives in `pin.mjs` (`VALID_COMMANDS`). Keep it in sync with the table above.

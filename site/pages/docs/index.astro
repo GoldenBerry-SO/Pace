@@ -49,7 +49,7 @@ import { DOCS_SIDEBAR } from '../../lib/sidebar-data';
 │   │   └── .mcp.json
 │   ├── marketing/
 │   ├── engineering/
-│   ├── … 14 more first-party
+│   ├── … the rest of the first-party roles
 │   └── partner-built/&lt;vendor&gt;/
 │
 └── .claude-plugin/
@@ -105,7 +105,7 @@ npx skills add . --copy</code></pre>
 
       <h3>Namespaced slash commands</h3>
       <p>Each plugin's skills are namespaced by the plugin's name:</p>
-      <pre class="docs-pre"><code>/pace teach                <span class="docs-comment">← company router</span>
+      <pre class="docs-pre"><code>/pace cleanup              <span class="docs-comment">← company router</span>
 /sales:call-prep Acme      <span class="docs-comment">← sales plugin, namespace `sales:`</span>
 /data:write-query
 /engineering:code-review
@@ -168,12 +168,12 @@ npx skills add . --copy</code></pre>
         <li><strong>Register:</strong> brand or product (signals to commands whether work is marketing surface or app surface)</li>
       </ul>
 
-      <p>Run <code>/pace teach</code> once per project to generate <code>PRODUCT.md</code> through a guided interview. The file lives in your repo; you edit it like any other doc.</p>
+      <p>Write <code>PRODUCT.md</code> at your project root and the router reads it before every command. The file lives in your repo; you edit it like any other doc. Pace's own <a href="https://github.com/GoldenBerry-SO/Pace/blob/main/PRODUCT.md">PRODUCT.md</a> is a working example of the shape. The loader also picks up a <code>DESIGN.md</code> beside it, and falls back to <code>.agents/context/</code> or <code>docs/</code> when the files live there instead.</p>
 
       <h3>Pinning commands</h3>
       <p>You can promote any router sub-command to a top-level slash command:</p>
-      <pre class="docs-pre"><code>node skill/scripts/pin.mjs pin audit
-<span class="docs-comment"># now /audit is a shortcut for /pace audit</span></code></pre>
+      <pre class="docs-pre"><code>node skill/scripts/pin.mjs pin cleanup
+<span class="docs-comment"># now /cleanup is a shortcut for /pace cleanup</span></code></pre>
       <p>Pin creates a lightweight redirect skill that delegates to the router; updates to the router still flow through. Unpin with <code>--unpin</code>.</p>
     </section>
 
@@ -203,10 +203,10 @@ npx skills add . --copy</code></pre>
 
       <h3>Install impeccable alongside Pace</h3>
       <pre class="docs-pre"><code>npx impeccable skills install</code></pre>
-      <p>The Pace CLI (<code>npx pace skills install</code>) prompts to install impeccable on first run. You can re-run impeccable's installer anytime. Like Pace, impeccable installs across every harness it detects: Claude Code, Cursor, Gemini CLI, Codex CLI, Kiro, OpenCode, RovoDev, Trae, and more.</p>
+      <p>Impeccable's installer is separate from Pace's, and you can re-run it anytime. Like Pace, impeccable installs across every harness it detects: Claude Code, Cursor, Gemini CLI, Codex CLI, Kiro, OpenCode, RovoDev, Trae, and more.</p>
 
       <h3>Pace's relationship to impeccable</h3>
-      <p>Pace's site, build system, multi-harness install machinery, and editorial bar are all forked from impeccable. The two projects share a maintainer ethos (Apache 2.0, multi-harness, ~no-Tailwind, plain CSS, evergreen prose) but ship independently with separate release cadences. See <a href="/NOTICE.md">NOTICE.md</a> for full attribution.</p>
+      <p>Pace's site, build system, multi-harness install machinery, and editorial bar are all forked from impeccable. The two projects share a maintainer ethos (Apache 2.0, multi-harness, ~no-Tailwind, plain CSS, evergreen prose) but ship independently with separate release cadences. See <a href="https://github.com/GoldenBerry-SO/Pace/blob/main/NOTICE.md">NOTICE.md</a> for full attribution.</p>
 
       <h3>See it in action</h3>
       <p>The <a href="/cookbook#design">Cookbook</a> has a Design section with three concrete workflows that pair Pace with impeccable: per-PR design audit on frontend repos, polish pass on a feature branch before merging, and cross-tool design-system sync between Pace's <code>/design</code> and impeccable's token-aware sub-commands.</p>
@@ -232,10 +232,12 @@ echo '...' > skill/reference/ship.md
 
 <span class="docs-comment"># 4. Add to PACE_SUB_COMMANDS in scripts/lib/utils.js</span>
 
-<span class="docs-comment"># 5. Build (fans out to harness output dirs)</span>
+<span class="docs-comment"># 5. Add to VALID_COMMANDS in skill/scripts/pin.mjs so it can be pinned</span>
+
+<span class="docs-comment"># 6. Build (fans out to harness output dirs)</span>
 bun run build
 
-<span class="docs-comment"># 6. Ship a PR</span></code></pre>
+<span class="docs-comment"># 7. Ship a PR with the regenerated harness dirs</span></code></pre>
 
       <h3>Add a new plugin to the marketplace</h3>
       <p>For commands that don't belong in the company router and don't already exist in an imported plugin:</p>
