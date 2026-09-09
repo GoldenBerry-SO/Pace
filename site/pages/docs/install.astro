@@ -119,7 +119,7 @@ https://claude.ai/desktop/customize/plugins/new?marketplace=GoldenBerry-SO/Pace&
 
       <h3>2. Install the plugins your team uses</h3>
       <p>Install one plugin per team or function. The router (<code>pace</code>) is optional but recommended; it's where your company-specific commands go.</p>
-      <pre class="installpage-pre"><code><span class="installpage-comment"># The router (company commands like /pace teach)</span>
+      <pre class="installpage-pre"><code><span class="installpage-comment"># The router (your company's own commands)</span>
 claude plugin install pace@pace
 
 <span class="installpage-comment"># Department plugins (install only what you use)</span>
@@ -211,7 +211,7 @@ claude plugin install &lt;name&gt;@pace      <span class="installpage-comment">#
     <section class="installpage-section" id="verifying">
       <h2>Verifying it worked</h2>
       <p>
-        Open a chat in Claude Code or Cowork and type <code>/</code>. You should see commands prefixed by the plugins you installed: <code>/sales:call-prep</code>, <code>/engineering:standup</code>, <code>/pace:teach</code>, etc. Type one and the corresponding skill takes over.
+        Open a chat in Claude Code or Cowork and type <code>/</code>. You should see commands prefixed by the plugins you installed: <code>/sales:call-prep</code>, <code>/engineering:standup</code>, <code>/pace</code>, etc. Type one and the corresponding skill takes over.
       </p>
       <p>
         Connectors stay <em>declared but not authorized</em> until the first skill that needs them runs. That's by design: authorization is just-in-time, so a fresh install doesn't barrage you with OAuth windows you don't need yet.

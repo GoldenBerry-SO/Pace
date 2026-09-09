@@ -1,24 +1,39 @@
-# pace
+# pace-tools
 
-Company-wide skills for AI coding agents. Engineering, product, ops, marketing: one router, many commands.
+The CLI for [Pace](https://pace.tools): AI specialists for every role at your company. Sales,
+marketing, engineering, data, finance, legal, ops, HR, product, design, and more, each one a Claude
+Code plugin connected to the tools that team already uses.
 
-For frontend design, pace defers to [impeccable](https://impeccable.style).
+`pace-tools` wraps `claude plugin`, so the `claude` binary has to be on your `PATH`.
 
-## Install pace skills into your AI harness
+## Install plugins
 
 ```bash
-npx pace skills install
+npx pace-tools marketplace add        # register the Pace marketplace (one time per machine)
+npx pace-tools install sales          # install one plugin
+npx pace-tools install engineering data
 ```
 
-Installs pace's command set into your harness's skills directory (Claude Code, Cursor, Gemini CLI, Codex CLI, and 9 others). Offers to install impeccable alongside if you do any frontend work.
+## Find what you need
+
+```bash
+npx pace-tools list                   # the whole catalog
+npx pace-tools teams                  # per-role starter sets
+npx pace-tools teams sales            # one role
+npx pace-tools status                 # what is installed
+npx pace-tools uninstall sales
+npx pace-tools open                   # open pace.tools
+```
 
 ## Use
 
-```
-/pace <command> [target]
-```
+Describe the work in your own words and the matching skill takes over, or call it directly:
+`/sales:call-prep`, `/data:write-query`, `/engineering:code-review`. The `/pace` router holds the
+commands your own company authors.
 
-See [pace.tools](https://pace.tools) for the current command list.
+See [pace.tools/docs](https://pace.tools/docs) for the full catalog and setup guide.
+
+For frontend design work, Pace defers to [impeccable](https://impeccable.style).
 
 ## License
 
