@@ -116,3 +116,4 @@ echo
 echo "Pace for GitHub Copilot: $added added, $replaced replaced, $kept kept."
 echo "In Copilot chat, in agent mode, try: /grill-me <a brief>, then /to-prd, then /to-issues."
 echo "Assign an issue to Copilot to have the coding agent take it. @reviewer reads a pull request against the standards."
+echo "In the Copilot CLI the same names work (/grill-me calls the skill); run /skills reload in an open session, and restart it for the instructions."

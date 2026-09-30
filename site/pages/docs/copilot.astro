@@ -101,13 +101,13 @@ const currentPath = '/docs/copilot';
         <li>Ask in chat when unsure. Never force-push, bypass hooks, or delete without being asked.</li>
       </ul>
       <p>
-        Path-scoped rules go in <code>.github/instructions/*.instructions.md</code> with an <code>applyTo</code> pattern; Pace leaves that folder to you.
+        Path-scoped rules go in <code>.github/instructions/*.instructions.md</code> with an <code>applyTo</code> pattern; Pace leaves that folder to you. The CLI also reads <code>AGENTS.md</code> and <code>CLAUDE.md</code> when they exist and applies no precedence between them, so keep the pace block and those files from contradicting each other.
       </p>
     </section>
 
     <section class="installpage-section" id="commands">
       <h2>The commands</h2>
-      <p>Type <code>/</code> in Copilot chat, in agent mode, to see them. The five that make up a feature from idea to shipped:</p>
+      <p>In VS Code, type <code>/</code> in Copilot chat, in agent mode, to see them; the prompt files make each skill a slash command there. In the Copilot CLI, prompt files are not read, but a skill can be called by name the same way: <code>/grill-me</code> in your prompt loads the skill, and <code>/skills list</code> shows what is installed. The five that make up a feature from idea to shipped:</p>
       <pre class="installpage-pre"><code>/grill-me &lt;a brief&gt;     <span class="installpage-comment"># one question at a time, with a recommended answer, until you agree on what to build</span>
 /to-prd                  <span class="installpage-comment"># writes the destination down: problem, stories, decisions, out of scope, modules to touch</span>
 /to-issues               <span class="installpage-comment"># slices it into issues that each cut through every layer, marks which can run unattended</span>
@@ -129,6 +129,16 @@ const currentPath = '/docs/copilot';
       <p>
         <code>@reviewer</code> is a custom agent in <code>.github/agents/</code>. It reads a diff in a fresh context, with the standards in front of it, and returns findings marked P1, P2 or P3 and a verdict: approve, or send back. Use it on the coding agent's pull requests before a person reads them.
       </p>
+      <h3>From the terminal</h3>
+      <p>The Copilot CLI reads the same files: <code>copilot-instructions.md</code> on every prompt, the skills when a task matches or when you name one, the agents through <code>/agent</code> or a flag. Two commands worth knowing:</p>
+      <pre class="installpage-pre"><code><span class="installpage-comment"># one issue, unattended: the loop from the talk, on the CLI</span>
+copilot --autopilot --yolo --max-autopilot-continues 10 -p "Take issue #14 with the /tdd skill and stop when the checks pass"
+
+<span class="installpage-comment"># the reviewer, on a diff, in a fresh session</span>
+copilot --agent=reviewer -p "Review the diff on this branch against main"</code></pre>
+      <p>
+        <code>--yolo</code> approves every tool without asking, so run that form in a container or a throwaway checkout. Inside a session, <code>/delegate</code> hands the task to the cloud coding agent instead, which commits to a new branch and opens a draft pull request.
+      </p>
     </section>
 
     <section class="installpage-section" id="updating">
@@ -144,7 +154,7 @@ npx pace-tools copilot --force   <span class="installpage-comment"># replaces th
     <section class="installpage-section" id="verifying">
       <h2>Verifying it worked</h2>
       <p>
-        Open the repo in VS Code, open Copilot chat in agent mode and type <code>/grill-me</code>. It should appear in the list and, when run with a brief, start asking questions one at a time. Copilot's file layout moves between releases, so check the paths above against the current Copilot docs if a command does not show up.
+        Open the repo in VS Code, open Copilot chat in agent mode and type <code>/grill-me</code>. It should appear in the list and, when run with a brief, start asking questions one at a time. In the CLI, start <code>copilot</code> in the repo and run <code>/skills list</code>; the Pace skills should be there. If you installed while a session was open, run <code>/skills reload</code>, and restart the session for the instructions file, which the CLI reads at start. Copilot's file layout moves between releases, so check the paths above against the current Copilot docs if a command does not show up.
       </p>
       <p>
         Stuck? Open an issue at <a href="https://github.com/GoldenBerry-SO/Pace/issues">github.com/GoldenBerry-SO/Pace</a>.

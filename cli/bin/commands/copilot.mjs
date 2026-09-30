@@ -113,4 +113,5 @@ export async function run(args) {
   console.log(`\nPace for GitHub Copilot: ${counts.added} added, ${counts.replaced} replaced, ${counts.kept} kept.`);
   console.log('In Copilot chat, in agent mode, try: /grill-me <a brief>, then /to-prd, then /to-issues.');
   console.log('Assign an issue to Copilot to have the coding agent take it. @reviewer reads a pull request against the standards.');
+console.log('In the Copilot CLI the same names work (/grill-me calls the skill); run /skills reload in an open session, and restart it for the instructions.');
 }
