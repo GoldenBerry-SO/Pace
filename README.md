@@ -90,6 +90,16 @@ npx pace-tools open                   # open pace.tools
 
 `npx pace-tools install` needs at least one plugin name. Use `list` or `teams` to pick.
 
+### GitHub Copilot
+
+The engineering skills, in the shape Copilot reads (`.github/skills`, prompt files, a reviewer agent). From the repo you want Copilot to work in:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/GoldenBerry-SO/Pace/main/copilot/install.sh | sh
+```
+
+or `npx pace-tools copilot`. Details in [copilot/README.md](copilot/README.md).
+
 ## Use
 
 Describe what you need in your own words. Skills carry a `description` that the agent matches
@@ -234,6 +244,7 @@ pace.tools/
 │   └── plugin.json         ← the router's manifest
 ├── site/                   ← pace.tools (Astro: pages, layouts, components, styles)
 ├── cli/                    ← the npx pace-tools CLI
+├── copilot/                ← the engineering skills for GitHub Copilot, and the installer
 ├── scripts/                ← build, agent discovery, release
 ├── .claude/ .cursor/ …     ← generated harness copies of the router
 ├── CLAUDE.md               ← instructions for agents working in this repo

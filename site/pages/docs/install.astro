@@ -52,6 +52,12 @@ const currentPath = '/docs/install';
         <p>Three commands: register the marketplace, install the plugins your team uses, connect tools on first run. Right path if you live in the terminal.</p>
         <span class="installpage-path-cta">Show me &darr;</span>
       </a>
+      <a class="installpage-path installpage-path-copilot" href="/docs/copilot">
+        <span class="installpage-path-label">One command</span>
+        <h3>GitHub Copilot</h3>
+        <p>The engineering skills as slash commands in Copilot chat, the same rules for the coding agent, and a reviewer agent. One command, no Claude Code needed.</p>
+        <span class="installpage-path-cta">Show me &rarr;</span>
+      </a>
     </div>
 
     <nav class="installpage-toc" aria-label="On this page">
@@ -59,6 +65,7 @@ const currentPath = '/docs/install';
       <ol class="installpage-toc-list">
         <li><a href="#cowork">Cowork (click-to-install)</a></li>
         <li><a href="#claude-code">Claude Code (terminal)</a></li>
+        <li><a href="#copilot">GitHub Copilot</a></li>
         <li><a href="#picking">Picking plugins</a></li>
         <li><a href="#pace-cli">The <code>pace-tools</code> CLI</a></li>
         <li><a href="#updating">Updating</a></li>
@@ -137,6 +144,19 @@ claude plugin install marketing@pace</code></pre>
       </p>
       <p>
         For the full connector model (OAuth, self-hosted URLs, local stdio servers), see <a href="/docs/connectors">Connectors &amp; MCP</a>.
+      </p>
+    </section>
+
+    <section class="installpage-section" id="copilot">
+      <h2>GitHub Copilot</h2>
+      <p>
+        Teams on Copilot get the engineering skills without Claude Code. From the root of the repo Copilot works in:
+      </p>
+      <pre class="installpage-pre"><code>curl -fsSL https://raw.githubusercontent.com/GoldenBerry-SO/Pace/main/copilot/install.sh | sh
+<span class="installpage-comment"># or, on Windows or with npm</span>
+npx pace-tools copilot</code></pre>
+      <p>
+        It adds <code>.github/skills/</code>, a prompt file per skill so each is a slash command in chat, a short block in <code>copilot-instructions.md</code>, and a <code>@reviewer</code> agent. Nothing of yours is overwritten. The full guide is at <a href="/docs/copilot">Pace for GitHub Copilot</a>.
       </p>
     </section>
 
@@ -261,7 +281,7 @@ claude plugin install &lt;name&gt;@pace      <span class="installpage-comment">#
   }
   .installpage-paths {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: var(--spacing-md);
     margin-bottom: var(--spacing-xl);
   }

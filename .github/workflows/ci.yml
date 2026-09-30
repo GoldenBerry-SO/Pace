@@ -30,6 +30,15 @@ jobs:
       - name: Build skills
         run: bun run build:skills
 
+      - name: Build the Copilot kit
+        run: bun run build:copilot
+
+      - name: Test the Copilot kit
+        run: bun run test
+
+      - name: The committed Copilot kit matches the skills
+        run: git diff --exit-code copilot/.github
+
       - name: Build site
         run: bun run build:site
 
