@@ -7,9 +7,11 @@ Project-level instructions for any AI coding agent working in `pace.tools` — a
 Pace is **two things in one repo**:
 
 1. **A company router** — one installable skill (`/pace`) that fans out to company-specific sub-commands. Lives in `skill/`. Starts empty; we add commands as we author them.
-2. **A Claude Code marketplace** — a curated catalog of plugins under `plugins/`, primarily a verbatim import of [Anthropic's knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins). Sales, marketing, finance, legal, engineering, data, customer-support, product, HR, ops, design, and more (~150 skills).
+2. **A Claude Code marketplace** — a curated catalog of plugins under `plugins/`, primarily a verbatim import of [Anthropic's knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins). Sales, marketing, finance, legal, engineering, data, customer-support, product, HR, ops, design, and more.
 
-The marketplace is registered via `.claude-plugin/marketplace.json` (50 plugin entries: pace + 16 first-party Anthropic + 5 partner-built + 28 external by git URL).
+**Current state:** the router ships one command, `cleanup`. Everything else a user sees comes from the plugins.
+
+The marketplace is registered via `.claude-plugin/marketplace.json`, which is the source of truth for the catalog. Four kinds of entry live there: the pace router (`source: "./plugin"`), the first-party Anthropic plugins, the partner-built ones, and external vendor plugins referenced by git URL and pinned to a commit. Count anything you need to quote from that file rather than from a doc.
 
 ## Changelog: do not edit without permission
 
@@ -42,18 +44,21 @@ skill/                      ← THE PACE ROUTER (our work)
 ├── reference/<cmd>.md      ← one file per /pace sub-command
 └── scripts/                ← load-context, pin, cleanup
 
+plugin/                     ← GENERATED plugin subtree for the router (build output)
+
 plugins/                    ← THE MARKETPLACE (verbatim Anthropic imports)
 ├── sales/
 │   ├── .claude-plugin/plugin.json   ← Anthropic's manifest, untouched
 │   ├── skills/<skill>/SKILL.md      ← Anthropic's skills
 │   ├── .mcp.json                    ← Anthropic's connector config
+│   ├── CONNECTORS.md                ← which MCP servers the skills expect
 │   └── README.md
 ├── marketing/
-├── … 15 more first-party
+├── … the rest of the first-party roles
 └── partner-built/
     ├── apollo/                       ← Apollo.io
     ├── brand-voice/                  ← Tribe AI
-    └── … 3 more
+    └── … the rest of the vendors
 
 .claude-plugin/marketplace.json       ← Registers BOTH pace and every plugin
 ```
@@ -81,20 +86,13 @@ For a new company-authored plugin: create `plugins/<name>/` with `.claude-plugin
 
 **Do not edit imported plugins under `plugins/` casually.** That forks us from Anthropic and breaks `git pull`-style upstream syncs. If you must customize, copy to a new name (e.g., `plugins/sales-custom/`) and edit there.
 
-### Adding a new command
-
-1. Create `skill/reference/<command>.md`.
-2. Add a row to the **Commands** table in `skill/SKILL.md`.
-3. Add metadata to `skill/scripts/command-metadata.json`.
-4. Add the name to `PACE_SUB_COMMANDS` in `scripts/lib/utils.js`.
-5. Add it to `VALID_COMMANDS` in `skill/scripts/pin.mjs`.
-6. Run `bun run build` to fan out to all harness output dirs.
-
 ## Build system
 
-Same shape as impeccable. `bun run build` reads `skill/` and writes a per-harness transformed copy to each of the 13 harness output dirs (`.claude/`, `.cursor/`, `.agents/`, `.codex/`, `.gemini/`, `.kiro/`, `.opencode/`, `.pi/`, `.qoder/`, `.rovodev/`, `.trae/`, `.trae-cn/`, `.github/`).
+Same shape as impeccable. `bun run build:skills` reads `skill/` and writes a per-harness transformed copy for each of the 13 providers in `scripts/lib/transformers/providers.js` (`.claude/`, `.cursor/`, `.agents/`, `.codex/`, `.gemini/`, `.kiro/`, `.opencode/`, `.pi/`, `.qoder/`, `.rovodev/`, `.trae/`, `.trae-cn/`, `.github/`). It also rebuilds the Claude Code plugin subtree at `plugin/`, which is what `marketplace.json` points at for the router.
 
-These harness dirs are **build outputs that should be committed** so `npx pace skills install` can read them straight from the repo. Don't gitignore them. They're empty in the initial scaffold; run `bun run build` after editing `skill/` to populate, then commit.
+Twelve of those directories are synced back to the repo root and **committed**, so an installer can read the skills straight from the repo. Don't gitignore them. `.codex/` is the exception: the build keeps that layout under `dist/` only, and `.gitignore` covers the root copy.
+
+`bun run build` runs four steps in order: `build:skills`, `build:marketplace` (copies `marketplace.json` into `site/public/`), `build:agent-discovery` (writes the `/.well-known/agent-skills` index), then `build:site`.
 
 Source placeholders that get replaced per-provider:
 - `{{model}}` — Model name (Claude, Gemini, GPT, etc.)
@@ -110,17 +108,21 @@ Source placeholders that get replaced per-provider:
 
 ## Install flow
 
-`npx pace skills install` is the entry point. It:
+Plugins install through Claude Code. `claude plugin marketplace add GoldenBerry-SO/Pace` registers the catalog as `pace`, then `claude plugin install <name>@pace` installs one. Cowork does the same through its Plugins pane.
 
-1. Installs pace skills into the user's harness dirs.
-2. Asks whether they also want impeccable (design skills) installed.
-3. If yes, shells out to `npx impeccable skills install`.
+`npx pace-tools` wraps those calls: `list`, `install`, `uninstall`, `status`, `marketplace add|remove`, `teams`, `open`. It refuses to run without the `claude` binary on PATH. The dispatcher is `cli/bin/cli.js`; every sub-command lives in `cli/bin/commands/marketplace.mjs`.
 
-Lives in `cli/bin/cli.js` + `cli/bin/commands/skills.mjs`. Keep the impeccable handoff explicit — users should understand that design = impeccable, not a renamed pace command.
+`pace skills <verb>` is a deprecated shim kept so old docs and bookmarks still land somewhere: `install` now prints a notice and falls through to `marketplace add` + `list`. The older installer at `cli/bin/commands/skills.mjs` is no longer wired into the CLI.
+
+Keep the impeccable handoff explicit wherever it appears: design = impeccable, not a renamed pace command.
 
 ## Site
 
-Astro at `site/`. Dev with `bun run dev`. CSS architecture, content collections, and build validators copied from impeccable. The prose denylist in the build validator stays opt-in until pace has enough editorial content to warrant it — start with no denylist.
+Astro at `site/`, with `srcDir: ./site` and `outDir: ./build`. `bun run dev` for the dev server, `bun run preview` to build and serve the output. CSS architecture and build validators copied from impeccable.
+
+The prose validators are on. `validateProse` scans the site plus `README.md` and `README.npm.md`; `validateSkillProse` scans `skill/` with a tighter list. Both reject em dashes, the ` -- ` substitute, and a denylist of AI-tell phrases. Add a rule to `scripts/build.js` if a new one earns its place.
+
+CI (`.github/workflows/ci.yml`) runs `bun install`, `bun run build:skills` and `bun run build:site` on every push and pull request to `main`. There is no local git hook in this repo; the build is the gate.
 
 ## Working agreements
 

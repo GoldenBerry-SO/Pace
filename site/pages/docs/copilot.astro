@@ -1,0 +1,419 @@
+---
+// ABOUTME: Docs page for Pace on GitHub Copilot: the one-line install, what lands in .github/, the commands, updating.
+// ABOUTME: Mirrors the install page's layout and styles; the kit itself is generated under copilot/ in the repo.
+import SubPage from '../../layouts/SubPage.astro';
+import { DOCS_SIDEBAR } from '../../lib/sidebar-data';
+
+const currentPath = '/docs/copilot';
+---
+
+<SubPage
+  title="GitHub Copilot · Pace"
+  description="Install Pace's engineering skills for GitHub Copilot with one command. Slash commands in Copilot chat, the same rules for the coding agent, and a reviewer agent for pull requests."
+  activeNav="docs"
+  canonicalPath={currentPath}
+  sidebarLabel="Docs"
+>
+  <Fragment slot="sidebar">
+    {DOCS_SIDEBAR.map((group) => (
+      <div class="subpage-sidebar-group">
+        <span class="subpage-sidebar-group-title">{group.title}</span>
+        <ul class="subpage-sidebar-list">
+          {group.items.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={item.href === currentPath ? 'page' : undefined}
+              >{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </Fragment>
+
+  <article class="installpage">
+    <header class="installpage-header">
+      <span class="installpage-eyebrow">Get started</span>
+      <h1>Pace for GitHub Copilot</h1>
+      <p class="installpage-lede">
+        The engineering skills, in the shape GitHub Copilot reads. One command puts them into a repo's <code>.github/</code> folder. From then on <code>/grill-me</code>, <code>/to-prd</code>, <code>/to-issues</code>, <code>/tdd</code> and the rest are slash commands in Copilot chat, the coding agent follows the same rules when it takes an issue, and <code>@reviewer</code> reads pull requests against your standards.
+      </p>
+    </header>
+
+    <nav class="installpage-toc" aria-label="On this page">
+      <span class="installpage-toc-label">On this page</span>
+      <ol class="installpage-toc-list">
+        <li><a href="#install">Install</a></li>
+        <li><a href="#files">What lands where</a></li>
+        <li><a href="#instructions">The instructions file</a></li>
+        <li><a href="#commands">The commands</a></li>
+        <li><a href="#coding-agent">The coding agent and the reviewer</a></li>
+        <li><a href="#updating">Updating</a></li>
+        <li><a href="#verifying">Verifying it worked</a></li>
+      </ol>
+    </nav>
+
+    <section class="installpage-section" id="install">
+      <h2>Install</h2>
+      <p>From the root of the repo you want Copilot to work in:</p>
+      <pre class="installpage-pre"><code>curl -fsSL https://raw.githubusercontent.com/GoldenBerry-SO/Pace/main/copilot/install.sh | sh</code></pre>
+      <p>On Windows, or if you prefer npm:</p>
+      <pre class="installpage-pre"><code>npx pace-tools copilot</code></pre>
+      <p>
+        Both add files and never delete yours. A skill, prompt or agent that already exists is kept unless you pass <code>--force</code>. <code>--dry-run</code> shows what would change and writes nothing. Then commit <code>.github/</code>, so the whole team and the coding agent get the same setup.
+      </p>
+      <div class="installpage-callout">
+        <strong>No Claude Code needed.</strong> This path is separate from the marketplace. It needs <code>curl</code> or <code>wget</code> and <code>tar</code>, or Node for the <code>npx</code> form, and a git repository to install into.
+      </div>
+    </section>
+
+    <section class="installpage-section" id="files">
+      <h2>What lands where</h2>
+      <pre class="installpage-pre"><code>.github/
+├── copilot-instructions.md      <span class="installpage-comment"># read on every request: the house rules, short</span>
+├── skills/
+│   ├── grill-me/SKILL.md        <span class="installpage-comment"># read when a task matches: the full instructions</span>
+│   ├── to-prd/SKILL.md
+│   ├── to-issues/SKILL.md
+│   ├── tdd/SKILL.md
+│   └── … 29 more, with their reference files
+├── prompts/
+│   ├── grill-me.prompt.md       <span class="installpage-comment"># /grill-me in Copilot chat; reads the skill</span>
+│   └── … one per skill
+└── agents/
+    └── reviewer.agent.md        <span class="installpage-comment"># @reviewer: a fresh reading of a pull request</span></code></pre>
+      <p>
+        Two kinds of file. The instructions file is loaded into every session, so it holds only the rules that apply to everything and stays under a screen. The skills folder holds the long instructions; a task reads only the one it needs, and the prompt files are the slash commands that point at them.
+      </p>
+    </section>
+
+    <section class="installpage-section" id="instructions">
+      <h2>The instructions file</h2>
+      <p>
+        Pace adds a block to <code>.github/copilot-instructions.md</code> between <code>&lt;!-- pace:start --&gt;</code> and <code>&lt;!-- pace:end --&gt;</code> markers. If the file already exists, the block is appended after your own text; a later install refreshes only the block. What it says, in short:
+      </p>
+      <ul>
+        <li>When a task matches a skill in <code>.github/skills/</code>, read that file first and follow it.</li>
+        <li>Work one issue at a time, as a thin slice through every layer it touches.</li>
+        <li>Test first: a failing test, the smallest change that passes, then tidy. Never edit a test to make it pass.</li>
+        <li>Run every check the repo has before saying it is done, and paste the result.</li>
+        <li>Ask in chat when unsure. Never force-push, bypass hooks, or delete without being asked.</li>
+      </ul>
+      <p>
+        Path-scoped rules go in <code>.github/instructions/*.instructions.md</code> with an <code>applyTo</code> pattern; Pace leaves that folder to you.
+      </p>
+    </section>
+
+    <section class="installpage-section" id="commands">
+      <h2>The commands</h2>
+      <p>Type <code>/</code> in Copilot chat, in agent mode, to see them. The five that make up a feature from idea to shipped:</p>
+      <pre class="installpage-pre"><code>/grill-me &lt;a brief&gt;     <span class="installpage-comment"># one question at a time, with a recommended answer, until you agree on what to build</span>
+/to-prd                  <span class="installpage-comment"># writes the destination down: problem, stories, decisions, out of scope, modules to touch</span>
+/to-issues               <span class="installpage-comment"># slices it into issues that each cut through every layer, marks which can run unattended</span>
+/tdd                     <span class="installpage-comment"># red, green, refactor on one issue</span>
+/code-review             <span class="installpage-comment"># a second reading of the change</span></code></pre>
+      <p>
+        Run <code>/setup-engineering-skills</code> once per repo first: it tells the skills where your issues live, which labels you use and where your docs are. The rest of the catalog covers debugging (<code>/diagnose</code>), incidents, documentation, deploy checklists, stacked pull requests (<code>/spec</code>, <code>/implement</code>, <code>/topr</code>), triage and architecture (<code>/improve-codebase-architecture</code>). Every skill is listed in the <a href="/docs/skills">skill catalog</a>.
+      </p>
+      <p class="installpage-aside">
+        One engineering skill is left out: <code>git-guardrails-claude-code</code> installs Claude Code hooks and has no Copilot equivalent.
+      </p>
+    </section>
+
+    <section class="installpage-section" id="coding-agent">
+      <h2>The coding agent and the reviewer</h2>
+      <p>
+        Assign an issue to Copilot and the coding agent works it in a GitHub Actions runner and opens a pull request. It reads the same <code>copilot-instructions.md</code> and the same skills, so it tests first and runs the checks like anyone else on the team.
+      </p>
+      <p>
+        <code>@reviewer</code> is a custom agent in <code>.github/agents/</code>. It reads a diff in a fresh context, with the standards in front of it, and returns findings marked P1, P2 or P3 and a verdict: approve, or send back. Use it on the coding agent's pull requests before a person reads them.
+      </p>
+    </section>
+
+    <section class="installpage-section" id="updating">
+      <h2>Updating</h2>
+      <p>Run the install again. New skills are added, the pace block in the instructions file is refreshed, and anything you changed is kept unless you pass <code>--force</code>:</p>
+      <pre class="installpage-pre"><code>npx pace-tools copilot           <span class="installpage-comment"># adds what is new, keeps what you edited</span>
+npx pace-tools copilot --force   <span class="installpage-comment"># replaces the skills, prompts and agent with the current versions</span></code></pre>
+      <p>
+        To install from a branch or tag instead of <code>main</code>, set <code>PACE_REF</code> in front of either command.
+      </p>
+    </section>
+
+    <section class="installpage-section" id="verifying">
+      <h2>Verifying it worked</h2>
+      <p>
+        Open the repo in VS Code, open Copilot chat in agent mode and type <code>/grill-me</code>. It should appear in the list and, when run with a brief, start asking questions one at a time. Copilot's file layout moves between releases, so check the paths above against the current Copilot docs if a command does not show up.
+      </p>
+      <p>
+        Stuck? Open an issue at <a href="https://github.com/GoldenBerry-SO/Pace/issues">github.com/GoldenBerry-SO/Pace</a>.
+      </p>
+    </section>
+  </article>
+</SubPage>
+
+<style>
+  .installpage {
+    max-width: 100%;
+  }
+  .installpage-header {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .installpage-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    margin-bottom: var(--spacing-sm);
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .installpage-header h1 {
+    font-family: var(--font-display);
+    font-size: var(--fs-3xl);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-md);
+  }
+  .installpage-lede {
+    font-size: var(--fs-md);
+    color: var(--color-charcoal);
+    line-height: 1.55;
+    max-width: 64ch;
+  }
+  .installpage-lede a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .installpage-paths {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+  }
+  @media (max-width: 720px) {
+    .installpage-paths {
+      grid-template-columns: 1fr;
+    }
+  }
+  .installpage-path {
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 10px;
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color var(--duration-fast) var(--ease-out-quart),
+                transform var(--duration-fast) var(--ease-out-quart),
+                background var(--duration-fast) var(--ease-out-quart);
+  }
+  .installpage-path:hover {
+    border-color: var(--color-forest);
+    background: color-mix(in oklch, var(--color-paper-elev) 88%, var(--color-forest-dim));
+    transform: translateY(-2px);
+  }
+  .installpage-path-label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+  }
+  .installpage-path h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+    margin: 0;
+  }
+  .installpage-path p {
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.6;
+  }
+  .installpage-path-cta {
+    margin-top: auto;
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    color: var(--color-forest);
+    font-weight: 600;
+  }
+  .installpage-toc {
+    background: var(--color-paper-elev);
+    border: 1px solid var(--color-mist);
+    border-radius: 8px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+  }
+  .installpage-toc-label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ash);
+    display: block;
+    margin-bottom: var(--spacing-sm);
+  }
+  .installpage-toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px var(--spacing-md);
+    counter-reset: toc;
+  }
+  .installpage-toc-list li {
+    counter-increment: toc;
+    font-size: var(--fs-sm);
+  }
+  .installpage-toc-list li::before {
+    content: counter(toc, decimal-leading-zero) ' ';
+    font-family: var(--font-mono);
+    color: var(--color-ash);
+    margin-right: 4px;
+  }
+  .installpage-toc-list a {
+    color: var(--color-charcoal);
+    border-bottom: 1px solid transparent;
+    transition: color var(--duration-fast) var(--ease-out-quart), border-color var(--duration-fast) var(--ease-out-quart);
+  }
+  .installpage-toc-list a:hover {
+    color: var(--color-forest);
+    border-color: var(--color-forest-soft);
+  }
+  .installpage-toc-list code {
+    font-family: var(--font-mono);
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: inherit;
+  }
+  .installpage-section {
+    margin-bottom: var(--spacing-2xl);
+    scroll-margin-top: 96px;
+  }
+  .installpage-section h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .installpage-section h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    color: var(--color-ink);
+  }
+  .installpage-section p {
+    font-size: var(--fs-base);
+    color: var(--color-charcoal);
+    line-height: 1.65;
+    margin-bottom: var(--spacing-sm);
+    max-width: 70ch;
+  }
+  .installpage-section ol,
+  .installpage-section ul {
+    padding-left: var(--spacing-md);
+    color: var(--color-charcoal);
+    font-size: var(--fs-base);
+    line-height: 1.65;
+    margin-bottom: var(--spacing-sm);
+    max-width: 70ch;
+  }
+  .installpage-section li {
+    margin-bottom: var(--spacing-xs);
+  }
+  .installpage-section a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+    transition: border-color var(--duration-fast) var(--ease-out-quart);
+  }
+  .installpage-section a:hover {
+    border-bottom-color: var(--color-forest);
+  }
+  .installpage-section strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .installpage-pre {
+    background: oklch(18% 0.015 150);
+    color: oklch(92% 0.005 150);
+    padding: var(--spacing-md);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    overflow-x: auto;
+    margin: var(--spacing-md) 0;
+    line-height: 1.6;
+  }
+  .installpage-pre code {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: inherit;
+  }
+  .installpage-comment {
+    color: oklch(62% 0.04 150);
+  }
+  .installpage-aside {
+    font-size: var(--fs-sm);
+    color: var(--color-ash);
+    font-style: italic;
+    border-left: 2px solid var(--color-mist);
+    padding-left: var(--spacing-md);
+    margin-left: 2px;
+  }
+  .installpage-aside a {
+    color: var(--color-forest);
+    border-bottom: 1px solid var(--color-forest-soft);
+  }
+  .installpage-callout {
+    background: var(--color-forest-dim);
+    border-left: 3px solid var(--color-forest);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: 0 6px 6px 0;
+    margin: var(--spacing-md) 0;
+    font-size: var(--fs-sm);
+    color: var(--color-charcoal);
+    line-height: 1.6;
+  }
+  .installpage-callout strong {
+    color: var(--color-forest);
+  }
+  .installpage-callout-warning {
+    background: var(--color-clay-dim);
+    border-left-color: var(--color-clay);
+  }
+  .installpage-callout-warning strong {
+    color: var(--color-clay-hover);
+  }
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: var(--color-code-bg);
+    padding: 1px 7px;
+    border-radius: 4px;
+    border: 1px solid var(--color-code-border);
+    color: var(--color-ink);
+  }
+  @media (max-width: 720px) {
+    .installpage-toc-list {
+      flex-direction: column;
+      gap: 4px;
+    }
+  }
+</style>

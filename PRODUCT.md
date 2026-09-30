@@ -15,7 +15,9 @@ They land on `pace.tools` from internal docs, Slack, or word of mouth. They alre
 Pace is a curated marketplace of AI agent skills, with two halves:
 
 1. **The `/pace` router** is the company-specific command surface. It's where commands that wrap our internal processes live (when we author them).
-2. **The plugin catalog** is Anthropic's [knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins) imported verbatim. ~150 skills across sales, marketing, finance, legal, engineering, data, customer support, product, HR, ops, and design.
+2. **The plugin catalog** is built on Anthropic's [knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins), imported and kept close to upstream, covering sales, marketing, finance, legal, engineering, data, customer support, product, HR, ops, and design. Alongside them sit the partner-built plugins from that same upstream marketplace, an engineering plugin extended with a workflow layer authored here, and external vendor plugins referenced by git URL and pinned to a commit.
+
+**Status (2026-09):** the router ships one command, `cleanup`. The catalog carries the weight today; company-specific commands land as we author them. `.claude-plugin/marketplace.json` is the source of truth for what the catalog contains.
 
 Together, pace is the one entry point a person registers to get every department's AI playbook, with the company-specific layer on top. For frontend design specifically, pace also defers to **impeccable** (separate scope, code-level UI craft).
 

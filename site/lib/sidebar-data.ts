@@ -21,6 +21,7 @@ export const DOCS_SIDEBAR: SidebarGroup[] = [
     title: 'Get started',
     items: [
       { href: '/docs/install', label: 'Installing' },
+      { href: '/docs/copilot', label: 'GitHub Copilot' },
       { href: '/docs#usage', label: 'Using commands' },
     ],
   },
