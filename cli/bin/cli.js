@@ -26,6 +26,7 @@ Commands:
   marketplace remove         Unregister the Pace marketplace
   teams                      Show the per-role plugin starter sets
   open                       Open https://pace.tools in your browser
+  copilot                    Install Pace for GitHub Copilot into ./.github/
 
 Options:
   --help                     Show this help message
@@ -36,6 +37,7 @@ Examples:
   npx pace-tools install sales             # install the sales plugin
   npx pace-tools install engineering data  # install multiple
   npx pace-tools list                      # browse the catalog
+  npx pace-tools copilot                   # Pace for GitHub Copilot, into this repo
 
 For frontend code design, Pace defers to impeccable
 (https://impeccable.style). Install separately if you do frontend work.
@@ -50,6 +52,12 @@ if (!command || command === '--help' || command === '-h' || command === 'help') 
 if (command === '--version' || command === '-v') {
   const pkg = JSON.parse(readFileSync(join(__dirname, '..', '..', 'package.json'), 'utf8'));
   console.log(pkg.version);
+  process.exit(0);
+}
+
+if (command === 'copilot') {
+  const mod = await import('./commands/copilot.mjs');
+  await mod.run(args.slice(1));
   process.exit(0);
 }
 

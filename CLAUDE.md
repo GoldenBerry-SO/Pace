@@ -104,6 +104,10 @@ Source placeholders that get replaced per-provider:
 - `{{available_commands}}` — auto-populated list
 - `{{scripts_path}}` — provider-aware path
 
+## The Copilot kit
+
+`copilot/.github/` is the engineering plugin in GitHub Copilot's shape (skills, one prompt file per skill, a short instructions block, a reviewer agent). It is **generated** by `node copilot/build.mjs` from `plugins/engineering/skills/` and committed; never edit it by hand. Edit the skill, run `bun run build:copilot`, commit the output. The text rules live in `copilot/transform.mjs` and are pinned by `copilot/test/`; CI fails when the committed output is stale. `copilot/install.sh` and `npx pace-tools copilot` copy the kit into a user's repo and merge, never overwrite, their `copilot-instructions.md`.
+
 ## Install flow
 
 `npx pace skills install` is the entry point. It:

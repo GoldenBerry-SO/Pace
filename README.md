@@ -62,6 +62,16 @@ Or use the guided picker:
 npx pace-tools install
 ```
 
+### GitHub Copilot
+
+The engineering skills, in the shape Copilot reads (`.github/skills`, prompt files, a reviewer agent). From the repo you want Copilot to work in:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/GoldenBerry-SO/Pace/main/copilot/install.sh | sh
+```
+
+or `npx pace-tools copilot`. Details in [copilot/README.md](copilot/README.md).
+
 ## Use
 
 Just describe what you need. The skills auto-trigger from natural
@@ -107,6 +117,7 @@ pace.tools/
 │   └── marketplace.json            ← registers all 50 plugins
 ├── site/                           ← pace.tools (Astro)
 ├── cli/                            ← npx pace-tools CLI
+├── copilot/                        ← the same engineering skills for GitHub Copilot
 └── NOTICE.md                       ← full attribution
 ```
 
