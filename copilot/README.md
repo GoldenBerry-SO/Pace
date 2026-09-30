@@ -26,7 +26,7 @@ Then commit `.github/` so the whole team, and the coding agent, get the same set
 |---|---|
 | `.github/copilot-instructions.md` | Read on every request. Pace adds a short block: one issue at a time, test first, run every check, read the matching skill. Keep the whole file under a screen. |
 | `.github/skills/<name>/SKILL.md` | Agent skills, read when a task matches. The full instructions for each command, with their reference files. |
-| `.github/prompts/<name>.prompt.md` | Slash commands in Copilot chat: `/grill-me`, `/to-prd`, `/to-issues`, ... Each one reads its skill and applies it to what you typed after it. |
+| `.github/prompts/<name>.prompt.md` | Slash commands in Copilot chat in VS Code, JetBrains and Visual Studio: `/grill-me`, `/to-prd`, `/to-issues`, ... Each one reads its skill and applies it to what you typed after it. The Copilot CLI does not read prompt files; there, `/grill-me` in a prompt calls the skill by name, which the CLI supports directly. |
 | `.github/agents/reviewer.agent.md` | A custom agent: `@reviewer` reads a diff in a fresh context against the standards and says approve or send back. |
 
 ## The commands
@@ -45,6 +45,16 @@ The five-step flow from the talk, then the rest:
 | everything else in `.github/skills/` | Debugging, incidents, documentation, deploy checklists, stacked pull requests, triage, and more |
 
 `git-guardrails-claude-code` is the one engineering skill left out: it installs Claude Code hooks and has no Copilot equivalent.
+
+## From the terminal
+
+The Copilot CLI reads the same files: the instructions on every prompt, the skills when a task matches or when you name one (`/grill-me ...`), the agent through `/agent` or `--agent=reviewer`. `/skills list` shows what is installed and `/skills reload` picks up a fresh install; the instructions file is read at session start, so restart after installing. One issue unattended, the loop from the talk:
+
+```bash
+copilot --autopilot --yolo --max-autopilot-continues 10 -p "Take issue #14 with the /tdd skill and stop when the checks pass"
+```
+
+`--yolo` approves every tool, so run that in a container or a throwaway checkout. `/delegate` inside a session hands the task to the cloud coding agent instead, on a new branch with a draft pull request.
 
 ## How it is built
 
